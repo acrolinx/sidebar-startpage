@@ -1,11 +1,11 @@
-import {$} from "./utils";
+import {$, show, hide} from "./utils";
 import {loadSidebarIntoIFrame} from "./acrolinx-sidebar-integration/utils/sidebar-loader";
 import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from "./proxy-acrolinx-plugin";
 
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 
 const TEMPLATE = `
-  <form id="serverSelectorForm">
+  <form id="serverSelectorForm" style="display: none">
     <h1>Acrolinx Server Selector</h1>
     <input type="text" id="serverAddress" placeholder="Acrolinx Server Address">
     <input type="submit" value="Go">
@@ -34,6 +34,8 @@ function main() {
 
   if (oldServerAddress) {
     tryToLoadSidebar(oldServerAddress);
+  } else {
+    show(form);
   }
 
   function onSubmit(event: Event) {
@@ -58,6 +60,10 @@ function main() {
         setErrorMessage("Can't load the provided URL.");
         return;
       }
+
+      hide(form);
+      show(sidebarContainer);
+
       localStorage.setItem(SERVER_ADDRESS_KEY, serverAddress);
       waitForAcrolinxPlugin(acrolinxPlugin => {
         const contentWindowAny = sidebarIFrameElement.contentWindow as any;
@@ -74,6 +80,8 @@ function main() {
 
   function onSignOut() {
     sidebarContainer.innerHTML = '';
+    hide(sidebarContainer);
+    show(form);
   }
 
   function setErrorMessage(message: string) {
