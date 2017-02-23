@@ -10,7 +10,11 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
   }
 
   init(initParameters: InitParameters): void {
-    const hackedInitParameters = {...initParameters, serverAddress: this.serverAddress, showServerSelector: false};
+    const hackedInitParameters = {...initParameters,
+      serverAddress: this.serverAddress,
+      showServerSelector: false,
+      supported: {...initParameters.supported, onSignOut: true}
+    };
     this.acrolinxSidebar.init(hackedInitParameters);
   }
 

@@ -1,51 +1,69 @@
 import {
-  AcrolinxPlugin, InitResult,
-  AcrolinxPluginConfiguration, CheckResult, MatchWithReplacement, DownloadInfo, OpenWindowParameters
+  AcrolinxPlugin,
+  InitResult,
+  AcrolinxPluginConfiguration,
+  CheckResult,
+  MatchWithReplacement,
+  DownloadInfo,
+  OpenWindowParameters
 } from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 import {ProxyAcrolinxSidebar} from "./proxy-acrolinx-sidebar";
 
 
+export interface ProxyAcrolinxPluginProps {
+  window: Window;
+  sidebarWindow: Window;
+  acrolinxPlugin: AcrolinxPlugin;
+  serverAddress: string;
+  onSignOut: Function;
+}
+
 export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
-  constructor(private window: Window, private sidebarWindow: Window, private acrolinxPlugin: AcrolinxPlugin, private serverAddress: string) {
+  constructor(private props: ProxyAcrolinxPluginProps) {
   }
 
   requestInit() {
-    const windowAny = this.window as any;
-    const sidebarWindowAny = this.sidebarWindow as any;
-    windowAny.acrolinxSidebar = new ProxyAcrolinxSidebar(sidebarWindowAny.acrolinxSidebar, this.serverAddress);
-    this.acrolinxPlugin.requestInit();
+    const windowAny = this.props.window as any;
+    const sidebarWindowAny = this.props.sidebarWindow as any;
+    windowAny.acrolinxSidebar = new ProxyAcrolinxSidebar(sidebarWindowAny.acrolinxSidebar, this.props.serverAddress);
+    this.props.acrolinxPlugin.requestInit();
   }
 
   onInitFinished(initFinishedResult: InitResult) {
-    this.acrolinxPlugin.onInitFinished(initFinishedResult);
+    this.props.acrolinxPlugin.onInitFinished(initFinishedResult);
   }
 
   configure(configuration: AcrolinxPluginConfiguration) {
-    this.acrolinxPlugin.configure(configuration);
+    this.props.acrolinxPlugin.configure(configuration);
   }
 
   requestGlobalCheck() {
-    this.acrolinxPlugin.requestGlobalCheck();
+    this.props.acrolinxPlugin.requestGlobalCheck();
   }
 
   onCheckResult(checkResult: CheckResult) {
-    this.acrolinxPlugin.onCheckResult(checkResult);
+    this.props.acrolinxPlugin.onCheckResult(checkResult);
   }
 
   selectRanges(checkId: string, matches: MatchWithReplacement[]) {
-    this.acrolinxPlugin.selectRanges(checkId, matches);
+    this.props.acrolinxPlugin.selectRanges(checkId, matches);
   }
 
   replaceRanges(checkId: string, matchesWithReplacement: MatchWithReplacement[]) {
-    this.acrolinxPlugin.replaceRanges(checkId, matchesWithReplacement);
+    this.props.acrolinxPlugin.replaceRanges(checkId, matchesWithReplacement);
   }
 
   download(download: DownloadInfo) {
-    this.acrolinxPlugin.download(download);
+    this.props.acrolinxPlugin.download(download);
   }
 
   openWindow(opts: OpenWindowParameters) {
-    this.acrolinxPlugin.openWindow(opts);
+    this.props.acrolinxPlugin.openWindow(opts);
+  }
+
+  onSignOut() {
+    console.log('onSignOut!');
+    this.props.onSignOut();
   }
 }
 

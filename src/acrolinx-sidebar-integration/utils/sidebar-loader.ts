@@ -22,8 +22,7 @@ interface  AcrolinxPluginConfig {
 
 export function loadSidebarIntoIFrame(config: AcrolinxPluginConfig, sidebarIFrameElement: HTMLIFrameElement, onSidebarLoaded: ErrorFirstCallback<void>) {
   const sidebarBaseUrl = config.sidebarUrl || SIDEBAR_URL;
-  const timestamp = Date.now().toString();
-  const completeSidebarUrl = sidebarBaseUrl + 'index.html?t=' + timestamp;
+  const completeSidebarUrl = sidebarBaseUrl + 'index.html?t=' + Date.now();
   utils.fetch(completeSidebarUrl, (error, sidebarHtml) => {
     if (!sidebarHtml) {
       onSidebarLoaded(error);

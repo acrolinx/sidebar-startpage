@@ -19,6 +19,7 @@ function main() {
   const appElement = $('#app')!;
   appElement.innerHTML = TEMPLATE;
 
+  const sidebarContainer = $('#sidebarContainer')!;
   const errorMessageEl = $('#errorMessage')!;
 
   const form = $('#serverSelectorForm')!;
@@ -47,7 +48,6 @@ function main() {
   function tryToLoadSidebar(serverAddress: string) {
     console.log(serverAddress);
 
-    const sidebarContainer = $('#sidebarContainer')!;
     sidebarContainer.innerHTML = '';
     const sidebarIFrameElement = document.createElement('iframe') as HTMLIFrameElement;
     sidebarContainer.appendChild(sidebarIFrameElement);
@@ -61,9 +61,19 @@ function main() {
       localStorage.setItem(SERVER_ADDRESS_KEY, serverAddress);
       waitForAcrolinxPlugin(acrolinxPlugin => {
         const contentWindowAny = sidebarIFrameElement.contentWindow as any;
-        contentWindowAny.acrolinxPlugin = new ProxyAcrolinxPlugin(window, sidebarIFrameElement.contentWindow, acrolinxPlugin, serverAddress);
+        contentWindowAny.acrolinxPlugin = new ProxyAcrolinxPlugin({
+          window,
+          sidebarWindow: sidebarIFrameElement.contentWindow,
+          acrolinxPlugin,
+          serverAddress,
+          onSignOut
+        });
       });
     });
+  }
+
+  function onSignOut() {
+    sidebarContainer.innerHTML = '';
   }
 
   function setErrorMessage(message: string) {

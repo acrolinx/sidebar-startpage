@@ -112,6 +112,12 @@ export interface InitParameters extends SidebarConfiguration {
    */
   enforceHTTPS?: boolean;
 
+  /**
+   * Extraordinary capabilities of the plugin.
+   */
+  supported?: {
+    onSignOut?: boolean
+  }
 }
 
 /**
@@ -520,6 +526,8 @@ export interface AcrolinxPlugin {
    * @param openWindowParameters
    */
   openWindow(openWindowParameters: OpenWindowParameters): void;
+
+  onSignOut?(): void;
 }
 
 export const ErrorCodes = {
