@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "importHelpers": true,
+    "outDir": "tmp/compiled",
+    "sourceMap": true,
+    "module": "commonjs"
+  },
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
+}
