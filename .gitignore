@@ -1,0 +1,5 @@
+.idea
+.private
+node_modules
+tmp
+app/scripts
