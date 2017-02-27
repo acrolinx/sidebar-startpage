@@ -61,8 +61,7 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
     this.props.acrolinxPlugin.openWindow(opts);
   }
 
-  onSignOut() {
-    console.log('onSignOut!');
+  showServerSelector() {
     this.props.onSignOut();
   }
 }

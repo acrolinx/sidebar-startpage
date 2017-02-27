@@ -116,7 +116,7 @@ export interface InitParameters extends SidebarConfiguration {
    * Extraordinary capabilities of the plugin.
    */
   supported?: {
-    onSignOut?: boolean
+    showServerSelector?: boolean
   }
 }
 
@@ -527,7 +527,7 @@ export interface AcrolinxPlugin {
    */
   openWindow(openWindowParameters: OpenWindowParameters): void;
 
-  onSignOut?(): void;
+  showServerSelector?(): void;
 }
 
 export const ErrorCodes = {
