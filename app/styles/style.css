@@ -1,24 +1,107 @@
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Roboto Light'), local('Roboto-Light'), url('https://s3-eu-west-1.amazonaws.com/acrolinx-sidebar-classic/v14.3/dev/fonts/Roboto-Thin.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Regular'), local('Roboto-Regular'), url('https://s3-eu-west-1.amazonaws.com/acrolinx-sidebar-classic/v14.3/dev/fonts/Roboto-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Bold'), local('Roboto-Bold'), url('https://s3-eu-west-1.amazonaws.com/acrolinx-sidebar-classic/v14.3/dev/fonts/Roboto-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Roboto Italic'), local('Roboto-Italic'), url('https://s3-eu-west-1.amazonaws.com/acrolinx-sidebar-classic/v14.3/dev/fonts/Roboto-Italic.ttf') format('truetype');
+}
+
+
+
 html, body, #app {
   margin: 0;
   padding: 0;
   height: 100%;
   overflow: hidden;
+  font-size: 13px;
+  font-family: 'Roboto', sans-serif;
 }
 
+
+
 h1 {
-  color: #888;
-  font-size: 20px;
+  color: #909090;
+  font-size: 18px;
+  color: #909090;
+  margin-top: 25px;
+  font-weight: 400;
+}
+
+.loginHeader {
+  background: url(https://s3-eu-west-1.amazonaws.com/acrolinx-sidebar-classic/v14.3/dev/images/d1d25dc8.logoClaim213px20px.png) no-repeat;
+  background-position-x: 15px;
+  background-position-y: center;
+  border-bottom: 1px solid #dadada;
+  height: 55px;
 }
 
 #serverAddress {
   display: block;
+  margin-top: 15px;
   width: 100%;
-  margin-bottom: 1em;
+  font-size: 13px;
+  color: #3e96db;
+  appearance: none;
+  -moz-appearance: none;
+  box-shadow: none;
+  border-bottom: solid 1px #3e96db;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-radius: 0;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+  font-weight: 400;
+  overflow: hidden;
+  padding: 4px;
+  outline: 0;
+  background: #fff;
 }
 
+.buttonGroup {
+  text-align: right;
+}
+
+.submitButton {
+  border-radius: 2px;
+  padding: 0 10px;
+  line-height: 27px;
+  background-color: #3e96db;
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  margin:  0 0 0 auto;
+}
+
+
 #serverSelectorForm {
-  padding: 10px;
   display: block;
+}
+
+.formContent {
+  padding: 0 15px 15px;
 }
 
 #sidebarContainer,
@@ -30,4 +113,14 @@ h1 {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+#errorMessage {
+  background-color: #f0556a;
+  color: #fff;
+  border-radius: 4px;
+  padding: 1.5em;
+  font-size: 13px;
+  margin-top: 1em;
+  font-weight: 400;
 }

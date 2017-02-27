@@ -5,11 +5,18 @@ import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from "./proxy-acrolinx-plugi
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 
 const TEMPLATE = `
+  
   <form id="serverSelectorForm" style="display: none">
-    <h1>Acrolinx Server Selector</h1>
-    <input type="text" id="serverAddress" placeholder="Acrolinx Server Address">
-    <input type="submit" value="Go">
-    <div id="errorMessage" style="display: none"></div>
+      
+    <div class="loginHeader"></div>
+    <div class="formContent">
+      <h1>Server Address</h1>
+      <input type="text" id="serverAddress" placeholder="Acrolinx Server Address">
+      <div class="buttonGroup">
+        <input type="submit" class="submitButton" value="CONNECT">
+      </div>
+      <div id="errorMessage" style="display: none"></div>
+    </div>
   </form>
   
   <div id="sidebarContainer"></div>
