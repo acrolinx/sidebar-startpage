@@ -1,7 +1,7 @@
 import * as utils from "./utils";
 import {ErrorFirstCallback} from "../../utils";
 
-export const SIDEBAR_URL = 'http://s3-eu-west-1.amazonaws.com/acrolinx-sidebar-classic/v14.3/dev/';
+export const SIDEBAR_URL = 'https://s3-eu-west-1.amazonaws.com/acrolinx-sidebar-classic/v14.3/dev/';
 
 export class SidebarURLInvalidError extends Error {
   public details: string;
