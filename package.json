@@ -12,7 +12,8 @@
     "browsersync": "browser-sync start --server --files \"app/**/*\" --startPath app --cors",
     "tslint": "tslint src/**/*",
     "tslintFix": "tslint --fix src/**/*",
-    "buildDist": "rm -rf tmp/dist && npm run tslint && tsc && npm run browserify && mkdir -p tmp && cp -r app tmp/dist && hashcat tmp/dist/index.html"
+    "buildDist": "rm -rf tmp/dist && npm run tslint && tsc && npm run browserify && mkdir -p tmp && cp -r app tmp/dist && hashcat tmp/dist/index.html && npm run fakeSidebarDist",
+    "fakeSidebarDist": "touch tmp/dist/scripts/libs.js && cp tmp/dist/scripts/main.js tmp/dist/scripts/sidebar.js"
   },
   "author": "Acrolinx",
   "license": "ISC",
