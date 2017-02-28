@@ -1,0 +1,9 @@
+{
+  "name": "acrolinx-server-selector",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "jquery": "2.2.4",
+    "lodash": "4.17.4"
+  }
+}

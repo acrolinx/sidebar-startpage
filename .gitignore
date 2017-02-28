@@ -3,3 +3,9 @@
 node_modules
 tmp
 app/scripts
+
+# bower components and cache
+bower_components
+.bower-cache
+.bower-registry
+.bower-tmp
