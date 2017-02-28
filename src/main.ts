@@ -92,6 +92,7 @@ function main() {
         return;
       }
 
+      removeErrorMessage();
       localStorage.setItem(SERVER_ADDRESS_KEY, serverAddress);
       showSidebarIFrame();
 
@@ -130,7 +131,12 @@ function main() {
 
   function setErrorMessage(message: string) {
     errorMessageEl.textContent = message;
-    errorMessageEl.style.display = 'block';
+    show(errorMessageEl);
+  }
+
+  function removeErrorMessage() {
+    hide(errorMessageEl);
+    errorMessageEl.textContent = '';
   }
 
   function onMessageFromSidebar(messageEvent: MessageEvent) {
