@@ -33,6 +33,7 @@ function isMessageAdapterNeeded() {
 }
 
 function main() {
+  const windowAny = window as any;
   const useMessageAdapter = isMessageAdapterNeeded();
   const appElement = $('#app')!;
   appElement.innerHTML = TEMPLATE;
@@ -57,6 +58,7 @@ function main() {
   if (useMessageAdapter) {
     console.log('useMessageAdapter');
     addEventListener('message', onMessageFromSidebar, false);
+    windowAny.acrolinxSidebar = {}; // Just to prevent error message in current browser extensions.
   }
 
   if (oldServerAddress) {
@@ -136,7 +138,6 @@ function main() {
       return;
     }
     
-    const windowAny = window as any;
     const {command, args} = messageEvent.data;
     console.log('onMessageFromSidebar', messageEvent, command, args);
     switch (command) {
