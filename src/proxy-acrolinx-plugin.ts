@@ -15,7 +15,7 @@ export interface ProxyAcrolinxPluginProps {
   sidebarWindow: Window;
   acrolinxPlugin: AcrolinxPlugin;
   serverAddress: string;
-  onSignOut: Function;
+  showServerSelector: Function;
 }
 
 export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
@@ -62,7 +62,7 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
   }
 
   showServerSelector() {
-    this.props.onSignOut();
+    this.props.showServerSelector();
   }
 }
 

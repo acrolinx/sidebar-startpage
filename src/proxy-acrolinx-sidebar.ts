@@ -10,12 +10,7 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
   }
 
   init(initParameters: InitParameters): void {
-    const hackedInitParameters = {...initParameters,
-      serverAddress: this.serverAddress,
-      showServerSelector: false,
-      supported: {...initParameters.supported, showServerSelector: true}
-    };
-    this.acrolinxSidebar.init(hackedInitParameters);
+    this.acrolinxSidebar.init(hackInitParameters(initParameters, this.serverAddress));
   }
 
   configure(initParameters: SidebarConfiguration): void {
@@ -37,4 +32,13 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
   onVisibleRangesChanged(checkedDocumentRanges: CheckedDocumentRange[]) {
     return this.acrolinxSidebar.onVisibleRangesChanged(checkedDocumentRanges);
   }
+}
+
+
+export function hackInitParameters(initParameters: InitParameters, serverAddress: string) :InitParameters {
+  return {...initParameters,
+    serverAddress: serverAddress,
+    showServerSelector: false,
+    supported: {...initParameters.supported, showServerSelector: true}
+  };
 }

@@ -1,6 +1,9 @@
 import {$, show, hide} from "./utils";
-import {loadSidebarIntoIFrame} from "./acrolinx-sidebar-integration/utils/sidebar-loader";
+import {loadSidebarIntoIFrame, LoadSidebarProps} from "./acrolinx-sidebar-integration/utils/sidebar-loader";
 import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from "./proxy-acrolinx-plugin";
+import {FORCE_MESSAGE_ADAPTER} from "./constants";
+import {createSidebarMessageProxy} from "./acrolinx-sidebar-integration/message-adapter/message-adapter";
+import {ProxyAcrolinxSidebar} from "./proxy-acrolinx-sidebar";
 
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 
@@ -22,7 +25,15 @@ const TEMPLATE = `
   <div id="sidebarContainer"></div>
 `;
 
+
+const NEEDS_MESSAGE_ADAPTER = ['chrome-extension://', 'moz-extension://', 'resource://'];
+
+function isMessageAdapterNeeded() {
+  return FORCE_MESSAGE_ADAPTER || NEEDS_MESSAGE_ADAPTER.some(prefix => window.location.href.indexOf(prefix) === 0);
+}
+
 function main() {
+  const useMessageAdapter = isMessageAdapterNeeded();
   const appElement = $('#app')!;
   appElement.innerHTML = TEMPLATE;
 
@@ -32,12 +43,21 @@ function main() {
   const form = $('#serverSelectorForm')!;
   form.addEventListener('submit', onSubmit);
 
+  let sidebarIFrameElement: HTMLIFrameElement;
+
   const serverAddressField = $('#serverAddress')! as HTMLInputElement;
   const oldServerAddress = localStorage.getItem(SERVER_ADDRESS_KEY);
+  let serverAddress: string ;
   if (oldServerAddress) {
     serverAddressField.value = oldServerAddress;
+    serverAddress = oldServerAddress;
   }
   serverAddressField.focus();
+
+  if (useMessageAdapter) {
+    console.log('useMessageAdapter');
+    addEventListener('message', onMessageFromSidebar, false);
+  }
 
   if (oldServerAddress) {
     tryToLoadSidebar(oldServerAddress);
@@ -48,30 +68,35 @@ function main() {
   function onSubmit(event: Event) {
     event.preventDefault();
 
-    const serverAddress = serverAddressField.value;
+    serverAddress = serverAddressField.value;
     console.log(serverAddress);
 
     tryToLoadSidebar(serverAddress);
   }
 
   function tryToLoadSidebar(serverAddress: string) {
-    console.log(serverAddress);
+    console.log('tryToLoadSidebar', serverAddress);
 
     sidebarContainer.innerHTML = '';
-    const sidebarIFrameElement = document.createElement('iframe') as HTMLIFrameElement;
+    sidebarIFrameElement = document.createElement('iframe') as HTMLIFrameElement;
     sidebarContainer.appendChild(sidebarIFrameElement);
 
     const sidebarUrl = serverAddress + '/sidebar/v14/';
-    loadSidebarIntoIFrame({sidebarUrl}, sidebarIFrameElement, (error) => {
+    const loadSidebarProps: LoadSidebarProps = {sidebarUrl, useMessageAdapter};
+
+    loadSidebarIntoIFrame(loadSidebarProps, sidebarIFrameElement, (error) => {
       if (error) {
-        setErrorMessage("Can't load the provided URL.");
+        onSidebarLoadError();
         return;
       }
 
-      hide(form);
-      show(sidebarContainer);
-
       localStorage.setItem(SERVER_ADDRESS_KEY, serverAddress);
+      showSidebarIFrame();
+
+      if (useMessageAdapter) {
+        return;
+      }
+
       waitForAcrolinxPlugin(acrolinxPlugin => {
         const contentWindowAny = sidebarIFrameElement.contentWindow as any;
         contentWindowAny.acrolinxPlugin = new ProxyAcrolinxPlugin({
@@ -79,13 +104,23 @@ function main() {
           sidebarWindow: sidebarIFrameElement.contentWindow,
           acrolinxPlugin,
           serverAddress,
-          onSignOut
+          showServerSelector
         });
       });
     });
+
   }
 
-  function onSignOut() {
+  function onSidebarLoadError() {
+    setErrorMessage("Can't load the provided URL.");
+  }
+
+  function showSidebarIFrame() {
+    hide(form);
+    show(sidebarContainer);
+  }
+
+  function showServerSelector() {
     sidebarContainer.innerHTML = '';
     hide(sidebarContainer);
     show(form);
@@ -96,8 +131,31 @@ function main() {
     errorMessageEl.style.display = 'block';
   }
 
+  function onMessageFromSidebar(messageEvent: MessageEvent) {
+    if (messageEvent.source !== sidebarIFrameElement.contentWindow) {
+      return;
+    }
+    
+    const windowAny = window as any;
+    const {command, args} = messageEvent.data;
+    console.log('onMessageFromSidebar', messageEvent, command, args);
+    switch (command) {
+      case 'requestInit':
+        waitForAcrolinxPlugin(acrolinxPlugin => {
+          const sidebar = new ProxyAcrolinxSidebar(createSidebarMessageProxy(sidebarIFrameElement.contentWindow), serverAddress);
+          windowAny.acrolinxSidebar = sidebar;
+          acrolinxPlugin.requestInit();
+        });
+        break;
+      case 'showServerSelector':
+        showServerSelector();
+        break;
+      default:
+        const acrolinxPluginAny = windowAny.acrolinxPlugin;
+        acrolinxPluginAny[command].apply(acrolinxPluginAny, args);
+    }
+  }
 }
-
 
 main();
 
