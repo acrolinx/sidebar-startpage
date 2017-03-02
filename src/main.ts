@@ -14,7 +14,7 @@ const TEMPLATE = `
     <div class="loginHeader"></div>
     <div class="formContent">
       <h1>Server Address</h1>
-      <input type="text" id="serverAddress" placeholder="Acrolinx Server Address">
+      <input type="text" id="serverAddress" placeholder="Acrolinx Server Address" autofocus>
       <div class="buttonGroup">
         <input type="submit" class="submitButton" value="CONNECT">
       </div>
@@ -143,6 +143,7 @@ function main() {
     sidebarContainer.innerHTML = '';
     hide(sidebarContainer);
     show(form);
+    serverAddressField.focus();
   }
 
   function showErrorMessage(message: string) {
