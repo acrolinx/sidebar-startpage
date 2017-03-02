@@ -26,7 +26,7 @@ const TEMPLATE = `
 `;
 
 
-const NEEDS_MESSAGE_ADAPTER = ['chrome-extension://', 'moz-extension://', 'resource://'];
+const NEEDS_MESSAGE_ADAPTER = ['chrome-extension://', 'moz-extension://', 'resource://', 'ms-browser-extension://', 'safari-extension://'];
 
 function isMessageAdapterNeeded() {
   return FORCE_MESSAGE_ADAPTER || NEEDS_MESSAGE_ADAPTER.some(prefix => window.location.href.indexOf(prefix) === 0);
@@ -48,7 +48,7 @@ function main() {
 
   const serverAddressField = $('#serverAddress')! as HTMLInputElement;
   const oldServerAddress = localStorage.getItem(SERVER_ADDRESS_KEY);
-  let serverAddress: string ;
+  let serverAddress: string;
   if (oldServerAddress) {
     serverAddressField.value = oldServerAddress;
     serverAddress = oldServerAddress;
@@ -143,7 +143,7 @@ function main() {
     if (messageEvent.source !== sidebarIFrameElement.contentWindow) {
       return;
     }
-    
+
     const {command, args} = messageEvent.data;
     console.log('onMessageFromSidebar', messageEvent, command, args);
     switch (command) {
