@@ -131,7 +131,7 @@ function main() {
   }
 
   function onSidebarLoadError() {
-    showErrorMessage("Can't load the provided URL.");
+    showErrorMessage("We couldn't establish a connection to your server. \n\nEither your server isn't set up to accept secure connections or it's not running at all.\n\nIf you're using Acrolinx in a web application, your server might not be set up for cross-origin resource sharing (CORS). \n\nIf you're sure you entered the correct address, ask your server administrator to check your server availability.");
   }
 
   function showSidebarIFrame() {
