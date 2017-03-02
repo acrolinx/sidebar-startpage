@@ -1,4 +1,4 @@
-import {$, show, hide} from "./utils";
+import {$, show, hide, startsWith, startsWithAnyOf, sanitizeServerAddress, validateServerAddress} from "./utils";
 import {loadSidebarIntoIFrame, LoadSidebarProps} from "./acrolinx-sidebar-integration/utils/sidebar-loader";
 import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from "./proxy-acrolinx-plugin";
 import {FORCE_MESSAGE_ADAPTER} from "./constants";
@@ -26,10 +26,13 @@ const TEMPLATE = `
 `;
 
 
-const NEEDS_MESSAGE_ADAPTER = ['chrome-extension://', 'moz-extension://', 'resource://', 'ms-browser-extension://', 'safari-extension://'];
+const EXTENSION_URL_PREFIXES = ['chrome-extension://', 'moz-extension://', 'resource://', 'ms-browser-extension://', 'safari-extension://'];
+const NEEDS_MESSAGE_ADAPTER = EXTENSION_URL_PREFIXES;
+const URL_PREFIXES_REQUIRING_HTTPS = [...EXTENSION_URL_PREFIXES, 'https://'];
+
 
 function isMessageAdapterNeeded() {
-  return FORCE_MESSAGE_ADAPTER || NEEDS_MESSAGE_ADAPTER.some(prefix => window.location.href.indexOf(prefix) === 0);
+  return FORCE_MESSAGE_ADAPTER || startsWithAnyOf(window.location.href, NEEDS_MESSAGE_ADAPTER);
 }
 
 function main() {
@@ -70,7 +73,20 @@ function main() {
   function onSubmit(event: Event) {
     event.preventDefault();
 
-    serverAddress = serverAddressField.value;
+    let newServerAddress = serverAddressField.value.trim();
+
+    if (startsWith(newServerAddress, 'http:') && isHttpsRequired()) {
+      showErrorMessage("The server isn't secure. You must connect to a secure server. A secure server address starts with \"https\" .");
+      return;
+    }
+    newServerAddress = sanitizeServerAddress(newServerAddress, window.location.protocol);
+    if (!validateServerAddress(newServerAddress)) {
+      showErrorMessage( "This doesn't look like a URL. Check the address for any mistakes and try again.");
+      return;
+    }
+
+    serverAddress = newServerAddress;
+
     console.log(serverAddress);
 
     tryToLoadSidebar(serverAddress);
@@ -115,7 +131,7 @@ function main() {
   }
 
   function onSidebarLoadError() {
-    setErrorMessage("Can't load the provided URL.");
+    showErrorMessage("Can't load the provided URL.");
   }
 
   function showSidebarIFrame() {
@@ -129,7 +145,7 @@ function main() {
     show(form);
   }
 
-  function setErrorMessage(message: string) {
+  function showErrorMessage(message: string) {
     errorMessageEl.textContent = message;
     show(errorMessageEl);
   }
@@ -162,6 +178,10 @@ function main() {
         acrolinxPluginAny[command].apply(acrolinxPluginAny, args);
     }
   }
+}
+
+function isHttpsRequired(windowUrl = window.location.href) {
+  return startsWithAnyOf(windowUrl, URL_PREFIXES_REQUIRING_HTTPS);
 }
 
 main();
