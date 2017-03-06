@@ -58,7 +58,11 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
   }
 
   openWindow(opts: OpenWindowParameters) {
-    this.props.acrolinxPlugin.openWindow(opts);
+    if (this.props.acrolinxPlugin.openWindow) {
+      this.props.acrolinxPlugin.openWindow(opts);
+    } else {
+      window.open(opts.url);
+    }
   }
 
   showServerSelector() {
