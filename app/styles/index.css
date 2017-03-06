@@ -35,9 +35,12 @@ html, body, #app {
   height: 100%;
   overflow: hidden;
   font-size: 13px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', 'Arial', sans-serif;
 }
 
+html #app input {
+  font-family: 'Roboto', 'Arial', sans-serif;
+}
 
 
 h1 {
