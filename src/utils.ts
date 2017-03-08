@@ -1,4 +1,5 @@
 
+import {InitParameters} from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 export type ErrorFirstCallback<T> = (error?: Error | null, result?: T) => void;
 
 export function $(selector: string): HTMLElement | undefined {
@@ -92,6 +93,13 @@ export function getDefaultServerAddress() {
   } else {
     return '';
   }
+}
+
+export function initialServerAddress(initParameters: InitParameters, storedValue: string | null, defaultServerAddress: string): string {
+  if (initParameters.showServerSelector && !initParameters.enableSingleSignOn && storedValue) {
+    return storedValue;
+  }
+  return initParameters.serverAddress || (initParameters.showServerSelector ? '' : defaultServerAddress);
 }
 
 export function isValidServerProtocol(protocol: string) {

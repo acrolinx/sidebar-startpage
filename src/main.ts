@@ -1,4 +1,7 @@
-import {$, show, hide, startsWith, startsWithAnyOf, sanitizeServerAddress, validateServerAddress} from "./utils";
+import {
+  $, show, hide, startsWith, startsWithAnyOf, sanitizeServerAddress, validateServerAddress,
+  getDefaultServerAddress
+} from "./utils";
 import {loadSidebarIntoIFrame, LoadSidebarProps} from "./acrolinx-sidebar-integration/utils/sidebar-loader";
 import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from "./proxy-acrolinx-plugin";
 import {FORCE_MESSAGE_ADAPTER} from "./constants";
@@ -161,14 +164,26 @@ function main() {
     errorMessageEl.textContent = '';
   }
 
+
   function onInitFromPlugin(initParameters: InitParameters) {
     initParametersFromPlugin = initParameters;
-    if (oldServerAddress) {
-      tryToLoadSidebar(oldServerAddress);
+    if (initParameters.showServerSelector) {
+      if (oldServerAddress) {
+        tryToLoadSidebar(oldServerAddress);
+      } else  {
+        if (initParameters.serverAddress) {
+          serverAddressField.value = initParameters.serverAddress;
+        }
+        show(form);
+      }
     } else {
-      show(form);
+      console.log('Load directly!');
+      serverAddress = initParameters.serverAddress || getDefaultServerAddress();
+      tryToLoadSidebar(serverAddress);
     }
+
   }
+
 
   function onMessageFromSidebar(messageEvent: MessageEvent) {
     if (messageEvent.source !== sidebarIFrameElement.contentWindow) {
@@ -206,7 +221,7 @@ function hackInitParameters(initParameters: InitParameters, serverAddress: strin
     ...initParameters,
     serverAddress: serverAddress,
     showServerSelector: false,
-    supported: {...initParameters.supported, showServerSelector: true}
+    supported: {...initParameters.supported, showServerSelector: initParameters.showServerSelector}
   };
 }
 
