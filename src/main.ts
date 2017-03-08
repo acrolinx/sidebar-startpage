@@ -4,6 +4,7 @@ import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from "./proxy-acrolinx-plugi
 import {FORCE_MESSAGE_ADAPTER} from "./constants";
 import {createSidebarMessageProxy} from "./acrolinx-sidebar-integration/message-adapter/message-adapter";
 import {ProxyAcrolinxSidebar} from "./proxy-acrolinx-sidebar";
+import {InitParameters, AcrolinxPlugin} from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 
@@ -37,6 +38,11 @@ function isMessageAdapterNeeded() {
 
 function main() {
   const windowAny = window as any;
+  const sidebarProxy = new ProxyAcrolinxSidebar(onInitFromPlugin);
+  let acrolinxPlugin: AcrolinxPlugin;
+  let initParametersFromPlugin: InitParameters;
+  windowAny.acrolinxSidebar = sidebarProxy;
+
   const useMessageAdapter = isMessageAdapterNeeded();
   const appElement = $('#app')!;
   appElement.innerHTML = TEMPLATE;
@@ -58,17 +64,16 @@ function main() {
   }
   serverAddressField.focus();
 
-  if (useMessageAdapter) {
-    console.log('useMessageAdapter');
-    addEventListener('message', onMessageFromSidebar, false);
-    windowAny.acrolinxSidebar = {}; // Just to prevent error message in current browser extensions.
-  }
+  waitForAcrolinxPlugin(acrolinxPluginArg => {
+    acrolinxPlugin = acrolinxPluginArg;
+    acrolinxPlugin.requestInit();
 
-  if (oldServerAddress) {
-    tryToLoadSidebar(oldServerAddress);
-  } else {
-    show(form);
-  }
+    if (useMessageAdapter) {
+      console.log('useMessageAdapter');
+      addEventListener('message', onMessageFromSidebar, false);
+    }
+  });
+
 
   function onSubmit(event: Event) {
     event.preventDefault();
@@ -81,7 +86,7 @@ function main() {
     }
     newServerAddress = sanitizeServerAddress(newServerAddress, window.location.protocol);
     if (!validateServerAddress(newServerAddress)) {
-      showErrorMessage( "This doesn't look like a URL. Check the address for any mistakes and try again.");
+      showErrorMessage("This doesn't look like a URL. Check the address for any mistakes and try again.");
       return;
     }
 
@@ -116,15 +121,15 @@ function main() {
         return;
       }
 
-      waitForAcrolinxPlugin(acrolinxPlugin => {
-        const contentWindowAny = sidebarIFrameElement.contentWindow as any;
-        contentWindowAny.acrolinxPlugin = new ProxyAcrolinxPlugin({
-          window,
-          sidebarWindow: sidebarIFrameElement.contentWindow,
-          acrolinxPlugin,
-          serverAddress,
-          showServerSelector
-        });
+      const contentWindowAny = sidebarIFrameElement.contentWindow as any;
+      contentWindowAny.acrolinxPlugin = new ProxyAcrolinxPlugin({
+        requestInitListener: () => {
+          sidebarProxy.acrolinxSidebar = contentWindowAny.acrolinxSidebar;
+          onRequestInit();
+        },
+        acrolinxPlugin,
+        serverAddress,
+        showServerSelector
       });
     });
 
@@ -156,6 +161,15 @@ function main() {
     errorMessageEl.textContent = '';
   }
 
+  function onInitFromPlugin(initParameters: InitParameters) {
+    initParametersFromPlugin = initParameters;
+    if (oldServerAddress) {
+      tryToLoadSidebar(oldServerAddress);
+    } else {
+      show(form);
+    }
+  }
+
   function onMessageFromSidebar(messageEvent: MessageEvent) {
     if (messageEvent.source !== sidebarIFrameElement.contentWindow) {
       return;
@@ -165,11 +179,8 @@ function main() {
     console.log('onMessageFromSidebar', messageEvent, command, args);
     switch (command) {
       case 'requestInit':
-        waitForAcrolinxPlugin(acrolinxPlugin => {
-          const sidebar = new ProxyAcrolinxSidebar(createSidebarMessageProxy(sidebarIFrameElement.contentWindow), serverAddress);
-          windowAny.acrolinxSidebar = sidebar;
-          acrolinxPlugin.requestInit();
-        });
+        sidebarProxy.acrolinxSidebar = createSidebarMessageProxy(sidebarIFrameElement.contentWindow);
+        onRequestInit();
         break;
       case 'showServerSelector':
         showServerSelector();
@@ -179,10 +190,24 @@ function main() {
         acrolinxPluginAny[command].apply(acrolinxPluginAny, args);
     }
   }
+
+  function onRequestInit() {
+    sidebarProxy.acrolinxSidebar.init(hackInitParameters(initParametersFromPlugin, serverAddress));
+  }
+
 }
 
 function isHttpsRequired(windowUrl = window.location.href) {
   return startsWithAnyOf(windowUrl, URL_PREFIXES_REQUIRING_HTTPS);
+}
+
+function hackInitParameters(initParameters: InitParameters, serverAddress: string): InitParameters {
+  return {
+    ...initParameters,
+    serverAddress: serverAddress,
+    showServerSelector: false,
+    supported: {...initParameters.supported, showServerSelector: true}
+  };
 }
 
 main();

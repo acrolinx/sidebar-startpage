@@ -5,28 +5,24 @@ import {
   CheckResult,
   MatchWithReplacement,
   DownloadInfo,
-  OpenWindowParameters
+  OpenWindowParameters,
 } from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
-import {ProxyAcrolinxSidebar} from "./proxy-acrolinx-sidebar";
 
 
 export interface ProxyAcrolinxPluginProps {
-  window: Window;
-  sidebarWindow: Window;
+  requestInitListener: () => void;
   acrolinxPlugin: AcrolinxPlugin;
   serverAddress: string;
   showServerSelector: Function;
 }
 
 export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
+
   constructor(private props: ProxyAcrolinxPluginProps) {
   }
 
   requestInit() {
-    const windowAny = this.props.window as any;
-    const sidebarWindowAny = this.props.sidebarWindow as any;
-    windowAny.acrolinxSidebar = new ProxyAcrolinxSidebar(sidebarWindowAny.acrolinxSidebar, this.props.serverAddress);
-    this.props.acrolinxPlugin.requestInit();
+    this.props.requestInitListener();
   }
 
   onInitFinished(initFinishedResult: InitResult) {

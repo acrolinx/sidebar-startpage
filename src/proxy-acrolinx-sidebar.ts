@@ -1,20 +1,51 @@
-
 import {
-  AcrolinxSidebar, InitParameters,
-  SidebarConfiguration, CheckOptions, Check, InvalidDocumentPart, CheckedDocumentRange
+  AcrolinxSidebar,
+  InitParameters,
+  SidebarConfiguration,
+  CheckOptions,
+  Check,
+  InvalidDocumentPart,
+  CheckedDocumentRange
 } from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 
 
 export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
-  constructor(private acrolinxSidebar: AcrolinxSidebar, private serverAddress: string) {
+  private _acrolinxSidebar: AcrolinxSidebar;
+  private _serverAddress: string;
+  private configureQueue: SidebarConfiguration[] = [];
+
+  constructor(private initListener: (initParameters: InitParameters) => void) {
+  }
+
+  get serverAddress(): string {
+    return this._serverAddress;
+  }
+
+  set serverAddress(value: string) {
+    this._serverAddress = value;
+  }
+
+  get acrolinxSidebar(): AcrolinxSidebar {
+    return this._acrolinxSidebar;
+  }
+
+  set acrolinxSidebar(sidebar: AcrolinxSidebar) {
+    this._acrolinxSidebar = sidebar;
+    while (this.configureQueue.length > 0) {
+      this._acrolinxSidebar.configure(this.configureQueue.splice(0, 1)[0]);
+    }
   }
 
   init(initParameters: InitParameters): void {
-    this.acrolinxSidebar.init(hackInitParameters(initParameters, this.serverAddress));
+    this.initListener(initParameters);
   }
 
-  configure(initParameters: SidebarConfiguration): void {
-    this.acrolinxSidebar.configure(initParameters);
+  configure(sidebarConfiguration: SidebarConfiguration): void {
+    if (this.acrolinxSidebar) {
+      this.acrolinxSidebar.configure(sidebarConfiguration);
+    } else {
+      this.configureQueue.push(sidebarConfiguration);
+    }
   }
 
   checkGlobal(documentContent: string, options: CheckOptions): Check {
@@ -32,13 +63,4 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
   onVisibleRangesChanged(checkedDocumentRanges: CheckedDocumentRange[]) {
     return this.acrolinxSidebar.onVisibleRangesChanged(checkedDocumentRanges);
   }
-}
-
-
-export function hackInitParameters(initParameters: InitParameters, serverAddress: string) :InitParameters {
-  return {...initParameters,
-    serverAddress: serverAddress,
-    showServerSelector: false,
-    supported: {...initParameters.supported, showServerSelector: true}
-  };
 }
