@@ -32,7 +32,5 @@
     "typescript": "^2.2.1",
     "watchify": "^3.9.0"
   },
-  "dependencies": {
-    "tslib": "^1.6.0"
-  }
+  "dependencies": {}
 }
