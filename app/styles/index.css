@@ -119,6 +119,7 @@ h1 {
 }
 
 #errorMessage {
+  margin: 0 15px 15px;
   background-color: #f0556a;
   color: #fff;
   border-radius: 4px;

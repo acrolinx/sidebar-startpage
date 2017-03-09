@@ -1,5 +1,11 @@
 import {
-  $, show, hide, startsWith, startsWithAnyOf, sanitizeServerAddress, validateServerAddress,
+  $,
+  show,
+  hide,
+  startsWith,
+  startsWithAnyOf,
+  sanitizeServerAddress,
+  validateServerAddress,
   getDefaultServerAddress
 } from "./utils";
 import {loadSidebarIntoIFrame, LoadSidebarProps} from "./acrolinx-sidebar-integration/utils/sidebar-loader";
@@ -22,9 +28,10 @@ const TEMPLATE = `
       <div class="buttonGroup">
         <input type="submit" class="submitButton" value="CONNECT">
       </div>
-      <div id="errorMessage" style="display: none"></div>
     </div>
   </form>
+  
+  <div id="errorMessage" style="display: none"></div>
   
   <div id="sidebarContainer"></div>
 `;
@@ -140,6 +147,9 @@ function main() {
 
   function onSidebarLoadError() {
     showErrorMessage("We couldn't establish a connection to your server. \n\nEither your server isn't set up to accept secure connections or it's not running at all.\n\nIf you're using Acrolinx in a web application, your server might not be set up for cross-origin resource sharing (CORS). \n\nIf you're sure you entered the correct address, ask your server administrator to check your server availability.");
+    if (initParametersFromPlugin.showServerSelector) {
+      showServerSelector();
+    }
   }
 
   function showSidebarIFrame() {
@@ -170,7 +180,7 @@ function main() {
     if (initParameters.showServerSelector) {
       if (oldServerAddress) {
         tryToLoadSidebar(oldServerAddress);
-      } else  {
+      } else {
         if (initParameters.serverAddress) {
           serverAddressField.value = initParameters.serverAddress;
         }
