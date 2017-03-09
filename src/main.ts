@@ -124,7 +124,9 @@ function main() {
       }
 
       removeErrorMessage();
-      localStorage.setItem(SERVER_ADDRESS_KEY, serverAddress);
+      if (initParametersFromPlugin.showServerSelector) {
+        localStorage.setItem(SERVER_ADDRESS_KEY, serverAddress);
+      }
       showSidebarIFrame();
 
       if (useMessageAdapter) {
