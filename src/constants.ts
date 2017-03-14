@@ -1,4 +1,4 @@
-export const FALLBACK_SIDEBAR_URL = 'https://s3-eu-west-1.amazonaws.com/acrolinx-sidebar-classic/v14.3/dev/';
+export const FALLBACK_SIDEBAR_URL = 'https://s3-eu-west-1.amazonaws.com/acrolinx-sidebar-classic/v14.3/prod/';
 
 /**
  * Just for Development.

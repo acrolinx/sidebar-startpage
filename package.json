@@ -1,10 +1,11 @@
 {
   "name": "acrolinx-server-selector",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A Container Component for Acrolinx Integrations that loads the Acrolinx sidebar",
   "scripts": {
     "bower": "bower install",
     "deploy": "aws s3 cp tmp/dist s3://acrolinx-sidebar-classic/v14/dev --recursive --acl public-read",
+    "deployProd": "aws s3 cp tmp/dist s3://acrolinx-sidebar-classic/v14/prod --recursive --acl public-read",
     "install": "mkdir app/scripts",
     "test": "mocha tmp/compiled/test/**/*.js",
     "clean": "rm -rf tmp; rm -rf app/scripts",
