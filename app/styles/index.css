@@ -2,7 +2,7 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 300;
-  src: local('Roboto Light'), local('Roboto-Light'), url('https://s3-eu-west-1.amazonaws.com/acrolinx-sidebar-classic/v14.3/prod/fonts/Roboto-Thin.ttf') format('truetype');
+  src: local('Roboto Light'), local('Roboto-Light'), url('https://sidebar-classic.acrolinx-cloud.com/v14.3/prod/fonts/Roboto-Thin.ttf') format('truetype');
 }
 
 
@@ -10,21 +10,21 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  src: local('Roboto Regular'), local('Roboto-Regular'), url('https://s3-eu-west-1.amazonaws.com/acrolinx-sidebar-classic/v14.3/prod/fonts/Roboto-Medium.ttf') format('truetype');
+  src: local('Roboto Regular'), local('Roboto-Regular'), url('https://sidebar-classic.acrolinx-cloud.com/v14.3/prod/fonts/Roboto-Medium.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 700;
-  src: local('Roboto Bold'), local('Roboto-Bold'), url('https://s3-eu-west-1.amazonaws.com/acrolinx-sidebar-classic/v14.3/prod/fonts/Roboto-Bold.ttf') format('truetype');
+  src: local('Roboto Bold'), local('Roboto-Bold'), url('https://sidebar-classic.acrolinx-cloud.com/v14.3/prod/fonts/Roboto-Bold.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Roboto';
   font-style: italic;
   font-weight: 400;
-  src: local('Roboto Italic'), local('Roboto-Italic'), url('https://s3-eu-west-1.amazonaws.com/acrolinx-sidebar-classic/v14.3/prod/fonts/Roboto-Italic.ttf') format('truetype');
+  src: local('Roboto Italic'), local('Roboto-Italic'), url('https://sidebar-classic.acrolinx-cloud.com/v14.3/prod/fonts/Roboto-Italic.ttf') format('truetype');
 }
 
 
@@ -52,7 +52,7 @@ h1 {
 }
 
 .loginHeader {
-  background: url(https://s3-eu-west-1.amazonaws.com/acrolinx-sidebar-classic/v14.3/prod/images/d1d25dc8.logoClaim213px20px.png) no-repeat;
+  background: url(https://sidebar-classic.acrolinx-cloud.com/v14.3/prod/images/d1d25dc8.logoClaim213px20px.png) no-repeat;
   background-position-x: 15px;
   background-position-y: center;
   border-bottom: 1px solid #dadada;
