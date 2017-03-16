@@ -237,5 +237,6 @@ function hackInitParameters(initParameters: InitParameters, serverAddress: strin
   };
 }
 
-main();
+
+setTimeout(main, 500);
 
