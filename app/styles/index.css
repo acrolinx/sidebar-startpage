@@ -57,6 +57,7 @@ h1 {
   background-position-y: center;
   border-bottom: 1px solid #dadada;
   height: 55px;
+  cursor: pointer;
 }
 
 #serverAddress {

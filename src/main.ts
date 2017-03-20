@@ -21,7 +21,7 @@ const TEMPLATE = `
   
   <form id="serverSelectorForm" style="display: none">
       
-    <div class="loginHeader"></div>
+    <div class="loginHeader" title="www.acrolinx.com"></div>
     <div class="formContent">
       <h1>Server Address</h1>
       <input type="text" id="serverAddress" placeholder="Acrolinx Server Address" autofocus>
@@ -60,6 +60,9 @@ function main() {
   const sidebarContainer = $('#sidebarContainer')!;
   const errorMessageEl = $('#errorMessage')!;
 
+  const loginHeaderEl = $('.loginHeader')!;
+  loginHeaderEl.addEventListener('click', onClickHeaderEl)
+
   const form = $('#serverSelectorForm')!;
   form.addEventListener('submit', onSubmit);
 
@@ -84,6 +87,10 @@ function main() {
     }
   });
 
+  function onClickHeaderEl(event: Event) {
+    event.preventDefault();
+    acrolinxPlugin.openWindow({url: 'https://www.acrolinx.com/'});
+  }
 
   function onSubmit(event: Event) {
     event.preventDefault();
