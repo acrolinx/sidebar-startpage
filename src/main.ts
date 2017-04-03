@@ -14,6 +14,7 @@ import {FORCE_MESSAGE_ADAPTER} from "./constants";
 import {createSidebarMessageProxy} from "./acrolinx-sidebar-integration/message-adapter/message-adapter";
 import {ProxyAcrolinxSidebar} from "./proxy-acrolinx-sidebar";
 import {InitParameters, AcrolinxPlugin} from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
+import {isCorsWithCredentialsNeeded} from "./acrolinx-sidebar-integration/utils/utils";
 
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 
@@ -240,6 +241,7 @@ function hackInitParameters(initParameters: InitParameters, serverAddress: strin
     ...initParameters,
     serverAddress: serverAddress,
     showServerSelector: false,
+    corsWithCredentials: initParameters.corsWithCredentials || isCorsWithCredentialsNeeded(serverAddress),
     supported: {...initParameters.supported, showServerSelector: initParameters.showServerSelector}
   };
 }

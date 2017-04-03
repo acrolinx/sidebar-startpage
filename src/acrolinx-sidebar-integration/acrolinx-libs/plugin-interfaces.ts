@@ -112,6 +112,9 @@ export interface InitParameters extends SidebarConfiguration {
    */
   enforceHTTPS?: boolean;
 
+  corsWithCredentials?: boolean;
+
+
   /**
    * Extraordinary capabilities of the plugin.
    */
