@@ -30,6 +30,7 @@
     "browser-sync": "^2.18.8",
     "browserify": "^14.1.0",
     "chai": "^3.5.0",
+    "cookie": "^0.3.1",
     "hashcat": "^0.3.1",
     "inliner": "1.10.2",
     "mocha": "^3.2.0",
