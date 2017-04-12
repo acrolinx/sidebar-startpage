@@ -3,6 +3,7 @@
 node_modules
 tmp
 app/scripts
+app/version.properties
 
 # bower components and cache
 bower_components

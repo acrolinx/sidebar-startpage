@@ -1,19 +1,23 @@
 import {
   $,
-  show,
+  getDefaultServerAddress,
   hide,
+  sanitizeServerAddress,
+  show,
   startsWith,
   startsWithAnyOf,
-  sanitizeServerAddress,
-  validateServerAddress,
-  getDefaultServerAddress
+  validateServerAddress
 } from "./utils";
 import {loadSidebarIntoIFrame, LoadSidebarProps} from "./acrolinx-sidebar-integration/utils/sidebar-loader";
 import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from "./proxy-acrolinx-plugin";
-import {FORCE_MESSAGE_ADAPTER} from "./constants";
+import {FORCE_MESSAGE_ADAPTER, SERVER_SELECTOR_VERSION} from "./constants";
 import {createSidebarMessageProxy} from "./acrolinx-sidebar-integration/message-adapter/message-adapter";
 import {ProxyAcrolinxSidebar} from "./proxy-acrolinx-sidebar";
-import {InitParameters, AcrolinxPlugin} from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
+import {
+  AcrolinxPlugin,
+  InitParameters,
+  SoftwareComponentCategory
+} from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 import {isCorsWithCredentialsNeeded} from "./acrolinx-sidebar-integration/utils/utils";
 
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
@@ -48,6 +52,8 @@ function isMessageAdapterNeeded() {
 }
 
 function main() {
+  console.log('Loading acrolinx server selector ' + SERVER_SELECTOR_VERSION);
+
   const windowAny = window as any;
   const sidebarProxy = new ProxyAcrolinxSidebar(onInitFromPlugin);
   let acrolinxPlugin: AcrolinxPlugin;
@@ -242,7 +248,13 @@ function hackInitParameters(initParameters: InitParameters, serverAddress: strin
     serverAddress: serverAddress,
     showServerSelector: false,
     corsWithCredentials: initParameters.corsWithCredentials || isCorsWithCredentialsNeeded(serverAddress),
-    supported: {...initParameters.supported, showServerSelector: initParameters.showServerSelector}
+    supported: {...initParameters.supported, showServerSelector: initParameters.showServerSelector},
+    clientComponents: (initParameters.clientComponents || []).concat({
+      id: 'com.acrolinx.serverselector',
+      name: 'Server Selector',
+      version: SERVER_SELECTOR_VERSION,
+      category: SoftwareComponentCategory.DETAIL
+    })
   };
 }
 
