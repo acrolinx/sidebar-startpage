@@ -6,7 +6,7 @@
     "bower": "bower install",
     "deploy": "aws s3 cp tmp/dist s3://acrolinx-sidebar-classic/v14/dev --recursive --acl public-read",
     "deployProd": "aws s3 cp tmp/dist s3://acrolinx-sidebar-classic/v14/prod --recursive --acl public-read",
-    "install": "mkdir app/scripts",
+    "install": "mkdir -p app/scripts",
     "test": "mocha tmp/compiled/test/**/*.js",
     "clean": "rm -rf tmp; rm -rf app/scripts",
     "tsc": "tsc",
@@ -37,7 +37,7 @@
     "inliner": "1.10.2",
     "mocha": "^3.2.0",
     "tslint": "^4.4.2",
-    "typescript": "^2.2.1",
+    "typescript": "2.2.2",
     "watchify": "^3.9.0"
   },
   "dependencies": {}

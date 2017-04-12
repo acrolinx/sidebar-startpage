@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import {assert} from "chai";
 import {getSidebarVersion} from "../../src/acrolinx-sidebar-integration/utils/sidebar-loader";
 
 describe('sidebar-loader', () => {
@@ -14,7 +14,7 @@ describe('sidebar-loader', () => {
     });
 
     it('returns version if there is a sidebar', () => {
-      assert.deepEqual(getSidebarVersion('<html><meta name="sidebar-version" content="14.2.2"></html> '), [14,2,2]);
+      assert.deepEqual(getSidebarVersion('<html><meta name="sidebar-version" content="14.2.2"></html> '), [14, 2, 2] as [number, number, number]);
     });
 
   })
