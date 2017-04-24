@@ -21,7 +21,8 @@ h1 {
 }
 
 .loginHeader {
-  background: url(https://sidebar-classic.acrolinx-cloud.com/v14.3/prod/images/d1d25dc8.logoClaim213px20px.png) no-repeat;
+  background: url(../images/acrolinx-claim.svg) no-repeat;
+  background-size: 213px;
   background-position-x: 15px;
   background-position-y: center;
   border-bottom: 1px solid #dadada;
