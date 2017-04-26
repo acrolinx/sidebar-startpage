@@ -73,7 +73,7 @@ function main() {
   const form = $('#serverSelectorForm')!;
   form.addEventListener('submit', onSubmit);
 
-  let sidebarIFrameElement: HTMLIFrameElement;
+  let sidebarIFrameElement: HTMLIFrameElement | undefined;
 
   const serverAddressField = $('#serverAddress')! as HTMLInputElement;
   const oldServerAddress = localStorage.getItem(SERVER_ADDRESS_KEY);
@@ -147,7 +147,7 @@ function main() {
         return;
       }
 
-      const contentWindowAny = sidebarIFrameElement.contentWindow as any;
+      const contentWindowAny = sidebarIFrameElement!.contentWindow as any;
       contentWindowAny.acrolinxPlugin = new ProxyAcrolinxPlugin({
         requestInitListener: () => {
           sidebarProxy.acrolinxSidebar = contentWindowAny.acrolinxSidebar;
@@ -212,7 +212,7 @@ function main() {
 
 
   function onMessageFromSidebar(messageEvent: MessageEvent) {
-    if (messageEvent.source !== sidebarIFrameElement.contentWindow) {
+    if (!sidebarIFrameElement || messageEvent.source !== sidebarIFrameElement.contentWindow) {
       return;
     }
 
