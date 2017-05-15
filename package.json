@@ -18,7 +18,8 @@
     "tslintFix": "tslint --fix src/**/*",
     "buildDist": "rm -rf tmp/dist && npm run tslint && tsc && npm run injectVersion && npm run browserify && mkdir -p tmp && cp -r app tmp/dist && hashcat tmp/dist/index.html && npm run buildInlined && npm run fakeSidebarDist",
     "buildInlined": "rm -rf tmp/dist-inlined && cp -r app tmp/dist-inlined && hashcat tmp/dist-inlined/index-inlined.html && npm run inline && npm run packInlined",
-    "inline": "cd tmp/dist-inlined && cat index-inlined.html |inliner >../dist-inlined.html",
+    "inline": "npm run inlineSvg && cd tmp/dist-inlined && cat index-inlined.html |inliner >../dist-inlined.html",
+    "inlineSvg": "node ./tools/inline-svg.js",
     "packInlined": "node ./tools/pack-inlined.js >tmp/acrolinx-server-selector-inlined.js",
     "injectVersion": "node ./tools/inject-version.js",
     "fakeSidebarDist": "npm run bower && cat bower_components/jquery/dist/jquery.min.js bower_components/lodash/dist/lodash.min.js > tmp/dist/scripts/libs.js && cp tmp/dist/scripts/main.js tmp/dist/scripts/sidebar.js"
