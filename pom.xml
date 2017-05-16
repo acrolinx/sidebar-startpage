@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.acrolinx.sidebar</groupId>
+  <artifactId>acrolinx-server-selector</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+
+  <name>Acrolinx Server Selector</name>
+
+  <organization>
+      <name>Acrolinx GmbH</name>
+      <url>https://www.acrolinx.com/</url>
+  </organization>
+
+  <licenses>
+      <license>
+          <name>Acrolinx Software License Agreement</name>
+      </license>
+  </licenses>
+
+  <developers>
+      <developer>
+          <name>Acrolinx GmbH</name>
+          <organization>Acrolinx GmbH</organization>
+      </developer>
+  </developers>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.6</version>
+        <executions>
+          <execution>
+            <id>package-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>artifactory.xml</descriptor>
+              </descriptors>
+              <appendAssemblyId>false</appendAssemblyId>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <distributionManagement>
+    <repository>
+      <id>dune</id>
+      <url>http://artifactory.dune.acrolinx.local/artifactory/libs-release-local</url>
+    </repository>
+    <snapshotRepository>
+      <id>dune-snapshots</id>
+      <url>http://artifactory.dune.acrolinx.local/artifactory/libs-snapshot-local</url>
+    </snapshotRepository>
+  </distributionManagement>
+</project>
