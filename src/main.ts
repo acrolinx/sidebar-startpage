@@ -31,7 +31,14 @@ const TEMPLATE = `
       <h1>Server Address</h1>
       <input type="text" id="serverAddress" placeholder="Acrolinx Server Address" autofocus>
       <div class="buttonGroup">
-        <input type="submit" class="submitButton" value="CONNECT">
+        <button type="submit" class="submitButton" value="CONNECT">CONNECT</button>
+      </div>
+      <div class="logFileContent" style="di splay: none">
+        <h1>Log File</h1>
+        <p type="text" readonly style="word-break: break-all" id="logfileLocationValue"/>
+        <div class="buttonGroup">
+          <button class="submitButton" id="openLogFileButton">Open Logfile</button>
+        </div>
       </div>
     </div>
   </form>
@@ -73,6 +80,15 @@ function main() {
   const form = $('#serverSelectorForm')!;
   form.addEventListener('submit', onSubmit);
 
+  const openLogFileButton = $('#openLogFileButton')!;
+  openLogFileButton.addEventListener('click', openLogFile);
+
+  const logFileLocationValue = $('#logfileLocationValue')!;
+  logFileLocationValue.addEventListener('click', selectLogFileLocationValue)
+
+  const logFileElement = $('.logFileContent')!;
+
+
   let sidebarIFrameElement: HTMLIFrameElement | undefined;
 
   const serverAddressField = $('#serverAddress')! as HTMLInputElement;
@@ -93,6 +109,24 @@ function main() {
       addEventListener('message', onMessageFromSidebar, false);
     }
   });
+
+  function openLogFile(event: Event) {
+    event.preventDefault();
+    console.log("clicked openLogFile");
+    if (acrolinxPlugin.openLogFile) {
+      acrolinxPlugin.openLogFile();
+    }
+    else console.log("No log file defined!")
+  }
+
+  function selectLogFileLocationValue(event: Event){
+    event.preventDefault();
+    var selection = window.getSelection();
+    var range = document.createRange();
+    range.selectNodeContents(logFileLocationValue);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
 
   function onClickHeaderEl(event: Event) {
     event.preventDefault();
@@ -177,6 +211,9 @@ function main() {
     sidebarContainer.innerHTML = '';
     hide(sidebarContainer);
     show(form);
+    if (initParametersFromPlugin.logFileLocation) {
+      showLogfileOpenener(initParametersFromPlugin.logFileLocation);
+    }
     serverAddressField.focus();
   }
 
@@ -190,6 +227,11 @@ function main() {
     errorMessageEl.textContent = '';
   }
 
+  function showLogfileOpenener(logFileLocation: string) {
+    logFileLocationValue.innerText = logFileLocation;
+    show(logFileElement);
+  }
+
 
   function onInitFromPlugin(initParameters: InitParameters) {
     initParametersFromPlugin = initParameters;
@@ -201,6 +243,9 @@ function main() {
           serverAddressField.value = initParameters.serverAddress;
         }
         show(form);
+        if (initParametersFromPlugin.logFileLocation) {
+          showLogfileOpenener(initParametersFromPlugin.logFileLocation);
+        }
       }
     } else {
       console.log('Load directly!');

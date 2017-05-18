@@ -5,6 +5,11 @@ html, body, #app {
   overflow: hidden;
   font-size: 13px;
   font-family: 'Roboto', 'Arial', sans-serif;
+  box-sizing: border-box;
+}
+
+*, ::before, ::after {
+  box-sizing: inherit;
 }
 
 html #app input {
@@ -98,4 +103,8 @@ h1 {
   font-size: 13px;
   margin-top: 1em;
   font-weight: 400;
+}
+
+#logfileLocationValue{
+  width: 100%;
 }

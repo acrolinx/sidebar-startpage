@@ -114,6 +114,11 @@ export interface InitParameters extends SidebarConfiguration {
 
   corsWithCredentials?: boolean;
 
+  /**
+   * Path to log file for Acrolinx application.
+   */
+  logFileLocation?: string;
+
 
   /**
    * Extraordinary capabilities of the plugin.
@@ -529,6 +534,8 @@ export interface AcrolinxPlugin {
    * @param openWindowParameters
    */
   openWindow(openWindowParameters: OpenWindowParameters): void;
+
+  openLogFile?(): void;
 
   showServerSelector?(): void;
 }
