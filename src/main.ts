@@ -33,7 +33,7 @@ const TEMPLATE = `
       <div class="buttonGroup">
         <button type="submit" class="submitButton" value="CONNECT">CONNECT</button>
       </div>
-      <div class="logFileContent" style="di splay: none">
+      <div class="logFileContent" style="display: none">
         <h1>Log File</h1>
         <p type="text" readonly style="word-break: break-all" id="logfileLocationValue"/>
         <div class="buttonGroup">
