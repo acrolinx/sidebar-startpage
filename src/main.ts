@@ -25,6 +25,7 @@ const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 
 const ID_SERVER_ADDRESS_TITLE = 'serverAddressTitle';
 const ID_CONNECT_BUTTON = 'connectButton';
+const ID_LOG_FILE_TITLE = 'logFileTitle';
 
 
 const TEMPLATE = `
@@ -39,7 +40,7 @@ const TEMPLATE = `
         <button id="${ID_CONNECT_BUTTON}" type="submit" class="submitButton" value="CONNECT">CONNECT</button>
       </div>
       <div class="logFileContent" style="display: none">
-        <h1>Log File</h1>
+        <h1 id="${ID_LOG_FILE_TITLE}">Log File</h1>
         <p type="text" readonly style="word-break: break-all" id="logfileLocationValue"/>
         <div class="buttonGroup">
           <button class="submitButton" id="openLogFileButton">Open Logfile</button>
@@ -144,12 +145,12 @@ function main() {
     let newServerAddress = serverAddressField.value.trim();
 
     if (startsWith(newServerAddress, 'http:') && isHttpsRequired()) {
-      showErrorMessage("The server isn't secure. You must connect to a secure server. A secure server address starts with \"https\" .");
+      showErrorMessage(getTranslation().serverSelector.message.serverIsNotSecure);
       return;
     }
     newServerAddress = sanitizeServerAddress(newServerAddress, window.location.protocol);
     if (!validateServerAddress(newServerAddress)) {
-      showErrorMessage("This doesn't look like a URL. Check the address for any mistakes and try again.");
+      showErrorMessage(getTranslation().serverSelector.message.invalidServerAddress);
       return;
     }
 
@@ -264,10 +265,12 @@ function main() {
 
   function localizeUI() {
     const t = getTranslation().serverSelector;
-    setInnerText(ID_CONNECT_BUTTON, t.button.connect);
+    loginHeaderEl.title = t.tooltip.headerLogo;
     setInnerText(ID_SERVER_ADDRESS_TITLE, t.title.serverAddress);
     serverAddressField.placeholder = t.placeHolder.serverAddress;
-    loginHeaderEl.title = t.tooltip.headerLogo;
+    setInnerText(ID_CONNECT_BUTTON, t.button.connect);
+    setInnerText(ID_LOG_FILE_TITLE, t.title.logFile);
+    openLogFileButton.innerText = t.button.openLogFile;
   }
 
 
