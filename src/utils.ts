@@ -110,3 +110,10 @@ export function validateServerAddress(url: string) {
   return SERVER_ADDRESS_REGEXP.test(url);
 }
 
+
+export function setInnerText(id: string, text: string) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.innerText = text;
+  }
+}

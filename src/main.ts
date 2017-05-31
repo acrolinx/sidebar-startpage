@@ -2,7 +2,7 @@ import {
   $,
   getDefaultServerAddress,
   hide,
-  sanitizeServerAddress,
+  sanitizeServerAddress, setInnerText,
   show,
   startsWith,
   startsWithAnyOf,
@@ -19,8 +19,13 @@ import {
   SoftwareComponentCategory
 } from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 import {isCorsWithCredentialsNeeded} from "./acrolinx-sidebar-integration/utils/utils";
+import {setLanguage, getTranslation} from "./localization";
 
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
+
+const ID_SERVER_ADDRESS_TITLE = 'serverAddressTitle';
+const ID_CONNECT_BUTTON = 'connectButton';
+
 
 const TEMPLATE = `
   
@@ -28,10 +33,10 @@ const TEMPLATE = `
       
     <div class="loginHeader" title="www.acrolinx.com"></div>
     <div class="formContent">
-      <h1>Server Address</h1>
+      <h1 id="${ID_SERVER_ADDRESS_TITLE}">Server Address</h1>
       <input type="text" id="serverAddress" placeholder="Acrolinx Server Address" autofocus>
       <div class="buttonGroup">
-        <button type="submit" class="submitButton" value="CONNECT">CONNECT</button>
+        <button id="${ID_CONNECT_BUTTON}" type="submit" class="submitButton" value="CONNECT">CONNECT</button>
       </div>
       <div class="logFileContent" style="display: none">
         <h1>Log File</h1>
@@ -119,7 +124,7 @@ function main() {
     else console.log("No log file defined!")
   }
 
-  function selectLogFileLocationValue(event: Event){
+  function selectLogFileLocationValue(event: Event) {
     event.preventDefault();
     var selection = window.getSelection();
     var range = document.createRange();
@@ -196,7 +201,7 @@ function main() {
   }
 
   function onSidebarLoadError() {
-    showErrorMessage("We couldn't establish a connection to your server. \n\nEither your server isn't set up to accept secure connections or it's not running at all.\n\nIf you're using Acrolinx in a web application, your server might not be set up for cross-origin resource sharing (CORS). \n\nIf you're sure you entered the correct address, ask your server administrator to check your server availability.");
+    showErrorMessage(getTranslation().serverSelector.message.serverConnectionProblem);
     if (initParametersFromPlugin.showServerSelector) {
       showServerSelector();
     }
@@ -235,6 +240,8 @@ function main() {
 
   function onInitFromPlugin(initParameters: InitParameters) {
     initParametersFromPlugin = initParameters;
+    setLanguage(initParameters.clientLocale);
+    localizeUI();
     if (initParameters.showServerSelector) {
       if (oldServerAddress) {
         tryToLoadSidebar(oldServerAddress);
@@ -253,6 +260,14 @@ function main() {
       tryToLoadSidebar(serverAddress);
     }
 
+  }
+
+  function localizeUI() {
+    const t = getTranslation().serverSelector;
+    setInnerText(ID_CONNECT_BUTTON, t.button.connect);
+    setInnerText(ID_SERVER_ADDRESS_TITLE, t.title.serverAddress);
+    serverAddressField.placeholder = t.placeHolder.serverAddress;
+    loginHeaderEl.title = t.tooltip.headerLogo;
   }
 
 

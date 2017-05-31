@@ -1,0 +1,19 @@
+{
+  "serverSelector": {
+    "button": {
+      "connect": "Connect!"
+    },
+    "title": {
+      "serverAddress": "Server Address"
+    },
+    "placeHolder": {
+      "serverAddress": "Acrolinx Server Address"
+    },
+    "tooltip": {
+      "headerLogo": "www.acrolinx.com"
+    },
+    "message": {
+      "serverConnectionProblem": "We couldn't establish a connection to your server. \n\nEither your server isn't set up to accept secure connections or it's not running at all.\n\nIf you're using Acrolinx in a web application, your server might not be set up for cross-origin resource sharing (CORS). \n\nIf you're sure you entered the correct address, ask your server administrator to check your server availability."
+    }
+  }
+}
