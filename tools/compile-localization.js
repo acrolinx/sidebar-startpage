@@ -28,7 +28,7 @@ ${createTranslationTs(localizationDev, 'devTranslation')}
 
 type Translation = typeof devTranslation;
 
-${_.map(languageTranslationPairs, pair => createTranslationTs(pair[1], pair[0])).join(';\n\n')}
+${_.map(languageTranslationPairs, pair => createTranslationTs(pair[1], pair[0])).join(' as Translation;\n\n')}
 
 export const translations: { [language: string]: Translation|undefined } = {
   dev: devTranslation,
