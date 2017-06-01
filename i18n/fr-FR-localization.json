@@ -2,6 +2,18 @@
   "serverSelector": {
     "button": {
       "connect": "Connect"
+    },
+    "message": {
+      "invalidServerAddress": "Ceci ne ressemble pas \u00e0 une adresse URL. Corriger l'adresse et essayer \u00e0 nouveau."
+    },
+    "placeHolder": {
+      "serverAddress": "Adresse du serveur Acrolinx"
+    },
+    "title": {
+      "serverAddress": "Adresse du serveur:"
+    },
+    "tooltip": {
+      "headerLogo": "www.acrolinx.com"
     }
   }
 }
