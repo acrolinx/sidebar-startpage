@@ -3,7 +3,7 @@ const _ = require('lodash');
 
 const OUTPUT_FILE = 'tmp/generated/translations.ts';
 const ENCODING = 'utf8';
-const LANGUAGES = ['en-US', 'de-DE'];
+const LANGUAGES = ['en-US', 'de-DE', 'fr-FR', 'sv-SE', 'ja-JP'];
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, ENCODING));
