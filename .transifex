@@ -40,7 +40,7 @@
 # The only exception is the "format" key: Its values cannot contain any whitespace.
 #
 # All lines beginning with a hash character (#), preceded by optional whitespace,
-# are treated as comments and ignored.
+# are treated as comments and ignored. Yeah!
 
 project     server-selector
 branches    master

@@ -1,7 +1,7 @@
 {
   "serverSelector": {
     "button": {
-      "connect": "Connect!",
+      "connect": "Connect!!",
       "openLogFile": "Open Logfile"
     },
     "title": {
