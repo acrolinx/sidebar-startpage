@@ -1,7 +1,16 @@
 {
   "serverSelector": {
-    "button": {
-      "connect": "Verbinden"
+    "message": {
+      "invalidServerAddress": "Dies scheint keine URL zu sein. Pr\u00fcfen Sie die Adresse und versuchen Sie es noch einmal."
+    },
+    "placeHolder": {
+      "serverAddress": "Acrolinx Serveradresse"
+    },
+    "title": {
+      "serverAddress": "Serveradresse"
+    },
+    "tooltip": {
+      "headerLogo": "www.acrolinx.com"
     }
   }
 }
