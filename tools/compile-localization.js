@@ -3,7 +3,8 @@ const _ = require('lodash');
 
 const OUTPUT_FILE = 'tmp/generated/translations.ts';
 const ENCODING = 'utf8';
-const LANGUAGES = ['en-US', 'de-DE', 'fr-FR', 'sv-SE', 'ja-JP'];
+const EN_US = 'en-US';
+const LANGUAGES = [EN_US, 'de-DE', 'fr-FR', 'sv-SE', 'ja-JP'];
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, ENCODING));
@@ -40,10 +41,11 @@ export const translations: { [language: string]: Translation|undefined } = {
 function compileLocalizationToTypeScript() {
   const basePath = 'i18n/';
   const localizationDev = readLocalization(basePath, 'dev');
+  const localizationEn = readLocalization(basePath, EN_US);
 
   const languageTranslationPairs = LANGUAGES.map(languageCodeLong => [
     getShortLanguageCode(languageCodeLong),
-    _.defaultsDeep({}, readLocalization(basePath, languageCodeLong), localizationDev)
+    _.defaultsDeep({}, readLocalization(basePath, languageCodeLong), localizationEn, localizationDev)
   ]);
 
   const translationsTs = fillTypeScriptTemplate(localizationDev, languageTranslationPairs);
