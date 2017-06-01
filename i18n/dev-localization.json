@@ -4,20 +4,20 @@
       "connect": "Connect!!",
       "openLogFile": "Open Logfile"
     },
-    "title": {
-      "serverAddress": "Server Address",
-      "logFile": "Log File"
+    "message": {
+      "invalidServerAddress": "This doesn't look like a URL. Check the address for any mistakes and try again.",
+      "serverConnectionProblem": "We couldn't establish a connection to your server. \n\nEither your server isn't set up to accept secure connections or it's not running at all.\n\nIf you're using Acrolinx in a web application, your server might not be set up for cross-origin resource sharing (CORS). \n\nIf you're sure you entered the correct address, ask your server administrator to check your server availability.",
+      "serverIsNotSecure": "The server isn't secure. You must connect to a secure server. A secure server address starts with \"https\" ."
     },
     "placeHolder": {
       "serverAddress": "Acrolinx Server Address"
     },
+    "title": {
+      "logFile": "Log File",
+      "serverAddress": "Server Address"
+    },
     "tooltip": {
       "headerLogo": "www.acrolinx.com"
-    },
-    "message": {
-      "serverConnectionProblem": "We couldn't establish a connection to your server. \n\nEither your server isn't set up to accept secure connections or it's not running at all.\n\nIf you're using Acrolinx in a web application, your server might not be set up for cross-origin resource sharing (CORS). \n\nIf you're sure you entered the correct address, ask your server administrator to check your server availability.",
-      "serverIsNotSecure": "The server isn't secure. You must connect to a secure server. A secure server address starts with \"https\" .",
-      "invalidServerAddress": "This doesn't look like a URL. Check the address for any mistakes and try again."
     }
   }
 }
