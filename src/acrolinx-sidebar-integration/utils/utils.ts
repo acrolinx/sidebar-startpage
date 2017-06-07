@@ -1,4 +1,4 @@
-import {ErrorFirstCallback} from "../../utils";
+import {ErrorFirstCallback} from "../../utils/utils";
 
 const IS_WITH_CREDENTIALS_NEEDED = /^https:\/\/acrolinx-(dev|uat|prod)\.corp\.google\.com(:[0-9]+)?/;
 

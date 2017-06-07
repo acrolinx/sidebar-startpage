@@ -7,12 +7,12 @@ import {
   startsWith,
   startsWithAnyOf,
   validateServerAddress
-} from "./utils";
+} from "./utils/utils";
 import {loadSidebarIntoIFrame, LoadSidebarProps} from "./acrolinx-sidebar-integration/utils/sidebar-loader";
-import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from "./proxy-acrolinx-plugin";
+import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from "./proxies/proxy-acrolinx-plugin";
 import {FORCE_MESSAGE_ADAPTER, SERVER_SELECTOR_VERSION} from "./constants";
 import {createSidebarMessageProxy} from "./acrolinx-sidebar-integration/message-adapter/message-adapter";
-import {ProxyAcrolinxSidebar} from "./proxy-acrolinx-sidebar";
+import {ProxyAcrolinxSidebar} from "./proxies/proxy-acrolinx-sidebar";
 import {
   AcrolinxPlugin,
   InitParameters,
@@ -81,7 +81,7 @@ function main() {
   const errorMessageEl = $('#errorMessage')!;
 
   const loginHeaderEl = $('.loginHeader')!;
-  loginHeaderEl.addEventListener('click', onClickHeaderEl)
+  loginHeaderEl.addEventListener('click', onClickHeaderEl);
 
   const form = $('#serverSelectorForm')!;
   form.addEventListener('submit', onSubmit);
@@ -90,7 +90,7 @@ function main() {
   openLogFileButton.addEventListener('click', openLogFile);
 
   const logFileLocationValue = $('#logfileLocationValue')!;
-  logFileLocationValue.addEventListener('click', selectLogFileLocationValue)
+  logFileLocationValue.addEventListener('click', selectLogFileLocationValue);
 
   const logFileElement = $('.logFileContent')!;
 
@@ -122,13 +122,13 @@ function main() {
     if (acrolinxPlugin.openLogFile) {
       acrolinxPlugin.openLogFile();
     }
-    else console.log("No log file defined!")
+    else console.log("No log file defined!");
   }
 
   function selectLogFileLocationValue(event: Event) {
     event.preventDefault();
-    var selection = window.getSelection();
-    var range = document.createRange();
+    const selection = window.getSelection();
+    const range = document.createRange();
     range.selectNodeContents(logFileLocationValue);
     selection.removeAllRanges();
     selection.addRange(range);

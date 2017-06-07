@@ -1,5 +1,5 @@
 import * as utils from "./utils";
-import {ErrorFirstCallback} from "../../utils";
+import {ErrorFirstCallback} from "../../utils/utils";
 import {FORCE_SIDEBAR_URL, FALLBACK_SIDEBAR_URL} from "../../constants";
 
 export class SidebarURLInvalidError extends Error {
@@ -16,8 +16,8 @@ export class SidebarURLInvalidError extends Error {
 }
 
 export interface  LoadSidebarProps {
-  sidebarUrl?: string
-  useMessageAdapter?: boolean
+  sidebarUrl?: string;
+  useMessageAdapter?: boolean;
 }
 
 
@@ -51,7 +51,7 @@ export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameEle
         console.log('Load sidebar from cloud');
         loadSidebarIntoIFrame({...config, sidebarUrl: FALLBACK_SIDEBAR_URL}, sidebarIFrameElement, onSidebarLoaded, false);
       } else {
-        onSidebarLoaded(new Error("Where is my cloud sidebar?"))
+        onSidebarLoaded(new Error("Where is my cloud sidebar?"));
       }
       return;
     }

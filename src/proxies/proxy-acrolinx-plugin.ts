@@ -6,7 +6,7 @@ import {
   MatchWithReplacement,
   DownloadInfo,
   OpenWindowParameters,
-} from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
+} from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 
 
 export interface ProxyAcrolinxPluginProps {

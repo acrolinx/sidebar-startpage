@@ -1,5 +1,5 @@
 
-import {InitParameters} from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
+import {InitParameters} from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 export type ErrorFirstCallback<T> = (error?: Error | null, result?: T) => void;
 
 export function $(selector: string): HTMLElement | undefined {
@@ -79,7 +79,7 @@ export function sanitizeServerAddress(serverAddressArg: string, defaultProtocolA
     return addressWithProtocol;
   } else {
     if (startsWith(addressWithProtocol, 'http:')) {
-      return addressWithProtocol + ':' + defaultHttpPort
+      return addressWithProtocol + ':' + defaultHttpPort;
     } else {
       return addressWithProtocol;
     }

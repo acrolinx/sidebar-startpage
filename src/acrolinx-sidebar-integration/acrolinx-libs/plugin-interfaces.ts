@@ -125,7 +125,7 @@ export interface InitParameters extends SidebarConfiguration {
    */
   supported?: {
     showServerSelector?: boolean
-  }
+  };
 }
 
 /**

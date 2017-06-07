@@ -1,5 +1,5 @@
 import {assert} from "chai";
-import {sanitizeServerAddress, validateServerAddress} from "../../src/utils";
+import {sanitizeServerAddress, validateServerAddress} from "../../src/utils/utils";
 
 
 describe('validate-server-address', () => {

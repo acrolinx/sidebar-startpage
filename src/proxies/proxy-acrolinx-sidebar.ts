@@ -6,7 +6,7 @@ import {
   Check,
   InvalidDocumentPart,
   CheckedDocumentRange
-} from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
+} from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 
 
 export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
