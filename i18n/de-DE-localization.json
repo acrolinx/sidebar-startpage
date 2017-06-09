@@ -1,7 +1,11 @@
 {
   "serverSelector": {
+    "button": {
+      "connect": "Verbinden"
+    },
     "message": {
-      "invalidServerAddress": "Dies scheint keine URL zu sein. Pr\u00fcfen Sie die Adresse und versuchen Sie es noch einmal."
+      "invalidServerAddress": "Dies scheint keine URL zu sein. Pr\u00fcfen Sie die Adresse und versuchen Sie es noch einmal.",
+      "serverConnectionProblem": "Wir konnten keine Verbindung zum Server herstellen.\n\nEntweder akzeptiert Ihr Server keine sicheren Verbindungen oder er ist nicht aktiviert.\n\nWenn Sie Acrolinx in einer Webanwendung nutzen, ist Ihr Server m\u00f6glicherweise nicht f\u00fcr Cross-Origin Resource Sharing (CORS) eingerichtet.\n\nWenn Sie sicher sind, dass Sie die korrekte Adresse eingegeben haben, bitten Sie Ihren Serveradministrator, die Verf\u00fcgbarkeit Ihres Servers zu \u00fcberpr\u00fcfen."
     },
     "placeHolder": {
       "serverAddress": "Acrolinx Serveradresse"
