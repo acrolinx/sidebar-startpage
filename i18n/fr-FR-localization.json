@@ -1,10 +1,12 @@
 {
   "serverSelector": {
     "button": {
-      "connect": "Connect"
+      "connect": "Se connecter"
     },
     "message": {
-      "invalidServerAddress": "Ceci ne ressemble pas \u00e0 une adresse URL. Corriger l'adresse et essayer \u00e0 nouveau."
+      "invalidServerAddress": "Ceci ne ressemble pas \u00e0 une adresse URL. Corriger l'adresse et essayer \u00e0 nouveau.",
+      "serverConnectionProblem": "Aucune connexion au serveur n'est disponible.\n\nSoit le serveur n'est pas configur\u00e9 pour accepter des connexions s\u00e9curis\u00e9es soit il n'est pas en cours d'ex\u00e9cution. \n\nSi vous utilisez Acrolinx dans une application web, votre serveur n'est \u00e9ventuellement pas configur\u00e9 pour le partage des ressources cross-origin (CORS).\n\nSi vous \u00eates certain(e) d'avoir entr\u00e9 la bonne adresse, contactez l'administrateur Acrolinx.",
+      "serverIsNotSecure": "Ce serveur n'est pas s\u00e9curis\u00e9. Vous devez vous connecter \u00e0 un serveur s\u00e9curis\u00e9. Une adresse s\u00e9curis\u00e9e commence toujours pas \"https\"."
     },
     "placeHolder": {
       "serverAddress": "Adresse du serveur Acrolinx"
