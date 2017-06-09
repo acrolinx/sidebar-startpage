@@ -1,7 +1,7 @@
 {
   "serverSelector": {
     "button": {
-      "connect": "Connect"
+      "connect": "Anslut"
     },
     "message": {
       "invalidServerAddress": "Detta ser inte ut som en URL. Kontrollera adressen och f\u00f6rs\u00f6k igen."
