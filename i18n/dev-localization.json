@@ -2,7 +2,7 @@
   "serverSelector": {
     "button": {
       "connect": "Connect",
-      "openLogFile": "Open Logfile"
+      "openLogFile": "Open Log File"
     },
     "message": {
       "invalidServerAddress": "It looks like the URL is incorrect. Check the address and try again.",
