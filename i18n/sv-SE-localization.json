@@ -1,15 +1,19 @@
 {
   "serverSelector": {
     "button": {
-      "connect": "Anslut"
+      "connect": "Anslut",
+      "openLogFile": "\u00d6ppna loggfil"
     },
     "message": {
-      "invalidServerAddress": "Detta ser inte ut som en URL. Kontrollera adressen och f\u00f6rs\u00f6k igen."
+      "invalidServerAddress": "Det ser ut som om adressen \u00e4r felaktig. Kontrollera adressen och f\u00f6rs\u00f6k igen.",
+      "serverConnectionProblem": "Vi kunde inte ansluta till din server.\n\nAntingen \u00e4r din server inte konfigurerad f\u00f6r att acceptera s\u00e4kra anslutningar eller ocks\u00e5 \u00e4r den inte ig\u00e5ng.\n\nOm du anv\u00e4nder Acrolinx i en webbapplikation kan det h\u00e4nda att din server inte \u00e4r konfigurerad f\u00f6r \"cross-origin resource sharing\" (CORS). \n\nOm du \u00e4r s\u00e4ker p\u00e5 att du angett korrekt adress kontaktar du din serveradministrat\u00f6r f\u00f6r att kontrollera att servern \u00e4r tillg\u00e4nglig.",
+      "serverIsNotSecure": "Du beh\u00f6ver ansluta till en s\u00e4ker server. En s\u00e4ker serveradress b\u00f6rjar med \"https\"."
     },
     "placeHolder": {
-      "serverAddress": "Acrolinx Serveradress"
+      "serverAddress": "Acrolinx-serveradress"
     },
     "title": {
+      "logFile": "Loggfil",
       "serverAddress": "Serveradress:"
     },
     "tooltip": {
