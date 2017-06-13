@@ -1,16 +1,7 @@
-import {
-  $,
-  getDefaultServerAddress,
-  hide,
-  sanitizeServerAddress, setInnerText,
-  show,
-  startsWith,
-  startsWithAnyOf,
-  validateServerAddress
-} from "./utils/utils";
+import {$, getDefaultServerAddress, hide, setInnerText, show, startsWithAnyOf} from "./utils/utils";
 import {loadSidebarIntoIFrame, LoadSidebarProps} from "./acrolinx-sidebar-integration/utils/sidebar-loader";
 import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from "./proxies/proxy-acrolinx-plugin";
-import {FORCE_MESSAGE_ADAPTER, SERVER_SELECTOR_VERSION} from "./constants";
+import {EXTENSION_URL_PREFIXES, FORCE_MESSAGE_ADAPTER, SERVER_SELECTOR_VERSION} from "./constants";
 import {createSidebarMessageProxy} from "./acrolinx-sidebar-integration/message-adapter/message-adapter";
 import {ProxyAcrolinxSidebar} from "./proxies/proxy-acrolinx-sidebar";
 import {
@@ -19,7 +10,8 @@ import {
   SoftwareComponentCategory
 } from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 import {isCorsWithCredentialsNeeded} from "./acrolinx-sidebar-integration/utils/utils";
-import {setLanguage, getTranslation} from "./localization";
+import {getTranslation, setLanguage} from "./localization";
+import {sanitizeAndValidateServerAddress} from "./utils/validation";
 
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 
@@ -55,9 +47,8 @@ const TEMPLATE = `
 `;
 
 
-const EXTENSION_URL_PREFIXES = ['chrome-extension://', 'moz-extension://', 'resource://', 'ms-browser-extension://', 'safari-extension://'];
+
 const NEEDS_MESSAGE_ADAPTER = EXTENSION_URL_PREFIXES;
-const URL_PREFIXES_REQUIRING_HTTPS = [...EXTENSION_URL_PREFIXES, 'https://'];
 
 
 function isMessageAdapterNeeded() {
@@ -142,23 +133,21 @@ function main() {
   function onSubmit(event: Event) {
     event.preventDefault();
 
-    let newServerAddress = serverAddressField.value.trim();
+    const newServerAddressResult = sanitizeAndValidateServerAddress(serverAddressField.value, {
+      enforceHTTPS: initParametersFromPlugin.enforceHTTPS,
+      windowLocation: window.location
+    });
 
-    if (startsWith(newServerAddress, 'http:') && isHttpsRequired()) {
-      showErrorMessage(getTranslation().serverSelector.message.serverIsNotSecure);
-      return;
-    }
-    newServerAddress = sanitizeServerAddress(newServerAddress, window.location.protocol);
-    if (!validateServerAddress(newServerAddress)) {
-      showErrorMessage(getTranslation().serverSelector.message.invalidServerAddress);
-      return;
-    }
-
-    serverAddress = newServerAddress;
-
-    console.log(serverAddress);
-
-    tryToLoadSidebar(serverAddress);
+    newServerAddressResult.match({
+      ok: newServerAddress => {
+        serverAddress = newServerAddress;
+        console.log(serverAddress);
+        tryToLoadSidebar(serverAddress);
+      },
+      err: errorMessage => {
+        showErrorMessage(errorMessage);
+      }
+    });
   }
 
   function tryToLoadSidebar(serverAddress: string) {
@@ -257,7 +246,7 @@ function main() {
       }
     } else {
       console.log('Load directly!');
-      serverAddress = initParameters.serverAddress || getDefaultServerAddress();
+      serverAddress = initParameters.serverAddress || getDefaultServerAddress(window.location);
       tryToLoadSidebar(serverAddress);
     }
 
@@ -301,9 +290,6 @@ function main() {
 
 }
 
-function isHttpsRequired(windowUrl = window.location.href) {
-  return startsWithAnyOf(windowUrl, URL_PREFIXES_REQUIRING_HTTPS);
-}
 
 function hackInitParameters(initParameters: InitParameters, serverAddress: string): InitParameters {
   return {

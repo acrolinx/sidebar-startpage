@@ -1,5 +1,3 @@
-
-import {InitParameters} from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 export type ErrorFirstCallback<T> = (error?: Error | null, result?: T) => void;
 
 export function $(selector: string): HTMLElement | undefined {
@@ -60,20 +58,31 @@ const SERVER_ADDRESS_REGEXP = new RegExp(
 );
 
 
+export interface WindowLocation {
+  protocol: string; // example: 'http:' or 'https:'
+  hostname: string;
+  port?: string;
+}
+
+export interface SanitizeOpts {
+  enforceHTTPS?: boolean;
+  windowLocation: WindowLocation;
+}
+
+
 /**
  * Converts input like integration2.acrolinx.com, http://integration2.acrolinx.com or integration2.acrolinx.com:8031
  * to a valid server address (including port if there is no provided port or path)
- * @param defaultProtocol 'http:' or 'https:'
  */
-export function sanitizeServerAddress(serverAddressArg: string, defaultProtocolArg = 'https:') {
+export function sanitizeServerAddress(serverAddressArg: string, opts: SanitizeOpts) {
   const trimmedAddress = serverAddressArg.trim();
   if (startsWith(trimmedAddress, '/')) {
-    return getDefaultServerAddress() + trimmedAddress;
+    return getDefaultServerAddress(opts.windowLocation) + trimmedAddress;
   }
   const defaultHttpPort = 8031;
-  const defaultProtocol = isValidServerProtocol(defaultProtocolArg) ? defaultProtocolArg : 'https:';
+  const defaultProtocol = (includes(trimmedAddress, ':443') || isHttpsRequired(opts)) ? 'https' : 'http';
   const normalizedAddress = trimmedAddress.replace(/\/$/, '');
-  const addressWithProtocol = startsWith(normalizedAddress, 'http') ? normalizedAddress : (defaultProtocol + '//' + normalizedAddress);
+  const addressWithProtocol = startsWith(normalizedAddress, 'http') ? normalizedAddress : (defaultProtocol + '://' + normalizedAddress);
   const hasPortRegExp = /\/\/.+((:\d+.*)|(\/.+))$/;
   if (hasPortRegExp.test(addressWithProtocol)) {
     return addressWithProtocol;
@@ -86,8 +95,11 @@ export function sanitizeServerAddress(serverAddressArg: string, defaultProtocolA
   }
 }
 
-export function getDefaultServerAddress() {
-  const location = window.location;
+export function isHttpsRequired(opts: SanitizeOpts) {
+  return opts.enforceHTTPS || opts.windowLocation.protocol == 'https:';
+}
+
+export function getDefaultServerAddress(location: WindowLocation) {
   if (isValidServerProtocol(location.protocol)) {
     return location.protocol + "//" + location.hostname + (location.port ? ':' + location.port : '');
   } else {
@@ -95,18 +107,11 @@ export function getDefaultServerAddress() {
   }
 }
 
-export function initialServerAddress(initParameters: InitParameters, storedValue: string | null, defaultServerAddress: string): string {
-  if (initParameters.showServerSelector && !initParameters.enableSingleSignOn && storedValue) {
-    return storedValue;
-  }
-  return initParameters.serverAddress || (initParameters.showServerSelector ? '' : defaultServerAddress);
-}
-
 export function isValidServerProtocol(protocol: string) {
   return protocol === 'http:' || protocol === 'https:';
 }
 
-export function validateServerAddress(url: string) {
+export function validateUrl(url: string) {
   return SERVER_ADDRESS_REGEXP.test(url);
 }
 
@@ -116,4 +121,8 @@ export function setInnerText(id: string, text: string) {
   if (el) {
     el.innerText = text;
   }
+}
+
+function includes(haystack: string, needle: string) {
+  return haystack.indexOf(needle) >= 0;
 }
