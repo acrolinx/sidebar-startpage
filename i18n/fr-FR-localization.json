@@ -1,7 +1,8 @@
 {
   "serverSelector": {
     "button": {
-      "connect": "Se connecter"
+      "connect": "Se connecter",
+      "openLogFile": "Ouvrir le fichier journal"
     },
     "message": {
       "invalidServerAddress": "Il semblerait que l'adresse soit incorrecte. Corriger l'adresse et essayer \u00e0 nouveau.",
@@ -12,6 +13,7 @@
       "serverAddress": "Adresse du serveur Acrolinx"
     },
     "title": {
+      "logFile": "Fichier journal",
       "serverAddress": "Adresse du serveur:"
     },
     "tooltip": {
