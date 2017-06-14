@@ -18,6 +18,10 @@ interface  FetchOptions {
 }
 
 export function fetch(url: string, opts: FetchOptions, callback: (responseTextOrError: string | FetchError) => void) {
+  function onConnectionError() {
+    callback(new FetchError('connectionError', `Error while loading ${url}.`));
+  }
+
   try {
     const request = new XMLHttpRequest();
     request.open('GET', url, true);
@@ -34,9 +38,9 @@ export function fetch(url: string, opts: FetchOptions, callback: (responseTextOr
       request.timeout = opts.timeout;
     }
 
-    request.onerror = () => {
-      callback(new FetchError('connectionError', `Error while loading ${url}.`));
-    };
+
+    request.ontimeout = onConnectionError;
+    request.onerror = onConnectionError;
 
     request.withCredentials = isCorsWithCredentialsNeeded(url);
 
