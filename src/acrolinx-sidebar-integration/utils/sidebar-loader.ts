@@ -36,7 +36,7 @@ export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameEle
   console.log('loadSidebarIntoIFrame', config);
   const sidebarBaseUrl = retryWithCloudSidebar ? FALLBACK_SIDEBAR_URL : (FORCE_SIDEBAR_URL || config.sidebarUrl);
   const completeSidebarUrl = sidebarBaseUrl + 'index.html?t=' + Date.now();
-  utils.fetch(completeSidebarUrl, (sidebarHtmlOrError) => {
+  utils.fetch(completeSidebarUrl, {timeout: 10000}, (sidebarHtmlOrError) => {
     // Handle fetch errors.
     if (typeof sidebarHtmlOrError !== 'string') {
       if (retryWithCloudSidebar) {

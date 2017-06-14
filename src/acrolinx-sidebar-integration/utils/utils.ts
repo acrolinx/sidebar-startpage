@@ -13,7 +13,11 @@ export class FetchError extends Error {
   }
 }
 
-export function fetch(url: string, callback: (responseTextOrError: string | FetchError) => void) {
+interface  FetchOptions {
+  timeout?: number;
+}
+
+export function fetch(url: string, opts: FetchOptions, callback: (responseTextOrError: string | FetchError) => void) {
   try {
     const request = new XMLHttpRequest();
     request.open('GET', url, true);
@@ -25,6 +29,10 @@ export function fetch(url: string, callback: (responseTextOrError: string | Fetc
         callback(new FetchError('httpErrorStatus', `Error while loading ${url}. Status = ${request.status}`));
       }
     };
+
+    if (opts.timeout) {
+      request.timeout = opts.timeout;
+    }
 
     request.onerror = () => {
       callback(new FetchError('connectionError', `Error while loading ${url}.`));
