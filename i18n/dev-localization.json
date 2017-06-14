@@ -6,7 +6,10 @@
     },
     "message": {
       "invalidServerAddress": "It looks like the address is incorrect. Check the address and try again.",
-      "serverConnectionProblem": "We couldn't establish a connection to your server. \n\nEither your server isn't set up to accept secure connections or it's not running at all.\n\nIf you're using Acrolinx in a web application, your server might not be set up for cross-origin resource sharing (CORS). \n\nIf you're sure you entered the correct address, ask your server administrator to check your server availability.",
+      "serverConnectionProblemHttps": "We couldn't establish a connection to your server. \n\nEither your server isn't set up to accept secure connections or it's not running at all.\n\nIf you're using Acrolinx in a web application, your server might not be set up for cross-origin resource sharing (CORS). \n\nIf you're sure you entered the correct address, ask your server administrator to check your server availability.",
+      "serverConnectionProblemHttp": "We couldn't establish a connection to your server. \n\nEither your server isn't set up to accept insecure connections or it's not running at all.\n\nIf you're using Acrolinx in a web application, your server might not be set up for cross-origin resource sharing (CORS). \n\nIf you're sure you entered the correct address, ask your server administrator to check your server availability.",
+      "noCloudSidebar": "Your server has a very old sidebar version. We have tried to load a fallback sidebar from the acrolinx cloud, but there occurred a connection problem.",
+      "serverIsNoAcrolinxServerOrHasNoSidebar": "This server seems to be no Acrolinx server or is so old, that it has no sidebar.",
       "serverIsNotSecure": "You need to connect to a secure server. A secure server address starts with \"https\"."
     },
     "placeHolder": {
