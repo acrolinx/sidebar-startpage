@@ -32,6 +32,8 @@ describe('validate-server-address', () => {
 
     it('http server custom port', () => {
       assertDeepEqual(sanitizeAndValidateServerAddress('http://integration2.acrolinx.com:555', opts), ok('http://integration2.acrolinx.com:555'));
+      assertDeepEqual(sanitizeAndValidateServerAddress('http://integration2.acrolinx.com:443', opts), ok('http://integration2.acrolinx.com:443'));
+
     });
 
     it('https server custom port', () => {

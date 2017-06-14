@@ -1,5 +1,8 @@
-import {$, getDefaultServerAddress, hide, setInnerText, show, startsWithAnyOf} from "./utils/utils";
-import {loadSidebarIntoIFrame, LoadSidebarProps} from "./acrolinx-sidebar-integration/utils/sidebar-loader";
+import {$, getDefaultServerAddress, hide, isHttpUrl, setInnerText, show, startsWithAnyOf} from "./utils/utils";
+import {
+  LoadSidebarError, loadSidebarIntoIFrame,
+  LoadSidebarProps
+} from "./acrolinx-sidebar-integration/utils/sidebar-loader";
 import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from "./proxies/proxy-acrolinx-plugin";
 import {EXTENSION_URL_PREFIXES, FORCE_MESSAGE_ADAPTER, SERVER_SELECTOR_VERSION} from "./constants";
 import {createSidebarMessageProxy} from "./acrolinx-sidebar-integration/message-adapter/message-adapter";
@@ -162,7 +165,7 @@ function main() {
 
     loadSidebarIntoIFrame(loadSidebarProps, sidebarIFrameElement, (error) => {
       if (error) {
-        onSidebarLoadError();
+        onSidebarLoadError(serverAddress, error);
         return;
       }
 
@@ -190,8 +193,21 @@ function main() {
 
   }
 
-  function onSidebarLoadError() {
-    showErrorMessage(getTranslation().serverSelector.message.serverConnectionProblem);
+  function getSidebarLoadErrorMessage(serverAddress: string, error: LoadSidebarError) {
+    const errorMessages = getTranslation().serverSelector.message;
+    switch (error.acrolinxErrorCode) {
+      case 'httpErrorStatus':
+      case 'noSidebar':
+        return errorMessages.serverIsNoAcrolinxServerOrHasNoSidebar;
+      case 'noCloudSidebar':
+        return errorMessages.noCloudSidebar;
+      default:
+        return isHttpUrl(serverAddress) ? errorMessages.serverConnectionProblemHttp : errorMessages.serverConnectionProblemHttps;
+    }
+  }
+
+  function onSidebarLoadError(serverAddress: string, error: LoadSidebarError) {
+    showErrorMessage(getSidebarLoadErrorMessage(serverAddress, error));
     if (initParametersFromPlugin.showServerSelector) {
       showServerSelector();
     }

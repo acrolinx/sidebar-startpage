@@ -1,25 +1,12 @@
 import * as utils from "./utils";
-import {ErrorFirstCallback} from "../../utils/utils";
-import {FORCE_SIDEBAR_URL, FALLBACK_SIDEBAR_URL} from "../../constants";
+import {FetchError} from "./utils";
+import {FALLBACK_SIDEBAR_URL, FORCE_SIDEBAR_URL} from "../../constants";
 
-export class SidebarURLInvalidError extends Error {
-  public details: string;
-
-  constructor(public message: string, public configuredSidebarURL: string, public htmlLoaded: string) {
-    super(message);
-    this.configuredSidebarURL = configuredSidebarURL;
-    this.htmlLoaded = htmlLoaded;
-    this.details = message + "\n" +
-      "Configured SidebarURL:" + configuredSidebarURL + "\n" +
-      htmlLoaded;
-  }
-}
 
 export interface  LoadSidebarProps {
-  sidebarUrl?: string;
-  useMessageAdapter?: boolean;
+  sidebarUrl: string;
+  useMessageAdapter: boolean;
 }
-
 
 export function getSidebarVersion(sidebarHtml: string): [number, number, number] | null {
   const match = sidebarHtml.match(/<meta name=\"sidebar-version\" content=\"(\d+)\.(\d+)\.(\d+)/);
@@ -30,28 +17,54 @@ export function getSidebarVersion(sidebarHtml: string): [number, number, number]
   return [versionParts[0], versionParts[1], versionParts[2]];
 }
 
-export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameElement: HTMLIFrameElement, onSidebarLoaded: ErrorFirstCallback<void>, retry = true) {
+function isOutDatedSidebarVersion(sidebarVersion: [number, number, number] | null) {
+  return (!sidebarVersion || sidebarVersion[1] < 3 || (sidebarVersion[1] == 3 && sidebarVersion[2] < 1));
+}
+
+
+type NoValidSidebarErrorCode = 'noSidebar' | 'noCloudSidebar';
+
+export class NoValidSidebarError extends Error {
+  constructor(public acrolinxErrorCode: NoValidSidebarErrorCode, message: string) {
+    super(message);
+  }
+}
+
+export type LoadSidebarError = FetchError | NoValidSidebarError;
+
+export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameElement: HTMLIFrameElement, onSidebarLoaded: (error?: LoadSidebarError) => void, retryWithCloudSidebar = false) {
   console.log('loadSidebarIntoIFrame', config);
-  const sidebarBaseUrl = FORCE_SIDEBAR_URL || config.sidebarUrl || FALLBACK_SIDEBAR_URL;
+  const sidebarBaseUrl = retryWithCloudSidebar ? FALLBACK_SIDEBAR_URL : (FORCE_SIDEBAR_URL || config.sidebarUrl);
   const completeSidebarUrl = sidebarBaseUrl + 'index.html?t=' + Date.now();
-  utils.fetch(completeSidebarUrl, (error, sidebarHtml) => {
-    if (!sidebarHtml) {
-      onSidebarLoaded(error);
-      return;
-    }
-    if (sidebarHtml.indexOf("<meta name=\"sidebar-version\"") < 0) {
-      onSidebarLoaded(new SidebarURLInvalidError("It looks like the sidebar URL was configured wrongly. " +
-        "Check developer console for more information!", completeSidebarUrl, sidebarHtml));
+  utils.fetch(completeSidebarUrl, (sidebarHtmlOrError) => {
+    // Handle fetch errors.
+    if (typeof sidebarHtmlOrError !== 'string') {
+      if (retryWithCloudSidebar) {
+        onSidebarLoaded(new NoValidSidebarError('noCloudSidebar', "Can't load cloud sidebar."));
+      } else {
+        const fetchError: FetchError = sidebarHtmlOrError;
+        console.error("Error while fetching the sidebar: " + fetchError.acrolinxErrorCode, fetchError);
+        onSidebarLoaded(fetchError);
+      }
       return;
     }
 
+    const sidebarHtml = sidebarHtmlOrError;
+
+    // Handle invalid sidebar html error.
+    if (sidebarHtml.indexOf("<meta name=\"sidebar-version\"") < 0) {
+      onSidebarLoaded(new NoValidSidebarError(retryWithCloudSidebar ? 'noCloudSidebar' : 'noSidebar', 'No valid sidebar html code:' + sidebarHtml));
+      return;
+    }
+
+    // Handle out-dated sidebar version by retryWithCloudSidebar
     const sidebarVersion = getSidebarVersion(sidebarHtml);
-    if (!FORCE_SIDEBAR_URL && (!sidebarVersion || sidebarVersion[1] < 3 || (sidebarVersion[1] == 3 && sidebarVersion[2] < 1))) {
-      if (retry) {
-        console.log('Load sidebar from cloud');
-        loadSidebarIntoIFrame({...config, sidebarUrl: FALLBACK_SIDEBAR_URL}, sidebarIFrameElement, onSidebarLoaded, false);
+    if (!FORCE_SIDEBAR_URL && isOutDatedSidebarVersion(sidebarVersion)) {
+      if (retryWithCloudSidebar) {
+        onSidebarLoaded(new NoValidSidebarError('noCloudSidebar', "The cloud sidebar has the wrong version."));
       } else {
-        onSidebarLoaded(new Error("Where is my cloud sidebar?"));
+        console.log('Load sidebar from cloud');
+        loadSidebarIntoIFrame(config, sidebarIFrameElement, onSidebarLoaded, true);
       }
       return;
     }
@@ -64,16 +77,18 @@ export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameEle
       });
       sidebarIFrameElement.src = completeSidebarUrl + '&acrolinxUseMessageApi=true';
     } else {
-      const sidebarContentWindow = sidebarIFrameElement.contentWindow;
-      const sidebarHtmlWithAbsoluteLinks = sidebarHtml
-        .replace(/src="/g, 'src="' + sidebarBaseUrl)
-        .replace(/href="/g, 'href="' + sidebarBaseUrl);
-      sidebarContentWindow.document.open();
-      sidebarContentWindow.document.write(sidebarHtmlWithAbsoluteLinks);
-      sidebarContentWindow.document.close();
+      writeSidebarHtmlIntoIFrame(sidebarHtml, sidebarIFrameElement, sidebarBaseUrl);
       onSidebarLoaded();
     }
-
   });
 }
 
+function writeSidebarHtmlIntoIFrame(sidebarHtml: string, sidebarIFrameElement: HTMLIFrameElement, sidebarBaseUrl: string) {
+  const sidebarContentWindow = sidebarIFrameElement.contentWindow;
+  const sidebarHtmlWithAbsoluteLinks = sidebarHtml
+    .replace(/src="/g, 'src="' + sidebarBaseUrl)
+    .replace(/href="/g, 'href="' + sidebarBaseUrl);
+  sidebarContentWindow.document.open();
+  sidebarContentWindow.document.write(sidebarHtmlWithAbsoluteLinks);
+  sidebarContentWindow.document.close();
+}

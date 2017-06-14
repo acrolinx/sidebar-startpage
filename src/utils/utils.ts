@@ -1,5 +1,3 @@
-export type ErrorFirstCallback<T> = (error?: Error | null, result?: T) => void;
-
 export function $(selector: string): HTMLElement | undefined {
   return document.querySelector(selector) as HTMLElement;
 }
@@ -109,6 +107,10 @@ export function getDefaultServerAddress(location: WindowLocation) {
 
 export function isValidServerProtocol(protocol: string) {
   return protocol === 'http:' || protocol === 'https:';
+}
+
+export function isHttpUrl(url: string) {
+  return startsWith(url, 'http:');
 }
 
 export function validateUrl(url: string) {
