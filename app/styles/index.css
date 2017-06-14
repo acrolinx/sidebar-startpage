@@ -16,7 +16,6 @@ html #app input {
   font-family: 'Roboto', 'Arial', sans-serif;
 }
 
-
 h1 {
   color: #909090;
   font-size: 18px;
@@ -73,9 +72,16 @@ h1 {
   color: #fff;
   border: none;
   cursor: pointer;
-  margin:  0 0 0 auto;
+  margin: 0 0 0 auto;
 }
 
+.submitButton:disabled {
+  opacity: 0.5;
+}
+
+.submitButton:disabled:hover {
+  cursor: default;
+}
 
 #serverSelectorForm {
   display: block;
@@ -107,6 +113,6 @@ h1 {
   font-weight: 400;
 }
 
-#logfileLocationValue{
+#logfileLocationValue {
   width: 100%;
 }

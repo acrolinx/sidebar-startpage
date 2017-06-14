@@ -80,6 +80,8 @@ function main() {
   const form = $('#serverSelectorForm')!;
   form.addEventListener('submit', onSubmit);
 
+  const connectButton = document.getElementById(ID_CONNECT_BUTTON) as HTMLButtonElement;
+
   const openLogFileButton = $('#openLogFileButton')!;
   openLogFileButton.addEventListener('click', openLogFile);
 
@@ -163,8 +165,11 @@ function main() {
     const sidebarUrl = serverAddress + '/sidebar/v14/';
     const loadSidebarProps: LoadSidebarProps = {sidebarUrl, useMessageAdapter};
 
+    connectButton.disabled = true;
+
     loadSidebarIntoIFrame(loadSidebarProps, sidebarIFrameElement, (error) => {
       if (error) {
+        connectButton.disabled = false;
         onSidebarLoadError(serverAddress, error);
         return;
       }
@@ -222,6 +227,7 @@ function main() {
     sidebarContainer.innerHTML = '';
     hide(sidebarContainer);
     show(form);
+    connectButton.disabled = false;
     if (initParametersFromPlugin.logFileLocation) {
       showLogfileOpenener(initParametersFromPlugin.logFileLocation);
     }
