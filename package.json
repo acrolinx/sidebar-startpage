@@ -1,6 +1,6 @@
 {
   "name": "acrolinx-server-selector",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A Container Component for Acrolinx Integrations that loads the Acrolinx sidebar",
   "scripts": {
     "bower": "bower install",
