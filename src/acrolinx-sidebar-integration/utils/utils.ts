@@ -5,7 +5,7 @@ export function isCorsWithCredentialsNeeded(url: string) {
 }
 
 
-type FetchErrorCode = 'connectionError' | 'httpErrorStatus';
+type FetchErrorCode = 'connectionError' | 'timeout' | 'httpErrorStatus';
 
 export class FetchError extends Error {
   constructor(public readonly acrolinxErrorCode: FetchErrorCode, message: string) {
@@ -18,10 +18,6 @@ interface  FetchOptions {
 }
 
 export function fetch(url: string, opts: FetchOptions, callback: (responseTextOrError: string | FetchError) => void) {
-  function onConnectionError() {
-    callback(new FetchError('connectionError', `Error while loading ${url}.`));
-  }
-
   try {
     const request = new XMLHttpRequest();
     request.open('GET', url, true);
@@ -39,8 +35,13 @@ export function fetch(url: string, opts: FetchOptions, callback: (responseTextOr
     }
 
 
-    request.ontimeout = onConnectionError;
-    request.onerror = onConnectionError;
+    request.ontimeout = () => {
+      callback(new FetchError('timeout', `Timeout while loading ${url}.`));
+    };
+
+    request.onerror = () => {
+      callback(new FetchError('connectionError', `Error while loading ${url}.`));
+    };
 
     request.withCredentials = isCorsWithCredentialsNeeded(url);
 

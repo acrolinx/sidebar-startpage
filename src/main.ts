@@ -210,6 +210,8 @@ function main() {
         return errorMessages.serverIsNoAcrolinxServerOrHasNoSidebar;
       case 'noCloudSidebar':
         return errorMessages.noCloudSidebar;
+      case 'timeout':
+        return isHttpUrl(serverAddress) ? errorMessages.serverConnectionProblemTimeoutHttp : errorMessages.serverConnectionProblemTimeoutHttps;
       default:
         return isHttpUrl(serverAddress) ? errorMessages.serverConnectionProblemHttp : errorMessages.serverConnectionProblemHttps;
     }
