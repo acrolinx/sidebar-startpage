@@ -17,7 +17,8 @@
       "serverAddress": "Serveradress:"
     },
     "tooltip": {
-      "headerLogo": "www.acrolinx.com"
+      "headerLogo": "www.acrolinx.com",
+      "httpsRequired": "Du beh\u00f6ver ansluta till en s\u00e4ker server. En s\u00e4ker serveradress b\u00f6rjar med \"https\"."
     }
   }
 }
