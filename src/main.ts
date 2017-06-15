@@ -1,4 +1,7 @@
-import {$, getDefaultServerAddress, hide, isHttpUrl, setInnerText, show, startsWithAnyOf} from "./utils/utils";
+import {
+  $, getDefaultServerAddress, hide, isHttpsRequired, isHttpUrl, setDisplayed, setInnerText, setTooltip, show,
+  startsWithAnyOf
+} from "./utils/utils";
 import {
   LoadSidebarError, loadSidebarIntoIFrame,
   LoadSidebarProps
@@ -19,6 +22,8 @@ import {sanitizeAndValidateServerAddress} from "./utils/validation";
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 
 const ID_SERVER_ADDRESS_TITLE = 'serverAddressTitle';
+const HTTP_REQUIRED_ICON = 'httpsRequiredIcon';
+const ID_SERVER_ADDRESS_TITLE_TEXT = 'serverAddressTitleText';
 const ID_CONNECT_BUTTON = 'connectButton';
 const ID_LOG_FILE_TITLE = 'logFileTitle';
 
@@ -29,7 +34,7 @@ const TEMPLATE = `
       
     <div class="loginHeader" title="www.acrolinx.com"></div>
     <div class="formContent">
-      <h1 id="${ID_SERVER_ADDRESS_TITLE}">Server Address</h1>
+      <h1 id="${ID_SERVER_ADDRESS_TITLE}"><span id="${ID_SERVER_ADDRESS_TITLE_TEXT}">Server Addresss</span><span id="${HTTP_REQUIRED_ICON}"></span></h1>
       <input type="text" id="serverAddress" placeholder="Acrolinx Server Address" autofocus>
       <div class="buttonGroup">
         <button id="${ID_CONNECT_BUTTON}" type="submit" class="submitButton" value="CONNECT">CONNECT</button>
@@ -48,7 +53,6 @@ const TEMPLATE = `
   
   <div id="sidebarContainer"></div>
 `;
-
 
 
 const NEEDS_MESSAGE_ADAPTER = EXTENSION_URL_PREFIXES;
@@ -253,7 +257,8 @@ function main() {
   function onInitFromPlugin(initParameters: InitParameters) {
     initParametersFromPlugin = initParameters;
     setLanguage(initParameters.clientLocale);
-    localizeUI();
+    setupUiAccordingToInitParameters(initParameters);
+
     if (initParameters.showServerSelector) {
       if (oldServerAddress) {
         tryToLoadSidebar(oldServerAddress);
@@ -274,10 +279,15 @@ function main() {
 
   }
 
-  function localizeUI() {
+  function setupUiAccordingToInitParameters(initParameters: InitParameters) {
     const t = getTranslation().serverSelector;
     loginHeaderEl.title = t.tooltip.headerLogo;
-    setInnerText(ID_SERVER_ADDRESS_TITLE, t.title.serverAddress);
+
+    setInnerText(ID_SERVER_ADDRESS_TITLE_TEXT, t.title.serverAddress);
+    const httpsRequired = isHttpsRequired({enforceHTTPS: initParameters.enforceHTTPS, windowLocation: window.location});
+    setTooltip(ID_SERVER_ADDRESS_TITLE, httpsRequired ? t.tooltip.httpsRequired : '');
+    setDisplayed(document.getElementById(HTTP_REQUIRED_ICON)!, httpsRequired, 'inline-block');
+
     serverAddressField.placeholder = t.placeHolder.serverAddress;
     setInnerText(ID_CONNECT_BUTTON, t.button.connect);
     setInnerText(ID_LOG_FILE_TITLE, t.title.logFile);

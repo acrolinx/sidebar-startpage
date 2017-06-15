@@ -17,9 +17,8 @@ html #app input {
 }
 
 h1 {
-  color: #909090;
+  color: @sidebar-grey;
   font-size: 18px;
-  color: #909090;
   margin-top: 25px;
   font-weight: 400;
 }
@@ -34,16 +33,33 @@ h1 {
   cursor: pointer;
 }
 
+
+#serverAddressTitle {
+  position: relative;
+}
+
+#httpsRequiredIcon {
+  top: 2px;
+  margin-left: 5px;
+  position: absolute;
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  background-size: cover;
+  .icon-vpn-lock-grey();
+}
+
+
 #serverAddress {
   display: block;
   margin-top: 15px;
   width: 100%;
   font-size: 13px;
-  color: #3e96db;
+  color: @acroBlue;
   appearance: none;
   -moz-appearance: none;
   box-shadow: none;
-  border-bottom: solid 1px #3e96db;
+  border-bottom: solid 1px @acroBlue;
   border-top: none;
   border-right: none;
   border-left: none;
@@ -68,7 +84,7 @@ h1 {
   border-radius: 2px;
   padding: 0 10px;
   line-height: 27px;
-  background-color: #3e96db;
+  background-color: @acroBlue;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -104,7 +120,7 @@ h1 {
 
 #errorMessage {
   margin: 0 15px 15px;
-  background-color: #f0556a;
+  background-color: @acroRed;
   color: #fff;
   border-radius: 4px;
   padding: 1.5em;

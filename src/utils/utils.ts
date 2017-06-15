@@ -3,11 +3,15 @@ export function $(selector: string): HTMLElement | undefined {
 }
 
 export function hide(el: HTMLElement) {
-  el.style.display = 'none';
+  setDisplayed(el, false);
 }
 
 export function show(el: HTMLElement) {
-  el.style.display = 'block';
+  setDisplayed(el, true);
+}
+
+export function setDisplayed(el: HTMLElement, isDisplayed: boolean, display = 'block') {
+  el.style.display = isDisplayed ? display : 'none';
 }
 
 export function startsWith(haystack: string, needle: string) {
@@ -122,6 +126,13 @@ export function setInnerText(id: string, text: string) {
   const el = document.getElementById(id);
   if (el) {
     el.innerText = text;
+  }
+}
+
+export function setTooltip(id: string, text: string) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.title = text;
   }
 }
 

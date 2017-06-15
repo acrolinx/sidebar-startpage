@@ -1,0 +1,13 @@
+/* https://zslabs.com/articles/svg-background-fill */
+.icon-replace-fill(@src, @fill-default, @fill-new) {
+  @escape-fill-default: escape(@fill-default);
+  @escape-fill-new: escape(@fill-new);
+  @data-uri: data-uri('image/svg+xml;charset=UTF-8', "@{src}");
+  @replace-src: replace("@{data-uri}", "@{escape-fill-default}", "@{escape-fill-new}");
+  background-image: e(@replace-src);
+  background-repeat: no-repeat;
+}
+
+.icon-vpn-lock-grey {
+  .icon-replace-fill("./icons/ic_vpn_lock.svg", "#000000", @sidebar-grey);
+}
