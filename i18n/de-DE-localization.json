@@ -17,7 +17,8 @@
       "serverAddress": "Serveradresse"
     },
     "tooltip": {
-      "headerLogo": "www.acrolinx.com"
+      "headerLogo": "www.acrolinx.com",
+      "httpsRequired": "Sie m\u00fcssen sich mit einem sicheren Server verbinden. Eine sichere Serveradresse beginnt mit \"https\"."
     }
   }
 }
