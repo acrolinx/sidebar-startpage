@@ -1,5 +1,5 @@
 import {
-  $, getDefaultServerAddress, hide, isHttpsRequired, isHttpUrl, setDisplayed, setInnerText, setTooltip, show,
+  $, $byId, getDefaultServerAddress, hide, isHttpsRequired, isHttpUrl, setDisplayed, setInnerText, setTooltip, show,
   startsWithAnyOf
 } from "./utils/utils";
 import {
@@ -19,19 +19,22 @@ import {isCorsWithCredentialsNeeded} from "./acrolinx-sidebar-integration/utils/
 import {getTranslation, setLanguage} from "./localization";
 import {sanitizeAndValidateServerAddress} from "./utils/validation";
 
+import {render} from 'preact';
+import {aboutComponent} from "./about";
+
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 
 const ID_SERVER_ADDRESS_TITLE = 'serverAddressTitle';
 const HTTP_REQUIRED_ICON = 'httpsRequiredIcon';
 const ID_SERVER_ADDRESS_TITLE_TEXT = 'serverAddressTitleText';
 const ID_CONNECT_BUTTON = 'connectButton';
-const ID_LOG_FILE_TITLE = 'logFileTitle';
+const ABOUT_PAGE_ID = 'aboutPage';
+const ABOUT_LINK_ID = 'aboutLink';
 
 
 const TEMPLATE = `
   
   <form id="serverSelectorForm" style="display: none">
-      
     <div class="loginHeader" title="www.acrolinx.com"></div>
     <div class="formContent">
       <h1 id="${ID_SERVER_ADDRESS_TITLE}"><span id="${ID_SERVER_ADDRESS_TITLE_TEXT}">Server Addresss</span><span id="${HTTP_REQUIRED_ICON}"></span></h1>
@@ -39,15 +42,11 @@ const TEMPLATE = `
       <div class="buttonGroup">
         <button id="${ID_CONNECT_BUTTON}" type="submit" class="submitButton" value="CONNECT">CONNECT</button>
       </div>
-      <div class="logFileContent" style="display: none">
-        <h1 id="${ID_LOG_FILE_TITLE}">Log File</h1>
-        <p type="text" readonly style="word-break: break-all" id="logfileLocationValue"/>
-        <div class="buttonGroup">
-          <button class="submitButton" id="openLogFileButton">Open Logfile</button>
-        </div>
-      </div>
+      <a id="${ABOUT_LINK_ID}" href="#">About Acrolinx</a>
     </div>
   </form>
+  
+  <div id="${ABOUT_PAGE_ID}" style="display: none"></div>
   
   <div id="errorMessage" style="display: none"></div>
   
@@ -84,16 +83,11 @@ function main() {
   const form = $('#serverSelectorForm')!;
   form.addEventListener('submit', onSubmit);
 
-  const connectButton = document.getElementById(ID_CONNECT_BUTTON) as HTMLButtonElement;
+  const connectButton = $byId(ID_CONNECT_BUTTON) as HTMLButtonElement;
 
-  const openLogFileButton = $('#openLogFileButton')!;
-  openLogFileButton.addEventListener('click', openLogFile);
-
-  const logFileLocationValue = $('#logfileLocationValue')!;
-  logFileLocationValue.addEventListener('click', selectLogFileLocationValue);
-
-  const logFileElement = $('.logFileContent')!;
-
+  const aboutLink = $byId(ABOUT_LINK_ID)!;
+  aboutLink.addEventListener('click', onAboutLink);
+  const aboutPage = $byId(ABOUT_PAGE_ID)!;
 
   let sidebarIFrameElement: HTMLIFrameElement | undefined;
 
@@ -116,22 +110,13 @@ function main() {
     }
   });
 
-  function openLogFile(event: Event) {
-    event.preventDefault();
+  function openLogFile() {
     console.log("clicked openLogFile");
     if (acrolinxPlugin.openLogFile) {
       acrolinxPlugin.openLogFile();
+    } else {
+      console.error("acrolinxPlugin.openLogFile is not defined!");
     }
-    else console.log("No log file defined!");
-  }
-
-  function selectLogFileLocationValue(event: Event) {
-    event.preventDefault();
-    const selection = window.getSelection();
-    const range = document.createRange();
-    range.selectNodeContents(logFileLocationValue);
-    selection.removeAllRanges();
-    selection.addRange(range);
   }
 
   function onClickHeaderEl(event: Event) {
@@ -234,9 +219,6 @@ function main() {
     hide(sidebarContainer);
     show(form);
     connectButton.disabled = false;
-    if (initParametersFromPlugin.logFileLocation) {
-      showLogfileOpenener(initParametersFromPlugin.logFileLocation);
-    }
     serverAddressField.focus();
   }
 
@@ -249,12 +231,6 @@ function main() {
     hide(errorMessageEl);
     errorMessageEl.textContent = '';
   }
-
-  function showLogfileOpenener(logFileLocation: string) {
-    logFileLocationValue.innerText = logFileLocation;
-    show(logFileElement);
-  }
-
 
   function onInitFromPlugin(initParameters: InitParameters) {
     initParametersFromPlugin = initParameters;
@@ -269,9 +245,6 @@ function main() {
           serverAddressField.value = initParameters.serverAddress;
         }
         show(form);
-        if (initParametersFromPlugin.logFileLocation) {
-          showLogfileOpenener(initParametersFromPlugin.logFileLocation);
-        }
       }
     } else {
       console.log('Load directly!');
@@ -292,8 +265,6 @@ function main() {
 
     serverAddressField.placeholder = t.placeHolder.serverAddress;
     setInnerText(ID_CONNECT_BUTTON, t.button.connect);
-    setInnerText(ID_LOG_FILE_TITLE, t.title.logFile);
-    openLogFileButton.innerText = t.button.openLogFile;
   }
 
 
@@ -322,6 +293,19 @@ function main() {
     sidebarProxy.acrolinxSidebar.init(hackInitParameters(initParametersFromPlugin, serverAddress));
   }
 
+  function onAboutLink() {
+    hide(form);
+    show(aboutPage);
+    render(aboutComponent({
+      onBack () {
+        hide(aboutPage);
+        showServerSelector();
+      },
+      logFileLocation: initParametersFromPlugin.logFileLocation,
+      openLogFile
+    }), aboutPage, aboutPage.firstChild as Element);
+  }
+
 }
 
 
@@ -343,4 +327,3 @@ function hackInitParameters(initParameters: InitParameters, serverAddress: strin
 
 
 setTimeout(main, 500);
-

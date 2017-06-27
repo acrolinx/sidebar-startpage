@@ -2,6 +2,10 @@ export function $(selector: string): HTMLElement | undefined {
   return document.querySelector(selector) as HTMLElement;
 }
 
+export function $byId(id: string): HTMLElement | undefined {
+  return document.getElementById(id) as HTMLElement;
+}
+
 export function hide(el: HTMLElement) {
   setDisplayed(el, false);
 }
