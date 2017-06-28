@@ -12,15 +12,14 @@ import {createSidebarMessageProxy} from "./acrolinx-sidebar-integration/message-
 import {ProxyAcrolinxSidebar} from "./proxies/proxy-acrolinx-sidebar";
 import {
   AcrolinxPlugin,
-  InitParameters,
-  SoftwareComponentCategory
+  InitParameters
 } from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
-import {isCorsWithCredentialsNeeded} from "./acrolinx-sidebar-integration/utils/utils";
 import {getTranslation, setLanguage} from "./localization";
 import {sanitizeAndValidateServerAddress} from "./utils/validation";
 
 import {render} from 'preact';
 import {aboutComponent} from "./about";
+import {extendClientComponents, hackInitParameters} from "./init-parameters";
 
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 
@@ -302,27 +301,11 @@ function main() {
         showServerSelector();
       },
       logFileLocation: initParametersFromPlugin.logFileLocation,
-      openLogFile
+      openLogFile,
+      clientComponents: extendClientComponents(initParametersFromPlugin.clientComponents)
     }), aboutPage, aboutPage.firstChild as Element);
   }
 
-}
-
-
-function hackInitParameters(initParameters: InitParameters, serverAddress: string): InitParameters {
-  return {
-    ...initParameters,
-    serverAddress: serverAddress,
-    showServerSelector: false,
-    corsWithCredentials: initParameters.corsWithCredentials || isCorsWithCredentialsNeeded(serverAddress),
-    supported: {...initParameters.supported, showServerSelector: initParameters.showServerSelector},
-    clientComponents: (initParameters.clientComponents || []).concat({
-      id: 'com.acrolinx.serverselector',
-      name: 'Server Selector',
-      version: SERVER_SELECTOR_VERSION,
-      category: SoftwareComponentCategory.DETAIL
-    })
-  };
 }
 
 
