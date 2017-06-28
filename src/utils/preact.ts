@@ -24,7 +24,7 @@ export function classNames(...args: ({ [className: string]: (boolean | undefined
     if ('string' === typeof arg) {
       classes.push(arg);
     } else if ('object' === typeof arg) {
-      for (let key in arg) {
+      for (const key in arg) {
         if (arg.hasOwnProperty(key) && arg[key]) {
           classes.push(key);
         }

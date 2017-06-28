@@ -37,7 +37,7 @@ class AboutComponent extends Component<AboutProps, {}> {
 
   render() {
     const t = getTranslation().serverSelector;
-    let props = this.props;
+    const props = this.props;
     return div({className: 'aboutComponent'},
       div({
         className: classNames('aboutHeader', 'icon-arrow-back'),
