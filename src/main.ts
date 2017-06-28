@@ -84,9 +84,8 @@ function main() {
     }
   }
 
-  function onClickHeaderEl(event: Event) {
-    event.preventDefault();
-    acrolinxPlugin.openWindow({url: 'https://www.acrolinx.com/'});
+  function openExternalWindow(url: string) {
+    acrolinxPlugin.openWindow({url});
   }
 
   function onSubmit(serverAddressInput: string) {
@@ -189,10 +188,10 @@ function main() {
     render(severSelectorFormComponent({
       onSubmit: onSubmit,
       onAboutLink,
-      onClickHeaderEl,
       serverAddress,
       enforceHTTPS: initParametersFromPlugin.enforceHTTPS,
-      isConnectButtonDisabled: props.isConnectButtonDisabled!!
+      isConnectButtonDisabled: props.isConnectButtonDisabled!!,
+      openWindow: openExternalWindow
     }), serverSelectorFormPage, serverSelectorFormPage.firstChild as Element);
   }
 
@@ -262,7 +261,8 @@ function main() {
       },
       logFileLocation: initParametersFromPlugin.logFileLocation,
       openLogFile,
-      clientComponents: extendClientComponents(initParametersFromPlugin.clientComponents)
+      clientComponents: extendClientComponents(initParametersFromPlugin.clientComponents),
+      openWindow: openExternalWindow
     }), aboutPage, aboutPage.firstChild as Element);
   }
 

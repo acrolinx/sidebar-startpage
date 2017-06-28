@@ -2,14 +2,15 @@ import {Component} from 'preact';
 import {createPreactFactory, h1, div, button, form, input, span, a} from "../utils/preact";
 import {getTranslation} from "../localization";
 import {isHttpsRequired} from "../utils/utils";
+import {externalTextLink, OpenWindowFunction} from "./external-text-link";
 
 interface SeverSelectorFormProps {
   onSubmit: (serverAddress: string) => void;
   onAboutLink: Function;
-  onClickHeaderEl: Function;
   serverAddress: string | null;
   enforceHTTPS?: boolean;
   isConnectButtonDisabled: boolean;
+  openWindow: OpenWindowFunction;
 }
 
 const SERVER_ADDRESS_INPUT_FIELD_CLASS = 'serverAddress';
@@ -22,6 +23,10 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
     this.props.onSubmit(this.serverAddressField.value);
   }
 
+  onClickHeader = () => {
+    this.props.openWindow('https://www.acrolinx.com/');
+  }
+
   render() {
     const t = getTranslation().serverSelector;
     const props = this.props;
@@ -29,7 +34,8 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
     return form({onSubmit: this.onSubmit},
       div({
         className: 'loginHeader',
-        title: t.tooltip.headerLogo
+        title: t.tooltip.headerLogo,
+        onClick: this.onClickHeader,
       }),
       div({className: 'formContent'},
         h1({
@@ -48,6 +54,11 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
           spellCheck: "false"
         }),
         div({className: 'buttonGroup'},
+          externalTextLink({
+            url: 'https://blog.fefe.de',
+            openWindow: props.openWindow,
+            text: "Can't connect?"
+          }),
           button({
             type: 'submit',
             className: "submitButton",
@@ -64,6 +75,6 @@ export const severSelectorFormComponent = createPreactFactory(SeverSelectorFormC
 export function focusAddressInputField(el: HTMLElement) {
   const addressFieldElement = el.getElementsByClassName(SERVER_ADDRESS_INPUT_FIELD_CLASS).item(0) as HTMLElement;
   if (addressFieldElement) {
-      addressFieldElement.focus();
+    addressFieldElement.focus();
   }
 }

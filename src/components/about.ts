@@ -3,12 +3,14 @@ import {createPreactFactory, h1, div, classNames, p, button} from "../utils/prea
 import {getTranslation} from "../localization";
 import {SoftwareComponent} from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 import {getCorsOrigin} from "../utils/utils";
+import {externalTextLink, OpenWindowFunction} from "./external-text-link";
 
 interface AboutProps {
   onBack: Function;
   openLogFile: Function;
   clientComponents: SoftwareComponent[];
   logFileLocation?: string;
+  openWindow: OpenWindowFunction;
 }
 
 function aboutInfoLine(component: SoftwareComponent) {
@@ -62,6 +64,11 @@ class AboutComponent extends Component<AboutProps, {}> {
               }, t.button.openLogFile)
             )
           ) : [],
+        externalTextLink({
+          url: 'http://www.sternenlaub.de',
+          openWindow: props.openWindow,
+          text: "Need help?"
+        })
       ));
   }
 }
