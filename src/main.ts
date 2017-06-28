@@ -244,7 +244,7 @@ function main() {
           serverAddressField.value = initParameters.serverAddress;
         }
         show(form);
-        onAboutLink();
+        // onAboutLink();
       }
     } else {
       console.log('Load directly!');

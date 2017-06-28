@@ -143,3 +143,8 @@ export function setTooltip(id: string, text: string) {
 function includes(haystack: string, needle: string) {
   return haystack.indexOf(needle) >= 0;
 }
+
+export function getCorsOrigin() {
+  const location = window.location;
+  return location.protocol + "//" + location.hostname + (location.port ? ':' + location.port : '');
+}
