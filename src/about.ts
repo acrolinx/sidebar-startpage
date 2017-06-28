@@ -2,6 +2,7 @@ import {Component} from 'preact';
 import {createPreactFactory, h1, div, classNames, p, button} from "./utils/preact";
 import {getTranslation} from "./localization";
 import {SoftwareComponent} from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
+import {getCorsOrigin} from "./utils/utils";
 
 interface AboutProps {
   onBack: Function;
@@ -14,6 +15,14 @@ function aboutInfoLine(component: SoftwareComponent) {
   return div({className: 'about-item', key: component.id},
     div({className: 'about-tab-label'}, component.name),
     div({className: 'about-tab-value', title: component.version}, component.version));
+}
+
+function getCorsOriginComponent(): SoftwareComponent {
+  return {
+    id: "sidebarCorsOrigin",
+    name: 'Start Page Cors Origin',
+    version: getCorsOrigin()
+  };
 }
 
 class AboutComponent extends Component<AboutProps, {}> {
@@ -37,7 +46,7 @@ class AboutComponent extends Component<AboutProps, {}> {
       div({className: 'aboutBody'},
         div({className: 'aboutMain'},
           h1({}, 'About'),
-          props.clientComponents.map(aboutInfoLine)
+          props.clientComponents.concat(getCorsOriginComponent()).map(aboutInfoLine)
         ),
         props.logFileLocation ?
           div({className: 'logFileContent'},
