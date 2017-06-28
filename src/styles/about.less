@@ -1,9 +1,27 @@
+#aboutPage {
+  height: 100%;
+}
+
+.aboutComponent {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+}
+
 .aboutHeader {
   .bottomGreyBorder();
-  height: 50px;
   background-position-x: @horizontalPageMargin;
   background-position-y: center;
   cursor: pointer;
+  height: 50px;
+  flex-shrink: 0;
+}
+
+.aboutBody {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-bottom: 15px;
 }
 
 .aboutMain {

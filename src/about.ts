@@ -29,30 +29,31 @@ class AboutComponent extends Component<AboutProps, {}> {
   render() {
     const t = getTranslation().serverSelector;
     let props = this.props;
-    return div({},
+    return div({className: 'aboutComponent'},
       div({
         className: classNames('aboutHeader', 'icon-arrow-back'),
         onClick: props.onBack,
       }),
-      div({className: 'aboutMain'},
-        h1({}, 'About'),
-        props.clientComponents.map(aboutInfoLine)
-      ),
-      props.logFileLocation ?
-        div({className: 'logFileContent'},
-          h1({}, t.title.logFile),
-          p({
-            className: 'logfileLocationValue',
-            onClick: this.selectLogFileLocationValue
-          }, props.logFileLocation),
-          div({className: 'buttonGroup'},
-            button({
-              className: "submitButton",
-              onClick: props.openLogFile
-            }, t.button.openLogFile)
-          )
-        ) : [],
-    );
+      div({className: 'aboutBody'},
+        div({className: 'aboutMain'},
+          h1({}, 'About'),
+          props.clientComponents.map(aboutInfoLine)
+        ),
+        props.logFileLocation ?
+          div({className: 'logFileContent'},
+            h1({}, t.title.logFile),
+            p({
+              className: 'logfileLocationValue',
+              onClick: this.selectLogFileLocationValue
+            }, props.logFileLocation),
+            div({className: 'buttonGroup'},
+              button({
+                className: "submitButton",
+                onClick: props.openLogFile
+              }, t.button.openLogFile)
+            )
+          ) : [],
+      ));
   }
 }
 
