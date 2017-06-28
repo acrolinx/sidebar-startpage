@@ -7,10 +7,13 @@ export function createPreactFactory<PropsType, StateType=any>(component: Compone
 }
 
 export const div = createPreactFactory('div');
-export const span = createPreactFactory('div');
+export const span = createPreactFactory('span');
 export const button = createPreactFactory('button');
 export const h1 = createPreactFactory('h1');
 export const p = createPreactFactory('p');
+export const form = createPreactFactory('form');
+export const a = createPreactFactory('a');
+export const input = createPreactFactory('input');
 
 export function classNames(...args: ({ [className: string]: (boolean | undefined) } | string | undefined)[]) {
   const classes: string[] = [];

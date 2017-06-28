@@ -1,5 +1,5 @@
 import {
-  $, $byId, getDefaultServerAddress, hide, isHttpsRequired, isHttpUrl, setDisplayed, setInnerText, setTooltip, show,
+  $, $byId, getDefaultServerAddress, hide, isHttpUrl, show,
   startsWithAnyOf
 } from "./utils/utils";
 import {
@@ -20,41 +20,21 @@ import {sanitizeAndValidateServerAddress} from "./utils/validation";
 import {render} from 'preact';
 import {aboutComponent} from "./about";
 import {extendClientComponents, hackInitParameters} from "./init-parameters";
+import {focusAddressInputField, severSelectorFormComponent} from "./server-selector-form";
 
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 
-const ID_SERVER_ADDRESS_TITLE = 'serverAddressTitle';
-const HTTP_REQUIRED_ICON = 'httpsRequiredIcon';
-const ID_SERVER_ADDRESS_TITLE_TEXT = 'serverAddressTitleText';
-const ID_CONNECT_BUTTON = 'connectButton';
 const ABOUT_PAGE_ID = 'aboutPage';
-const ABOUT_LINK_ID = 'aboutLink';
-
+const SERVER_SELECTOR_FORM_PAGE_ID = 'serverSelectorFormPage';
 
 const TEMPLATE = `
-  
-  <form id="serverSelectorForm" style="display: none">
-    <div class="loginHeader" title="www.acrolinx.com"></div>
-    <div class="formContent">
-      <h1 id="${ID_SERVER_ADDRESS_TITLE}"><span id="${ID_SERVER_ADDRESS_TITLE_TEXT}">Server Addresss</span><span id="${HTTP_REQUIRED_ICON}"></span></h1>
-      <input type="text" id="serverAddress" placeholder="Acrolinx Server Address" autofocus>
-      <div class="buttonGroup">
-        <button id="${ID_CONNECT_BUTTON}" type="submit" class="submitButton" value="CONNECT">CONNECT</button>
-      </div>
-      <a id="${ABOUT_LINK_ID}" href="#">About Acrolinx</a>
-    </div>
-  </form>
-  
+  <div id="${SERVER_SELECTOR_FORM_PAGE_ID}" style="display: none"></div>
   <div id="${ABOUT_PAGE_ID}" style="display: none"></div>
-  
   <div id="errorMessage" style="display: none"></div>
-  
   <div id="sidebarContainer"></div>
 `;
 
-
 const NEEDS_MESSAGE_ADAPTER = EXTENSION_URL_PREFIXES;
-
 
 function isMessageAdapterNeeded() {
   return FORCE_MESSAGE_ADAPTER || startsWithAnyOf(window.location.href, NEEDS_MESSAGE_ADAPTER);
@@ -76,28 +56,14 @@ function main() {
   const sidebarContainer = $('#sidebarContainer')!;
   const errorMessageEl = $('#errorMessage')!;
 
-  const loginHeaderEl = $('.loginHeader')!;
-  loginHeaderEl.addEventListener('click', onClickHeaderEl);
-
-  const form = $('#serverSelectorForm')!;
-  form.addEventListener('submit', onSubmit);
-
-  const connectButton = $byId(ID_CONNECT_BUTTON) as HTMLButtonElement;
-
-  const aboutLink = $byId(ABOUT_LINK_ID)!;
-  aboutLink.addEventListener('click', onAboutLink);
   const aboutPage = $byId(ABOUT_PAGE_ID)!;
+
+  const serverSelectorFormPage = $byId(SERVER_SELECTOR_FORM_PAGE_ID)!;
 
   let sidebarIFrameElement: HTMLIFrameElement | undefined;
 
-  const serverAddressField = $('#serverAddress')! as HTMLInputElement;
   const oldServerAddress = localStorage.getItem(SERVER_ADDRESS_KEY);
-  let serverAddress: string;
-  if (oldServerAddress) {
-    serverAddressField.value = oldServerAddress;
-    serverAddress = oldServerAddress;
-  }
-  serverAddressField.focus();
+  let serverAddress = oldServerAddress;
 
   waitForAcrolinxPlugin(acrolinxPluginArg => {
     acrolinxPlugin = acrolinxPluginArg;
@@ -123,10 +89,8 @@ function main() {
     acrolinxPlugin.openWindow({url: 'https://www.acrolinx.com/'});
   }
 
-  function onSubmit(event: Event) {
-    event.preventDefault();
-
-    const newServerAddressResult = sanitizeAndValidateServerAddress(serverAddressField.value, {
+  function onSubmit(serverAddressInput: string) {
+    const newServerAddressResult = sanitizeAndValidateServerAddress(serverAddressInput, {
       enforceHTTPS: initParametersFromPlugin.enforceHTTPS,
       windowLocation: window.location
     });
@@ -153,11 +117,11 @@ function main() {
     const sidebarUrl = serverAddress + '/sidebar/v14/';
     const loadSidebarProps: LoadSidebarProps = {sidebarUrl, useMessageAdapter};
 
-    connectButton.disabled = true;
+    renderServerSelectorForm({isConnectButtonDisabled: true});
 
     loadSidebarIntoIFrame(loadSidebarProps, sidebarIFrameElement, (error) => {
       if (error) {
-        connectButton.disabled = false;
+        renderServerSelectorForm({isConnectButtonDisabled: false});
         onSidebarLoadError(serverAddress, error);
         return;
       }
@@ -209,16 +173,27 @@ function main() {
   }
 
   function showSidebarIFrame() {
-    hide(form);
+    hide(serverSelectorFormPage);
     show(sidebarContainer);
   }
 
   function showServerSelector() {
     sidebarContainer.innerHTML = '';
     hide(sidebarContainer);
-    show(form);
-    connectButton.disabled = false;
-    serverAddressField.focus();
+    show(serverSelectorFormPage);
+    focusAddressInputField(serverSelectorFormPage);
+    renderServerSelectorForm();
+  }
+
+  function renderServerSelectorForm(props: {isConnectButtonDisabled?: boolean} = {}) {
+    render(severSelectorFormComponent({
+      onSubmit: onSubmit,
+      onAboutLink,
+      onClickHeaderEl,
+      serverAddress,
+      enforceHTTPS: initParametersFromPlugin.enforceHTTPS,
+      isConnectButtonDisabled: props.isConnectButtonDisabled!!
+    }), serverSelectorFormPage, serverSelectorFormPage.firstChild as Element);
   }
 
   function showErrorMessage(message: string) {
@@ -234,17 +209,15 @@ function main() {
   function onInitFromPlugin(initParameters: InitParameters) {
     initParametersFromPlugin = initParameters;
     setLanguage(initParameters.clientLocale);
-    setupUiAccordingToInitParameters(initParameters);
 
     if (initParameters.showServerSelector) {
       if (oldServerAddress) {
         tryToLoadSidebar(oldServerAddress);
       } else {
         if (initParameters.serverAddress) {
-          serverAddressField.value = initParameters.serverAddress;
+          serverAddress = initParameters.serverAddress;
         }
-        show(form);
-        // onAboutLink();
+        showServerSelector();
       }
     } else {
       console.log('Load directly!');
@@ -253,20 +226,6 @@ function main() {
     }
 
   }
-
-  function setupUiAccordingToInitParameters(initParameters: InitParameters) {
-    const t = getTranslation().serverSelector;
-    loginHeaderEl.title = t.tooltip.headerLogo;
-
-    setInnerText(ID_SERVER_ADDRESS_TITLE_TEXT, t.title.serverAddress);
-    const httpsRequired = isHttpsRequired({enforceHTTPS: initParameters.enforceHTTPS, windowLocation: window.location});
-    setTooltip(ID_SERVER_ADDRESS_TITLE, httpsRequired ? t.tooltip.httpsRequired : '');
-    setDisplayed(document.getElementById(HTTP_REQUIRED_ICON)!, httpsRequired, 'inline-block');
-
-    serverAddressField.placeholder = t.placeHolder.serverAddress;
-    setInnerText(ID_CONNECT_BUTTON, t.button.connect);
-  }
-
 
   function onMessageFromSidebar(messageEvent: MessageEvent) {
     if (!sidebarIFrameElement || messageEvent.source !== sidebarIFrameElement.contentWindow) {
@@ -290,11 +249,11 @@ function main() {
   }
 
   function onRequestInit() {
-    sidebarProxy.acrolinxSidebar.init(hackInitParameters(initParametersFromPlugin, serverAddress));
+    sidebarProxy.acrolinxSidebar.init(hackInitParameters(initParametersFromPlugin, serverAddress!));
   }
 
   function onAboutLink() {
-    hide(form);
+    hide(serverSelectorFormPage);
     show(aboutPage);
     render(aboutComponent({
       onBack () {
