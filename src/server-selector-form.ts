@@ -44,7 +44,8 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
           ref: (inputEl: HTMLInputElement) => {
             this.serverAddressField = inputEl;
           },
-          defaultValue: props.serverAddress
+          defaultValue: props.serverAddress,
+          spellCheck: "false"
         }),
         div({className: 'buttonGroup'},
           button({
