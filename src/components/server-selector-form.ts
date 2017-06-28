@@ -1,7 +1,7 @@
 import {Component} from 'preact';
-import {createPreactFactory, h1, div, button, form, input, span, a} from "./utils/preact";
-import {getTranslation} from "./localization";
-import {isHttpsRequired} from "./utils/utils";
+import {createPreactFactory, h1, div, button, form, input, span, a} from "../utils/preact";
+import {getTranslation} from "../localization";
+import {isHttpsRequired} from "../utils/utils";
 
 interface SeverSelectorFormProps {
   onSubmit: (serverAddress: string) => void;

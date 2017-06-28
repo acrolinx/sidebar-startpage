@@ -18,9 +18,9 @@ import {getTranslation, setLanguage} from "./localization";
 import {sanitizeAndValidateServerAddress} from "./utils/validation";
 
 import {render} from 'preact';
-import {aboutComponent} from "./about";
+import {aboutComponent} from "./components/about";
 import {extendClientComponents, hackInitParameters} from "./init-parameters";
-import {focusAddressInputField, severSelectorFormComponent} from "./server-selector-form";
+import {focusAddressInputField, severSelectorFormComponent} from "./components/server-selector-form";
 
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 

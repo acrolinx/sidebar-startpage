@@ -1,8 +1,8 @@
 import {Component} from 'preact';
-import {createPreactFactory, h1, div, classNames, p, button} from "./utils/preact";
-import {getTranslation} from "./localization";
-import {SoftwareComponent} from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
-import {getCorsOrigin} from "./utils/utils";
+import {createPreactFactory, h1, div, classNames, p, button} from "../utils/preact";
+import {getTranslation} from "../localization";
+import {SoftwareComponent} from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
+import {getCorsOrigin} from "../utils/utils";
 
 interface AboutProps {
   onBack: Function;
