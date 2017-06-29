@@ -8,6 +8,7 @@ import {
   OpenWindowParameters,
 } from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 
+export const POLL_FOR_PLUGIN_INTERVAL_MS = 10;
 
 export interface ProxyAcrolinxPluginProps {
   requestInitListener: () => void;
@@ -74,6 +75,6 @@ export function waitForAcrolinxPlugin(callback: (acrolinxPlugin: AcrolinxPlugin)
   } else {
     setTimeout(() => {
       waitForAcrolinxPlugin(callback);
-    }, 1000);
+    }, POLL_FOR_PLUGIN_INTERVAL_MS);
   }
 }
