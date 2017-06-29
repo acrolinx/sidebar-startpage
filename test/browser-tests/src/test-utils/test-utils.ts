@@ -10,4 +10,11 @@ export function assertExistCount(jQuerySelector: any, expectedCount: number, mes
   assert.equal(realCount, expectedCount, message || `Element ${jQuerySelector} count(${realCount}) is not expected (${expectedCount}).`);
 }
 
+export function getExistingElement(jQuerySelector: string, message?: string) {
+  assertExistCount(jQuerySelector, 1, message);
+  return $(jQuerySelector);
+}
 
+export function simulateClick(jQuerySelector: any) {
+  getExistingElement(jQuerySelector).get(0).click();
+}

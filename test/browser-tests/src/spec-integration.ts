@@ -5,9 +5,9 @@ import {startMainController} from "../../../src/main-controller";
 import {
   AcrolinxSidebar, AcrolinxPlugin,
   InitParameters, InitResult, AcrolinxPluginConfiguration, Match, DownloadInfo, CheckResult, OpenWindowParameters,
-  MatchWithReplacement
+  MatchWithReplacement, SoftwareComponent, SoftwareComponentCategory
 } from "../../../src/acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
-import {assertExistCount} from "./test-utils/test-utils";
+import {assertExistCount, simulateClick} from "./test-utils/test-utils";
 import {POLL_FOR_PLUGIN_INTERVAL_MS} from "../../../src/proxies/proxy-acrolinx-plugin";
 
 type AugmentedWindow = Window & {
@@ -25,7 +25,6 @@ describe('integration-tests', () => {
     localStorage.clear();
     $('#app').remove();
     $('body').append('<div id="app">Loading</div>');
-    startMainController();
   });
 
   afterEach(function() {
@@ -70,17 +69,38 @@ describe('integration-tests', () => {
       }
 
     };
+    startMainController();
+    wait(POLL_FOR_PLUGIN_INTERVAL_MS);
   };
 
 
   it('Injects windowAny.acrolinxSidebar', () => {
+    startMainController();
     assert.isObject(augmentedWindow.acrolinxSidebar);
   });
 
   it('shows showServerSelector after init if requested', () => {
     init({showServerSelector: true});
-    wait(POLL_FOR_PLUGIN_INTERVAL_MS);
     assertExistCount('.submitButton', 1);
+  });
+
+  describe('about page', () => {
+    it('shows client components', () => {
+      const pluginClientComponent: SoftwareComponent = {
+        id: 'dummyId',
+        version: '1.2.3.4',
+        name: 'dummyName',
+        category: SoftwareComponentCategory.MAIN
+      };
+
+      init({showServerSelector: true, clientComponents: [pluginClientComponent]});
+      simulateClick('a:contains("About Acrolinx")');
+
+      const aboutItems = $('.about-item');
+      assert.equal(aboutItems.length, 3); // pluginClientComponent + Server Selector Version + Cors Origin
+      assert.equal($('.about-tab-label', aboutItems.get(0)).text(), pluginClientComponent.name);
+      assert.equal($('.about-tab-value', aboutItems.get(0)).text(), pluginClientComponent.version);
+    });
   });
 
 
