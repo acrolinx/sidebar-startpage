@@ -3,7 +3,6 @@ const istanbul = require('browserify-istanbul');
 
 module.exports = function(config) {
   const TMP_REPORTS_COVERAGE = "tmp/reports/coverage";
-  const TMP_COMPILED_TS = "tmp/compiled/test/browser-tests/src/index.js";
   const TMP_COMPILED_TS_PATTERN = "tmp/compiled/**/*.js";
 
   config.set({
@@ -19,12 +18,14 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      TMP_COMPILED_TS_PATTERN
+      TMP_COMPILED_TS_PATTERN,
+      {pattern: 'test/browser-tests/dummy-sidebar/**/*', included: false},
     ],
 
 
     // list of files to exclude
     exclude: [
+      "tmp/compiled/src/main.js"
     ],
 
 

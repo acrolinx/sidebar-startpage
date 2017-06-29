@@ -17,6 +17,8 @@ import {
 } from "../../../src/acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 import {assertExistCount, getExistingElement, simulateClick} from "./test-utils/test-utils";
 import {POLL_FOR_PLUGIN_INTERVAL_MS} from "../../../src/proxies/proxy-acrolinx-plugin";
+import {getTranslation} from "../../../src/localization";
+import {startsWith} from "../../../src/utils/utils";
 
 type AugmentedWindow = Window & {
   acrolinxSidebar: AcrolinxSidebar;
@@ -39,7 +41,7 @@ describe('integration-tests', () => {
     $('body').append('<div id="app">Loading</div>');
   });
 
-  afterEach(function() {
+  afterEach(() => {
     clock.restore();
   });
 
@@ -96,6 +98,45 @@ describe('integration-tests', () => {
   it('shows showServerSelector after init if requested', () => {
     init({showServerSelector: true});
     assertExistCount('.submitButton', 1);
+  });
+
+  describe('server selector form', () => {
+    it('validate server address for invalid URLS', () => {
+      init({showServerSelector: true});
+
+      $('.serverAddress').val('!');
+      simulateClick('.submitButton');
+
+      assert.equal($('#errorMessage').text(), getTranslation().serverSelector.message.invalidServerAddress);
+    });
+
+    it('display connection problems', (done) => {
+      init({showServerSelector: true});
+
+      $('.serverAddress').val('http://not-existing-local-domain');
+      simulateClick('.submitButton');
+
+      clock.restore();
+      setTimeout(() => {
+        assert.equal($('#errorMessage').text(), getTranslation().serverSelector.message.serverConnectionProblemHttp);
+        done();
+      }, 500);
+    });
+
+    it('load dummy sidebar', (done) => {
+      init({showServerSelector: true});
+
+      const serverAddress = (startsWith(window.location.pathname, '/test/') ? '' : '/base') + '/test/browser-tests/dummy-sidebar';
+      $('.serverAddress').val(serverAddress);
+      simulateClick('.submitButton');
+
+      clock.restore();
+      setTimeout(() => {
+        const sidebarIFrame = getExistingElement('#sidebarContainer iframe').get(0) as HTMLIFrameElement;
+        assert.equal(sidebarIFrame.contentWindow.document.body.innerText, 'Dummy Sidebar');
+        done();
+      }, 500);
+    });
   });
 
   describe('about page', () => {
