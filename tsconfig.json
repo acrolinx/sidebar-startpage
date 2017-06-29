@@ -12,7 +12,8 @@
     "outDir": "tmp/compiled",
     "sourceMap": true,
     "module": "commonjs",
-    "lib": ["ES5","DOM", "ES2015.Collection"] /* ES2015.Collection is just needed to make sinon happy */
+    "lib": ["ES5","DOM", "ES2015.Collection"] /* ES2015.Collection is just needed to make sinon happy */,
+    "importHelpers": true
   },
   "exclude": [
     "node_modules",

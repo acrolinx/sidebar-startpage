@@ -73,6 +73,7 @@
     "watchify": "^3.9.0"
   },
   "dependencies": {
-    "preact": "8.1.0"
+    "preact": "8.1.0",
+    "tslib": "^1.7.1"
   }
 }
