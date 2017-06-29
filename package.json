@@ -41,9 +41,9 @@
     "dist"
   ],
   "devDependencies": {
-    "@types/chai": "^3.4.35",
-    "@types/jquery": "^3.2.5",
-    "@types/mocha": "^2.2.39",
+    "@types/chai": "3.4.35",
+    "@types/jquery": "2.0.47",
+    "@types/mocha": "2.2.39",
     "bower": "^1.8.0",
     "browser-sync": "^2.18.8",
     "browserify": "^14.1.0",
