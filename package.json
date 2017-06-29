@@ -42,6 +42,7 @@
   ],
   "devDependencies": {
     "@types/chai": "^3.4.35",
+    "@types/jquery": "^3.2.5",
     "@types/mocha": "^2.2.39",
     "bower": "^1.8.0",
     "browser-sync": "^2.18.8",
@@ -52,6 +53,7 @@
     "cookie": "^0.3.1",
     "hashcat": "^0.3.1",
     "inliner": "1.10.2",
+    "jquery": "^3.2.1",
     "karma": "^1.7.0",
     "karma-browserify": "^5.1.1",
     "karma-coverage": "^1.1.1",
