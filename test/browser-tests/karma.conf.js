@@ -56,6 +56,11 @@ module.exports = function(config) {
       ]
     },
 
+    // the default configuration
+    junitReporter: {
+      outputDir: 'tmp/reports/junit',
+    },
+
     // web server port
     port: 9876,
 
