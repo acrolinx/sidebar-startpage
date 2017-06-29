@@ -3,18 +3,30 @@ import * as $ from "jquery";
 import * as sinon from "sinon";
 import {startMainController} from "../../../src/main-controller";
 import {
-  AcrolinxSidebar, AcrolinxPlugin,
-  InitParameters, InitResult, AcrolinxPluginConfiguration, Match, DownloadInfo, CheckResult, OpenWindowParameters,
-  MatchWithReplacement, SoftwareComponent, SoftwareComponentCategory
+  AcrolinxPlugin,
+  AcrolinxPluginConfiguration,
+  AcrolinxSidebar,
+  CheckResult,
+  DownloadInfo,
+  InitParameters,
+  InitResult,
+  Match,
+  MatchWithReplacement,
+  SoftwareComponent,
+  SoftwareComponentCategory
 } from "../../../src/acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
-import {assertExistCount, simulateClick} from "./test-utils/test-utils";
+import {assertExistCount, getExistingElement, simulateClick} from "./test-utils/test-utils";
 import {POLL_FOR_PLUGIN_INTERVAL_MS} from "../../../src/proxies/proxy-acrolinx-plugin";
 
 type AugmentedWindow = Window & {
   acrolinxSidebar: AcrolinxSidebar;
-  acrolinxPlugin: AcrolinxPlugin;
+  acrolinxPlugin: MockedAcrolinxPlugin;
 };
 
+interface MockedAcrolinxPlugin extends AcrolinxPlugin {
+  openLogFileSpy: sinon.SinonSpy;
+  openWindowSpy: sinon.SinonSpy;
+}
 
 describe('integration-tests', () => {
   const augmentedWindow = window as AugmentedWindow;
@@ -36,7 +48,13 @@ describe('integration-tests', () => {
   }
 
   function init(initParameters: InitParameters) {
+    const openLogFile = sinon.spy();
+    const openWindow = sinon.spy();
+
     augmentedWindow.acrolinxPlugin = {
+      openLogFileSpy: openLogFile,
+      openWindowSpy: openWindow,
+
       requestInit() {
         augmentedWindow.acrolinxSidebar.init(initParameters);
       },
@@ -62,12 +80,8 @@ describe('integration-tests', () => {
       download(_downloadInfo: DownloadInfo) {
       },
 
-      openWindow(_openWindowParameters: OpenWindowParameters) {
-      },
-
-      openLogFile() {
-      }
-
+      openWindow,
+      openLogFile
     };
     startMainController();
     wait(POLL_FOR_PLUGIN_INTERVAL_MS);
@@ -101,6 +115,47 @@ describe('integration-tests', () => {
       assert.equal($('.about-tab-label', aboutItems.get(0)).text(), pluginClientComponent.name);
       assert.equal($('.about-tab-value', aboutItems.get(0)).text(), pluginClientComponent.version);
     });
+
+    describe('shoe log file path section if requried', () => {
+      const DUMMY_LOG_FILE_LOCATION = 'dummyLogFileLocation';
+
+      beforeEach(() => {
+        init({showServerSelector: true, logFileLocation: DUMMY_LOG_FILE_LOCATION});
+        simulateClick('a:contains("About Acrolinx")');
+      });
+
+      it('shows log path', () => {
+        simulateClick('button:contains("Open Log File")');
+        assert.equal(augmentedWindow.acrolinxPlugin.openLogFileSpy.callCount, 1);
+        assert.equal(getExistingElement('.logfileLocationValue').text(), DUMMY_LOG_FILE_LOCATION);
+      });
+
+      it('select log path on click', () => {
+        simulateClick('button:contains("Open Log File")');
+        assert.equal(augmentedWindow.acrolinxPlugin.openLogFileSpy.callCount, 1);
+        simulateClick('.logfileLocationValue');
+        const selectedText = window.getSelection().toString();
+        assert.equal(selectedText, DUMMY_LOG_FILE_LOCATION);
+      });
+
+      it('open log file', () => {
+        simulateClick('button:contains("Open Log File")');
+        assert.equal(augmentedWindow.acrolinxPlugin.openLogFileSpy.callCount, 1);
+      });
+
+    });
+
+
+    it('click help', () => {
+      init({showServerSelector: true, logFileLocation: 'dummyLogFileLocation'});
+      simulateClick('a:contains("About Acrolinx")');
+
+      simulateClick('a:contains("Need help?")');
+      assert.equal(augmentedWindow.acrolinxPlugin.openWindowSpy.callCount, 1);
+      assert.deepEqual(augmentedWindow.acrolinxPlugin.openWindowSpy.args[0][0], {url: 'http://www.sternenlaub.de'});
+
+    });
+
   });
 
 
