@@ -6,7 +6,7 @@ dist
 app/scripts
 app/styles/index.css
 app/version.properties
-
+TESTS-PhantomJS*
 
 # bower components and cache
 bower_components

@@ -17,5 +17,5 @@ describe('sidebar-loader', () => {
       assert.deepEqual(getSidebarVersion('<html><meta name="sidebar-version" content="14.2.2"></html> '), [14, 2, 2] as [number, number, number]);
     });
 
-  })
+  });
 });
