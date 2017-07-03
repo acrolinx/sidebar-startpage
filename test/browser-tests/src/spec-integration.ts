@@ -19,6 +19,7 @@ import {assertExistCount, getExistingElement, simulateClick} from "./test-utils/
 import {POLL_FOR_PLUGIN_INTERVAL_MS} from "../../../src/proxies/proxy-acrolinx-plugin";
 import {getTranslation} from "../../../src/localization";
 import {startsWith} from "../../../src/utils/utils";
+import {HELP_LINK_URL} from "../../../src/components/about";
 
 type AugmentedWindow = Window & {
   acrolinxSidebar: AcrolinxSidebar;
@@ -157,7 +158,7 @@ describe('integration-tests', () => {
       assert.equal($('.about-tab-value', aboutItems.get(0)).text(), pluginClientComponent.version);
     });
 
-    describe('shoe log file path section if requried', () => {
+    describe('shoe log file path section if required', () => {
       const DUMMY_LOG_FILE_LOCATION = 'dummyLogFileLocation';
 
       beforeEach(() => {
@@ -193,7 +194,7 @@ describe('integration-tests', () => {
 
       simulateClick('a:contains("Need help?")');
       assert.equal(augmentedWindow.acrolinxPlugin.openWindowSpy.callCount, 1);
-      assert.deepEqual(augmentedWindow.acrolinxPlugin.openWindowSpy.args[0][0], {url: 'http://www.sternenlaub.de'});
+      assert.deepEqual(augmentedWindow.acrolinxPlugin.openWindowSpy.args[0][0], {url: HELP_LINK_URL});
 
     });
 

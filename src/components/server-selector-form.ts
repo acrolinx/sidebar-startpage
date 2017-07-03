@@ -14,6 +14,7 @@ interface SeverSelectorFormProps {
 }
 
 const SERVER_ADDRESS_INPUT_FIELD_CLASS = 'serverAddress';
+const CANT_CONNECT_HELP_LINK_URL = 'https://support.acrolinx.com/hc/en-us/articles/115004045529';
 
 class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
   serverAddressField: HTMLInputElement;
@@ -49,7 +50,7 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
         }),
         div({className: 'buttonGroup'},
           externalTextLink({
-            url: 'https://blog.fefe.de',
+            url: CANT_CONNECT_HELP_LINK_URL,
             openWindow: props.openWindow,
             text: "Can't connect?"
           }),

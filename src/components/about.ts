@@ -13,6 +13,8 @@ interface AboutProps {
   openWindow: OpenWindowFunction;
 }
 
+export const HELP_LINK_URL = 'https://support.acrolinx.com/hc/en-us/sections/201284252';
+
 function aboutInfoLine(component: SoftwareComponent) {
   return div({className: 'about-item', key: component.id},
     div({className: 'about-tab-label'}, component.name),
@@ -65,7 +67,7 @@ class AboutComponent extends Component<AboutProps, {}> {
             )
           ) : [],
         externalTextLink({
-          url: 'http://www.sternenlaub.de',
+          url: HELP_LINK_URL,
           openWindow: props.openWindow,
           text: "Need help?"
         })
