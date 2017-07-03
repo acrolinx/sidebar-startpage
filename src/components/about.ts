@@ -1,8 +1,11 @@
 import {Component} from 'preact';
 import {createPreactFactory, h1, div, classNames, p, button, span} from "../utils/preact";
 import {getTranslation} from "../localization";
-import {SoftwareComponent} from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
-import {getCorsOrigin} from "../utils/utils";
+import {
+  SoftwareComponent,
+  SoftwareComponentCategory
+} from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
+import {getCorsOrigin, sortBy} from "../utils/utils";
 import {externalTextLink, OpenWindowFunction} from "./external-text-link";
 
 interface AboutProps {
@@ -21,13 +24,27 @@ function aboutInfoLine(component: SoftwareComponent) {
     div({className: 'about-tab-value', title: component.version}, component.version));
 }
 
-function getCorsOriginComponent(): SoftwareComponent {
-  return {
-    id: "sidebarCorsOrigin",
-    name: 'Start Page Cors Origin',
-    version: getCorsOrigin()
-  };
+function getSortKey(softwareComponent: SoftwareComponent) {
+  const prefix = (softwareComponent.category === SoftwareComponentCategory.MAIN) ? '1' : '2';
+  return prefix + softwareComponent.name.toLowerCase();
 }
+
+function getAdditionalComponents(): SoftwareComponent[] {
+  return [
+    {
+      id: 'com.acrolinx.userAgent',
+      name: navigator.userAgent,
+      version: '',
+      category: SoftwareComponentCategory.DETAIL
+    },
+    {
+      id: "com.acrolinx.startPageCorsOrigin",
+      name: 'Start Page Cors Origin',
+      version: getCorsOrigin()
+    }
+  ];
+}
+
 
 class AboutComponent extends Component<AboutProps, {}> {
   selectLogFileLocationValue = (event: Event) => {
@@ -42,6 +59,7 @@ class AboutComponent extends Component<AboutProps, {}> {
   render() {
     const t = getTranslation().serverSelector;
     const props = this.props;
+    const allComponentsSorted = sortBy(this.props.clientComponents.concat(getAdditionalComponents()), getSortKey);
     return div({className: 'aboutComponent'},
       div({
         className: classNames('aboutHeader'),
@@ -50,7 +68,7 @@ class AboutComponent extends Component<AboutProps, {}> {
       div({className: 'aboutBody'},
         div({className: 'aboutMain'},
           h1({}, 'About'),
-          props.clientComponents.concat(getCorsOriginComponent()).map(aboutInfoLine)
+          allComponentsSorted.map(aboutInfoLine)
         ),
         props.logFileLocation ?
           div({className: 'logFileContent'},

@@ -153,7 +153,7 @@ describe('integration-tests', () => {
       simulateClick('a:contains("About Acrolinx")');
 
       const aboutItems = $('.about-item');
-      assert.equal(aboutItems.length, 3); // pluginClientComponent + Server Selector Version + Cors Origin
+      assert.equal(aboutItems.length, 4); // pluginClientComponent + Server Selector Version + Cors Origin
       assert.equal($('.about-tab-label', aboutItems.get(0)).text(), pluginClientComponent.name);
       assert.equal($('.about-tab-value', aboutItems.get(0)).text(), pluginClientComponent.version);
     });
