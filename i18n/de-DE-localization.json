@@ -4,6 +4,9 @@
       "connect": "Verbinden",
       "openLogFile": "Protokolldatei \u00f6ffnen"
     },
+    "links": {
+      "about": "\u00dcber Acrolinx"
+    },
     "message": {
       "invalidServerAddress": "Diese Adresse scheint nicht korrekt zu sein. \u00dcberpr\u00fcfen Sie die eingegebene Adresse und versuchen Sie es erneut.",
       "serverConnectionProblemHttps": "Wir konnten keine Verbindung zum Server herstellen.\n\nEntweder akzeptiert Ihr Server keine sicheren Verbindungen oder er ist nicht aktiviert.\n\nWenn Sie Acrolinx in einer Webanwendung nutzen, ist Ihr Server m\u00f6glicherweise nicht f\u00fcr Cross-Origin Resource Sharing (CORS) eingerichtet.\n\nWenn Sie sicher sind, dass Sie die korrekte Adresse eingegeben haben, bitten Sie Ihren Serveradministrator, die Verf\u00fcgbarkeit Ihres Servers zu \u00fcberpr\u00fcfen.",
@@ -13,11 +16,11 @@
       "serverAddress": "Acrolinx Serveradresse"
     },
     "title": {
+      "about": "\u00dcber",
       "logFile": "Protokolldatei",
       "serverAddress": "Serveradresse"
     },
     "tooltip": {
-      "headerLogo": "www.acrolinx.com",
       "httpsRequired": "Sie m\u00fcssen sich mit einem sicheren Server verbinden. Eine sichere Serveradresse beginnt mit \"https\"."
     }
   }
