@@ -14,6 +14,7 @@ export const p = createPreactFactory('p');
 export const form = createPreactFactory('form');
 export const a = createPreactFactory('a');
 export const input = createPreactFactory('input');
+export const textarea = createPreactFactory('textarea');
 
 export function classNames(...args: ({ [className: string]: (boolean | undefined) } | string | undefined)[]) {
   const classes: string[] = [];

@@ -119,7 +119,7 @@ describe('integration-tests', () => {
 
       clock.restore();
       setTimeout(() => {
-        assert.equal($('#errorMessage').text(), getTranslation().serverSelector.message.serverConnectionProblemHttp);
+        assert.equal($('.errorMessageMain').text(), getTranslation().serverSelector.message.serverConnectionProblemHttp);
         done();
       }, 500);
     });

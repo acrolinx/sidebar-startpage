@@ -1,5 +1,5 @@
 import {
-  $, $byId, getDefaultServerAddress, hide, isHttpUrl, show,
+  $, $byId, getCorsOrigin, getDefaultServerAddress, hide, isHttpUrl, show,
   startsWithAnyOf
 } from "./utils/utils";
 import {
@@ -21,16 +21,18 @@ import {render} from 'preact';
 import {aboutComponent} from "./components/about";
 import {extendClientComponents, hackInitParameters} from "./init-parameters";
 import {focusAddressInputField, severSelectorFormComponent} from "./components/server-selector-form";
+import {errorMessageComponent, ErrorMessageProps} from "./components/error-message";
 
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 
 const ABOUT_PAGE_ID = 'aboutPage';
 const SERVER_SELECTOR_FORM_PAGE_ID = 'serverSelectorFormPage';
+const ERROR_MESSAGE_CONTAINER_ID = 'errorMessage';
 
 const TEMPLATE = `
   <div id="${SERVER_SELECTOR_FORM_PAGE_ID}" style="display: none"></div>
   <div id="${ABOUT_PAGE_ID}" style="display: none"></div>
-  <div id="errorMessage" style="display: none"></div>
+  <div id="${ERROR_MESSAGE_CONTAINER_ID}" style="display: none"></div>
   <div id="sidebarContainer"></div>
 `;
 
@@ -54,7 +56,7 @@ export function startMainController() {
   appElement.innerHTML = TEMPLATE;
 
   const sidebarContainer = $('#sidebarContainer')!;
-  const errorMessageEl = $('#errorMessage')!;
+  const errorMessageEl = $byId(ERROR_MESSAGE_CONTAINER_ID)!;
 
   const aboutPage = $byId(ABOUT_PAGE_ID)!;
 
@@ -101,7 +103,7 @@ export function startMainController() {
         tryToLoadSidebar(serverAddress);
       },
       err: errorMessage => {
-        showErrorMessage(errorMessage);
+        showErrorMessage(simpleErrorMessage(errorMessage));
       }
     });
   }
@@ -149,18 +151,30 @@ export function startMainController() {
 
   }
 
-  function getSidebarLoadErrorMessage(serverAddress: string, error: LoadSidebarError) {
+  function simpleErrorMessage(message: string): ErrorMessageProps {
+    return {message};
+  }
+
+  function errorMessageWithCorsDetails(message: string): ErrorMessageProps {
+    const t = getTranslation();
+    return {
+      message: message,
+      detailedMessage: t.serverSelector.aboutItems.startPageCorsOrigin + '\n' + getCorsOrigin()
+    };
+  }
+
+  function getSidebarLoadErrorMessage(serverAddress: string, error: LoadSidebarError): ErrorMessageProps {
     const errorMessages = getTranslation().serverSelector.message;
     switch (error.acrolinxErrorCode) {
       case 'httpErrorStatus':
       case 'noSidebar':
-        return errorMessages.serverIsNoAcrolinxServerOrHasNoSidebar;
+        return simpleErrorMessage(errorMessages.serverIsNoAcrolinxServerOrHasNoSidebar);
       case 'noCloudSidebar':
-        return errorMessages.noCloudSidebar;
+        return simpleErrorMessage(errorMessages.noCloudSidebar);
       case 'timeout':
-        return isHttpUrl(serverAddress) ? errorMessages.serverConnectionProblemTimeoutHttp : errorMessages.serverConnectionProblemTimeoutHttps;
+        return simpleErrorMessage(isHttpUrl(serverAddress) ? errorMessages.serverConnectionProblemTimeoutHttp : errorMessages.serverConnectionProblemTimeoutHttps);
       default:
-        return isHttpUrl(serverAddress) ? errorMessages.serverConnectionProblemHttp : errorMessages.serverConnectionProblemHttps;
+        return errorMessageWithCorsDetails(isHttpUrl(serverAddress) ? errorMessages.serverConnectionProblemHttp : errorMessages.serverConnectionProblemHttps);
     }
   }
 
@@ -184,7 +198,7 @@ export function startMainController() {
     renderServerSelectorForm();
   }
 
-  function renderServerSelectorForm(props: {isConnectButtonDisabled?: boolean} = {}) {
+  function renderServerSelectorForm(props: { isConnectButtonDisabled?: boolean } = {}) {
     render(severSelectorFormComponent({
       onSubmit: onSubmit,
       onAboutLink,
@@ -195,14 +209,14 @@ export function startMainController() {
     }), serverSelectorFormPage, serverSelectorFormPage.firstChild as Element);
   }
 
-  function showErrorMessage(message: string) {
-    errorMessageEl.textContent = message;
+  function showErrorMessage(errorMessageProps: ErrorMessageProps) {
     show(errorMessageEl);
+    render(errorMessageComponent(errorMessageProps), errorMessageEl, errorMessageEl.firstChild as Element);
   }
 
   function removeErrorMessage() {
     hide(errorMessageEl);
-    errorMessageEl.textContent = '';
+    errorMessageEl.innerHTML = '';
   }
 
   function onInitFromPlugin(initParameters: InitParameters) {

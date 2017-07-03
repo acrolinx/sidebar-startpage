@@ -1,0 +1,41 @@
+.errorMessage {
+  .horizontalPageMargins();
+  font-size: 13px;
+  margin-top: 1em;
+  font-weight: 400;
+
+  .errorMessageMain {
+    padding: 15px;
+    color: #fff;
+    border-radius: 4px;
+    background-color: @acroRed;
+  }
+
+  .detailedErrorSection {
+    text-align: right;
+
+    .detailsButton {
+      display: inline-block;
+      color: @acroRed;
+      text-align: right;
+      cursor: pointer;
+      line-height: 30px;
+    }
+
+    textarea {
+      display: block;
+      width: 100%;
+      text-align: left;
+      height: 5em;
+      resize: none;
+      padding: 15px;
+      &:focus {
+        outline: none ;
+        border:1px solid @acroBlue;
+        box-shadow: none;
+      }
+    }
+
+  }
+
+}
