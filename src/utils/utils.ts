@@ -151,10 +151,10 @@ export function getCorsOrigin() {
 
 export function sortBy<T>(array: T[], getSortKey:  (el: T) => string) {
   const cloned_array = array.slice();
-  cloned_array.sort((a,b) => {
+  cloned_array.sort((a, b) => {
     const sortKeyA = getSortKey(a);
     const sortKeyB = getSortKey(b);
     return sortKeyA.localeCompare(sortKeyB);
-  })
+  });
   return cloned_array;
 }
