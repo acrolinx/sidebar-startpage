@@ -1,5 +1,5 @@
-import {Component} from 'preact';
-import {createPreactFactory, h1, div, classNames, p, button, span} from "../utils/preact";
+import {Component} from "preact";
+import {button, classNames, createPreactFactory, div, h1, span} from "../utils/preact";
 import {getTranslation} from "../localization";
 import {
   SoftwareComponent,
@@ -47,15 +47,6 @@ function getAdditionalComponents(): SoftwareComponent[] {
 
 
 class AboutComponent extends Component<AboutProps, {}> {
-  selectLogFileLocationValue = (event: Event) => {
-    event.preventDefault();
-    const selection = window.getSelection();
-    const range = document.createRange();
-    range.selectNodeContents(event.srcElement!);
-    selection.removeAllRanges();
-    selection.addRange(range);
-  }
-
   render() {
     const t = getTranslation().serverSelector;
     const props = this.props;
@@ -69,27 +60,25 @@ class AboutComponent extends Component<AboutProps, {}> {
         div({className: 'aboutMain'},
           h1({}, 'About'),
           allComponentsSorted.map(aboutInfoLine)
-        ),
+        )
+      ),
+      div({className: 'aboutFooter'},
         props.logFileLocation ?
-          div({className: 'logFileContent'},
-            h1({}, t.title.logFile),
-            p({
-              className: 'logfileLocationValue',
-              onClick: this.selectLogFileLocationValue
-            }, props.logFileLocation),
-            div({className: 'buttonGroup'},
-              button({
-                className: "submitButton",
-                onClick: props.openLogFile
-              }, t.button.openLogFile)
-            )
-          ) : [],
+          div({className: 'buttonGroup logFileSection'},
+            span({className: 'openLogFileTitle'}, t.title.logFile),
+            button({
+              className: "submitButton",
+              onClick: props.openLogFile
+            }, t.button.openLogFile)
+          )
+          : [],
         externalTextLink({
           url: HELP_LINK_URL,
           openWindow: props.openWindow,
           text: "Need help?"
         })
-      ));
+      )
+    );
   }
 }
 

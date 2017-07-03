@@ -25,20 +25,35 @@
   }
 }
 
-
 .aboutBody {
   flex-grow: 1;
   overflow-y: auto;
   padding-bottom: 15px;
+  .bottomGreyBorder();
+}
+
+.aboutFooter {
+  .logFileSection {
+    .bottomGreyBorder();
+
+    .openLogFileTitle {
+      float: left;
+    }
+    padding: @horizontalPageMargin;
+  }
+
+  .externalTextLink {
+    display: block;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
 }
 
 .aboutMain {
   .horizontalPageMargins();
 }
 
-.logFileContent{
-  .horizontalPageMargins();
-}
+
 
 .logfileLocationValue {
   word-break: break-all;

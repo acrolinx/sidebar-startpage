@@ -141,14 +141,15 @@ describe('integration-tests', () => {
   });
 
   describe('about page', () => {
-    it('shows client components', () => {
-      const pluginClientComponent: SoftwareComponent = {
-        id: 'dummyId',
-        version: '1.2.3.4',
-        name: 'dummyName',
-        category: SoftwareComponentCategory.MAIN
-      };
+    const openLogFileButtonSelector = 'button:contains("Open Log File")';
+    const pluginClientComponent: SoftwareComponent = {
+      id: 'dummyId',
+      version: '1.2.3.4',
+      name: 'dummyName',
+      category: SoftwareComponentCategory.MAIN
+    };
 
+    it('shows client components', () => {
       init({showServerSelector: true, clientComponents: [pluginClientComponent]});
       simulateClick('a:contains("About Acrolinx")');
 
@@ -156,9 +157,18 @@ describe('integration-tests', () => {
       assert.equal(aboutItems.length, 4); // pluginClientComponent + Server Selector Version + Cors Origin
       assert.equal($('.about-tab-label', aboutItems.get(0)).text(), pluginClientComponent.name);
       assert.equal($('.about-tab-value', aboutItems.get(0)).text(), pluginClientComponent.version);
+
+      // do not
+      assertExistCount(openLogFileButtonSelector, 0);
     });
 
-    describe('shoe log file path section if required', () => {
+    it('do not show openLogFile if not requested', () => {
+      init({showServerSelector: true, clientComponents: [pluginClientComponent]});
+      simulateClick('a:contains("About Acrolinx")');
+      assertExistCount(openLogFileButtonSelector, 0);
+    });
+
+    describe('shows log file path section if required', () => {
       const DUMMY_LOG_FILE_LOCATION = 'dummyLogFileLocation';
 
       beforeEach(() => {
@@ -166,22 +176,8 @@ describe('integration-tests', () => {
         simulateClick('a:contains("About Acrolinx")');
       });
 
-      it('shows log path', () => {
-        simulateClick('button:contains("Open Log File")');
-        assert.equal(augmentedWindow.acrolinxPlugin.openLogFileSpy.callCount, 1);
-        assert.equal(getExistingElement('.logfileLocationValue').text(), DUMMY_LOG_FILE_LOCATION);
-      });
-
-      it('select log path on click', () => {
-        simulateClick('button:contains("Open Log File")');
-        assert.equal(augmentedWindow.acrolinxPlugin.openLogFileSpy.callCount, 1);
-        simulateClick('.logfileLocationValue');
-        const selectedText = window.getSelection().toString();
-        assert.equal(selectedText, DUMMY_LOG_FILE_LOCATION);
-      });
-
       it('open log file', () => {
-        simulateClick('button:contains("Open Log File")');
+        simulateClick(openLogFileButtonSelector);
         assert.equal(augmentedWindow.acrolinxPlugin.openLogFileSpy.callCount, 1);
       });
 
