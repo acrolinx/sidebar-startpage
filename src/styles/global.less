@@ -34,7 +34,10 @@ a {
 
 .buttonGroup {
   text-align: right;
+  line-height: @BUTTON_LINE_HEIGHT;
 }
+
+@BUTTON_LINE_HEIGHT: 27px;
 
 .submitButton {
   font-size: 12px;
@@ -42,7 +45,7 @@ a {
   font-family: 'Roboto', 'Arial', sans-serif;
   border-radius: 2px;
   padding: 0 10px;
-  line-height: 27px;
+  line-height: @BUTTON_LINE_HEIGHT;
   background-color: @acroBlue;
   color: #fff;
   border: none;
