@@ -10,13 +10,20 @@
 }
 
 .aboutHeader {
+  .logoHeader();
   .bottomGreyBorder();
-  background-position-x: @horizontalPageMargin;
-  background-position-y: center;
-  cursor: pointer;
-  height: 50px;
   flex-shrink: 0;
+  background-position-x: @horizontalPageMargin+32px;
+
+  .icon-arrow-back {
+    display: inline-block;
+    margin-left: @horizontalPageMargin;
+    background-position-y: center;
+    height: 55px;
+    width: 24px;
+  }
 }
+
 
 .aboutBody {
   flex-grow: 1;

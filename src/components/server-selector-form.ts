@@ -33,7 +33,7 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
     const httpsRequired = isHttpsRequired({enforceHTTPS: props.enforceHTTPS, windowLocation: window.location});
     return form({onSubmit: this.onSubmit},
       div({
-        className: 'loginHeader',
+        className: 'logoHeader',
         title: t.tooltip.headerLogo,
         onClick: this.onClickHeader,
       }),

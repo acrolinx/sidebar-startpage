@@ -1,5 +1,5 @@
 import {Component} from 'preact';
-import {createPreactFactory, h1, div, classNames, p, button} from "../utils/preact";
+import {createPreactFactory, h1, div, classNames, p, button, span} from "../utils/preact";
 import {getTranslation} from "../localization";
 import {SoftwareComponent} from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 import {getCorsOrigin} from "../utils/utils";
@@ -42,9 +42,9 @@ class AboutComponent extends Component<AboutProps, {}> {
     const props = this.props;
     return div({className: 'aboutComponent'},
       div({
-        className: classNames('aboutHeader', 'icon-arrow-back'),
+        className: classNames('aboutHeader'),
         onClick: props.onBack,
-      }),
+      }, span({className: 'icon-arrow-back'})),
       div({className: 'aboutBody'},
         div({className: 'aboutMain'},
           h1({}, 'About'),
