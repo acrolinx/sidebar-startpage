@@ -30,17 +30,19 @@ function getSortKey(softwareComponent: SoftwareComponent) {
 }
 
 function getAdditionalComponents(): SoftwareComponent[] {
+  const t = getTranslation().serverSelector;
   return [
     {
       id: 'com.acrolinx.userAgent',
-      name: navigator.userAgent,
-      version: '',
+      name: t.aboutItems.browserInformation,
+      version: navigator.userAgent,
       category: SoftwareComponentCategory.DETAIL
     },
     {
       id: "com.acrolinx.startPageCorsOrigin",
-      name: 'Start Page Cors Origin',
-      version: getCorsOrigin()
+      name: t.aboutItems.startPageCorsOrigin,
+      version: getCorsOrigin(),
+      category: SoftwareComponentCategory.DETAIL
     }
   ];
 }
@@ -58,7 +60,7 @@ class AboutComponent extends Component<AboutProps, {}> {
       }, span({className: 'icon-arrow-back'})),
       div({className: 'aboutBody'},
         div({className: 'aboutMain'},
-          h1({}, 'About'),
+          h1({}, t.title.about),
           allComponentsSorted.map(aboutInfoLine)
         )
       ),
@@ -75,7 +77,7 @@ class AboutComponent extends Component<AboutProps, {}> {
         externalTextLink({
           url: HELP_LINK_URL,
           openWindow: props.openWindow,
-          text: "Need help?"
+          text: t.links.needHelp
         })
       )
     );

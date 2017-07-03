@@ -52,7 +52,7 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
           externalTextLink({
             url: CANT_CONNECT_HELP_LINK_URL,
             openWindow: props.openWindow,
-            text: "Can't connect?"
+            text: t.links.cantConnect
           }),
           button({
             type: 'submit',
@@ -60,7 +60,7 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
             disabled: props.isConnectButtonDisabled
           }, t.button.connect)
         ),
-        a({onClick: props.onAboutLink, href: '#'}, 'About Acrolinx')
+        a({onClick: props.onAboutLink, href: '#'}, t.links.about)
       ));
   }
 }

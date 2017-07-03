@@ -19,10 +19,20 @@
     },
     "title": {
       "logFile": "Log File",
-      "serverAddress": "Server Address"
+      "serverAddress": "Server Address",
+      "about": "About"
     },
     "tooltip": {
       "httpsRequired": "You need to connect to a secure server. A secure server address starts with \"https\"."
+    },
+    "aboutItems": {
+      "browserInformation": "Browser Information",
+      "startPageCorsOrigin": "Start Page Cors Origin"
+    },
+    "links": {
+      "about": "About Acrolinx",
+      "cantConnect": "Can't connect?",
+      "needHelp": "Need help?"
     }
   }
 }
