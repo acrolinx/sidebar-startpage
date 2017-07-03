@@ -23,19 +23,13 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
     this.props.onSubmit(this.serverAddressField.value);
   }
 
-  onClickHeader = () => {
-    this.props.openWindow('https://www.acrolinx.com/');
-  }
-
   render() {
     const t = getTranslation().serverSelector;
     const props = this.props;
     const httpsRequired = isHttpsRequired({enforceHTTPS: props.enforceHTTPS, windowLocation: window.location});
     return form({onSubmit: this.onSubmit},
       div({
-        className: 'logoHeader',
-        title: t.tooltip.headerLogo,
-        onClick: this.onClickHeader,
+        className: 'logoHeader'
       }),
       div({className: 'formContent'},
         h1({
