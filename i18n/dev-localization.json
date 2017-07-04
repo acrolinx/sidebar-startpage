@@ -2,6 +2,7 @@
   "serverSelector": {
     "aboutItems": {
       "browserInformation": "Browser Information",
+      "logFileLocation": "Log File Location",
       "startPageCorsOrigin": "Start Page Cors Origin"
     },
     "button": {

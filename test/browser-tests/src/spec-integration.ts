@@ -168,7 +168,7 @@ describe('integration-tests', () => {
       assertExistCount(openLogFileButtonSelector, 0);
     });
 
-    describe('shows log file path section if required', () => {
+    describe('plugin has provided a logFileLocation', () => {
       const DUMMY_LOG_FILE_LOCATION = 'dummyLogFileLocation';
 
       beforeEach(() => {
@@ -181,6 +181,11 @@ describe('integration-tests', () => {
         assert.equal(augmentedWindow.acrolinxPlugin.openLogFileSpy.callCount, 1);
       });
 
+      it('display logFileLocation as about item', () => {
+        const logFileLocationAboutItem = getExistingElement(`.about-item:contains("${DUMMY_LOG_FILE_LOCATION}")`).get(0);
+        assert.equal($('.about-tab-label', logFileLocationAboutItem).text(), getTranslation().serverSelector.aboutItems.logFileLocation);
+        assert.equal($('.about-tab-value', logFileLocationAboutItem).text(), DUMMY_LOG_FILE_LOCATION);
+      });
     });
 
 

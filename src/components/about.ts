@@ -29,9 +29,9 @@ function getSortKey(softwareComponent: SoftwareComponent) {
   return prefix + softwareComponent.name.toLowerCase();
 }
 
-function getAdditionalComponents(): SoftwareComponent[] {
+function getAdditionalComponents(logFileLocation: string | undefined): SoftwareComponent[] {
   const t = getTranslation().serverSelector;
-  return [
+  const additionalComponents = [
     {
       id: 'com.acrolinx.userAgent',
       name: t.aboutItems.browserInformation,
@@ -45,6 +45,17 @@ function getAdditionalComponents(): SoftwareComponent[] {
       category: SoftwareComponentCategory.DETAIL
     }
   ];
+
+  if (logFileLocation) {
+    additionalComponents.push({
+      id: "com.acrolinx.logFileLocation",
+      name: t.aboutItems.logFileLocation,
+      version: logFileLocation,
+      category: SoftwareComponentCategory.DETAIL
+    });
+  }
+
+  return additionalComponents;
 }
 
 
@@ -52,7 +63,7 @@ class AboutComponent extends Component<AboutProps, {}> {
   render() {
     const t = getTranslation().serverSelector;
     const props = this.props;
-    const allComponentsSorted = sortBy(this.props.clientComponents.concat(getAdditionalComponents()), getSortKey);
+    const allComponentsSorted = sortBy(this.props.clientComponents.concat(getAdditionalComponents(props.logFileLocation)), getSortKey);
     return div({className: 'aboutComponent'},
       div({
         className: classNames('aboutHeader'),
