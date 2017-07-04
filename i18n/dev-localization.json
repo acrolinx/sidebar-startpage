@@ -3,7 +3,8 @@
     "aboutItems": {
       "browserInformation": "Browser Information",
       "logFileLocation": "Log File Location",
-      "startPageCorsOrigin": "Start Page Cors Origin"
+      "startPageCorsOrigin": "Start Page Cors Origin",
+      "serverSelector": "Server Selector"
     },
     "button": {
       "connect": "Connect",

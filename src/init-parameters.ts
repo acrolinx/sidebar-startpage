@@ -4,6 +4,7 @@ import {
 } from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 import {isCorsWithCredentialsNeeded} from "./acrolinx-sidebar-integration/utils/utils";
 import {SERVER_SELECTOR_VERSION} from "./constants";
+import {getTranslation} from "./localization";
 
 
 export function hackInitParameters(initParameters: InitParameters, serverAddress: string): InitParameters {
@@ -20,7 +21,7 @@ export function hackInitParameters(initParameters: InitParameters, serverAddress
 export function extendClientComponents(clientComponents?: SoftwareComponent[]): SoftwareComponent[] {
   return (clientComponents || []).concat({
     id: 'com.acrolinx.serverselector',
-    name: 'Server Selector',
+    name: getTranslation().serverSelector.aboutItems.serverSelector,
     version: SERVER_SELECTOR_VERSION,
     category: SoftwareComponentCategory.DETAIL
   });
