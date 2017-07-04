@@ -3,13 +3,13 @@
     "aboutItems": {
       "browserInformation": "Browser Information",
       "logFileLocation": "Log File Location",
-      "startPageCorsOrigin": "Start Page Cors Origin",
-      "serverSelector": "Server Selector"
+      "serverSelector": "Server Selector",
+      "startPageCorsOrigin": "Start Page Cors Origin"
     },
     "button": {
       "connect": "Connect",
-      "openLogFile": "Open Log File",
-      "details": "Details"
+      "details": "Details",
+      "openLogFile": "Open Log File"
     },
     "links": {
       "about": "About Acrolinx",
