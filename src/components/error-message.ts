@@ -1,5 +1,6 @@
 import {Component} from "preact";
 import {createPreactFactory, div} from "../utils/preact";
+import {getTranslation} from "../localization";
 
 
 export interface ErrorMessageProps {
@@ -39,7 +40,8 @@ class ErrorMessageComponent extends Component<ErrorMessageProps, ErrorMessageSta
       this.props.detailedMessage ? div({
           className: 'detailedErrorSection'
         },
-        div({className: 'detailsButton', onClick: this.toggleErrorDetails}, "DETAILS"),
+        div({className: 'detailsButton', onClick: this.toggleErrorDetails},
+          getTranslation().serverSelector.button.details),
         this.state.showDetails ? div({
           className: 'detailedErrorMessage',
           onClick: this.selectDetailMessage,

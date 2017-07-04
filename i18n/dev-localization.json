@@ -8,7 +8,8 @@
     },
     "button": {
       "connect": "Connect",
-      "openLogFile": "Open Log File"
+      "openLogFile": "Open Log File",
+      "details": "Details"
     },
     "links": {
       "about": "About Acrolinx",
