@@ -101,6 +101,18 @@ describe('integration-tests', () => {
     assertExistCount('.submitButton', 1);
   });
 
+  describe('showServerSelector = false', () => {
+    it('display connection problems on own page', (done) => {
+      init({showServerSelector: false, serverAddress: 'http://not-existing-local-domain'});
+      clock.restore();
+      setTimeout(() => {
+        assert.equal($('.errorMessageMain').text(), getTranslation().serverSelector.message.serverConnectionProblemHttp);
+        done();
+      }, 500);
+    });
+  });
+
+
   describe('server selector form', () => {
     it('validate server address for invalid URLS', () => {
       init({showServerSelector: true});
@@ -108,7 +120,7 @@ describe('integration-tests', () => {
       $('.serverAddress').val('!');
       simulateClick('.submitButton');
 
-      assert.equal($('#errorMessage').text(), getTranslation().serverSelector.message.invalidServerAddress);
+      assert.equal($('.errorMessageMain').text(), getTranslation().serverSelector.message.invalidServerAddress);
     });
 
     it('display connection problems', (done) => {

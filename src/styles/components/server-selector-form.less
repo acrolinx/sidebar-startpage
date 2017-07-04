@@ -1,4 +1,13 @@
+#serverSelectorFormPage {
+  height: 100%;
+}
+
+.serverSelectorFormComponent {
+  .verticalFlexBox();
+}
+
 .logoHeader {
+  flex-shrink: 0;
   background: url(../images/acrolinx-logo.svg) no-repeat;
   background-size: auto 19px;
   background-position-x: @horizontalPageMargin;
@@ -12,7 +21,11 @@
 }
 
 .formContent {
-  .horizontalPageMargins();
+  margin-left: @horizontalPageMargin;
+  padding-right: @horizontalPageMargin;
+
+  flex-grow: 1;
+  overflow-y: auto;
 
   .buttonGroup {
     margin-bottom: 15px;

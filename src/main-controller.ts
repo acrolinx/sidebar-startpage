@@ -27,7 +27,7 @@ const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 
 const ABOUT_PAGE_ID = 'aboutPage';
 const SERVER_SELECTOR_FORM_PAGE_ID = 'serverSelectorFormPage';
-const ERROR_MESSAGE_CONTAINER_ID = 'errorMessage';
+const ERROR_MESSAGE_CONTAINER_ID = 'errorMessagePage';
 
 const TEMPLATE = `
   <div id="${SERVER_SELECTOR_FORM_PAGE_ID}" style="display: none"></div>
@@ -103,7 +103,7 @@ export function startMainController() {
         tryToLoadSidebar(serverAddress);
       },
       err: errorMessage => {
-        showErrorMessage(simpleErrorMessage(errorMessage));
+        showServerSelector({errorMessage: simpleErrorMessage(errorMessage)});
       }
     });
   }
@@ -127,7 +127,6 @@ export function startMainController() {
         return;
       }
 
-      removeErrorMessage();
       if (initParametersFromPlugin.showServerSelector) {
         localStorage.setItem(SERVER_ADDRESS_KEY, serverAddress);
       }
@@ -179,9 +178,11 @@ export function startMainController() {
   }
 
   function onSidebarLoadError(serverAddress: string, error: LoadSidebarError) {
-    showErrorMessage(getSidebarLoadErrorMessage(serverAddress, error));
+    const errorMessage = getSidebarLoadErrorMessage(serverAddress, error);
     if (initParametersFromPlugin.showServerSelector) {
-      showServerSelector();
+      showServerSelector({errorMessage: errorMessage});
+    } else {
+      showErrorMessagePage(errorMessage);
     }
   }
 
@@ -190,33 +191,29 @@ export function startMainController() {
     show(sidebarContainer);
   }
 
-  function showServerSelector() {
+  function showServerSelector(props: { isConnectButtonDisabled?: boolean, errorMessage?: ErrorMessageProps } = {}) {
     sidebarContainer.innerHTML = '';
     hide(sidebarContainer);
     show(serverSelectorFormPage);
     focusAddressInputField(serverSelectorFormPage);
-    renderServerSelectorForm();
+    renderServerSelectorForm(props);
   }
 
-  function renderServerSelectorForm(props: { isConnectButtonDisabled?: boolean } = {}) {
+  function renderServerSelectorForm(props: { isConnectButtonDisabled?: boolean, errorMessage?: ErrorMessageProps } = {}) {
     render(severSelectorFormComponent({
       onSubmit: onSubmit,
       onAboutLink,
       serverAddress,
       enforceHTTPS: initParametersFromPlugin.enforceHTTPS,
       isConnectButtonDisabled: props.isConnectButtonDisabled!!,
-      openWindow: openExternalWindow
+      openWindow: openExternalWindow,
+      errorMessage: props.errorMessage
     }), serverSelectorFormPage, serverSelectorFormPage.firstChild as Element);
   }
 
-  function showErrorMessage(errorMessageProps: ErrorMessageProps) {
+  function showErrorMessagePage(errorMessageProps: ErrorMessageProps) {
     show(errorMessageEl);
     render(errorMessageComponent(errorMessageProps), errorMessageEl, errorMessageEl.firstChild as Element);
-  }
-
-  function removeErrorMessage() {
-    hide(errorMessageEl);
-    errorMessageEl.innerHTML = '';
   }
 
   function onInitFromPlugin(initParameters: InitParameters) {

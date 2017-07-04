@@ -3,6 +3,7 @@ import {createPreactFactory, h1, div, button, form, input, span, a} from "../uti
 import {getTranslation} from "../localization";
 import {isHttpsRequired} from "../utils/utils";
 import {externalTextLink, OpenWindowFunction} from "./external-text-link";
+import {errorMessageComponent, ErrorMessageProps} from "./error-message";
 
 interface SeverSelectorFormProps {
   onSubmit: (serverAddress: string) => void;
@@ -11,6 +12,7 @@ interface SeverSelectorFormProps {
   enforceHTTPS?: boolean;
   isConnectButtonDisabled: boolean;
   openWindow: OpenWindowFunction;
+  errorMessage?: ErrorMessageProps;
 }
 
 const SERVER_ADDRESS_INPUT_FIELD_CLASS = 'serverAddress';
@@ -28,7 +30,7 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
     const t = getTranslation().serverSelector;
     const props = this.props;
     const httpsRequired = isHttpsRequired({enforceHTTPS: props.enforceHTTPS, windowLocation: window.location});
-    return form({onSubmit: this.onSubmit},
+    return form({className: 'serverSelectorFormComponent' , onSubmit: this.onSubmit},
       div({
         className: 'logoHeader'
       }),
@@ -60,7 +62,8 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
             disabled: props.isConnectButtonDisabled
           }, t.button.connect)
         ),
-        a({onClick: props.onAboutLink, href: '#'}, t.links.about)
+        a({onClick: props.onAboutLink, href: '#'}, t.links.about),
+        props.errorMessage ? errorMessageComponent(props.errorMessage) : []
       ));
   }
 }

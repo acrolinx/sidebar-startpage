@@ -1,5 +1,5 @@
 import {Component} from "preact";
-import {createPreactFactory, div, textarea} from "../utils/preact";
+import {createPreactFactory, div} from "../utils/preact";
 
 
 export interface ErrorMessageProps {
@@ -17,16 +17,19 @@ class ErrorMessageComponent extends Component<ErrorMessageProps, ErrorMessageSta
     showDetails: false
   };
 
-  showErrorDetails = () => {
+  toggleErrorDetails = () => {
     this.setState({
-      showDetails: true
+      showDetails: !this.state.showDetails
     });
   }
 
   selectDetailMessage = (event: Event) => {
     event.preventDefault();
-    const textArea = event.srcElement as HTMLTextAreaElement;
-    textArea.select();
+    const selection = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents(event.srcElement!);
+    selection.removeAllRanges();
+    selection.addRange(range);
   }
 
   render() {
@@ -36,12 +39,11 @@ class ErrorMessageComponent extends Component<ErrorMessageProps, ErrorMessageSta
       this.props.detailedMessage ? div({
           className: 'detailedErrorSection'
         },
-        div({className: 'detailsButton', onClick: this.showErrorDetails}, "DETAILS"),
-        this.state.showDetails ? textarea({
-          readOnly: true,
+        div({className: 'detailsButton', onClick: this.toggleErrorDetails}, "DETAILS"),
+        this.state.showDetails ? div({
+          className: 'detailedErrorMessage',
           onClick: this.selectDetailMessage,
-          value: this.props.detailedMessage
-        }) : []) : []);
+        }, this.props.detailedMessage) : []) : []);
   }
 }
 

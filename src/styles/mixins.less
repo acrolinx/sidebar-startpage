@@ -6,3 +6,17 @@
   margin-left: @horizontalPageMargin;
   margin-right: @horizontalPageMargin;
 }
+
+.user-select(@value) {
+  -webkit-user-select: @value;
+  -moz-user-select: @value;
+  -ms-user-select: @value;
+  user-select: @value;
+}
+
+.verticalFlexBox() {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+}

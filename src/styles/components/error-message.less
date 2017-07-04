@@ -1,39 +1,36 @@
 .errorMessage {
-  .horizontalPageMargins();
   font-size: 13px;
   margin-top: 1em;
   font-weight: 400;
+  padding: 15px;
+  color: #fff;
+  border-radius: 4px;
+  background-color: @acroRed;
 
   .errorMessageMain {
-    padding: 15px;
-    color: #fff;
-    border-radius: 4px;
-    background-color: @acroRed;
   }
 
   .detailedErrorSection {
     text-align: right;
 
     .detailsButton {
+      .user-select(none);
+      letter-spacing: 0.2px;
       display: inline-block;
-      color: @acroRed;
+      color: #ffffff;
       text-align: right;
       cursor: pointer;
+      padding: 0 15px;
       line-height: 30px;
+      &:hover {
+        background-color: #f26a7c;
+      }
     }
 
-    textarea {
-      display: block;
-      width: 100%;
+    .detailedErrorMessage {
       text-align: left;
-      height: 5em;
-      resize: none;
-      padding: 15px;
-      &:focus {
-        outline: none ;
-        border:1px solid @acroBlue;
-        box-shadow: none;
-      }
+      white-space: pre-line;
+      word-wrap: break-word;
     }
 
   }
