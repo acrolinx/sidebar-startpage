@@ -119,6 +119,11 @@ export interface InitParameters extends SidebarConfiguration {
    */
   logFileLocation?: string;
 
+  /**
+   * Example values: '14.4.2' or '14.4'
+   */
+  minimumSidebarVersion?: string;
+
 
   /**
    * Extraordinary capabilities of the plugin.

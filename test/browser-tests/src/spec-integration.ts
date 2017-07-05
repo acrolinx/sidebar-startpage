@@ -114,6 +114,8 @@ describe('integration-tests', () => {
 
 
   describe('server selector form', () => {
+    const validMockedServerAddress = (startsWith(window.location.pathname, '/test/') ? '' : '/base') + '/test/browser-tests/dummy-sidebar';
+
     it('validate server address for invalid URLS', () => {
       init({showServerSelector: true});
 
@@ -136,11 +138,23 @@ describe('integration-tests', () => {
       }, 500);
     });
 
+    it('show error message for outdated sidebar/server', (done) => {
+      init({showServerSelector: true, minimumSidebarVersion: '15'});
+
+      $('.serverAddress').val(validMockedServerAddress);
+      simulateClick('.submitButton');
+
+      clock.restore();
+      setTimeout(() => {
+        assert.equal($('.errorMessageMain').text(), getTranslation().serverSelector.message.outdatedServer);
+        done();
+      }, 500);
+    });
+
     it('load dummy sidebar', (done) => {
       init({showServerSelector: true});
 
-      const serverAddress = (startsWith(window.location.pathname, '/test/') ? '' : '/base') + '/test/browser-tests/dummy-sidebar';
-      $('.serverAddress').val(serverAddress);
+      $('.serverAddress').val(validMockedServerAddress);
       simulateClick('.submitButton');
 
       clock.restore();

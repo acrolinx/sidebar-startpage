@@ -1,5 +1,5 @@
 import {
-  $, $byId, getCorsOrigin, getDefaultServerAddress, hide, isHttpUrl, show,
+  $, $byId, getCorsOrigin, getDefaultServerAddress, hide, isHttpUrl, parseVersionNumberWithFallback, show,
   startsWithAnyOf
 } from "./utils/utils";
 import {
@@ -116,7 +116,11 @@ export function startMainController() {
     sidebarContainer.appendChild(sidebarIFrameElement);
 
     const sidebarUrl = serverAddress + '/sidebar/v14/';
-    const loadSidebarProps: LoadSidebarProps = {sidebarUrl, useMessageAdapter};
+
+    const loadSidebarProps: LoadSidebarProps = {
+      sidebarUrl, useMessageAdapter,
+      minimumSidebarVersion: parseVersionNumberWithFallback(initParametersFromPlugin.minimumSidebarVersion)
+    };
 
     renderServerSelectorForm({isConnectButtonDisabled: true});
 
@@ -170,6 +174,8 @@ export function startMainController() {
         return simpleErrorMessage(errorMessages.serverIsNoAcrolinxServerOrHasNoSidebar);
       case 'noCloudSidebar':
         return simpleErrorMessage(errorMessages.noCloudSidebar);
+      case 'sidebarVersionIsBelowMinimum':
+        return simpleErrorMessage(errorMessages.outdatedServer);
       case 'timeout':
         return simpleErrorMessage(isHttpUrl(serverAddress) ? errorMessages.serverConnectionProblemTimeoutHttp : errorMessages.serverConnectionProblemTimeoutHttps);
       default:

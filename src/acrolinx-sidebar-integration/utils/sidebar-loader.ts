@@ -1,11 +1,13 @@
 import * as utils from "./utils";
 import {FetchError} from "./utils";
 import {FALLBACK_SIDEBAR_URL, FORCE_SIDEBAR_URL} from "../../constants";
+import {isVersionGreaterEqual} from "../../utils/utils";
 
 
 export interface  LoadSidebarProps {
   sidebarUrl: string;
   useMessageAdapter: boolean;
+  minimumSidebarVersion: number[];
 }
 
 export function getSidebarVersion(sidebarHtml: string): [number, number, number] | null {
@@ -17,12 +19,12 @@ export function getSidebarVersion(sidebarHtml: string): [number, number, number]
   return [versionParts[0], versionParts[1], versionParts[2]];
 }
 
-function isOutDatedSidebarVersion(sidebarVersion: [number, number, number] | null) {
+function needsFallbackSidebar(sidebarVersion: [number, number, number] | null) {
   return (!sidebarVersion || sidebarVersion[1] < 3 || (sidebarVersion[1] == 3 && sidebarVersion[2] < 1));
 }
 
 
-type NoValidSidebarErrorCode = 'noSidebar' | 'noCloudSidebar';
+type NoValidSidebarErrorCode = 'noSidebar' | 'noCloudSidebar' | 'sidebarVersionIsBelowMinimum';
 
 export class NoValidSidebarError extends Error {
   constructor(public acrolinxErrorCode: NoValidSidebarErrorCode, message: string) {
@@ -57,16 +59,24 @@ export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameEle
       return;
     }
 
-    // Handle out-dated sidebar version by retryWithCloudSidebar
     const sidebarVersion = getSidebarVersion(sidebarHtml);
-    if (!FORCE_SIDEBAR_URL && isOutDatedSidebarVersion(sidebarVersion)) {
-      if (retryWithCloudSidebar) {
-        onSidebarLoaded(new NoValidSidebarError('noCloudSidebar', "The cloud sidebar has the wrong version."));
-      } else {
-        console.log('Load sidebar from cloud');
-        loadSidebarIntoIFrame(config, sidebarIFrameElement, onSidebarLoaded, true);
+
+    if (!FORCE_SIDEBAR_URL) {
+      if (!sidebarVersion || needsFallbackSidebar(sidebarVersion)) {
+        if (retryWithCloudSidebar) {
+          onSidebarLoaded(new NoValidSidebarError('noCloudSidebar', "The cloud sidebar has the wrong version."));
+        } else {
+          console.log('Load sidebar from cloud');
+          loadSidebarIntoIFrame(config, sidebarIFrameElement, onSidebarLoaded, true);
+        }
+        return;
       }
-      return;
+
+      if (!isVersionGreaterEqual(sidebarVersion, config.minimumSidebarVersion)) {
+        console.log('Found sidebar version', sidebarVersion, "minimumSidebarVersion was", config.minimumSidebarVersion);
+        onSidebarLoaded(new NoValidSidebarError('sidebarVersionIsBelowMinimum', "Sidebar version is smaller than minimumSidebarVersion"));
+        return;
+      }
     }
 
     console.log('Loaded!');

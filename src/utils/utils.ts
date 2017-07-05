@@ -149,7 +149,7 @@ export function getCorsOrigin() {
   return location.protocol + "//" + location.hostname + (location.port ? ':' + location.port : '');
 }
 
-export function sortBy<T>(array: T[], getSortKey:  (el: T) => string) {
+export function sortBy<T>(array: T[], getSortKey: (el: T) => string) {
   const cloned_array = array.slice();
   cloned_array.sort((a, b) => {
     const sortKeyA = getSortKey(a);
@@ -157,4 +157,36 @@ export function sortBy<T>(array: T[], getSortKey:  (el: T) => string) {
     return sortKeyA.localeCompare(sortKeyB);
   });
   return cloned_array;
+}
+
+export function isVersionGreaterEqual(version: number[], minimumVersion: number[]): boolean {
+  for (let i = 0; i < version.length; i++) {
+    const versionPart = version[i] || 0;
+    const minimumVersionPart = minimumVersion[i] || 0;
+    if (versionPart > minimumVersionPart) {
+      return true;
+    } else if (versionPart < minimumVersionPart) {
+      return false;
+    }
+  }
+  return true;
+}
+
+
+export function parseVersionNumberWithFallback(s: string | undefined): number[] {
+  if (!s) {
+    return [];
+  }
+
+  if (!/^(\d+.?)+$/.test(s)) {
+    console.error('Invalid version number:', s);
+    return [];
+  }
+
+  try {
+    return s.split('.').map(part => parseInt(part, 10));
+  } catch (error) {
+    console.error('Invalid version number:', s, error);
+    return [];
+  }
 }
