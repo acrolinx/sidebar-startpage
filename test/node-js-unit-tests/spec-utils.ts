@@ -46,7 +46,7 @@ describe('utils', () => {
         return Math.round(Math.random() * maxValue);
       }
 
-      for (let i = 0; i < 100000; i++) {
+      for (let i = 0; i < 10000; i++) {
         const minimumVersion = [randomInt(), randomInt(), randomInt()];
         const delta = [randomInt(2), randomInt(2), randomInt(2)];
 
