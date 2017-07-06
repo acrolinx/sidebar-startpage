@@ -138,6 +138,19 @@ describe('integration-tests', () => {
       }, 500);
     });
 
+    it('display different connection problems message if same origin policy is disabled ', (done) => {
+      init({showServerSelector: true, suppressCorsErrorMessages: true});
+
+      $('.serverAddress').val('http://not-existing-local-domain');
+      simulateClick('.submitButton');
+
+      clock.restore();
+      setTimeout(() => {
+        assert.equal($('.errorMessageMain').text(), getTranslation().serverSelector.message.serverConnectionProblemHttpNoCorsProblem);
+        done();
+      }, 500);
+    });
+
     it('show error message for outdated sidebar/server', (done) => {
       init({showServerSelector: true, minimumSidebarVersion: '15'});
 

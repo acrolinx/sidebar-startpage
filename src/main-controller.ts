@@ -166,7 +166,7 @@ export function startMainController() {
     };
   }
 
-  function getSidebarLoadErrorMessage(serverAddress: string, error: LoadSidebarError): ErrorMessageProps {
+  function getSidebarLoadErrorMessage(serverAddress: string, error: LoadSidebarError, suppressCorsErrorMessages?: boolean): ErrorMessageProps {
     const errorMessages = getTranslation().serverSelector.message;
     switch (error.acrolinxErrorCode) {
       case 'httpErrorStatus':
@@ -179,12 +179,16 @@ export function startMainController() {
       case 'timeout':
         return simpleErrorMessage(isHttpUrl(serverAddress) ? errorMessages.serverConnectionProblemTimeoutHttp : errorMessages.serverConnectionProblemTimeoutHttps);
       default:
-        return errorMessageWithCorsDetails(isHttpUrl(serverAddress) ? errorMessages.serverConnectionProblemHttp : errorMessages.serverConnectionProblemHttps);
+        if (suppressCorsErrorMessages) {
+          return simpleErrorMessage(isHttpUrl(serverAddress) ? errorMessages.serverConnectionProblemHttpNoCorsProblem : errorMessages.serverConnectionProblemHttpsNoCorsProblem);
+        } else {
+          return errorMessageWithCorsDetails(isHttpUrl(serverAddress) ? errorMessages.serverConnectionProblemHttp : errorMessages.serverConnectionProblemHttps);
+        }
     }
   }
 
   function onSidebarLoadError(serverAddress: string, error: LoadSidebarError) {
-    const errorMessage = getSidebarLoadErrorMessage(serverAddress, error);
+    const errorMessage = getSidebarLoadErrorMessage(serverAddress, error, initParametersFromPlugin.suppressCorsErrorMessages);
     if (initParametersFromPlugin.showServerSelector) {
       showServerSelector({errorMessage: errorMessage});
     } else {
