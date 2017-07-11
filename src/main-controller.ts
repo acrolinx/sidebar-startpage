@@ -264,7 +264,12 @@ export function startMainController() {
         break;
       default:
         const acrolinxPluginAny = windowAny.acrolinxPlugin;
-        acrolinxPluginAny[command].apply(acrolinxPluginAny, args);
+        const commandFunction = acrolinxPluginAny[command];
+        if (commandFunction) {
+          commandFunction.apply(acrolinxPluginAny, args);
+        } else {
+          console.error(`Plugin does not support command "${command}"`, args);
+        }
     }
   }
 

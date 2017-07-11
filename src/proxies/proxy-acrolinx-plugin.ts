@@ -65,6 +65,14 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
   showServerSelector() {
     this.props.showServerSelector();
   }
+
+  openLogFile() {
+    if (this.props.acrolinxPlugin.openLogFile) {
+      this.props.acrolinxPlugin.openLogFile();
+    } else {
+      console.error('openLogFile is not supported');
+    }
+  }
 }
 
 
