@@ -2,7 +2,7 @@
   "serverSelector": {
     "button": {
       "connect": "\u63a5\u7d9a\u3059\u308b",
-      "details": "\u30e9\u30a4\u30bb\u30f3\u30b9\u306e\u8a73\u7d30",
+      "details": "\u8a73\u7d30",
       "openLogFile": "\u30ed\u30b0\u30d5\u30a1\u30a4\u30eb\u3092\u958b\u304f"
     },
     "links": {
