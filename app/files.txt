@@ -1,7 +1,0 @@
-/styles/index.css
-/styles/fonts.css
-/scripts/main.js
-/images/acrolinx-logo.svg
-/fonts/Roboto-Bold.ttf
-/fonts/Roboto-Regular.ttf
-/index.html
