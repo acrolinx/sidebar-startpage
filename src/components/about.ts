@@ -28,7 +28,7 @@ const sortKeyByCategory = {
   [SoftwareComponentCategory.MAIN]: '1',
   [SoftwareComponentCategory.DEFAULT]: '2',
   [SoftwareComponentCategory.DETAIL]: '3',
-}
+};
 
 function getSortKey(softwareComponent: SoftwareComponent) {
   const prefix = sortKeyByCategory[softwareComponent.category || 'DEFAULT'];
