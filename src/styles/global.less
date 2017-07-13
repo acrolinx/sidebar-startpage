@@ -4,16 +4,19 @@ html, body, #app {
   height: 100%;
   overflow: hidden;
   font-size: 13px;
-  font-family: 'Roboto', 'Arial', sans-serif;
   box-sizing: border-box;
 }
+
+#app, textarea, input, button {
+  font-family: 'Roboto', 'Arial', sans-serif;
+}
+
 
 *, ::before, ::after {
   box-sizing: inherit;
 }
 
 html #app input, html #app textarea {
-  font-family: 'Roboto', 'Arial', sans-serif;
   font-size: 13px;
 }
 
@@ -44,7 +47,6 @@ a {
   .commonButton();
   font-size: 12px;
   font-weight: 700;
-  font-family: 'Roboto', 'Arial', sans-serif;
   border-radius: 2px;
   padding: 0 10px;
   line-height: @BUTTON_LINE_HEIGHT;
