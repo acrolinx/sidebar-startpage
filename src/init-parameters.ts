@@ -23,6 +23,6 @@ export function extendClientComponents(clientComponents?: SoftwareComponent[]): 
     id: 'com.acrolinx.serverselector',
     name: getTranslation().serverSelector.aboutItems.serverSelector,
     version: SERVER_SELECTOR_VERSION,
-    category: SoftwareComponentCategory.DETAIL
+    category: SoftwareComponentCategory.DEFAULT
   });
 }

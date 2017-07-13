@@ -24,10 +24,17 @@ function aboutInfoLine(component: SoftwareComponent) {
     div({className: 'about-tab-value', title: component.version}, component.version));
 }
 
+const sortKeyByCategory = {
+  [SoftwareComponentCategory.MAIN]: '1',
+  [SoftwareComponentCategory.DEFAULT]: '2',
+  [SoftwareComponentCategory.DETAIL]: '3',
+}
+
 function getSortKey(softwareComponent: SoftwareComponent) {
-  const prefix = (softwareComponent.category === SoftwareComponentCategory.MAIN) ? '1' : '2';
+  const prefix = sortKeyByCategory[softwareComponent.category || 'DEFAULT'];
   return prefix + softwareComponent.name.toLowerCase();
 }
+
 
 function getAdditionalComponents(logFileLocation: string | undefined): SoftwareComponent[] {
   const t = getTranslation().serverSelector;
@@ -36,13 +43,13 @@ function getAdditionalComponents(logFileLocation: string | undefined): SoftwareC
       id: 'com.acrolinx.userAgent',
       name: t.aboutItems.browserInformation,
       version: navigator.userAgent,
-      category: SoftwareComponentCategory.DETAIL
+      category: SoftwareComponentCategory.DEFAULT
     },
     {
       id: "com.acrolinx.startPageCorsOrigin",
       name: t.aboutItems.startPageCorsOrigin,
       version: getCorsOrigin(),
-      category: SoftwareComponentCategory.DETAIL
+      category: SoftwareComponentCategory.DEFAULT
     }
   ];
 
@@ -51,7 +58,7 @@ function getAdditionalComponents(logFileLocation: string | undefined): SoftwareC
       id: "com.acrolinx.logFileLocation",
       name: t.aboutItems.logFileLocation,
       version: logFileLocation,
-      category: SoftwareComponentCategory.DETAIL
+      category: SoftwareComponentCategory.DEFAULT
     });
   }
 
