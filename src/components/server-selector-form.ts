@@ -43,6 +43,7 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
         ),
         input({
           className: SERVER_ADDRESS_INPUT_FIELD_CLASS,
+          name: 'acrolinxServerAddress',
           placeholder: t.placeHolder.serverAddress, autofocus: true,
           ref: (inputEl: HTMLInputElement) => {
             this.serverAddressField = inputEl;
