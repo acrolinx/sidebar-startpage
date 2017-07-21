@@ -1,5 +1,9 @@
 {
   "serverSelector": {
+    "aboutItems": {
+      "browserInformation": "Browser information",
+      "startPageCorsOrigin": "CORS Origin"
+    },
     "button": {
       "connect": "Connect",
       "details": "Details",
