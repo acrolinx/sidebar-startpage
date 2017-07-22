@@ -1,5 +1,8 @@
 {
   "serverSelector": {
+    "aboutItems": {
+      "startPageCorsOrigin": "CORS Origin"
+    },
     "button": {
       "connect": "\u63a5\u7d9a\u3059\u308b",
       "details": "\u8a73\u7d30",
