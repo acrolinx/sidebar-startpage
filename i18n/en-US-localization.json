@@ -12,7 +12,9 @@
       "openLogFile": "Open Log File"
     },
     "links": {
-      "about": "About Acrolinx"
+      "about": "About Acrolinx",
+      "cantConnect": "Can't connect to the Acrolinx Server?",
+      "needHelp": "Help"
     },
     "message": {
       "invalidServerAddress": "It looks like the server address is incorrect. Check the address and try again.",
