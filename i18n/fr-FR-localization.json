@@ -9,7 +9,8 @@
       "openLogFile": "Ouvrir le fichier journal"
     },
     "links": {
-      "about": "A propos d\u00b4Acrolinx"
+      "about": "A propos d\u00b4Acrolinx",
+      "needHelp": "Aide"
     },
     "message": {
       "invalidServerAddress": "Il semblerait que l'adresse soit incorrecte. Corriger l'adresse et essayer \u00e0 nouveau.",
