@@ -228,7 +228,7 @@ describe('integration-tests', () => {
     });
 
 
-    it.only('click help', () => {
+    it('click help', () => {
       init({showServerSelector: true, logFileLocation: 'dummyLogFileLocation'});
       simulateClick('a:contains("About Acrolinx")');
 
