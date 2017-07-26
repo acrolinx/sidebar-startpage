@@ -9,7 +9,8 @@
       "openLogFile": "\u00d6ppna loggfil"
     },
     "links": {
-      "about": "Om Acrolinx"
+      "about": "Om Acrolinx",
+      "needHelp": "Hj\u00e4lp"
     },
     "message": {
       "invalidServerAddress": "Det verkar som om serveradressen \u00e4r felaktig. Kontrollera adressen och f\u00f6rs\u00f6k igen.",
