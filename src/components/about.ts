@@ -16,7 +16,7 @@ interface AboutProps {
   openWindow: OpenWindowFunction;
 }
 
-export const HELP_LINK_URL = 'https://support.acrolinx.com/hc/en-us/sections/201284252';
+export const HELP_LINK_URL = 'https://support.acrolinx.com/hc/en-us/articles/203845751';
 
 function aboutInfoLine(component: SoftwareComponent) {
   return div({className: 'about-item', key: component.id},
