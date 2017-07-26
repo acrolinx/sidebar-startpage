@@ -1,6 +1,9 @@
 {
   "serverSelector": {
     "aboutItems": {
+      "browserInformation": "Informationen zum Browser",
+      "logFileLocation": "Speicherort der Protokolldatei",
+      "serverSelector": "Startseite",
       "startPageCorsOrigin": "CORS Origin"
     },
     "button": {
@@ -9,7 +12,9 @@
       "openLogFile": "Protokolldatei \u00f6ffnen"
     },
     "links": {
-      "about": "\u00dcber Acrolinx"
+      "about": "\u00dcber Acrolinx",
+      "cantConnect": "Sie k\u00f6nnen keine Verbindung zum Acrolinx Server herstellen?",
+      "needHelp": "Hilfe"
     },
     "message": {
       "invalidServerAddress": "Diese Adresse scheint nicht korrekt zu sein. \u00dcberpr\u00fcfen Sie die eingegebene Adresse und versuchen Sie es erneut.",
