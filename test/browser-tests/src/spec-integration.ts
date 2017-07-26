@@ -228,11 +228,11 @@ describe('integration-tests', () => {
     });
 
 
-    it('click help', () => {
+    it.only('click help', () => {
       init({showServerSelector: true, logFileLocation: 'dummyLogFileLocation'});
       simulateClick('a:contains("About Acrolinx")');
 
-      simulateClick('a:contains("Need help?")');
+      simulateClick('a:contains("Help")');
       assert.equal(augmentedWindow.acrolinxPlugin.openWindowSpy.callCount, 1);
       assert.deepEqual(augmentedWindow.acrolinxPlugin.openWindowSpy.args[0][0], {url: HELP_LINK_URL});
 
