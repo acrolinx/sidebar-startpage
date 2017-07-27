@@ -3,7 +3,7 @@ import {createPreactFactory, div} from "../utils/preact";
 import {getTranslation} from "../localization";
 
 interface HtmlWrapper {
-  html: string
+  html: string;
 }
 
 export interface ErrorMessageProps {
