@@ -1,6 +1,9 @@
 {
   "serverSelector": {
     "aboutItems": {
+      "browserInformation": "Browser-information",
+      "logFileLocation": "Loggfilsplats",
+      "serverSelector": "Startsida",
       "startPageCorsOrigin": "CORS Origin"
     },
     "button": {
@@ -10,11 +13,13 @@
     },
     "links": {
       "about": "Om Acrolinx",
+      "cantConnect": "Kan inte ansluta till Acrolinx-servern?",
       "needHelp": "Hj\u00e4lp"
     },
     "message": {
       "invalidServerAddress": "Det verkar som om serveradressen \u00e4r felaktig. Kontrollera adressen och f\u00f6rs\u00f6k igen.",
       "noCloudSidebar": "Det verkar som om din server st\u00f6der en \u00e4ldre version av Sidebar. Vi har f\u00f6rs\u00f6kt att ladda en annan Sidebarversion fr\u00e5n Acrolinx-molnet men vi fick problem med anslutningen. Kontrollera din internetanslutning.",
+      "outdatedServer": "Det verkar som om din Acrolinx-plugin beh\u00f6ver en nyare serverversion f\u00f6r att kunna ladda Sidebar. Kontakta din Acrolinx-administrat\u00f6r f\u00f6r att uppdatera Acrolinx-servern.",
       "serverConnectionProblemHttp": "Det verkar som om vi har problem med att ansluta till din Acrolinx-server.\n\nVi \u00e4r inte s\u00e4kra p\u00e5 vad som har h\u00e4nt men det kan vara s\u00e5 att din server inte accepterar os\u00e4kra anslutningar eller ocks\u00e5 \u00e4r servern inte ig\u00e5ng. \n\nOm du anv\u00e4nder Acrolinx i en webbapplikation kan det h\u00e4nda att din server inte \u00e4r konfigurerad f\u00f6r \"cross-origin resource sharing\" (CORS).\n\nKontakta din serveradministrat\u00f6r och h\u00f6r om servern \u00e4r tillg\u00e4nglig om du \u00e4r s\u00e4ker p\u00e5 att serveradressen \u00e4r korrekt.",
       "serverConnectionProblemHttpNoCorsProblem": "Det verkar som om vi har problem med att ansluta till din Acrolinx-server.\n\nVi \u00e4r inte s\u00e4kra p\u00e5 vad som h\u00e4nt men det kan vara s\u00e5 att din server inte accepterar os\u00e4kra anslutningar eller ocks\u00e5 \u00e4r servern inte ig\u00e5ng.\n\nKontakta din serveradministrat\u00f6r och h\u00f6r om servern \u00e4r tillg\u00e4nglig om du \u00e4r s\u00e4ker p\u00e5 att serveradressen \u00e4r korrekt..",
       "serverConnectionProblemHttps": "Det verkar som om vi har problem med att ansluta till din Acrolinx-server.\n\nVi \u00e4r inte s\u00e4kra p\u00e5 vad som h\u00e4nt men det kan vara s\u00e5 att din server inte accepterar s\u00e4kra anslutningar eller ocks\u00e5 \u00e4r servern inte ig\u00e5ng.\n\nOm du anv\u00e4nder Acrolinx i en webbapplikation kan det h\u00e4nda att din server inte \u00e4r konfigurerad f\u00f6r \"cross-origin resource sharing\" (CORS). .\n\nKontakta din serveradministrat\u00f6r och h\u00f6r om servern \u00e4r tillg\u00e4nglig om du \u00e4r s\u00e4ker p\u00e5 att serveradressen \u00e4r korrekt.",
