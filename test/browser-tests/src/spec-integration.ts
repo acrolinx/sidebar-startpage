@@ -19,7 +19,7 @@ import {assertExistCount, getExistingElement, simulateClick} from "./test-utils/
 import {POLL_FOR_PLUGIN_INTERVAL_MS} from "../../../src/proxies/proxy-acrolinx-plugin";
 import {getTranslation} from "../../../src/localization";
 import {startsWith} from "../../../src/utils/utils";
-import {HELP_LINK_URL} from "../../../src/components/about";
+import {HELP_LINK_URL} from "../../../src/components/help-link";
 
 type AugmentedWindow = Window & {
   acrolinxSidebar: AcrolinxSidebar;
@@ -230,19 +230,14 @@ describe('integration-tests', () => {
         assert.equal($('.about-tab-value', logFileLocationAboutItem).text(), DUMMY_LOG_FILE_LOCATION);
       });
     });
-
-
-    it('click help', () => {
-      init({showServerSelector: true, logFileLocation: 'dummyLogFileLocation'});
-      simulateClick('a:contains("About Acrolinx")');
-
-      simulateClick('a:contains("Help")');
-      assert.equal(augmentedWindow.acrolinxPlugin.openWindowSpy.callCount, 1);
-      assert.deepEqual(augmentedWindow.acrolinxPlugin.openWindowSpy.args[0][0], {url: HELP_LINK_URL});
-
-    });
-
   });
 
+  it('click help', () => {
+    init({showServerSelector: true, logFileLocation: 'dummyLogFileLocation'});
+    simulateClick('.icon-help');
+    assert.equal(augmentedWindow.acrolinxPlugin.openWindowSpy.callCount, 1);
+    assert.deepEqual(augmentedWindow.acrolinxPlugin.openWindowSpy.args[0][0], {url: HELP_LINK_URL});
+
+  });
 
 });

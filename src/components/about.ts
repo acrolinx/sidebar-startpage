@@ -6,7 +6,8 @@ import {
   SoftwareComponentCategory
 } from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 import {getCorsOrigin, sortBy} from "../utils/utils";
-import {externalTextLink, OpenWindowFunction} from "./external-text-link";
+import {OpenWindowFunction} from "./external-text-link";
+import {helpLink} from "./help-link";
 
 interface AboutProps {
   onBack: Function;
@@ -15,8 +16,6 @@ interface AboutProps {
   logFileLocation?: string;
   openWindow: OpenWindowFunction;
 }
-
-export const HELP_LINK_URL = 'https://support.acrolinx.com/hc/en-us/articles/203845751';
 
 function aboutInfoLine(component: SoftwareComponent) {
   return div({className: 'about-item', key: component.id},
@@ -75,7 +74,7 @@ class AboutComponent extends Component<AboutProps, {}> {
       div({
         className: classNames('aboutHeader'),
         onClick: props.onBack,
-      }, span({className: 'icon-arrow-back'})),
+      }, span({className: 'icon-arrow-back'}), helpLink(props)),
       div({className: 'aboutBody'},
         div({className: 'aboutMain'},
           h1({}, t.title.about),
@@ -92,11 +91,6 @@ class AboutComponent extends Component<AboutProps, {}> {
             }, t.button.openLogFile)
           )
           : [],
-        externalTextLink({
-          url: HELP_LINK_URL,
-          openWindow: props.openWindow,
-          text: t.links.needHelp
-        })
       )
     );
   }

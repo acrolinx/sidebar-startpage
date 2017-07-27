@@ -4,6 +4,7 @@ import {getTranslation} from "../localization";
 import {isHttpsRequired} from "../utils/utils";
 import {externalTextLink, OpenWindowFunction} from "./external-text-link";
 import {errorMessageComponent, ErrorMessageProps} from "./error-message";
+import {helpLink} from "./help-link";
 
 interface SeverSelectorFormProps {
   onSubmit: (serverAddress: string) => void;
@@ -33,7 +34,7 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
     return form({className: 'serverSelectorFormComponent' , onSubmit: this.onSubmit},
       div({
         className: 'logoHeader'
-      }),
+      }, helpLink(props)),
       div({className: 'formContent'},
         h1({
             className: 'serverAddressTitle',
