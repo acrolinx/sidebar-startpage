@@ -154,14 +154,14 @@ export function startMainController() {
 
   }
 
-  function simpleErrorMessage(message: string): ErrorMessageProps {
-    return {message};
+  function simpleErrorMessage(messageHtml: string): ErrorMessageProps {
+    return {messageHtml: {html: messageHtml}};
   }
 
-  function errorMessageWithCorsDetails(message: string): ErrorMessageProps {
+  function errorMessageWithCorsDetails(messageHtml: string): ErrorMessageProps {
     const t = getTranslation();
     return {
-      message: message,
+      messageHtml: {html: messageHtml},
       detailedMessage: t.serverSelector.aboutItems.startPageCorsOrigin + '\n' + getCorsOrigin()
     };
   }

@@ -101,12 +101,16 @@ describe('integration-tests', () => {
     assertExistCount('.submitButton', 1);
   });
 
+  function assertMainErrorMessage(messageHtml: string) {
+    assert.equal($('.errorMessageMain').html(), messageHtml);
+  }
+
   describe('showServerSelector = false', () => {
     it('display connection problems on own page', (done) => {
       init({showServerSelector: false, serverAddress: 'http://not-existing-local-domain'});
       clock.restore();
       setTimeout(() => {
-        assert.equal($('.errorMessageMain').text(), getTranslation().serverSelector.message.serverConnectionProblemHttp);
+        assertMainErrorMessage(getTranslation().serverSelector.message.serverConnectionProblemHttp);
         done();
       }, 500);
     });
@@ -122,7 +126,7 @@ describe('integration-tests', () => {
       $('.serverAddress').val('!');
       simulateClick('.submitButton');
 
-      assert.equal($('.errorMessageMain').text(), getTranslation().serverSelector.message.invalidServerAddress);
+      assertMainErrorMessage(getTranslation().serverSelector.message.invalidServerAddress);
     });
 
     it('display connection problems', (done) => {
@@ -133,7 +137,7 @@ describe('integration-tests', () => {
 
       clock.restore();
       setTimeout(() => {
-        assert.equal($('.errorMessageMain').text(), getTranslation().serverSelector.message.serverConnectionProblemHttp);
+        assertMainErrorMessage(getTranslation().serverSelector.message.serverConnectionProblemHttp);
         done();
       }, 500);
     });
@@ -146,7 +150,7 @@ describe('integration-tests', () => {
 
       clock.restore();
       setTimeout(() => {
-        assert.equal($('.errorMessageMain').text(), getTranslation().serverSelector.message.serverConnectionProblemHttpNoCorsProblem);
+        assertMainErrorMessage(getTranslation().serverSelector.message.serverConnectionProblemHttpNoCorsProblem);
         done();
       }, 500);
     });
@@ -159,7 +163,7 @@ describe('integration-tests', () => {
 
       clock.restore();
       setTimeout(() => {
-        assert.equal($('.errorMessageMain').text(), getTranslation().serverSelector.message.outdatedServer);
+        assertMainErrorMessage(getTranslation().serverSelector.message.outdatedServer);
         done();
       }, 500);
     });

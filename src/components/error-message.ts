@@ -2,9 +2,12 @@ import {Component} from "preact";
 import {createPreactFactory, div} from "../utils/preact";
 import {getTranslation} from "../localization";
 
+interface HtmlWrapper {
+  html: string
+}
 
 export interface ErrorMessageProps {
-  message: string;
+  messageHtml: HtmlWrapper;
   detailedMessage?: string;
 }
 
@@ -36,7 +39,7 @@ class ErrorMessageComponent extends Component<ErrorMessageProps, ErrorMessageSta
   render() {
     const props = this.props;
     return div({className: 'errorMessage', },
-      div({className: "errorMessageMain"}, props.message),
+      div({className: "errorMessageMain", dangerouslySetInnerHTML: {__html: props.messageHtml.html}}),
       this.props.detailedMessage ? div({
           className: 'detailedErrorSection'
         },
