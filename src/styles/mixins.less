@@ -27,11 +27,13 @@
   cursor: pointer;
 }
 
+@opactiySoftblackToGrey: 0.555; /*  (0xff-0x90)/(0xff-0x37) */
+
 .headerIcon () {
   background-position-y: center;
   height: 55px;
   width: 24px;
-  opacity: 0.38194; /* @text-dark-grey (#373737) => @sidebar-grey (#909090) */
+  opacity: @opactiySoftblackToGrey; /* @text-dark-grey (#373737) => @sidebar-grey (#909090) */
   &:hover {
     opacity: 1;
   }
