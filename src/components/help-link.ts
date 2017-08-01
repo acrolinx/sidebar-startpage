@@ -1,5 +1,6 @@
 import {Component} from 'preact';
 import {createPreactFactory, a} from "../utils/preact";
+import {getTranslation} from "../localization";
 
 export const HELP_LINK_URL = 'https://support.acrolinx.com/hc/en-us/articles/203845751';
 
@@ -14,6 +15,7 @@ class HelpLink extends Component<HelpLinkProps, {}> {
     const props = this.props;
     return a({
       className: 'icon-help',
+      title: getTranslation().serverSelector.tooltip.openHelp,
       onClick: (event: Event) => {
         event.preventDefault();
         props.openWindow(HELP_LINK_URL);

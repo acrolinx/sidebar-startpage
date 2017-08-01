@@ -38,7 +38,8 @@
       "serverAddress": "Server Address"
     },
     "tooltip": {
-      "httpsRequired": "You need to connect to a secure server. A secure server address starts with \"https\"."
+      "httpsRequired": "You need to connect to a secure server. A secure server address starts with \"https\".",
+      "openHelp": "Open Help"
     }
   }
 }
