@@ -102,7 +102,7 @@ describe('integration-tests', () => {
   });
 
   function assertMainErrorMessage(messageHtml: string) {
-    assert.equal($('.errorMessageMain').html(), messageHtml);
+    assert.equal($('.errorMessageMain').html(), $('<div/>').html(messageHtml).html());
   }
 
   describe('showServerSelector = false', () => {
