@@ -39,7 +39,7 @@
     },
     "tooltip": {
       "httpsRequired": "You need to connect to a secure server. A secure server address starts with \"https\".",
-      "openHelp": "Open Help"
+      "openHelp": "We couldn't open the Help Center URL:"
     }
   }
 }
