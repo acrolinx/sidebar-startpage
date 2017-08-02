@@ -32,7 +32,8 @@
       "serverAddress": "Adresse du serveur:"
     },
     "tooltip": {
-      "httpsRequired": "Vous devez vous connecter \u00e0 un serveur s\u00e9curis\u00e9. L'adresse d'un serveur s\u00e9curis\u00e9 commence toujours par \"https\"."
+      "httpsRequired": "Vous devez vous connecter \u00e0 un serveur s\u00e9curis\u00e9. L'adresse d'un serveur s\u00e9curis\u00e9 commence toujours par \"https\".",
+      "openHelp": "Impossible d'ouvrir l'URL du centre d'aide."
     }
   }
 }
