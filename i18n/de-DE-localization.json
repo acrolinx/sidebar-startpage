@@ -32,7 +32,8 @@
       "serverAddress": "Serveradresse"
     },
     "tooltip": {
-      "httpsRequired": "Sie m\u00fcssen sich mit einem sicheren Server verbinden. Eine sichere Serveradresse beginnt mit \"https\"."
+      "httpsRequired": "Sie m\u00fcssen sich mit einem sicheren Server verbinden. Eine sichere Serveradresse beginnt mit \"https\".",
+      "openHelp": "Wir konnten die Help Center URL nicht \u00f6ffnen:"
     }
   }
 }
