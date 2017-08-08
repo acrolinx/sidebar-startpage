@@ -1,5 +1,5 @@
 interface WindowWithAcrolinxStorage extends Window {
-  acrolinxStorage: AcrolinxSimpleStorage
+  acrolinxStorage: AcrolinxSimpleStorage;
 }
 
 export interface AcrolinxSimpleStorage {
@@ -25,12 +25,12 @@ function isLocalStorageAvailable(storage: Storage | undefined) {
     return true;
   }
   catch (e) {
-    return false
+    return false;
   }
 }
 
 export class AcrolinxSimpleStorageInMemory implements AcrolinxSimpleStorage {
-  dataMap: { [key: string]: string } = {}
+  dataMap: { [key: string]: string } = {};
 
   clear(): void {
     this.dataMap = {};
@@ -51,7 +51,7 @@ export class AcrolinxSimpleStorageInMemory implements AcrolinxSimpleStorage {
 }
 
 
-const disableLocalStorageForTesting = true;
+const disableLocalStorageForTesting = false;
 
 function getAcrolinxSimpleStorageAtInitInternal(acrolinxStorageArg: AcrolinxSimpleStorage | undefined, localStorageArg: Storage | undefined): AcrolinxSimpleStorage {
   if (acrolinxStorageArg) {
@@ -87,3 +87,7 @@ export function injectAcrolinxStorageIntoSidebarIfAvailable(currentWindow: {acro
     sidebarIFrameWindow.acrolinxStorage = currentWindow.acrolinxStorage;
   }
 }
+
+export const forTesting = {
+  getAcrolinxSimpleStorageAtInitInternal
+};
