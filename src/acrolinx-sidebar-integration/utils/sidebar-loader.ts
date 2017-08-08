@@ -79,7 +79,7 @@ export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameEle
       }
     }
 
-    console.log('Loaded!');
+    console.log('Sidebar loaded');
 
     if (config.useMessageAdapter) {
       sidebarIFrameElement.addEventListener('load', () => {
