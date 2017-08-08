@@ -4,3 +4,7 @@
   height: 300px;
   margin: 0 auto;
 }
+
+html, body {
+  overflow: auto !important;
+}
