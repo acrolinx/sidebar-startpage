@@ -20,6 +20,7 @@ import {POLL_FOR_PLUGIN_INTERVAL_MS} from "../../../src/proxies/proxy-acrolinx-p
 import {getTranslation} from "../../../src/localization";
 import {startsWith} from "../../../src/utils/utils";
 import {HELP_LINK_URL} from "../../../src/components/help-link";
+import {getAcrolinxSimpleStorage} from "../../../src/utils/acrolinx-storage";
 
 type AugmentedWindow = Window & {
   acrolinxSidebar: AcrolinxSidebar;
@@ -37,7 +38,7 @@ describe('integration-tests', () => {
 
   beforeEach(() => {
     clock = sinon.useFakeTimers();
-    localStorage.clear();
+    getAcrolinxSimpleStorage().clear();
     $('#app').remove();
     $('body').append('<div id="app">Loading</div>');
   });

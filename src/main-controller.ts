@@ -22,6 +22,10 @@ import {aboutComponent} from "./components/about";
 import {extendClientComponents, hackInitParameters} from "./init-parameters";
 import {focusAddressInputField, severSelectorFormComponent} from "./components/server-selector-form";
 import {errorMessageComponent, ErrorMessageProps} from "./components/error-message";
+import {
+  getAcrolinxSimpleStorage, initAcrolinxStorage,
+  injectAcrolinxStorageIntoSidebarIfAvailable
+} from "./utils/acrolinx-storage";
 
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 
@@ -64,10 +68,11 @@ export function startMainController() {
 
   let sidebarIFrameElement: HTMLIFrameElement | undefined;
 
-  const oldServerAddress = localStorage.getItem(SERVER_ADDRESS_KEY);
-  let serverAddress = oldServerAddress;
+  let serverAddress: string | null;
 
   waitForAcrolinxPlugin(acrolinxPluginArg => {
+    initAcrolinxStorage();
+    serverAddress = getAcrolinxSimpleStorage().getItem(SERVER_ADDRESS_KEY);
     acrolinxPlugin = acrolinxPluginArg;
     acrolinxPlugin.requestInit();
 
@@ -132,7 +137,7 @@ export function startMainController() {
       }
 
       if (initParametersFromPlugin.showServerSelector) {
-        localStorage.setItem(SERVER_ADDRESS_KEY, serverAddress);
+        getAcrolinxSimpleStorage().setItem(SERVER_ADDRESS_KEY, serverAddress);
       }
       showSidebarIFrame();
 
@@ -141,6 +146,9 @@ export function startMainController() {
       }
 
       const contentWindowAny = sidebarIFrameElement!.contentWindow as any;
+
+      injectAcrolinxStorageIntoSidebarIfAvailable(window, contentWindowAny);
+
       contentWindowAny.acrolinxPlugin = new ProxyAcrolinxPlugin({
         requestInitListener: () => {
           sidebarProxy.acrolinxSidebar = contentWindowAny.acrolinxSidebar;
@@ -231,8 +239,8 @@ export function startMainController() {
     setLanguage(initParameters.clientLocale);
 
     if (initParameters.showServerSelector) {
-      if (oldServerAddress) {
-        tryToLoadSidebar(oldServerAddress);
+      if (serverAddress) {
+        tryToLoadSidebar(serverAddress);
       } else {
         if (initParameters.serverAddress) {
           serverAddress = initParameters.serverAddress;
