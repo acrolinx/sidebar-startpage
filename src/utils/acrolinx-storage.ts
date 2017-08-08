@@ -71,9 +71,12 @@ function getAcrolinxSimpleStorageAtInit(): AcrolinxSimpleStorage {
   return getAcrolinxSimpleStorageAtInitInternal(pimpedWindow.acrolinxStorage, window.localStorage);
 }
 
-let acrolinxSimpleStorage = getAcrolinxSimpleStorageAtInit();
+let acrolinxSimpleStorage: AcrolinxSimpleStorage | undefined;
 
-export function getAcrolinxSimpleStorage() {
+export function getAcrolinxSimpleStorage() : AcrolinxSimpleStorage {
+  if (!acrolinxSimpleStorage) {
+    acrolinxSimpleStorage = getAcrolinxSimpleStorageAtInit();
+  }
   return acrolinxSimpleStorage;
 }
 
