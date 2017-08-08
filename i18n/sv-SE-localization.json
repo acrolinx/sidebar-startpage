@@ -33,7 +33,7 @@
     },
     "tooltip": {
       "httpsRequired": "Du beh\u00f6ver ansluta till en s\u00e4ker server. En s\u00e4ker serveradress b\u00f6rjar med \"https\".",
-      "openHelp": "Vi kunde inte \u00f6ppna URL:en f\u00f6r Help Center:"
+      "openHelp": "\u00d6ppna hj\u00e4lpinformationen i ett webbl\u00e4sarf\u00f6nster"
     }
   }
 }
