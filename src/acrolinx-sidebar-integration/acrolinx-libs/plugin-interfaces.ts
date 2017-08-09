@@ -125,17 +125,6 @@ export interface InitParameters extends SidebarConfiguration {
   minimumSidebarVersion?: string;
 
   /**
-   * Normally browsers forbid javascript to execute requests to servers from a domain, which is different from the domain
-   * of the page in which the javascript is loaded (same origin policy).
-   * In order to allow such requests, the server must enable CORS. If the sidebar can't connect to a server, it displays a error message,
-   * suggesting that maybe CORS needs to be activated.
-   * In same browser components CORS is not needed to access a different domain.
-   * In this case this property can used to disable error messages which mention CORS.
-   */
-  suppressCorsErrorMessages?: boolean;
-
-
-  /**
    * Extraordinary capabilities of the plugin.
    */
   supported?: {

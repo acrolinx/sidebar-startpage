@@ -1,19 +1,23 @@
 import {
-  $, $byId, getCorsOrigin, getDefaultServerAddress, hide, isHttpUrl, parseVersionNumberWithFallback, show,
+  $,
+  $byId,
+  getDefaultServerAddress,
+  hide,
+  isHttpUrl,
+  parseVersionNumberWithFallback,
+  show,
   startsWithAnyOf
 } from "./utils/utils";
 import {
-  LoadSidebarError, loadSidebarIntoIFrame,
+  LoadSidebarError,
+  loadSidebarIntoIFrame,
   LoadSidebarProps
 } from "./acrolinx-sidebar-integration/utils/sidebar-loader";
 import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from "./proxies/proxy-acrolinx-plugin";
 import {EXTENSION_URL_PREFIXES, FORCE_MESSAGE_ADAPTER, SERVER_SELECTOR_VERSION} from "./constants";
 import {createSidebarMessageProxy} from "./acrolinx-sidebar-integration/message-adapter/message-adapter";
 import {ProxyAcrolinxSidebar} from "./proxies/proxy-acrolinx-sidebar";
-import {
-  AcrolinxPlugin,
-  InitParameters
-} from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
+import {AcrolinxPlugin, InitParameters} from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 import {getTranslation, setLanguage} from "./localization";
 import {sanitizeAndValidateServerAddress} from "./utils/validation";
 
@@ -23,7 +27,8 @@ import {extendClientComponents, hackInitParameters} from "./init-parameters";
 import {focusAddressInputField, severSelectorFormComponent} from "./components/server-selector-form";
 import {errorMessageComponent, ErrorMessageProps} from "./components/error-message";
 import {
-  getAcrolinxSimpleStorage, initAcrolinxStorage,
+  getAcrolinxSimpleStorage,
+  initAcrolinxStorage,
   injectAcrolinxStorageIntoSidebarIfAvailable
 } from "./utils/acrolinx-storage";
 
@@ -166,15 +171,7 @@ export function startMainController() {
     return {messageHtml: {html: messageHtml}};
   }
 
-  function errorMessageWithCorsDetails(messageHtml: string): ErrorMessageProps {
-    const t = getTranslation();
-    return {
-      messageHtml: {html: messageHtml},
-      detailedMessage: t.serverSelector.aboutItems.startPageCorsOrigin + '\n' + getCorsOrigin()
-    };
-  }
-
-  function getSidebarLoadErrorMessage(serverAddress: string, error: LoadSidebarError, suppressCorsErrorMessages?: boolean): ErrorMessageProps {
+  function getSidebarLoadErrorMessage(serverAddress: string, error: LoadSidebarError): ErrorMessageProps {
     const errorMessages = getTranslation().serverSelector.message;
     switch (error.acrolinxErrorCode) {
       case 'httpErrorStatus':
@@ -184,19 +181,13 @@ export function startMainController() {
         return simpleErrorMessage(errorMessages.noCloudSidebar);
       case 'sidebarVersionIsBelowMinimum':
         return simpleErrorMessage(errorMessages.outdatedServer);
-      case 'timeout':
-        return simpleErrorMessage(isHttpUrl(serverAddress) ? errorMessages.serverConnectionProblemTimeoutHttp : errorMessages.serverConnectionProblemTimeoutHttps);
       default:
-        if (suppressCorsErrorMessages) {
-          return simpleErrorMessage(isHttpUrl(serverAddress) ? errorMessages.serverConnectionProblemHttpNoCorsProblem : errorMessages.serverConnectionProblemHttpsNoCorsProblem);
-        } else {
-          return errorMessageWithCorsDetails(isHttpUrl(serverAddress) ? errorMessages.serverConnectionProblemHttp : errorMessages.serverConnectionProblemHttps);
-        }
+        return simpleErrorMessage(isHttpUrl(serverAddress) ? errorMessages.serverConnectionProblemHttp : errorMessages.serverConnectionProblemHttps);
     }
   }
 
   function onSidebarLoadError(serverAddress: string, error: LoadSidebarError) {
-    const errorMessage = getSidebarLoadErrorMessage(serverAddress, error, initParametersFromPlugin.suppressCorsErrorMessages);
+    const errorMessage = getSidebarLoadErrorMessage(serverAddress, error);
     if (initParametersFromPlugin.showServerSelector) {
       showServerSelector({errorMessage: errorMessage});
     } else {
@@ -289,7 +280,7 @@ export function startMainController() {
     hide(serverSelectorFormPage);
     show(aboutPage);
     render(aboutComponent({
-      onBack () {
+      onBack() {
         hide(aboutPage);
         showServerSelector();
       },
