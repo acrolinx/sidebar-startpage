@@ -31,40 +31,42 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
     const t = getTranslation().serverSelector;
     const props = this.props;
     const httpsRequired = isHttpsRequired({enforceHTTPS: props.enforceHTTPS, windowLocation: window.location});
-    return form({className: 'serverSelectorFormComponent' , onSubmit: this.onSubmit},
+    return form({className: 'serverSelectorFormComponent', onSubmit: this.onSubmit},
       div({
         className: 'logoHeader'
       }, helpLink(props)),
       div({className: 'formContent'},
-        h1({
-            className: 'serverAddressTitle',
-            title: httpsRequired ? t.tooltip.httpsRequired : ''
-          }, t.title.serverAddress,
-          httpsRequired ? span({className: 'httpsRequiredIcon'}) : []
-        ),
-        input({
-          className: SERVER_ADDRESS_INPUT_FIELD_CLASS,
-          name: 'acrolinxServerAddress',
-          placeholder: t.placeHolder.serverAddress, autofocus: true,
-          ref: (inputEl: HTMLInputElement) => {
-            this.serverAddressField = inputEl;
-          },
-          defaultValue: props.serverAddress,
-          spellCheck: "false"
-        }),
-        div({className: 'buttonGroup'},
-          externalTextLink({
-            url: CANT_CONNECT_HELP_LINK_URL,
-            openWindow: props.openWindow,
-            text: t.links.cantConnect
+        div({className: 'paddedFormContent'},
+          h1({
+              className: 'serverAddressTitle',
+              title: httpsRequired ? t.tooltip.httpsRequired : ''
+            }, t.title.serverAddress,
+            httpsRequired ? span({className: 'httpsRequiredIcon'}) : []
+          ),
+          input({
+            className: SERVER_ADDRESS_INPUT_FIELD_CLASS,
+            name: 'acrolinxServerAddress',
+            placeholder: t.placeHolder.serverAddress, autofocus: true,
+            ref: (inputEl: HTMLInputElement) => {
+              this.serverAddressField = inputEl;
+            },
+            defaultValue: props.serverAddress,
+            spellCheck: "false"
           }),
-          button({
-            type: 'submit',
-            className: "submitButton",
-            disabled: props.isConnectButtonDisabled
-          }, t.button.connect)
+          div({className: 'buttonGroup'},
+            externalTextLink({
+              url: CANT_CONNECT_HELP_LINK_URL,
+              openWindow: props.openWindow,
+              text: t.links.cantConnect
+            }),
+            button({
+              type: 'submit',
+              className: "submitButton",
+              disabled: props.isConnectButtonDisabled
+            }, t.button.connect)
+          ),
+          a({onClick: props.onAboutLink, href: '#'}, t.links.about),
         ),
-        a({onClick: props.onAboutLink, href: '#'}, t.links.about),
         props.errorMessage ? errorMessageComponent(props.errorMessage) : []
       ));
   }

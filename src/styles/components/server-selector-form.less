@@ -30,8 +30,10 @@
 }
 
 .formContent {
-  margin-left: @horizontalPageMargin;
-  padding-right: @horizontalPageMargin;
+  .paddedFormContent {
+    padding-left: @horizontalPageMargin;
+    padding-right: @horizontalPageMargin;
+  }
 
   .flex-grow(1);
   overflow-y: auto;
