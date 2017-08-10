@@ -22,7 +22,7 @@
       "outdatedServer": "It looks like your Acrolinx integration needs a newer server version to load the Sidebar. Ask your Acrolinx Server administrator to update your server.",
       "serverConnectionProblemHttp": "We couldn't connect to your Acrolinx Server. Check that the server address is correct. If you still can't connect then contact your Acrolinx Server administrator. It might be that your server doesn\u2019t accept insecure connections.",
       "serverConnectionProblemHttps": "We couldn't connect to your Acrolinx Server. Check that the server address is correct. If you still can't connect then contact your Acrolinx Server administrator. It might be that your server doesn\u2019t accept secure connections.",
-      "serverIsNoAcrolinxServerOrHasNoSidebar": "It looks like the server we tried to connect to isn\u2019t an Acrolinx Server or that the server version doesn't support the Sidebar. Ask your server administrator to check your server version if you're sure that the server address is correct.",
+      "serverIsNoAcrolinxServerOrHasNoSidebar": "It looks like this isn\u2019t an Acrolinx Server or this server version doesn't support the Sidebar. Ask your server administrator to check your server version if you're sure that the server address is correct.",
       "serverIsNotSecure": "You need to connect to a secure server. A secure server address starts with \"https\"."
     },
     "placeHolder": {
