@@ -20,7 +20,6 @@
       "invalidServerAddress": "Il semblerait que l'adresse soit incorrecte. Corriger l'adresse et essayer \u00e0 nouveau.",
       "noCloudSidebar": "Il semblerait que votre serveur prend en charge une ancienne version de la Sidebar. Nous avons essay\u00e9 de charger une Sidebar de secours, mais nous avons des probl\u00e8mes de connexion. Pouvez-vous v\u00e9rifier votre connexion Internet ?",
       "outdatedServer": "Il semblerait que votre int\u00e9gration Acrolinx ait besoin d'une version de serveur plus r\u00e9cente pour charger la Sidebar. Contactez votre administrateur Acrolinx pour une mise \u00e0 jour.",
-      "serverIsNoAcrolinxServerOrHasNoSidebar": "La connexion au serveur n'a pas abouti.\nSi l'adresse est correcte, contacter l'administrateur Acrolinx pour qu'il consulte les journaux du serveur.",
       "serverIsNotSecure": "Vous devez vous connecter \u00e0 un serveur s\u00e9curis\u00e9. L'adresse d'un serveur s\u00e9curis\u00e9 commence toujours par \"https\"."
     },
     "placeHolder": {
