@@ -1,14 +1,24 @@
 import {Component} from 'preact';
-import {createPreactFactory, a} from "../utils/preact";
-import {getTranslation} from "../localization";
-
-export const HELP_LINK_URL = 'https://support.acrolinx.com/hc/en-us/articles/203845751';
+import {a, createPreactFactory} from "../utils/preact";
+import {getLocale, getTranslation} from "../localization";
+import {InitParameters} from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 
 export type OpenWindowFunction = (url: string) => void;
 
 interface HelpLinkProps {
   openWindow: OpenWindowFunction;
+  initParameters: InitParameters;
 }
+
+export function getLocalizedDefaultHelpLink(): string {
+  return (getLocale() === 'de') ? HELP_LINK_URLS.de : HELP_LINK_URLS.en;
+}
+
+export const HELP_LINK_URLS = {
+  en: 'https://support.acrolinx.com/hc/en-us/articles/203845751',
+  de: 'https://support.acrolinx.com/hc/de/articles/203845751'
+};
+
 
 class HelpLink extends Component<HelpLinkProps, {}> {
   render() {
@@ -18,7 +28,7 @@ class HelpLink extends Component<HelpLinkProps, {}> {
       title: getTranslation().serverSelector.tooltip.openHelp,
       onClick: (event: Event) => {
         event.preventDefault();
-        props.openWindow(HELP_LINK_URL);
+        props.openWindow(props.initParameters.helpUrl || getLocalizedDefaultHelpLink());
       }, href: '#'
     });
   }

@@ -19,8 +19,8 @@ import {assertExistCount, getExistingElement, simulateClick} from "./test-utils/
 import {POLL_FOR_PLUGIN_INTERVAL_MS} from "../../../src/proxies/proxy-acrolinx-plugin";
 import {getTranslation} from "../../../src/localization";
 import {startsWith} from "../../../src/utils/utils";
-import {HELP_LINK_URL} from "../../../src/components/help-link";
 import {getAcrolinxSimpleStorage} from "../../../src/utils/acrolinx-storage";
+import {HELP_LINK_URLS} from "../../../src/components/help-link";
 
 type AugmentedWindow = Window & {
   acrolinxSidebar: AcrolinxSidebar;
@@ -220,11 +220,28 @@ describe('integration-tests', () => {
     });
   });
 
-  it('click help', () => {
-    init({showServerSelector: true, logFileLocation: 'dummyLogFileLocation'});
-    simulateClick('.icon-help');
-    assert.equal(augmentedWindow.acrolinxPlugin.openWindowSpy.callCount, 1);
-    assert.deepEqual(augmentedWindow.acrolinxPlugin.openWindowSpy.args[0][0], {url: HELP_LINK_URL});
+  describe('help', () => {
+    function assertHelpOpened(expectecUrl: string) {
+      simulateClick('.icon-help');
+      assert.equal(augmentedWindow.acrolinxPlugin.openWindowSpy.callCount, 1);
+      assert.deepEqual(augmentedWindow.acrolinxPlugin.openWindowSpy.args[0][0], {url: expectecUrl});
+    }
+
+    it('click help', () => {
+      init({showServerSelector: true, logFileLocation: 'dummyLogFileLocation'});
+      assertHelpOpened(HELP_LINK_URLS.en);
+    });
+
+    it('click help provided from plugin', () => {
+      const helpUrl = 'https://www.acrolinx.com';
+      init({showServerSelector: true, logFileLocation: 'dummyLogFileLocation', helpUrl});
+      assertHelpOpened(helpUrl);
+    });
+
+    it('click german help', () => {
+      init({showServerSelector: true, logFileLocation: 'dummyLogFileLocation', clientLocale: 'de-DE'});
+      assertHelpOpened(HELP_LINK_URLS.de);
+    });
 
   });
 

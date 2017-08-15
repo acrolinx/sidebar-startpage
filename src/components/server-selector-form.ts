@@ -5,6 +5,7 @@ import {isHttpsRequired} from "../utils/utils";
 import {externalTextLink, OpenWindowFunction} from "./external-text-link";
 import {errorMessageComponent, ErrorMessageProps} from "./error-message";
 import {helpLink} from "./help-link";
+import {InitParameters} from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 
 interface SeverSelectorFormProps {
   onSubmit: (serverAddress: string) => void;
@@ -14,6 +15,7 @@ interface SeverSelectorFormProps {
   isConnectButtonDisabled: boolean;
   openWindow: OpenWindowFunction;
   errorMessage?: ErrorMessageProps;
+  initParameters: InitParameters;
 }
 
 const SERVER_ADDRESS_INPUT_FIELD_CLASS = 'serverAddress';

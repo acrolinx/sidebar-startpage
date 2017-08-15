@@ -10,3 +10,7 @@ export const EXTENSION_URL_PREFIXES = ['chrome-extension://', 'moz-extension://'
 export const FORCE_SIDEBAR_URL = '';
 
 export const FORCE_MESSAGE_ADAPTER = false;
+
+// export const FORCE_SIDEBAR_URL = 'http://10.10.30.73:9001/';
+//
+// export const FORCE_MESSAGE_ADAPTER = true;

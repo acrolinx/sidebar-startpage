@@ -216,7 +216,8 @@ export function startMainController() {
       enforceHTTPS: initParametersFromPlugin.enforceHTTPS,
       isConnectButtonDisabled: props.isConnectButtonDisabled!!,
       openWindow: openExternalWindow,
-      errorMessage: props.errorMessage
+      errorMessage: props.errorMessage,
+      initParameters: initParametersFromPlugin
     }), serverSelectorFormPage, serverSelectorFormPage.firstChild as Element);
   }
 
@@ -287,7 +288,8 @@ export function startMainController() {
       logFileLocation: initParametersFromPlugin.logFileLocation,
       openLogFile,
       clientComponents: extendClientComponents(initParametersFromPlugin.clientComponents),
-      openWindow: openExternalWindow
+      openWindow: openExternalWindow,
+      initParameters: initParametersFromPlugin
     }), aboutPage, aboutPage.firstChild as Element);
   }
 

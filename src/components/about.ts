@@ -2,6 +2,7 @@ import {Component} from "preact";
 import {button, classNames, createPreactFactory, div, h1, span} from "../utils/preact";
 import {getTranslation} from "../localization";
 import {
+  InitParameters,
   SoftwareComponent,
   SoftwareComponentCategory
 } from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
@@ -15,6 +16,7 @@ interface AboutProps {
   clientComponents: SoftwareComponent[];
   logFileLocation?: string;
   openWindow: OpenWindowFunction;
+  initParameters: InitParameters;
 }
 
 function aboutInfoLine(component: SoftwareComponent) {
