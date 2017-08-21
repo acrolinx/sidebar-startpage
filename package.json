@@ -70,12 +70,12 @@
     "sinon": "2.3.6",
     "ts-node": "3.0.2",
     "tslint": "^4.4.2",
-    "typescript": "2.3.4",
+    "typescript": "2.4.2",
     "watch": "1.0.2",
     "watchify": "^3.9.0"
   },
   "dependencies": {
-    "preact": "8.1.0",
+    "preact": "8.2.1",
     "tslib": "^1.7.1"
   },
   "publishConfig": {
