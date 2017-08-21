@@ -6,16 +6,10 @@ export function $byId(id: string): HTMLElement | undefined {
   return document.getElementById(id) as HTMLElement;
 }
 
-export function hide(el: HTMLElement) {
-  setDisplayed(el, false);
-}
-
-export function show(el: HTMLElement) {
-  setDisplayed(el, true);
-}
-
 export function setDisplayed(el: HTMLElement, isDisplayed: boolean, display = 'block') {
-  el.style.display = isDisplayed ? display : 'none';
+  if (el.style) {
+    el.style.display = isDisplayed ? display : 'none';
+  }
 }
 
 export function startsWith(haystack: string, needle: string) {

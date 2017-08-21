@@ -2,11 +2,10 @@ import {
   $,
   $byId,
   getDefaultServerAddress,
-  hide,
   isHttpUrl,
   parseVersionNumberWithFallback,
-  show,
-  startsWithAnyOf
+  startsWithAnyOf,
+  setDisplayed,
 } from "./utils/utils";
 import {
   LoadSidebarError,
@@ -34,15 +33,20 @@ import {
 
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 
-const ABOUT_PAGE_ID = 'aboutPage';
-const SERVER_SELECTOR_FORM_PAGE_ID = 'serverSelectorFormPage';
-const ERROR_MESSAGE_CONTAINER_ID = 'errorMessagePage';
+enum PageId {
+  ABOUT = 'aboutPage',
+  SERVER_SELECTOR = 'serverSelectorFormPage',
+  ERROR_MESSAGE = 'errorMessagePage',
+  LOADING_SIDEBAR_MESSAGE = 'loadingSidebarMessagePage',
+  SIDEBAR_CONTAINER = 'sidebarContainer',
+}
 
 const TEMPLATE = `
-  <div id="${SERVER_SELECTOR_FORM_PAGE_ID}" style="display: none"></div>
-  <div id="${ABOUT_PAGE_ID}" style="display: none"></div>
-  <div id="${ERROR_MESSAGE_CONTAINER_ID}" style="display: none"></div>
-  <div id="sidebarContainer"></div>
+  <div id="${PageId.SERVER_SELECTOR}" style="display: none"></div>
+  <div id="${PageId.ABOUT}" style="display: none"></div>
+  <div id="${PageId.ERROR_MESSAGE}" style="display: none"></div>
+  <div id="${PageId.LOADING_SIDEBAR_MESSAGE}" style="display: none"></div>
+  <div id="${PageId.SIDEBAR_CONTAINER}" style="display: none"></div>
 `;
 
 const NEEDS_MESSAGE_ADAPTER = EXTENSION_URL_PREFIXES;
@@ -52,7 +56,7 @@ function isMessageAdapterNeeded() {
 }
 
 export function startMainController() {
-  console.log('Loading acrolinx server selector ' + SERVER_SELECTOR_VERSION);
+  console.log('Loading acrolinx sidebar startpage ' + SERVER_SELECTOR_VERSION);
 
   const windowAny = window as any;
   const sidebarProxy = new ProxyAcrolinxSidebar(onInitFromPlugin);
@@ -64,16 +68,22 @@ export function startMainController() {
   const appElement = $('#app')!;
   appElement.innerHTML = TEMPLATE;
 
-  const sidebarContainer = $('#sidebarContainer')!;
-  const errorMessageEl = $byId(ERROR_MESSAGE_CONTAINER_ID)!;
+  const loadingSidebarPage = $byId(PageId.LOADING_SIDEBAR_MESSAGE)!;
 
-  const aboutPage = $byId(ABOUT_PAGE_ID)!;
+  const sidebarContainer = $byId(PageId.SIDEBAR_CONTAINER)!;
+  const errorMessageEl = $byId(PageId.ERROR_MESSAGE)!;
 
-  const serverSelectorFormPage = $byId(SERVER_SELECTOR_FORM_PAGE_ID)!;
+  const aboutPage = $byId(PageId.ABOUT)!;
+
+  const serverSelectorFormPage = $byId(PageId.SERVER_SELECTOR)!;
 
   let sidebarIFrameElement: HTMLIFrameElement | undefined;
 
   let serverAddress: string | null;
+
+  let selectedPage: PageId;
+
+  showPage(PageId.LOADING_SIDEBAR_MESSAGE);
 
   waitForAcrolinxPlugin(acrolinxPluginArg => {
     initAcrolinxStorage();
@@ -132,7 +142,12 @@ export function startMainController() {
       minimumSidebarVersion: parseVersionNumberWithFallback(initParametersFromPlugin.minimumSidebarVersion)
     };
 
-    renderServerSelectorForm({isConnectButtonDisabled: true});
+    if (selectedPage === PageId.SERVER_SELECTOR) {
+      renderServerSelectorForm({isConnectButtonDisabled: true});
+    } else {
+      showPage(PageId.LOADING_SIDEBAR_MESSAGE);
+      loadingSidebarPage.innerText = 'Loading sidebar ...';
+    }
 
     loadSidebarIntoIFrame(loadSidebarProps, sidebarIFrameElement, (error) => {
       if (error) {
@@ -144,7 +159,8 @@ export function startMainController() {
       if (initParametersFromPlugin.showServerSelector) {
         getAcrolinxSimpleStorage().setItem(SERVER_ADDRESS_KEY, serverAddress);
       }
-      showSidebarIFrame();
+
+      showPage(PageId.SIDEBAR_CONTAINER);
 
       if (useMessageAdapter) {
         return;
@@ -152,7 +168,7 @@ export function startMainController() {
 
       const contentWindowAny = sidebarIFrameElement!.contentWindow as any;
 
-      injectAcrolinxStorageIntoSidebarIfAvailable(window, contentWindowAny);
+      injectAcrolinxStorageIntoSidebarIfAvailable(window as any, contentWindowAny);
 
       contentWindowAny.acrolinxPlugin = new ProxyAcrolinxPlugin({
         requestInitListener: () => {
@@ -195,15 +211,18 @@ export function startMainController() {
     }
   }
 
-  function showSidebarIFrame() {
-    hide(serverSelectorFormPage);
-    show(sidebarContainer);
+  function showPage(page: PageId) {
+    const divs = appElement.childNodes;
+    for (let i = 0; i < divs.length; ++i) {
+      const div = divs[i] as HTMLElement;
+      setDisplayed(div, page == div.id);
+    }
+    selectedPage = page;
   }
 
   function showServerSelector(props: { isConnectButtonDisabled?: boolean, errorMessage?: ErrorMessageProps } = {}) {
     sidebarContainer.innerHTML = '';
-    hide(sidebarContainer);
-    show(serverSelectorFormPage);
+    showPage(PageId.SERVER_SELECTOR);
     focusAddressInputField(serverSelectorFormPage);
     renderServerSelectorForm(props);
   }
@@ -222,7 +241,7 @@ export function startMainController() {
   }
 
   function showErrorMessagePage(errorMessageProps: ErrorMessageProps) {
-    show(errorMessageEl);
+    showPage(PageId.ERROR_MESSAGE);
     render(errorMessageComponent(errorMessageProps), errorMessageEl, errorMessageEl.firstChild as Element);
   }
 
@@ -278,11 +297,9 @@ export function startMainController() {
   }
 
   function onAboutLink() {
-    hide(serverSelectorFormPage);
-    show(aboutPage);
+    showPage(PageId.ABOUT);
     render(aboutComponent({
       onBack() {
-        hide(aboutPage);
         showServerSelector();
       },
       logFileLocation: initParametersFromPlugin.logFileLocation,
