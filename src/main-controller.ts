@@ -45,7 +45,9 @@ const TEMPLATE = `
   <div id="${PageId.SERVER_SELECTOR}" style="display: none"></div>
   <div id="${PageId.ABOUT}" style="display: none"></div>
   <div id="${PageId.ERROR_MESSAGE}" style="display: none"></div>
-  <div id="${PageId.LOADING_SIDEBAR_MESSAGE}" style="display: none"></div>
+  <div id="${PageId.LOADING_SIDEBAR_MESSAGE}">
+    <div class="loader loaderJsLoaded"><span class="fallbackLoadingMessage">Loading ...</span></div>
+  </div>
   <div id="${PageId.SIDEBAR_CONTAINER}" style="display: none"></div>
 `;
 
@@ -67,8 +69,6 @@ export function startMainController() {
   const useMessageAdapter = isMessageAdapterNeeded();
   const appElement = $('#app')!;
   appElement.innerHTML = TEMPLATE;
-
-  const loadingSidebarPage = $byId(PageId.LOADING_SIDEBAR_MESSAGE)!;
 
   const sidebarContainer = $byId(PageId.SIDEBAR_CONTAINER)!;
   const errorMessageEl = $byId(PageId.ERROR_MESSAGE)!;
@@ -145,8 +145,8 @@ export function startMainController() {
     if (selectedPage === PageId.SERVER_SELECTOR) {
       renderServerSelectorForm({isConnectButtonDisabled: true});
     } else {
+      addSidebarLoadingStyles();
       showPage(PageId.LOADING_SIDEBAR_MESSAGE);
-      loadingSidebarPage.innerText = 'Loading sidebar ...';
     }
 
     loadSidebarIntoIFrame(loadSidebarProps, sidebarIFrameElement, (error) => {
@@ -181,6 +181,13 @@ export function startMainController() {
       });
     });
 
+  }
+
+  function addSidebarLoadingStyles() {
+    const loader = appElement.querySelector('.loader');
+    if (loader) {
+      loader.classList.add('loadSidebarHtml');
+    }
   }
 
   function simpleErrorMessage(messageHtml: string): ErrorMessageProps {
