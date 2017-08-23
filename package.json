@@ -1,6 +1,6 @@
 {
   "name": "acrolinx-sidebar-startpage",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "description": "A Container Component for Acrolinx Integrations that loads the Acrolinx sidebar",
   "scripts": {
     "bower": "bower install",
@@ -25,14 +25,15 @@
     "tslint": "tslint 'src/**/*.ts' 'test/**/*.ts'",
     "tslintFix": "tslint --fix 'src/**/*.ts' 'test/**/*.ts'",
     "buildDist": "rm -rf tmp/dist && mkdir -p app/scripts && npm run generateTranslationsTs && npm run tslint && tsc && npm run injectVersion && npm run test && npm run browserify && npm run less && mkdir -p tmp && cp -r app tmp/dist && hashcat tmp/dist/index.html &&  npm run buildOfflineDist && npm run buildInlined && npm run fakeSidebarDist && npm run buildNpmDist",
-    "buildNpmDist": "mkdir -p dist && cp -R tmp/dist-offline/ dist && rm dist/dist-offline/index-inlined.html && npm run createNpmDistFilesIndex",
+    "buildNpmDist": "mkdir -p dist && cp -R tmp/dist-offline/ dist && rm dist/dist-offline/index-inlined.html && npm run createNpmDistFilesIndex && npm run copyInlinedToNpmDist",
+    "copyInlinedToNpmDist": "mkdir -p dist/inlined && cp tmp/acrolinx-sidebar-startpage-inlined.js dist/inlined",
     "createNpmDistFilesIndex": "cd dist/dist-offline && find . -type f | sed 's/^\\.//' |grep -v '^/files.txt' >files.txt",
     "prepack": "prepack app/scripts/main.js --out app/scripts/main.js",
     "buildOfflineDist": "rm -rf tmp/dist-offline && cp -r app tmp/dist-offline && npm run inlineSvg ./tmp/dist-offline/styles",
     "buildInlined": "rm -rf tmp/dist-inlined && cp -r app tmp/dist-inlined && hashcat tmp/dist-inlined/index-inlined.html && npm run inline && npm run packInlined",
     "inline": "npm run inlineSvg ./tmp/dist-inlined/styles && cd tmp/dist-inlined && cat index-inlined.html |inliner >../dist-inlined.html",
     "inlineSvg": "node ./tools/inline-svg.js",
-    "packInlined": "node ./tools/pack-inlined.js >tmp/acrolinx-server-selector-inlined.js",
+    "packInlined": "node ./tools/pack-inlined.js >tmp/acrolinx-sidebar-startpage-inlined.js",
     "injectVersion": "node ./tools/inject-version.js",
     "fakeSidebarDist": "npm run bower && cat bower_components/jquery/dist/jquery.min.js bower_components/lodash/dist/lodash.min.js > tmp/dist/scripts/libs.js && cp tmp/dist/scripts/main.js tmp/dist/scripts/sidebar.js"
   },
