@@ -12,10 +12,10 @@ export interface AcrolinxSimpleStorage {
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
 function isLocalStorageAvailable(storage: Storage | undefined) {
-  if (!storage) {
-    return false;
-  }
   try {
+    if (!storage) {
+      return false;
+    }
     const x = '__storage_test__';
     storage.setItem(x, x);
     if (storage.getItem(x) !== x) {
@@ -66,14 +66,26 @@ function getAcrolinxSimpleStorageAtInitInternal(acrolinxStorageArg: AcrolinxSimp
   }
 }
 
+/**
+ * Catches exceptions which might occur if loaded in IE from res://
+ * See https://acrolinx.atlassian.net/browse/DEV-13088
+ */
+function getLocalStorageSafe(): Storage | undefined {
+  try {
+    return window.localStorage;
+  } catch (_error) {
+    return undefined;
+  }
+}
+
 function getAcrolinxSimpleStorageAtInit(): AcrolinxSimpleStorage {
   const pimpedWindow = window as WindowWithAcrolinxStorage;
-  return getAcrolinxSimpleStorageAtInitInternal(pimpedWindow.acrolinxStorage, window.localStorage);
+  return getAcrolinxSimpleStorageAtInitInternal(pimpedWindow.acrolinxStorage, getLocalStorageSafe());
 }
 
 let acrolinxSimpleStorage: AcrolinxSimpleStorage | undefined;
 
-export function getAcrolinxSimpleStorage() : AcrolinxSimpleStorage {
+export function getAcrolinxSimpleStorage(): AcrolinxSimpleStorage {
   if (!acrolinxSimpleStorage) {
     acrolinxSimpleStorage = getAcrolinxSimpleStorageAtInit();
   }
@@ -84,7 +96,7 @@ export function initAcrolinxStorage() {
   acrolinxSimpleStorage = getAcrolinxSimpleStorageAtInit();
 }
 
-export function injectAcrolinxStorageIntoSidebarIfAvailable(currentWindow: {acrolinxStorage?: AcrolinxSimpleStorage}, sidebarIFrameWindow: WindowWithAcrolinxStorage) {
+export function injectAcrolinxStorageIntoSidebarIfAvailable(currentWindow: { acrolinxStorage?: AcrolinxSimpleStorage }, sidebarIFrameWindow: WindowWithAcrolinxStorage) {
   if (currentWindow.acrolinxStorage) {
     console.log('Inject window.acrolinxStorage into sidebar');
     sidebarIFrameWindow.acrolinxStorage = currentWindow.acrolinxStorage;
