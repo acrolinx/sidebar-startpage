@@ -21,6 +21,7 @@ import {getTranslation} from "../../../src/localization";
 import {startsWith} from "../../../src/utils/utils";
 import {getAcrolinxSimpleStorage} from "../../../src/utils/acrolinx-storage";
 import {HELP_LINK_URLS} from "../../../src/components/help-link";
+import {CANT_CONNECT_HELP_LINK_URLS} from "../../../src/components/server-selector-form";
 
 type AugmentedWindow = Window & {
   acrolinxSidebar: AcrolinxSidebar;
@@ -221,10 +222,10 @@ describe('integration-tests', () => {
   });
 
   describe('help', () => {
-    function assertHelpOpened(expectecUrl: string) {
-      simulateClick('.icon-help');
+    function assertHelpOpened(expectedUrl: string, selector = '.icon-help') {
+      simulateClick(selector);
       assert.equal(augmentedWindow.acrolinxPlugin.openWindowSpy.callCount, 1);
-      assert.deepEqual(augmentedWindow.acrolinxPlugin.openWindowSpy.args[0][0], {url: expectecUrl});
+      assert.deepEqual(augmentedWindow.acrolinxPlugin.openWindowSpy.args[0][0].url, expectedUrl);
     }
 
     it('click help', () => {
@@ -241,6 +242,16 @@ describe('integration-tests', () => {
     it('click german help', () => {
       init({showServerSelector: true, logFileLocation: 'dummyLogFileLocation', clientLocale: 'de-DE'});
       assertHelpOpened(HELP_LINK_URLS.de);
+    });
+
+    it('click english cant-connect-help', () => {
+      init({showServerSelector: true, clientLocale: 'en'});
+      assertHelpOpened(CANT_CONNECT_HELP_LINK_URLS.en, '.externalTextLink');
+    });
+
+    it('click german cant-connect-help', () => {
+      init({showServerSelector: true, clientLocale: 'de'});
+      assertHelpOpened(CANT_CONNECT_HELP_LINK_URLS.de, '.externalTextLink');
     });
 
   });

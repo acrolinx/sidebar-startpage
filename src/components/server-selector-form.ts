@@ -1,6 +1,6 @@
 import {Component} from 'preact';
 import {createPreactFactory, h1, div, button, form, input, span, a} from "../utils/preact";
-import {getTranslation} from "../localization";
+import {getLocale, getTranslation} from "../localization";
 import {isHttpsRequired} from "../utils/utils";
 import {externalTextLink, OpenWindowFunction} from "./external-text-link";
 import {errorMessageComponent, ErrorMessageProps} from "./error-message";
@@ -19,7 +19,16 @@ interface SeverSelectorFormProps {
 }
 
 const SERVER_ADDRESS_INPUT_FIELD_CLASS = 'serverAddress';
-const CANT_CONNECT_HELP_LINK_URL = 'https://support.acrolinx.com/hc/en-us/articles/115004045529';
+
+export function getLocalizedCantConnectHelpLink(): string {
+  return (getLocale() === 'de') ? CANT_CONNECT_HELP_LINK_URLS.de : CANT_CONNECT_HELP_LINK_URLS.en;
+}
+
+export const CANT_CONNECT_HELP_LINK_URLS = {
+  en: 'https://support.acrolinx.com/hc/en-us/articles/115004045529',
+  de: 'https://support.acrolinx.com/hc/de/articles/115004045529'
+};
+
 
 class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
   serverAddressField: HTMLInputElement;
@@ -57,7 +66,7 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
           }),
           div({className: 'buttonGroup'},
             externalTextLink({
-              url: CANT_CONNECT_HELP_LINK_URL,
+              url: getLocalizedCantConnectHelpLink(),
               openWindow: props.openWindow,
               text: t.links.cantConnect
             }),
