@@ -5,7 +5,7 @@ import {
   isHttpUrl,
   parseVersionNumberWithFallback,
   startsWithAnyOf,
-  setDisplayed,
+  setDisplayed, cleanIFrameContainerIfNeeded,
 } from "./utils/utils";
 import {
   LoadSidebarError,
@@ -227,11 +227,13 @@ export function startMainController() {
     selectedPage = page;
   }
 
+
   function showServerSelector(props: { isConnectButtonDisabled?: boolean, errorMessage?: ErrorMessageProps } = {}) {
-    sidebarContainer.innerHTML = '';
-    showPage(PageId.SERVER_SELECTOR);
-    focusAddressInputField(serverSelectorFormPage);
-    renderServerSelectorForm(props);
+    cleanIFrameContainerIfNeeded(sidebarContainer,() => {
+      showPage(PageId.SERVER_SELECTOR);
+      focusAddressInputField(serverSelectorFormPage);
+      renderServerSelectorForm(props);
+    });
   }
 
   function renderServerSelectorForm(props: { isConnectButtonDisabled?: boolean, errorMessage?: ErrorMessageProps } = {}) {

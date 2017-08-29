@@ -82,9 +82,11 @@ export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameEle
     console.log('Sidebar loaded');
 
     if (config.useMessageAdapter) {
-      sidebarIFrameElement.addEventListener('load', () => {
+      const onLoadHandler = () => {
+        sidebarIFrameElement.removeEventListener('load', onLoadHandler);
         onSidebarLoaded();
-      });
+      };
+      sidebarIFrameElement.addEventListener('load', onLoadHandler);
       sidebarIFrameElement.src = completeSidebarUrl + '&acrolinxUseMessageApi=true';
     } else {
       writeSidebarHtmlIntoIFrame(sidebarHtml, sidebarIFrameElement, sidebarBaseUrl);
