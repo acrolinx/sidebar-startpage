@@ -1,11 +1,12 @@
 import {
   $,
   $byId,
+  cleanIFrameContainerIfNeeded,
   getDefaultServerAddress,
   isHttpUrl,
   parseVersionNumberWithFallback,
+  setDisplayed,
   startsWithAnyOf,
-  setDisplayed, cleanIFrameContainerIfNeeded,
 } from "./utils/utils";
 import {
   LoadSidebarError,
@@ -229,7 +230,7 @@ export function startMainController() {
 
 
   function showServerSelector(props: { isConnectButtonDisabled?: boolean, errorMessage?: ErrorMessageProps } = {}) {
-    cleanIFrameContainerIfNeeded(sidebarContainer,() => {
+    cleanIFrameContainerIfNeeded(sidebarContainer, () => {
       showPage(PageId.SERVER_SELECTOR);
       focusAddressInputField(serverSelectorFormPage);
       renderServerSelectorForm(props);
