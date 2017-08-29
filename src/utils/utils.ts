@@ -205,3 +205,22 @@ export function cleanIFrameContainerIfNeeded(sidebarContainer: HTMLElement, call
     callback();
   }
 }
+
+function createScriptElement(src: string) {
+  const el = document.createElement('script');
+  el.src = src;
+  el.type = 'text/javascript';
+  el.async = false;
+  el.defer = false;
+  return el;
+}
+
+
+export function loadScript(url: string) {
+  const head = document.querySelector('head');
+  if (head) {
+    head.appendChild(createScriptElement(url));
+  } else {
+    console.error(`Can not load script "${url}" because of missing head element.`);
+  }
+}

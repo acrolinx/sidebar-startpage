@@ -31,6 +31,7 @@ import {
   initAcrolinxStorage,
   injectAcrolinxStorageIntoSidebarIfAvailable
 } from "./utils/acrolinx-storage";
+import {initDebug} from "./utils/debug";
 
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 
@@ -60,6 +61,7 @@ function isMessageAdapterNeeded() {
 
 export function startMainController() {
   console.log('Loading acrolinx sidebar startpage ' + SERVER_SELECTOR_VERSION);
+  initDebug();
 
   const windowAny = window as any;
   const sidebarProxy = new ProxyAcrolinxSidebar(onInitFromPlugin);
