@@ -116,7 +116,7 @@ def main():
                             os.path.join(parent, path),
                             directory
                         )
-                    ),
+                    ).replace("\\", "/"),
                     args.resource_language
                 ) for path in files
             )
