@@ -39,7 +39,7 @@ def raise_error_without_traceback(exc):
     raise exc, None, sys.exc_info()[2]
 
 def escape_path(path):
-    return '"%s"' % path.replace("\\", "\\\\").replace('"', r'\"')
+    return '"%s"' % path.replace('"', r'\"')
 
 def make_argparser():
     p = argparse.ArgumentParser(
