@@ -28,7 +28,7 @@ _SCRIPT_TEMPLATE = """\
 [FILENAMES]
 Open   = {base_dll}
 SaveAs = {target_dll}
-Log    = CONSOLE
+Log    = {logfile}
 
 [COMMANDS]
 {commands}
@@ -66,6 +66,13 @@ def make_argparser():
         default=0,
         help="Numeric language code to specify for the packaged "
              "resources. Default: %(default)s"
+    )
+
+    p.add_argument(
+        "-L", "--script-logfile",
+        default="CONSOLE",
+        help="Where should Resource Hacker write its log to? "
+             "Default: %(default)s"
     )
 
     p.add_argument(
@@ -118,6 +125,7 @@ def main():
             script_name=os.path.basename(sys.argv[0]),
             base_dll=escape_path(args.base_dll),
             target_dll=escape_path(args.target_dll),
+            logfile=escape_path(args.script_logfile),
             commands="\n".join(commands)
         ),
 
