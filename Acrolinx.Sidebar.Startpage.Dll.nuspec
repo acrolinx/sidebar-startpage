@@ -14,9 +14,13 @@
     </description>
     <copyright>Copyright © Acrolinx 2017</copyright>
     <tags>Acrolinx Sidebar Startpage</tags>
+
+    <contentFiles>
+        <files include="Acrolinx.Startpage.dll" buildAction="Content" copyToOutput="true" />
+    </contentFiles>
   </metadata>
 
   <files>
-    <file src="dist\Acrolinx.Startpage.dll" target="lib" />
+    <file src="dist\Acrolinx.Startpage.dll" target="content" />
   </files>
 </package>
