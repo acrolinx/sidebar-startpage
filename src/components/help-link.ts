@@ -28,6 +28,7 @@ class HelpLink extends Component<HelpLinkProps, {}> {
       title: getTranslation().serverSelector.tooltip.openHelp,
       onClick: (event: Event) => {
         event.preventDefault();
+        event.stopPropagation(); // Prevent triggering the click event on the containing element.
         props.openWindow(props.initParameters.helpUrl || getLocalizedDefaultHelpLink());
       }, href: '#'
     });
