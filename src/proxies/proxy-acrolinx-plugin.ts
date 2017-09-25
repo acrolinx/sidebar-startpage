@@ -5,7 +5,7 @@ import {
   CheckResult,
   MatchWithReplacement,
   DownloadInfo,
-  OpenWindowParameters,
+  OpenWindowParameters, RequestGlobalCheckOptions,
 } from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 
 export const POLL_FOR_PLUGIN_INTERVAL_MS = 10;
@@ -34,8 +34,12 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
     this.props.acrolinxPlugin.configure(configuration);
   }
 
-  requestGlobalCheck() {
-    this.props.acrolinxPlugin.requestGlobalCheck();
+  requestGlobalCheck(options?: RequestGlobalCheckOptions) {
+    if (options) {
+      this.props.acrolinxPlugin.requestGlobalCheck(options);
+    } else {
+      this.props.acrolinxPlugin.requestGlobalCheck();
+    }
   }
 
   onCheckResult(checkResult: CheckResult) {
