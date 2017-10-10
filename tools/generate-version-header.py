@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from argparse import ArgumentParser
+import argparse
 import codecs
 import datetime
 import re
@@ -36,8 +36,16 @@ def to_c_string(string):
         )
     )
 
+def ensure_valid_version(arg):
+    if not re.search(r"^\d+(?:\.\d+){3}$", arg):
+        raise argparse.ArgumentTypeError(
+            "Version must be of format N.N.N.N, where N is a positive integer."
+        )
+
+    return arg
+
 def get_argparser():
-    p = ArgumentParser(
+    p = argparse.ArgumentParser(
         description="Generate a version header file for the build.",
         epilog="This file is intended to be included into a resource script."
     )
@@ -45,6 +53,7 @@ def get_argparser():
     p.add_argument(
         "-v", "--version",
         default="1.0.0.0",
+        type=ensure_valid_version,
         help="Version of the built application. Default: %(default)s"
     )
     p.add_argument(
@@ -83,7 +92,10 @@ def main():
             year_range = str(current_year)
         fh.write("#define BUILD_COPYRIGHT_YEARS %s\r\n" % to_c_string(year_range))
 
-        fh.write("#define BUILD_VER_TUPLE %s\r\n" % args.version.replace(".", ","))
+        fh.write("#define BUILD_VER_TUPLE %s\r\n" % (
+                re.sub(r"\b0+(?=0\b|[1-9])", "", args.version).replace(".", ",")
+            )
+        )
         fh.write("#define BUILD_VER_STRING %s\r\n" % to_c_string(args.version))
 
 
