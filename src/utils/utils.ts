@@ -224,3 +224,32 @@ export function loadScript(url: string) {
     console.error(`Can not load script "${url}" because of missing head element.`);
   }
 }
+
+
+export class TimeoutWatcher {
+  private timeoutId: number | undefined;
+
+  constructor(private readonly onTimeout: () => void, private readonly durationMs: number) {
+  }
+
+  start() {
+    if (this.timeoutId !== undefined) {
+      this.stop();
+      console.warn('TimeoutWatcher: start was called twice');
+    }
+
+    this.timeoutId = setTimeout(() => {
+      this.timeoutId = undefined;
+      this.onTimeout();
+    }, this.durationMs);
+  }
+
+  stop() {
+    if (this.timeoutId === undefined) {
+      console.warn('TimeoutWatcher: stop was called before start');
+    } else {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = undefined;
+    }
+  }
+}

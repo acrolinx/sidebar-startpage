@@ -1,7 +1,7 @@
 import {assert} from "chai";
 import * as $ from "jquery";
 import * as sinon from "sinon";
-import {startMainController} from "../../../src/main-controller";
+import {MainControllerOpts, startMainController} from "../../../src/main-controller";
 import {
   AcrolinxPlugin,
   AcrolinxPluginConfiguration,
@@ -52,7 +52,7 @@ describe('integration-tests', () => {
     clock.tick(ms);
   }
 
-  function init(initParameters: InitParameters) {
+  function init(initParameters: InitParameters, mainControllerOpts: MainControllerOpts = {}) {
     const openLogFile = sinon.spy();
     const openWindow = sinon.spy();
 
@@ -88,7 +88,7 @@ describe('integration-tests', () => {
       openWindow,
       openLogFile
     };
-    startMainController();
+    startMainController(mainControllerOpts);
     wait(POLL_FOR_PLUGIN_INTERVAL_MS);
   };
 
@@ -170,6 +170,20 @@ describe('integration-tests', () => {
         done();
       }, 500);
     });
+
+    it('show error message if sidebar loads to slowly', (done) => {
+      init({showServerSelector: true}, {requestInitTimeOutMs: 50});
+
+      $('.serverAddress').val(validMockedServerAddress);
+      simulateClick('.submitButton');
+
+      clock.restore();
+      setTimeout(() => {
+        assertMainErrorMessage(getTranslation().serverSelector.message.loadSidebarTimeout);
+        done();
+      }, 500);
+    });
+
   });
 
   describe('about page', () => {

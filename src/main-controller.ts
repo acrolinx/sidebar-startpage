@@ -6,7 +6,7 @@ import {
   isHttpUrl,
   parseVersionNumberWithFallback,
   setDisplayed,
-  startsWithAnyOf,
+  startsWithAnyOf, TimeoutWatcher,
 } from "./utils/utils";
 import {
   LoadSidebarError,
@@ -14,7 +14,10 @@ import {
   LoadSidebarProps
 } from "./acrolinx-sidebar-integration/utils/sidebar-loader";
 import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from "./proxies/proxy-acrolinx-plugin";
-import {EXTENSION_URL_PREFIXES, FORCE_MESSAGE_ADAPTER, SERVER_SELECTOR_VERSION} from "./constants";
+import {
+  EXTENSION_URL_PREFIXES, FORCE_MESSAGE_ADAPTER, REQUEST_INIT_TIMEOUT_MS,
+  SERVER_SELECTOR_VERSION
+} from "./constants";
 import {createSidebarMessageProxy} from "./acrolinx-sidebar-integration/message-adapter/message-adapter";
 import {ProxyAcrolinxSidebar} from "./proxies/proxy-acrolinx-sidebar";
 import {AcrolinxPlugin, InitParameters} from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
@@ -59,7 +62,15 @@ function isMessageAdapterNeeded() {
   return FORCE_MESSAGE_ADAPTER || startsWithAnyOf(window.location.href, NEEDS_MESSAGE_ADAPTER);
 }
 
-export function startMainController() {
+enum SidebarState {
+  BEFORE_REQUEST_INIT, AFTER_REQUEST_INIT
+}
+
+export interface MainControllerOpts {
+  requestInitTimeOutMs?: number;
+}
+
+export function startMainController(opts: MainControllerOpts = {}) {
   console.log('Loading acrolinx sidebar startpage ' + SERVER_SELECTOR_VERSION);
   initDebug();
 
@@ -85,6 +96,9 @@ export function startMainController() {
   let serverAddress: string | null;
 
   let selectedPage: PageId;
+
+  const requestInitTimeoutWatcher = new TimeoutWatcher(onRequestInitTimeout, opts.requestInitTimeOutMs || REQUEST_INIT_TIMEOUT_MS);
+  let sidebarState = SidebarState.BEFORE_REQUEST_INIT;
 
   showPage(PageId.LOADING_SIDEBAR_MESSAGE);
 
@@ -164,6 +178,7 @@ export function startMainController() {
       }
 
       showPage(PageId.SIDEBAR_CONTAINER);
+      requestInitTimeoutWatcher.start();
 
       if (useMessageAdapter) {
         return;
@@ -213,7 +228,10 @@ export function startMainController() {
   }
 
   function onSidebarLoadError(serverAddress: string, error: LoadSidebarError) {
-    const errorMessage = getSidebarLoadErrorMessage(serverAddress, error);
+    showSidebarLoadError(getSidebarLoadErrorMessage(serverAddress, error));
+  }
+
+  function showSidebarLoadError(errorMessage: ErrorMessageProps) {
     if (initParametersFromPlugin.showServerSelector) {
       showServerSelector({errorMessage: errorMessage});
     } else {
@@ -232,6 +250,7 @@ export function startMainController() {
 
 
   function showServerSelector(props: { isConnectButtonDisabled?: boolean, errorMessage?: ErrorMessageProps } = {}) {
+    sidebarState = SidebarState.BEFORE_REQUEST_INIT;
     cleanIFrameContainerIfNeeded(sidebarContainer, () => {
       showPage(PageId.SERVER_SELECTOR);
       focusAddressInputField(serverSelectorFormPage);
@@ -305,7 +324,15 @@ export function startMainController() {
   }
 
   function onRequestInit() {
+    sidebarState = SidebarState.AFTER_REQUEST_INIT;
+    requestInitTimeoutWatcher.stop();
     sidebarProxy.acrolinxSidebar.init(hackInitParameters(initParametersFromPlugin, serverAddress!));
+  }
+
+  function onRequestInitTimeout() {
+    if (sidebarState === SidebarState.BEFORE_REQUEST_INIT) {
+      showSidebarLoadError({messageHtml: {html: getTranslation().serverSelector.message.loadSidebarTimeout}});
+    }
   }
 
   function onAboutLink() {
