@@ -18,6 +18,7 @@
     },
     "message": {
       "invalidServerAddress": "Diese Adresse scheint nicht korrekt zu sein. \u00dcberpr\u00fcfen Sie die eingegebene Adresse und versuchen Sie es erneut.",
+      "loadSidebarTimeout": "Die Sidebar braucht zu lange zum Laden. \u00dcberpr\u00fcfen Sie Ihre Netzwerkverbindung oder wenden Sie sich an Ihren Acrolinx Server-Administrator.",
       "noCloudSidebar": "Ihr Server scheint eine \u00e4ltere Sidebar-Version zu unterst\u00fctzen. Wir haben versucht, eine \u00e4ltere Sidebar aus der Acrolinx Cloud zu laden. Dabei ist aber ein Verbindungsproblem aufgetreten. Pr\u00fcfen Sie Ihre Internetverbindung.",
       "outdatedServer": "Ihre Acrolinx-Integration scheint eine neuere Serverversion zu brauchen, um die Sidebar zu laden. Bitten Sie Ihren Acrolinx-Serveradministrator, Ihren Server zu aktualisieren.",
       "serverConnectionProblemHttp": "Wir konnten keine Verbindung zu Ihrem Acrolinx Server herstellen. \u00dcberpr\u00fcfen Sie, ob die Serveradresse korrekt ist. Wenn Sie trotzdem keine Verbindung herstellen k\u00f6nnen, wenden Sie sich an Ihren Acrolinx-Serveradministrator. M\u00f6glicherweise akzeptiert Ihr Server keine unsicheren Verbindungen.",
