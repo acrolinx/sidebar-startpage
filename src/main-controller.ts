@@ -129,6 +129,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
   }
 
   function onSubmit(serverAddressInput: string) {
+    logging.log('User tries to connect with server', serverAddressInput);
     const newServerAddressResult = sanitizeAndValidateServerAddress(serverAddressInput, {
       enforceHTTPS: initParametersFromPlugin.enforceHTTPS,
       windowLocation: window.location
@@ -137,7 +138,6 @@ export function startMainController(opts: MainControllerOpts = {}) {
     newServerAddressResult.match({
       ok: newServerAddress => {
         serverAddress = newServerAddress;
-        logging.log(serverAddress);
         tryToLoadSidebar(serverAddress);
       },
       err: errorMessage => {
@@ -147,7 +147,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
   }
 
   function tryToLoadSidebar(serverAddress: string) {
-    logging.log('tryToLoadSidebar', serverAddress);
+    logging.log(`Try to load sidebar from "${serverAddress}"`);
 
     sidebarContainer.innerHTML = '';
     sidebarIFrameElement = document.createElement('iframe') as HTMLIFrameElement;
