@@ -129,7 +129,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
   }
 
   function onSubmit(serverAddressInput: string) {
-    logging.log('User tries to connect with server', serverAddressInput);
+    logging.log(`User tries to connect with server "${serverAddressInput}"`);
     const newServerAddressResult = sanitizeAndValidateServerAddress(serverAddressInput, {
       enforceHTTPS: initParametersFromPlugin.enforceHTTPS,
       windowLocation: window.location
@@ -325,7 +325,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
   }
 
   function onRequestInit() {
-    logging.log('Sidebar is loaded completely and has requested init', serverAddress);
+    logging.log(`Sidebar is loaded completely and has requested init ("${serverAddress}")`);
     sidebarState = SidebarState.AFTER_REQUEST_INIT;
     requestInitTimeoutWatcher.stop();
     sidebarProxy.acrolinxSidebar.init(hackInitParameters(initParametersFromPlugin, serverAddress!));
@@ -333,7 +333,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
 
   function onRequestInitTimeout() {
     if (sidebarState === SidebarState.BEFORE_REQUEST_INIT) {
-      logging.error('Sidebar took too long to load from', serverAddress);
+      logging.error(`Sidebar took too long to load from "${serverAddress}"`);
       showSidebarLoadError({messageHtml: {html: getTranslation().serverSelector.message.loadSidebarTimeout}});
     }
   }

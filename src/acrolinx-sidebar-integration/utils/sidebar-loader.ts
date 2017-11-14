@@ -80,7 +80,7 @@ export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameEle
       }
     }
 
-    logging.log('Sidebar is loaded');
+    logging.log('Sidebar HTML is loaded successfully');
 
     if (config.useMessageAdapter) {
       const onLoadHandler = () => {
