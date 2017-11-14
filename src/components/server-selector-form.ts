@@ -9,7 +9,7 @@ import {InitParameters} from "../acrolinx-sidebar-integration/acrolinx-libs/plug
 
 interface SeverSelectorFormProps {
   onSubmit: (serverAddress: string) => void;
-  onAboutLink: Function;
+  onAboutLink: () => void;
   serverAddress: string | null;
   enforceHTTPS?: boolean;
   isConnectButtonDisabled: boolean;
@@ -76,7 +76,15 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
               disabled: props.isConnectButtonDisabled
             }, t.button.connect)
           ),
-          a({onClick: props.onAboutLink, href: '#'}, t.links.about),
+          a({
+              onClick: (event: Event) => {
+                event.preventDefault();
+                props.onAboutLink();
+              },
+              href: '#'
+            },
+            t.links.about
+          ),
         ),
         props.errorMessage ? errorMessageComponent(props.errorMessage) : []
       ));
