@@ -21,8 +21,7 @@
       "check-branch",
       "check-operator",
       "check-separator",
-      "check-type",
-      "check-module"
+      "check-type"
     ],
     "typedef-whitespace": [
       true,
@@ -35,6 +34,7 @@
     "no-internal-module": false,
     "no-trailing-whitespace": false,
     "no-inferrable-types": true,
-    "prefer-const": true
+    "prefer-const": true,
+    "no-console": [true]
   }
 }

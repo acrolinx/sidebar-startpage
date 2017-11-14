@@ -7,6 +7,7 @@ import {
   DownloadInfo,
   OpenWindowParameters, RequestGlobalCheckOptions,
 } from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
+import * as logging from "../utils/logging";
 
 export const POLL_FOR_PLUGIN_INTERVAL_MS = 10;
 
@@ -74,7 +75,7 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
     if (this.props.acrolinxPlugin.openLogFile) {
       this.props.acrolinxPlugin.openLogFile();
     } else {
-      console.error('openLogFile is not supported');
+      logging.error('openLogFile is not supported');
     }
   }
 }

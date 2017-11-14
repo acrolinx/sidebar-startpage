@@ -90,7 +90,7 @@ describe('integration-tests', () => {
     };
     startMainController(mainControllerOpts);
     wait(POLL_FOR_PLUGIN_INTERVAL_MS);
-  };
+  }
 
 
   it('Injects windowAny.acrolinxSidebar', () => {

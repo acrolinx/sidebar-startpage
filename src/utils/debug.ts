@@ -1,4 +1,5 @@
 import {loadScript} from "./utils";
+import * as logging from "./logging";
 
 function patchFirebugUI() {
   const iFrameEl = document.getElementById('FirebugUI') as HTMLIFrameElement;
@@ -23,7 +24,7 @@ function waitToPatchFirebugUI() {
 }
 
 function loadFirebugLite() {
-  console.log('Loading firebug lite into sidebar startpage ...');
+  logging.log('Loading firebug lite into sidebar startpage ...');
   loadScript('https://getfirebug.com/releases/lite/1.3/firebug-lite.js#startOpened=true');
   waitToPatchFirebugUI();
 }
@@ -52,7 +53,7 @@ function waitForFirebugCheatCode() {
         break;
       default:
         if (cheatCode.length > 3) {
-          console.log('Unknown command:', cheatCode);
+          logging.log('Unknown command:', cheatCode);
         }
     }
     cheatCode = '';

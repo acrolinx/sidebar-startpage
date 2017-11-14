@@ -1,3 +1,5 @@
+import * as logging from "./logging";
+
 interface WindowWithAcrolinxStorage extends Window {
   acrolinxStorage: AcrolinxSimpleStorage;
 }
@@ -55,13 +57,13 @@ const disableLocalStorageForTesting = false;
 
 function getAcrolinxSimpleStorageAtInitInternal(acrolinxStorageArg: AcrolinxSimpleStorage | undefined, localStorageArg: Storage | undefined): AcrolinxSimpleStorage {
   if (acrolinxStorageArg) {
-    console.log('acrolinxStartpage: Using window.acrolinxStorage');
+    logging.log('acrolinxStartpage: Using window.acrolinxStorage');
     return acrolinxStorageArg;
   } else if (isLocalStorageAvailable(localStorageArg) && !disableLocalStorageForTesting) {
-    console.log('acrolinxStartpage: Using window.localStorage');
+    logging.log('acrolinxStartpage: Using window.localStorage');
     return localStorageArg!;
   } else {
-    console.log('acrolinxStartpage: Using AcrolinxSimpleStorageInMemory');
+    logging.log('acrolinxStartpage: Using AcrolinxSimpleStorageInMemory');
     return new AcrolinxSimpleStorageInMemory();
   }
 }
@@ -98,7 +100,7 @@ export function initAcrolinxStorage() {
 
 export function injectAcrolinxStorageIntoSidebarIfAvailable(currentWindow: { acrolinxStorage?: AcrolinxSimpleStorage }, sidebarIFrameWindow: WindowWithAcrolinxStorage) {
   if (currentWindow.acrolinxStorage) {
-    console.log('Inject window.acrolinxStorage into sidebar');
+    logging.log('Inject window.acrolinxStorage into sidebar');
     sidebarIFrameWindow.acrolinxStorage = currentWindow.acrolinxStorage;
   }
 }

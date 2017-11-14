@@ -35,6 +35,7 @@ import {
   injectAcrolinxStorageIntoSidebarIfAvailable
 } from "./utils/acrolinx-storage";
 import {initDebug} from "./utils/debug";
+import * as logging from "./utils/logging";
 
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 
@@ -71,7 +72,7 @@ export interface MainControllerOpts {
 }
 
 export function startMainController(opts: MainControllerOpts = {}) {
-  console.log('Loading acrolinx sidebar startpage ' + SERVER_SELECTOR_VERSION);
+  logging.log('Loading acrolinx sidebar startpage ' + SERVER_SELECTOR_VERSION);
   initDebug();
 
   const windowAny = window as any;
@@ -109,17 +110,17 @@ export function startMainController(opts: MainControllerOpts = {}) {
     acrolinxPlugin.requestInit();
 
     if (useMessageAdapter) {
-      console.log('useMessageAdapter');
+      logging.log('useMessageAdapter');
       addEventListener('message', onMessageFromSidebar, false);
     }
   });
 
   function openLogFile() {
-    console.log("clicked openLogFile");
+    logging.log("clicked openLogFile");
     if (acrolinxPlugin.openLogFile) {
       acrolinxPlugin.openLogFile();
     } else {
-      console.error("acrolinxPlugin.openLogFile is not defined!");
+      logging.error("acrolinxPlugin.openLogFile is not defined!");
     }
   }
 
@@ -136,7 +137,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
     newServerAddressResult.match({
       ok: newServerAddress => {
         serverAddress = newServerAddress;
-        console.log(serverAddress);
+        logging.log(serverAddress);
         tryToLoadSidebar(serverAddress);
       },
       err: errorMessage => {
@@ -146,7 +147,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
   }
 
   function tryToLoadSidebar(serverAddress: string) {
-    console.log('tryToLoadSidebar', serverAddress);
+    logging.log('tryToLoadSidebar', serverAddress);
 
     sidebarContainer.innerHTML = '';
     sidebarIFrameElement = document.createElement('iframe') as HTMLIFrameElement;
@@ -290,7 +291,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
         showServerSelector();
       }
     } else {
-      console.log('Load directly!');
+      logging.log('Load directly!');
       serverAddress = initParameters.serverAddress || getDefaultServerAddress(window.location);
       tryToLoadSidebar(serverAddress);
     }
@@ -303,7 +304,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
     }
 
     const {command, args} = messageEvent.data;
-    console.log('onMessageFromSidebar', messageEvent, command, args);
+    logging.log('onMessageFromSidebar', messageEvent, command, args);
     switch (command) {
       case 'requestInit':
         sidebarProxy.acrolinxSidebar = createSidebarMessageProxy(sidebarIFrameElement.contentWindow);
@@ -318,12 +319,13 @@ export function startMainController(opts: MainControllerOpts = {}) {
         if (commandFunction) {
           commandFunction.apply(acrolinxPluginAny, args);
         } else {
-          console.error(`Plugin does not support command "${command}"`, args);
+          logging.error(`Plugin does not support command "${command}"`, args);
         }
     }
   }
 
   function onRequestInit() {
+    logging.log('Sidebar is loaded completely and has requested init', serverAddress);
     sidebarState = SidebarState.AFTER_REQUEST_INIT;
     requestInitTimeoutWatcher.stop();
     sidebarProxy.acrolinxSidebar.init(hackInitParameters(initParametersFromPlugin, serverAddress!));
@@ -331,6 +333,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
 
   function onRequestInitTimeout() {
     if (sidebarState === SidebarState.BEFORE_REQUEST_INIT) {
+      logging.error('Sidebar took too long to load from', serverAddress);
       showSidebarLoadError({messageHtml: {html: getTranslation().serverSelector.message.loadSidebarTimeout}});
     }
   }

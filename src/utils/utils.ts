@@ -1,3 +1,5 @@
+import * as logging from "./logging";
+
 export function $(selector: string): HTMLElement | undefined {
   return document.querySelector(selector) as HTMLElement;
 }
@@ -173,14 +175,14 @@ export function parseVersionNumberWithFallback(s: string | undefined): number[] 
   }
 
   if (!/^(\d+.?)+$/.test(s)) {
-    console.error('Invalid version number:', s);
+    logging.error('Invalid version number:', s);
     return [];
   }
 
   try {
     return s.split('.').map(part => parseInt(part, 10));
   } catch (error) {
-    console.error('Invalid version number:', s, error);
+    logging.error('Invalid version number:', s, error);
     return [];
   }
 }
@@ -198,7 +200,7 @@ export function cleanIFrameContainerIfNeeded(sidebarContainer: HTMLElement, call
         callback();
       }, 0);
     } catch (error) {
-      console.error(error);
+      logging.error(error);
       callback();
     }
   } else {
@@ -221,7 +223,7 @@ export function loadScript(url: string) {
   if (head) {
     head.appendChild(createScriptElement(url));
   } else {
-    console.error(`Can not load script "${url}" because of missing head element.`);
+    logging.error(`Can not load script "${url}" because of missing head element.`);
   }
 }
 
@@ -235,7 +237,7 @@ export class TimeoutWatcher {
   start() {
     if (this.timeoutId !== undefined) {
       this.stop();
-      console.warn('TimeoutWatcher: start was called twice');
+      logging.warn('TimeoutWatcher: start was called twice');
     }
 
     this.timeoutId = setTimeout(() => {
@@ -246,7 +248,7 @@ export class TimeoutWatcher {
 
   stop() {
     if (this.timeoutId === undefined) {
-      console.warn('TimeoutWatcher: stop was called before start');
+      logging.warn('TimeoutWatcher: stop was called before start');
     } else {
       clearTimeout(this.timeoutId);
       this.timeoutId = undefined;

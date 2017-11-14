@@ -2,6 +2,7 @@ import * as utils from "./utils";
 import {FetchError} from "./utils";
 import {FALLBACK_SIDEBAR_URL, FORCE_SIDEBAR_URL} from "../../constants";
 import {isVersionGreaterEqual} from "../../utils/utils";
+import * as logging from "../../utils/logging";
 
 
 export interface  LoadSidebarProps {
@@ -35,7 +36,7 @@ export class NoValidSidebarError extends Error {
 export type LoadSidebarError = FetchError | NoValidSidebarError;
 
 export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameElement: HTMLIFrameElement, onSidebarLoaded: (error?: LoadSidebarError) => void, retryWithCloudSidebar = false) {
-  console.log('loadSidebarIntoIFrame', config);
+  logging.log('loadSidebarIntoIFrame', config);
   const sidebarBaseUrl = retryWithCloudSidebar ? FALLBACK_SIDEBAR_URL : (FORCE_SIDEBAR_URL || config.sidebarUrl);
   const completeSidebarUrl = sidebarBaseUrl + 'index.html?t=' + Date.now();
   utils.fetch(completeSidebarUrl, {timeout: 10000}, (sidebarHtmlOrError) => {
@@ -45,7 +46,7 @@ export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameEle
         onSidebarLoaded(new NoValidSidebarError('noCloudSidebar', "Can't load cloud sidebar."));
       } else {
         const fetchError: FetchError = sidebarHtmlOrError;
-        console.error("Error while fetching the sidebar: " + fetchError.acrolinxErrorCode, fetchError);
+        logging.error("Error while fetching the sidebar: " + fetchError.acrolinxErrorCode, fetchError);
         onSidebarLoaded(fetchError);
       }
       return;
@@ -66,20 +67,20 @@ export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameEle
         if (retryWithCloudSidebar) {
           onSidebarLoaded(new NoValidSidebarError('noCloudSidebar', "The cloud sidebar has the wrong version."));
         } else {
-          console.log('Load sidebar from cloud');
+          logging.log('Load sidebar from cloud');
           loadSidebarIntoIFrame(config, sidebarIFrameElement, onSidebarLoaded, true);
         }
         return;
       }
 
       if (!isVersionGreaterEqual(sidebarVersion, config.minimumSidebarVersion)) {
-        console.log('Found sidebar version', sidebarVersion, "minimumSidebarVersion was", config.minimumSidebarVersion);
+        logging.log('Found sidebar version', sidebarVersion, "minimumSidebarVersion was", config.minimumSidebarVersion);
         onSidebarLoaded(new NoValidSidebarError('sidebarVersionIsBelowMinimum', "Sidebar version is smaller than minimumSidebarVersion"));
         return;
       }
     }
 
-    console.log('Sidebar loaded');
+    logging.log('Sidebar is loaded');
 
     if (config.useMessageAdapter) {
       const onLoadHandler = () => {
