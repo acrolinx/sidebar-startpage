@@ -1,7 +1,7 @@
 import * as utils from "./utils";
 import {FetchError} from "./utils";
 import {FALLBACK_SIDEBAR_URL, FORCE_SIDEBAR_URL} from "../../constants";
-import {isVersionGreaterEqual} from "../../utils/utils";
+import {isVersionGreaterEqual, TimeoutWatcher} from "../../utils/utils";
 import * as logging from "../../utils/logging";
 
 
@@ -9,6 +9,7 @@ export interface  LoadSidebarProps {
   sidebarUrl: string;
   useMessageAdapter: boolean;
   minimumSidebarVersion: number[];
+  timeoutWatcher: TimeoutWatcher;
 }
 
 export function getSidebarVersion(sidebarHtml: string): [number, number, number] | null {
@@ -81,6 +82,8 @@ export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameEle
     }
 
     logging.log('Sidebar HTML is loaded successfully');
+
+    config.timeoutWatcher.start();
 
     if (config.useMessageAdapter) {
       const onLoadHandler = () => {

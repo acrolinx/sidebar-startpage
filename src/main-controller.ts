@@ -157,6 +157,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
 
     const loadSidebarProps: LoadSidebarProps = {
       sidebarUrl, useMessageAdapter,
+      timeoutWatcher: requestInitTimeoutWatcher,
       minimumSidebarVersion: parseVersionNumberWithFallback(initParametersFromPlugin.minimumSidebarVersion)
     };
 
@@ -179,7 +180,6 @@ export function startMainController(opts: MainControllerOpts = {}) {
       }
 
       showPage(PageId.SIDEBAR_CONTAINER);
-      requestInitTimeoutWatcher.start();
 
       if (useMessageAdapter) {
         return;
