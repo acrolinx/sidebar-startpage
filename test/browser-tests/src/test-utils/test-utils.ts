@@ -34,7 +34,7 @@ export function waitUntilSuccess(f: () => void, timeoutMs: number) {
           throw error;
         }
       }
-    }, 100)
+    }, 100);
   }
 
   waitUntilSuccessInternal();
