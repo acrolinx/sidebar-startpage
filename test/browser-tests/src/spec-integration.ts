@@ -15,7 +15,7 @@ import {
   SoftwareComponent,
   SoftwareComponentCategory
 } from "../../../src/acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
-import {assertExistCount, getExistingElement, simulateClick} from "./test-utils/test-utils";
+import {assertExistCount, getExistingElement, simulateClick, waitUntilSuccess} from "./test-utils/test-utils";
 import {POLL_FOR_PLUGIN_INTERVAL_MS} from "../../../src/proxies/proxy-acrolinx-plugin";
 import {getTranslation} from "../../../src/localization";
 import {startsWith} from "../../../src/utils/utils";
@@ -33,7 +33,8 @@ interface MockedAcrolinxPlugin extends AcrolinxPlugin {
   openWindowSpy: sinon.SinonSpy;
 }
 
-describe('integration-tests', () => {
+describe('integration-tests', function () {
+  this.timeout(5000);
   const augmentedWindow = window as AugmentedWindow;
   let clock: sinon.SinonFakeTimers;
 
@@ -111,10 +112,10 @@ describe('integration-tests', () => {
     it('display connection problems on own page', (done) => {
       init({showServerSelector: false, serverAddress: 'http://not-existing-local-domain'});
       clock.restore();
-      setTimeout(() => {
+      waitUntilSuccess(() => {
         assertMainErrorMessage(getTranslation().serverSelector.message.serverConnectionProblemHttp);
         done();
-      }, 500);
+      }, 4000);
     });
   });
 
@@ -138,10 +139,11 @@ describe('integration-tests', () => {
       simulateClick('.submitButton');
 
       clock.restore();
-      setTimeout(() => {
+      waitUntilSuccess(() => {
         assertMainErrorMessage(getTranslation().serverSelector.message.serverConnectionProblemHttp);
         done();
-      }, 500);
+      }, 4000);
+
     });
 
     it('show error message for outdated sidebar/server', (done) => {
@@ -151,10 +153,10 @@ describe('integration-tests', () => {
       simulateClick('.submitButton');
 
       clock.restore();
-      setTimeout(() => {
+      waitUntilSuccess(() => {
         assertMainErrorMessage(getTranslation().serverSelector.message.outdatedServer);
         done();
-      }, 500);
+      }, 4000);
     });
 
     it('load dummy sidebar', (done) => {
@@ -164,11 +166,13 @@ describe('integration-tests', () => {
       simulateClick('.submitButton');
 
       clock.restore();
-      setTimeout(() => {
+
+      waitUntilSuccess(() => {
         const sidebarIFrame = getExistingElement('#sidebarContainer iframe').get(0) as HTMLIFrameElement;
-        assert.equal(sidebarIFrame.contentWindow.document.body.innerText, 'Dummy Sidebar');
+        assert.equal(sidebarIFrame.contentWindow.document.body.innerText.trim(), 'Dummy Sidebar');
         done();
-      }, 500);
+      }, 4000);
+
     });
 
     it('show error message if sidebar loads to slowly', (done) => {
@@ -178,10 +182,10 @@ describe('integration-tests', () => {
       simulateClick('.submitButton');
 
       clock.restore();
-      setTimeout(() => {
+      waitUntilSuccess(() => {
         assertMainErrorMessage(getTranslation().serverSelector.message.loadSidebarTimeout);
         done();
-      }, 500);
+      }, 4000);
     });
 
   });

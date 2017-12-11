@@ -18,3 +18,24 @@ export function getExistingElement(jQuerySelector: string, message?: string) {
 export function simulateClick(jQuerySelector: any) {
   getExistingElement(jQuerySelector).get(0).click();
 }
+
+
+export function waitUntilSuccess(f: () => void, timeoutMs: number) {
+  const startTime = Date.now();
+
+  function waitUntilSuccessInternal() {
+    setTimeout(() => {
+      try {
+        f();
+      } catch (error) {
+        if (Date.now() < startTime + timeoutMs) {
+          waitUntilSuccessInternal();
+        } else {
+          throw error;
+        }
+      }
+    }, 100)
+  }
+
+  waitUntilSuccessInternal();
+}
