@@ -7,6 +7,12 @@ module.exports = function(config) {
 
   config.set({
 
+    browserStack: {
+      /// username: 'marcostahl2', set by BROWSER_STACK_USERNAME
+      //  accessKey: '*', set by BROWSER_STACK_ACCESS_KEY
+      name: 'sidebar-startpage'
+    },
+
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '../..',
 
@@ -46,7 +52,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'coverage', 'junit'],
+    reporters: ['progress', 'coverage', 'junit', 'dots', 'BrowserStack'],
 
     coverageReporter: {
       dir: TMP_REPORTS_COVERAGE,
@@ -78,10 +84,33 @@ module.exports = function(config) {
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: false,
 
+    customLaunchers: {
+      bs_ie11_win: {
+        base: 'BrowserStack',
+        browser: 'ie',
+        browser_version: '11',
+        os: 'Windows',
+        os_version: '10'
+      },
+      bs_edge_win: {
+        base: 'BrowserStack',
+        browser: 'edge',
+        browser_version: 'latest',
+        os: 'Windows',
+        os_version: '10'
+      },
+      bs_safari_macos: {
+        base: 'BrowserStack',
+        browser: 'Safari',
+        browser_version: '10',
+        os: 'OSX',
+        os_version: 'Sierra'
+      }
+    },
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
+    browsers: ['PhantomJS', 'bs_ie11_win', 'bs_edge_win', 'bs_safari_macos'],
 
 
     // Continuous Integration mode
