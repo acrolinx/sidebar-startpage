@@ -31,7 +31,7 @@ module.exports = function (config) {
     browserStack: {
       /// username: 'marcostahl2', set by BROWSER_STACK_USERNAME
       //  accessKey: '*', set by BROWSER_STACK_ACCESS_KEY
-      build: 'sidebar-startpage' + (process.env.BUILD_NUMBER || 'local'),
+      build: 'sidebar-startpage-' + (process.env.BUILD_NUMBER || 'local'),
       name: 'sidebar-startpage'
     },
 
