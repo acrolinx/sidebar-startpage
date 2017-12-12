@@ -1,7 +1,28 @@
 // Karma configuration
 const istanbul = require('browserify-istanbul');
 
-module.exports = function(config) {
+const win10 = ["Windows", "10"];
+const macOS = ["OSX", "Sierra"];
+
+const chromeLatest = ["chrome", "latest"];
+const firefoxLatest = ["firefox", "latest"];
+const firefoxEST = ["firefox", "45"];
+const ie11 = ["ie", "11"];
+const edge = ["edge", "latest"];
+const safari10 = ["Safari", "10"];
+
+function bsLauncher([os, os_version], [browser, browser_version]) {
+  return {
+    base: 'BrowserStack',
+    browser,
+    browser_version,
+    os,
+    os_version
+  };
+}
+
+
+module.exports = function (config) {
   const TMP_REPORTS_COVERAGE = "tmp/reports/coverage";
   const TMP_COMPILED_TS_PATTERN = "tmp/compiled/**/*.js";
 
@@ -10,6 +31,7 @@ module.exports = function(config) {
     browserStack: {
       /// username: 'marcostahl2', set by BROWSER_STACK_USERNAME
       //  accessKey: '*', set by BROWSER_STACK_ACCESS_KEY
+      build: 'sidebar-startpage' + (process.env.BUILD_NUMBER || 'local'),
       name: 'sidebar-startpage'
     },
 
@@ -19,7 +41,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['browserify','mocha'],
+    frameworks: ['browserify', 'mocha'],
 
 
     // list of files / patterns to load in the browser
@@ -85,32 +107,18 @@ module.exports = function(config) {
     autoWatch: false,
 
     customLaunchers: {
-      bs_ie11_win: {
-        base: 'BrowserStack',
-        browser: 'ie',
-        browser_version: '11',
-        os: 'Windows',
-        os_version: '10'
-      },
-      bs_edge_win: {
-        base: 'BrowserStack',
-        browser: 'edge',
-        browser_version: 'latest',
-        os: 'Windows',
-        os_version: '10'
-      },
-      bs_safari_macos: {
-        base: 'BrowserStack',
-        browser: 'Safari',
-        browser_version: '10',
-        os: 'OSX',
-        os_version: 'Sierra'
-      }
+      bs_ie11_win: bsLauncher(win10, ie11),
+      bs_edge_win: bsLauncher(win10, edge),
+      bs_chrome_win: bsLauncher(win10, chromeLatest),
+      bs_firefox_win: bsLauncher(win10, firefoxLatest),
+      bs_firefox_est_win: bsLauncher(win10, firefoxEST),
+      bs_safari_macos: bsLauncher(macOS, safari10),
     },
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS', 'bs_ie11_win', 'bs_edge_win', 'bs_safari_macos'],
+    browsers: ['PhantomJS', 'bs_ie11_win', 'bs_edge_win','bs_chrome_win','bs_firefox_win','bs_firefox_est_win',
+      'bs_safari_macos'],
 
 
     // Continuous Integration mode
