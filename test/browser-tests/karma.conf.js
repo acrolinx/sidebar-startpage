@@ -32,8 +32,11 @@ module.exports = function (config) {
       /// username: 'marcostahl2', set by BROWSER_STACK_USERNAME
       //  accessKey: '*', set by BROWSER_STACK_ACCESS_KEY
       build: 'sidebar-startpage-' + (process.env.BUILD_NUMBER || 'local'),
-      name: 'sidebar-startpage'
+      name: 'sidebar-startpage',
+      project: 'Sidebar',
     },
+
+    concurrency: 1,
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '../..',
