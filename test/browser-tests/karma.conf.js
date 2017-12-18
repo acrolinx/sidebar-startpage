@@ -34,9 +34,18 @@ module.exports = function (config) {
       build: 'sidebar-startpage-' + (process.env.BUILD_NUMBER || 'local'),
       name: 'sidebar-startpage',
       project: 'Sidebar',
+      retryLimit: 6,
     },
 
-    concurrency: 1,
+    // https://oligofren.wordpress.com/2014/05/27/running-karma-tests-on-browserstack/
+    browserDisconnectTimeout: 10000, // default 2000
+    browserDisconnectTolerance: 1, // default 0
+    browserNoActivityTimeout: 4 * 60 * 1000, //default 10000
+    captureTimeout: 4 * 60 * 1000, //default 60000
+
+    // Concurrency level
+    // how many browser should be started simultaneous
+    concurrency: 1, // 1 is better for browserstack
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '../..',
@@ -69,7 +78,7 @@ module.exports = function (config) {
     browserify: {
       debug: true,
       transform: [istanbul({
-        ignore: ['**/node_modules/**', '**/test/**', '**/websdk/**'],
+        ignore: ['**/node_modules/**', '**/test/**'],
       })]
     },
 
@@ -126,10 +135,6 @@ module.exports = function (config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true,
-
-    // Concurrency level
-    // how many browser should be started simultaneous
-    concurrency: Infinity,
+    singleRun: true
   })
 }
