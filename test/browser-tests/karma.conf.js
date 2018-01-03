@@ -33,7 +33,7 @@ module.exports = function (config) {
       //  accessKey: '*', set by BROWSER_STACK_ACCESS_KEY
       build: 'sidebar-startpage-' + (process.env.BUILD_NUMBER || 'local'),
       name: 'sidebar-startpage',
-      project: 'Sidebar',
+      project: 'Sidebar Start Page',
       retryLimit: 6,
     },
 
