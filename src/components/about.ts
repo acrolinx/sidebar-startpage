@@ -1,4 +1,5 @@
 import {Component} from "preact";
+import {forceRedrawInWebkit} from '../utils/hacks';
 import {button, classNames, createPreactFactory, div, h1, span} from "../utils/preact";
 import {getTranslation} from "../localization";
 import {
@@ -68,6 +69,10 @@ function getAdditionalComponents(logFileLocation: string | undefined): SoftwareC
 
 
 class AboutComponent extends Component<AboutProps, {}> {
+  componentDidMount() {
+    forceRedrawInWebkit();
+  }
+
   render() {
     const t = getTranslation().serverSelector;
     const props = this.props;
