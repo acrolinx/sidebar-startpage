@@ -15,7 +15,7 @@ import {
 } from "./acrolinx-sidebar-integration/utils/sidebar-loader";
 import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from "./proxies/proxy-acrolinx-plugin";
 import {
-  EXTENSION_URL_PREFIXES, FORCE_MESSAGE_ADAPTER, REQUEST_INIT_TIMEOUT_MS,
+  URL_PREFIXES_NEEDING_MESSAGE_ADAPTER, FORCE_MESSAGE_ADAPTER, REQUEST_INIT_TIMEOUT_MS,
   SERVER_SELECTOR_VERSION
 } from "./constants";
 import {createSidebarMessageProxy} from "./acrolinx-sidebar-integration/message-adapter/message-adapter";
@@ -57,10 +57,8 @@ const TEMPLATE = `
   <div id="${PageId.SIDEBAR_CONTAINER}" style="display: none"></div>
 `;
 
-const NEEDS_MESSAGE_ADAPTER = EXTENSION_URL_PREFIXES;
-
 function isMessageAdapterNeeded() {
-  return FORCE_MESSAGE_ADAPTER || startsWithAnyOf(window.location.href, NEEDS_MESSAGE_ADAPTER);
+  return FORCE_MESSAGE_ADAPTER || startsWithAnyOf(window.location.href, URL_PREFIXES_NEEDING_MESSAGE_ADAPTER);
 }
 
 enum SidebarState {
