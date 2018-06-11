@@ -1,4 +1,5 @@
 import {assert} from "chai";
+import {isCorsWithCredentialsNeeded} from '../../src/acrolinx-sidebar-integration/utils/utils';
 import {isVersionGreaterEqual, parseVersionNumberWithFallback} from "../../src/utils/utils";
 
 describe('utils', () => {
@@ -75,5 +76,19 @@ describe('utils', () => {
       assert.deepEqual(parseVersionNumberWithFallback('12..'), []);
     });
   });
+
+  describe('isCorsWithCredentialsNeeded', () => {
+    it('matches gcpnode', () => {
+      assert.equal(isCorsWithCredentialsNeeded('https://sub.gcpnode.com:1234'), true);
+    });
+    it('matches corp.google', () => {
+      assert.equal(isCorsWithCredentialsNeeded('https://sub.corp.google.com:1234'), true);
+    });
+    it('does not match other stuff', () => {
+      assert.equal(isCorsWithCredentialsNeeded('https://www.google.com:1234'), false);
+      assert.equal(isCorsWithCredentialsNeeded('https://www.google.com'), false);
+      assert.equal(isCorsWithCredentialsNeeded('https://google.com'), false);
+    });
+  })
 
 });
