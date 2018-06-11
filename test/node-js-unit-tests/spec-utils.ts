@@ -89,6 +89,6 @@ describe('utils', () => {
       assert.equal(isCorsWithCredentialsNeeded('https://www.google.com'), false);
       assert.equal(isCorsWithCredentialsNeeded('https://google.com'), false);
     });
-  })
+  });
 
 });
