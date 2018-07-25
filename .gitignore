@@ -2,7 +2,7 @@
 .private
 node_modules
 tmp
-dist
+/dist
 app/scripts
 app/styles/index.css
 app/version.properties
