@@ -26,14 +26,14 @@
     "browsersync": "browser-sync start --server --files \"app/**/*\" --files \"tmp/browser-tests-index.js\" --startPath app --cors",
     "tslint": "tslint 'src/**/*.ts' 'test/**/*.ts'",
     "tslintFix": "tslint --fix 'src/**/*.ts' 'test/**/*.ts'",
-    "buildDist": "rm -rf tmp/dist && mkdir -p app/scripts && npm run generateTranslationsTs && npm run tslint && tsc && npm run injectVersion && npm run test && npm run browserify && npm run less && mkdir -p tmp && cp -r app tmp/dist && hashcat tmp/dist/index.html && npm run buildOfflineDist && npm run buildInlined && npm run buildNpmDist",
-    "buildNpmDist": "mkdir -p dist && cp -R tmp/dist-offline/ dist && rm dist/dist-offline/index-inlined.html && npm run createNpmDistFilesIndex && npm run copyInlinedToNpmDist",
-    "copyInlinedToNpmDist": "mkdir -p dist/inlined && cp tmp/acrolinx-sidebar-startpage-inlined.js dist/inlined",
+    "buildDist": "rm -rf tmp/dist && mkdir -p app/scripts && npm run generateTranslationsTs && npm run tslint && tsc && npm run injectVersion && npm run browserify && npm run less && mkdir -p tmp && cp -r app tmp/dist && hashcat tmp/dist/index.html && npm run buildOfflineDist && npm run buildInlined && npm run buildNpmDist",
+    "buildNpmDist": "mkdir -p dist && cp -R tmp/dist-offline/ dist && rm dist/dist-offline/index.html && npm run createNpmDistFilesIndex && npm run copyInlinedToNpmDist",
+    "copyInlinedToNpmDist": "cp tmp/acrolinx-sidebar-startpage-inlined.js dist/index.js && cp tools/dist/index.d.ts dist/",
     "createNpmDistFilesIndex": "cd dist/dist-offline && find . -type f | sed 's/^\\.//' |grep -v '^/files.txt' >files.txt",
     "prepack": "prepack app/scripts/main.js --out app/scripts/main.js",
     "buildOfflineDist": "rm -rf tmp/dist-offline && cp -r app tmp/dist-offline && npm run inlineSvg ./tmp/dist-offline/styles",
-    "buildInlined": "rm -rf tmp/dist-inlined && cp -r app tmp/dist-inlined && hashcat tmp/dist-inlined/index-inlined.html && npm run inline && npm run packInlined",
-    "inline": "npm run inlineSvg ./tmp/dist-inlined/styles && cd tmp/dist-inlined && cat index-inlined.html |inliner >../dist-inlined.html",
+    "buildInlined": "rm -rf tmp/dist-inlined && cp -r app tmp/dist-inlined && hashcat tmp/dist-inlined/index.html && npm run inline && npm run packInlined",
+    "inline": "npm run inlineSvg ./tmp/dist-inlined/styles && cd tmp/dist-inlined && cat index.html |inliner >../dist-inlined.html",
     "inlineSvg": "node ./tools/inline-svg.js",
     "packInlined": "node ./tools/pack-inlined.js >tmp/acrolinx-sidebar-startpage-inlined.js",
     "injectVersion": "node ./tools/inject-version.js"
@@ -41,6 +41,8 @@
   "author": "Acrolinx",
   "url": "http://www.acrolinx.com",
   "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -70,16 +72,14 @@
     "lodash": "^4.17.4",
     "mocha": "^3.2.0",
     "prepack": "0.2.4",
+    "preact": "8.2.1",
     "sinon": "2.3.6",
+    "tslib": "^1.7.1",
     "ts-node": "3.0.2",
     "tslint": "5.8.0",
     "typescript": "2.6.2",
     "watch": "1.0.2",
     "watchify": "^3.9.0"
-  },
-  "dependencies": {
-    "preact": "8.2.1",
-    "tslib": "^1.7.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
