@@ -297,7 +297,8 @@ export function startMainController(opts: MainControllerOpts = {}) {
   }
 
   function onMessageFromSidebar(messageEvent: MessageEvent) {
-    if (!sidebarIFrameElement || messageEvent.source !== sidebarIFrameElement.contentWindow) {
+    if (!sidebarIFrameElement || !sidebarIFrameElement.contentWindow ||
+      messageEvent.source !== sidebarIFrameElement.contentWindow) {
       return;
     }
 

@@ -169,7 +169,7 @@ describe('integration-tests', function () {
 
       waitUntilSuccess(() => {
         const sidebarIFrame = getExistingElement('#sidebarContainer iframe').get(0) as HTMLIFrameElement;
-        assert.equal(sidebarIFrame.contentWindow.document.body.innerText.trim(), 'Dummy Sidebar');
+        assert.equal(sidebarIFrame.contentWindow!.document.body.innerText.trim(), 'Dummy Sidebar');
         done();
       }, 4000);
 

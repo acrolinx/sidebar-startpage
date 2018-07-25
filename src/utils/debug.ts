@@ -3,7 +3,7 @@ import * as logging from "./logging";
 
 function patchFirebugUI() {
   const iFrameEl = document.getElementById('FirebugUI') as HTMLIFrameElement;
-  if (!iFrameEl) {
+  if (!iFrameEl || !iFrameEl.contentWindow) {
     return false;
   }
 

@@ -100,7 +100,7 @@ export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameEle
 }
 
 function writeSidebarHtmlIntoIFrame(sidebarHtml: string, sidebarIFrameElement: HTMLIFrameElement, sidebarBaseUrl: string) {
-  const sidebarContentWindow = sidebarIFrameElement.contentWindow;
+  const sidebarContentWindow = sidebarIFrameElement.contentWindow!!;
   const sidebarHtmlWithAbsoluteLinks = sidebarHtml
     .replace(/src="/g, 'src="' + sidebarBaseUrl)
     .replace(/href="/g, 'href="' + sidebarBaseUrl);
