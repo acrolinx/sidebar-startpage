@@ -3,7 +3,7 @@ import {h, ComponentConstructor} from 'preact';
 type JsxFactory<PropsType> = (params?: PropsType, ...children: (JSX.Element | JSX.Element[] | string)[]) => JSX.Element;
 
 export function createPreactFactory<PropsType, StateType=any>(component: ComponentConstructor<PropsType, StateType> | string): JsxFactory<PropsType> {
-  return (params?: PropsType, ...children: (JSX.Element | JSX.Element[] | string)[]) => h(component as any, params, ...children);
+  return (params?: PropsType, ...children: (JSX.Element | JSX.Element[] | string)[]) => h(component as any, params!, ...children);
 }
 
 export const div = createPreactFactory('div');
