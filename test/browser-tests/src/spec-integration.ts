@@ -16,6 +16,7 @@
 
 import {assert} from "chai";
 import * as $ from "jquery";
+import {SinonSandbox, SinonStub} from "sinon";
 import * as sinon from "sinon";
 import {MainControllerOpts, startMainController} from "../../../src/main-controller";
 import {
@@ -50,19 +51,24 @@ interface MockedAcrolinxPlugin extends AcrolinxPlugin {
 }
 
 describe('integration-tests', function () {
-  this.timeout(5000);
   const augmentedWindow = window as AugmentedWindow;
+  let sinonSandbox: SinonSandbox;
+  let windowOpenStub: SinonStub;
   let clock: sinon.SinonFakeTimers;
 
+  this.timeout(5000);
+
   beforeEach(() => {
-    clock = sinon.useFakeTimers();
+    sinonSandbox = sinon.createSandbox();
+    clock = sinonSandbox.useFakeTimers();
+    windowOpenStub = sinonSandbox.stub(window, 'open');
     getAcrolinxSimpleStorage().clear();
     $('#app').remove();
     $('body').append('<div id="app">Loading</div>');
   });
 
   afterEach(() => {
-    clock.restore();
+    sinonSandbox.restore();
   });
 
   function wait(ms: number) {
@@ -108,7 +114,6 @@ describe('integration-tests', function () {
     startMainController(mainControllerOpts);
     wait(POLL_FOR_PLUGIN_INTERVAL_MS);
   }
-
 
   it('Injects windowAny.acrolinxSidebar', () => {
     startMainController();
@@ -256,7 +261,9 @@ describe('integration-tests', function () {
   });
 
   describe('help', () => {
-    function assertHelpOpened(expectedUrl: string, selector = '.icon-help') {
+    const HELP_ICON_SELECTOR = '.icon-help';
+
+    function assertHelpOpened(expectedUrl: string, selector = HELP_ICON_SELECTOR) {
       simulateClick(selector);
       assert.equal(augmentedWindow.acrolinxPlugin.openWindowSpy.callCount, 1);
       assert.deepEqual(augmentedWindow.acrolinxPlugin.openWindowSpy.args[0][0].url, expectedUrl);
@@ -265,6 +272,16 @@ describe('integration-tests', function () {
     it('click help', () => {
       init({showServerSelector: true, logFileLocation: 'dummyLogFileLocation'});
       assertHelpOpened(HELP_LINK_URLS.en);
+    });
+
+    it('uses window.open if initParameters.openWindowDirectly == true', () => {
+      init({openWindowDirectly: true, showServerSelector: true});
+
+      simulateClick(HELP_ICON_SELECTOR);
+
+      sinon.assert.callCount(windowOpenStub, 1);
+      sinon.assert.calledWith(windowOpenStub, HELP_LINK_URLS.en);
+      sinon.assert.notCalled(augmentedWindow.acrolinxPlugin.openWindowSpy);
     });
 
     it('click help provided from plugin', () => {
