@@ -36,7 +36,11 @@ import {
 } from "./constants";
 import {createSidebarMessageProxy} from "./acrolinx-sidebar-integration/message-adapter/message-adapter";
 import {ProxyAcrolinxSidebar} from "./proxies/proxy-acrolinx-sidebar";
-import {AcrolinxPlugin, InitParameters} from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
+import {
+  AcrolinxPlugin,
+  InitParameters,
+  OpenWindowParameters
+} from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 import {getTranslation, setLanguage} from "./localization";
 import {sanitizeAndValidateServerAddress} from "./utils/validation";
 
@@ -138,8 +142,13 @@ export function startMainController(opts: MainControllerOpts = {}) {
     }
   }
 
-  function openExternalWindow(url: string) {
-    acrolinxPlugin.openWindow({url});
+  function openWindow(opts: OpenWindowParameters) {
+    if (acrolinxPlugin && acrolinxPlugin.openWindow &&
+      !(initParametersFromPlugin && initParametersFromPlugin.openWindowDirectly)) {
+      acrolinxPlugin.openWindow(opts);
+    } else {
+      window.open(opts.url);
+    }
   }
 
   function onSubmit(serverAddressInput: string) {
@@ -210,7 +219,8 @@ export function startMainController(opts: MainControllerOpts = {}) {
         },
         acrolinxPlugin,
         serverAddress,
-        showServerSelector
+        showServerSelector,
+        openWindow
       });
     });
 
@@ -280,7 +290,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
       serverAddress,
       enforceHTTPS: initParametersFromPlugin.enforceHTTPS,
       isConnectButtonDisabled: props.isConnectButtonDisabled!!,
-      openWindow: openExternalWindow,
+      openWindow: (url) => openWindow({url}),
       errorMessage: props.errorMessage,
       initParameters: initParametersFromPlugin
     }), serverSelectorFormPage, serverSelectorFormPage.firstChild as Element);
@@ -362,7 +372,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
       logFileLocation: initParametersFromPlugin.logFileLocation,
       openLogFile,
       clientComponents: extendClientComponents(initParametersFromPlugin.clientComponents),
-      openWindow: openExternalWindow,
+      openWindow: (url) => openWindow({url}),
       initParameters: initParametersFromPlugin
     }), aboutPage, aboutPage.firstChild as Element);
   }

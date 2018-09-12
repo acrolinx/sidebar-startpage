@@ -32,8 +32,13 @@ export interface ProxyAcrolinxPluginProps {
   acrolinxPlugin: AcrolinxPlugin;
   serverAddress: string;
   showServerSelector: Function;
+  openWindow: (opts: OpenWindowParameters) => void;
 }
 
+/**
+ * Made for injection into the sidebar iframe.
+ * It will forward method calls from the sidebar to the startpage or directly to the acrolinxPlugin.
+ */
 export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
 
   constructor(private props: ProxyAcrolinxPluginProps) {
@@ -76,11 +81,7 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
   }
 
   openWindow(opts: OpenWindowParameters) {
-    if (this.props.acrolinxPlugin.openWindow) {
-      this.props.acrolinxPlugin.openWindow(opts);
-    } else {
-      window.open(opts.url);
-    }
+    this.props.openWindow(opts);
   }
 
   showServerSelector() {

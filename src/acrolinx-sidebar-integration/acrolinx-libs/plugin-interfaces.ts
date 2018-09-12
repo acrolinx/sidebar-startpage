@@ -148,6 +148,14 @@ export interface InitParameters extends SidebarConfiguration {
   };
 
   helpUrl?: string;
+
+  /**
+   * By default, the Sidebar uses {@link AcrolinxPlugin.openWindow} to open new windows.
+   * In some web integrations this might trigger the popup blocker.
+   * If openWindowDirectly is true, the Sidebar will open new windows directly and thereby circumvent
+   * the popup blocker.
+   */
+  openWindowDirectly?: boolean;
 }
 
 /**
