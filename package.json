@@ -5,8 +5,6 @@
   "scripts": {
     "generateTranslationsTs": "mkdir -p tmp/generated && node ./tools/generate-translations-ts.js",
     "dev": "npm run prepareDev && concurrently --kill-others -r 'npm run lessWatch' 'npm run tscWatch' 'npm run watchify' 'npm run browsersync'",
-    "deploy": "aws s3 cp tmp/dist s3://acrolinx-sidebar-classic/v14/dev --recursive --acl public-read",
-    "deployProd": "aws s3 cp tmp/dist s3://acrolinx-sidebar-classic/v14/prod --recursive --acl public-read",
     "prepareDev": "mkdir -p app/scripts && npm run less",
     "test": "npm run testNodeJS && npm run testKarmaPhantomJS",
     "testNodeJS": "mocha tmp/compiled/test/node-js-unit-tests/**/*.js",
