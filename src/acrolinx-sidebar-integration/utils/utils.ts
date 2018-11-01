@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-const IS_WITH_CREDENTIALS_NEEDED = /^https:\/\/[a-z-_]+\.(corp\.google|gcpnode)\.com(:[0-9]+)?/;
+const IS_WITH_CREDENTIALS_NEEDED = /^https:\/\/[a-z-_]+\.(corp\.google\.com|gcpnode\.com|corp\.goog)(:[0-9]+)?/;
 
 export function isCorsWithCredentialsNeeded(url: string) {
   return IS_WITH_CREDENTIALS_NEEDED.test(url);

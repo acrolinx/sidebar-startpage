@@ -94,11 +94,14 @@ describe('utils', () => {
   });
 
   describe('isCorsWithCredentialsNeeded', () => {
-    it('matches gcpnode', () => {
+    it('matches gcpnode.com', () => {
       assert.equal(isCorsWithCredentialsNeeded('https://sub.gcpnode.com:1234'), true);
     });
-    it('matches corp.google', () => {
+    it('matches corp.google.com', () => {
       assert.equal(isCorsWithCredentialsNeeded('https://sub.corp.google.com:1234'), true);
+    });
+    it('matches corp.goog', () => {
+      assert.equal(isCorsWithCredentialsNeeded('https://sub.corp.goog:1234'), true);
     });
     it('does not match other stuff', () => {
       assert.equal(isCorsWithCredentialsNeeded('https://www.google.com:1234'), false);
