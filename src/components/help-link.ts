@@ -31,8 +31,8 @@ export function getLocalizedDefaultHelpLink(): string {
 }
 
 export const HELP_LINK_URLS = {
-  en: 'https://support.acrolinx.com/hc/en-us/articles/203845751',
-  de: 'https://support.acrolinx.com/hc/de/articles/203845751'
+  en: 'https://docs.acrolinx.com/doc/en',
+  de: 'https://docs.acrolinx.com/doc/en'
 };
 
 
