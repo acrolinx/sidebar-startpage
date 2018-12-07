@@ -41,8 +41,8 @@ export function getLocalizedCantConnectHelpLink(): string {
 }
 
 export const CANT_CONNECT_HELP_LINK_URLS = {
-  en: 'https://support.acrolinx.com/hc/en-us/articles/115004045529',
-  de: 'https://support.acrolinx.com/hc/de/articles/115004045529'
+  en: 'https://docs.acrolinx.com/coreplatform/latest/en/the-sidebar/connect-your-sidebar-to-acrolinx',
+  de: 'https://docs.acrolinx.com/coreplatform/latest/de/the-sidebar/connect-your-sidebar-to-acrolinx'
 };
 
 
