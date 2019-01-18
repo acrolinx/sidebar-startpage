@@ -13,29 +13,29 @@
     },
     "links": {
       "about": "A propos d\u00b4Acrolinx",
-      "cantConnect": "Est-ce que vous avez des probl\u00e8mes \u00e0 vous connecter au serveur Acrolinx ?",
+      "cantConnect": "Vous ne r\u00e9ussissez pas \u00e0 vous connecter \u00e0 Acrolinx ?",
       "needHelp": "Aide"
     },
     "message": {
-      "invalidServerAddress": "Il semblerait que l'adresse soit incorrecte. Corriger l'adresse et essayer \u00e0 nouveau.",
-      "loadSidebarTimeout": "La Sidebar Acrolinx est trop lent \u00e0 d\u00e9marrer. V\u00e9rifier la connexion r\u00e9seau ou contacter l'administrateur du serveur Acrolinx. ",
+      "invalidServerAddress": "Il semblerait que l'URL d'Acrolinx soit incorrecte. Corriger l'adresse et essayer \u00e0 nouveau.",
+      "loadSidebarTimeout": "La Sidebar Acrolinx est trop lent \u00e0 d\u00e9marrer. V\u00e9rifier la connexion r\u00e9seau ou contacter l'administrateur de Acrolinx. ",
       "noCloudSidebar": "Il semblerait que votre serveur prend en charge une ancienne version de la Sidebar. Nous avons essay\u00e9 de charger une Sidebar de secours, mais nous avons des probl\u00e8mes de connexion. Pouvez-vous v\u00e9rifier votre connexion Internet ?",
       "outdatedServer": "Il semblerait que votre int\u00e9gration Acrolinx ait besoin d'une version de serveur plus r\u00e9cente pour charger la Sidebar. Contactez votre administrateur Acrolinx pour une mise \u00e0 jour.",
-      "serverConnectionProblemHttp": "La connexion au serveur n'a pas abouti. Si l'adresse est correcte, contactez l'administrateur Acrolinx. Il se pourrait que le serveur n'accepte pas de connexions non s\u00e9curis\u00e9es.",
-      "serverConnectionProblemHttps": "La connexion au serveur n'a pas abouti. Si l'adresse est correcte, contactez l'administrateur Acrolinx. Il se pourrait que le serveur n'accepte pas de connexions s\u00e9curis\u00e9es.",
-      "serverIsNoAcrolinxServerOrHasNoSidebar": "Il semblerait que votre il ne s'agit pas d'un serveur Acrolinx ou que la version du serveur ne prend pas en charge la Sidebar. Contactez votre administrateur Acrolinx pour v\u00e9rifier.",
-      "serverIsNotSecure": "Vous devez vous connecter \u00e0 un serveur s\u00e9curis\u00e9. L'adresse d'un serveur s\u00e9curis\u00e9 commence toujours par \"https\"."
+      "serverConnectionProblemHttp": "La connexion au serveur Acrolinx n'a pas abouti. Si l'adresse est correcte, contactez l'administrateur Acrolinx. Il se pourrait que votre serveur n'accepte pas de connexions non s\u00e9curis\u00e9es.",
+      "serverConnectionProblemHttps": "La connexion au serveur Acrolinx n'a pas abouti. Si l'adresse est correcte, contactez l'administrateur Acrolinx. Il se pourrait que votre serveur n'accepte pas de connexions non s\u00e9curis\u00e9es.",
+      "serverIsNoAcrolinxServerOrHasNoSidebar": "Il semblerait qu'il ne s'agit pas d'un serveur Acrolinx ou que la version du serveur ne prend pas en charge la Sidebar. Contactez votre administrateur Acrolinx pour v\u00e9rifier.",
+      "serverIsNotSecure": "Vous devez vous connecter \u00e0 un serveur s\u00e9curis\u00e9. L'adresse d'une URL d'Acrolinx s\u00e9curis\u00e9e commence par \"https\"."
     },
     "placeHolder": {
-      "serverAddress": "Adresse du serveur Acrolinx"
+      "serverAddress": "URL d'Acrolinx"
     },
     "title": {
       "about": "A propos de",
       "logFile": "Fichier journal",
-      "serverAddress": "Adresse du serveur:"
+      "serverAddress": "URL d'Acrolinx"
     },
     "tooltip": {
-      "httpsRequired": "Vous devez vous connecter \u00e0 un serveur s\u00e9curis\u00e9. L'adresse d'un serveur s\u00e9curis\u00e9 commence toujours par \"https\".",
+      "httpsRequired": "Vous devez vous connecter \u00e0 un serveur s\u00e9curis\u00e9. L'adresse d'une URL d'Acrolinx s\u00e9curis\u00e9e commence par \"https\".",
       "openHelp": "Ouvrir les informations d'aide dans la fen\u00eatre d'un navigateur Web."
     }
   }
