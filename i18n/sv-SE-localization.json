@@ -13,29 +13,29 @@
     },
     "links": {
       "about": "Om Acrolinx",
-      "cantConnect": "Kan inte ansluta till Acrolinx-servern?",
+      "cantConnect": "Kan du inte ansluta till Acrolinx?",
       "needHelp": "Hj\u00e4lp"
     },
     "message": {
-      "invalidServerAddress": "Det verkar som om serveradressen \u00e4r felaktig. Kontrollera adressen och f\u00f6rs\u00f6k igen.",
-      "loadSidebarTimeout": "Det verkar som om det tar f\u00f6r l\u00e5ng tid att ladda sidopanelen. Kontrollera din n\u00e4tverksanslutning eller kontakta din Acrolinx-administrat\u00f6r.",
+      "invalidServerAddress": "Det ser ut som om Acrolinx-URL:en \u00e4r felaktig. Kontrollera adressen och f\u00f6rs\u00f6k igen.",
+      "loadSidebarTimeout": "Det verkar som om det tar f\u00f6r l\u00e5ng tid att ladda Sidebar. Kontrollera din n\u00e4tverksanslutning eller kontakta din Acrolinx-administrat\u00f6r.",
       "noCloudSidebar": "Det verkar som om din server st\u00f6der en \u00e4ldre version av Sidebar. Vi har f\u00f6rs\u00f6kt att ladda en annan Sidebarversion fr\u00e5n Acrolinx-molnet men vi fick problem med anslutningen. Kontrollera din internetanslutning.",
-      "outdatedServer": "Det verkar som om din Acrolinx-plugin beh\u00f6ver en nyare serverversion f\u00f6r att kunna ladda Sidebar. Kontakta din Acrolinx-administrat\u00f6r f\u00f6r att uppdatera Acrolinx-servern.",
-      "serverConnectionProblemHttp": "Det gick inte att ansluta till din Acrolinx-server. Kontrollera att serveradressen \u00e4r korrekt. Om du fortfarande inte kan ansluta kontaktar du din Acrolinx-administrat\u00f6r. Det kan vara s\u00e5 att din server inte accepterar oskyddade anslutningar.",
-      "serverConnectionProblemHttps": "Det gick inte att ansluta till din Acrolinx-server. Kontrollera att serveradressen \u00e4r korrekt. Om du fortfarande inte kan ansluta till servern kontaktar du din Acrolinx-administrat\u00f6r. Det kan vara s\u00e5 att din server inte accepterar s\u00e4kra anslutningar.",
-      "serverIsNoAcrolinxServerOrHasNoSidebar": "Det verkar som om detta inte \u00e4r en Acrolinx-server eller ocks\u00e5 har den h\u00e4r serverversionen inte st\u00f6d f\u00f6r Acrolinx Sidebar. Kontakta din serveradministrat\u00f6r och kontrollera serverversion om du inte \u00e4r s\u00e4ker p\u00e5 att serveradressen \u00e4r korrekt.",
-      "serverIsNotSecure": "Du beh\u00f6ver ansluta till en s\u00e4ker server. En s\u00e4ker serveradress b\u00f6rjar med \"https\"."
+      "outdatedServer": "Det verkar som om din Acrolinx-integration beh\u00f6ver en nyare serverversion f\u00f6r att kunna ladda Sidebar. Kontakta din Acrolinx-administrat\u00f6r f\u00f6r att uppdatera Acrolinx-servern.",
+      "serverConnectionProblemHttp": "Det gick inte att ansluta till din Acrolinx-server. Kontrollera att URL:en \u00e4r korrekt. Om du fortfarande inte kan ansluta till servern kontaktar du din Acrolinx-administrat\u00f6r. Det kan vara s\u00e5 att din server inte accepterar s\u00e4kra anslutningar.",
+      "serverConnectionProblemHttps": "Det gick inte att ansluta till din Acrolinx-server. Kontrollera att URL:en \u00e4r korrekt. Om du fortfarande inte kan ansluta till servern kontaktar du din Acrolinx-administrat\u00f6r. Det kan vara s\u00e5 att din server inte accepterar s\u00e4kra anslutningar.",
+      "serverIsNoAcrolinxServerOrHasNoSidebar": "Det verkar som om detta inte \u00e4r en Acrolinx-server eller ocks\u00e5 har den h\u00e4r serverversionen inte st\u00f6d f\u00f6r Acrolinx Sidebar. Kontakta din Acrolinx-administrat\u00f6r och kontrollera serverversion om du inte \u00e4r s\u00e4ker p\u00e5 att Acrolinx-URL:en \u00e4r korrekt.",
+      "serverIsNotSecure": "Du beh\u00f6ver ansluta till en s\u00e4ker server. En s\u00e4ker Acrolinx-URL b\u00f6rjar med \"https\"."
     },
     "placeHolder": {
-      "serverAddress": "Acrolinx-serveradress"
+      "serverAddress": "Acrolinx-URL"
     },
     "title": {
       "about": "Om",
       "logFile": "Loggfil",
-      "serverAddress": "Serveradress:"
+      "serverAddress": "Acrolinx-URL"
     },
     "tooltip": {
-      "httpsRequired": "Du beh\u00f6ver ansluta till en s\u00e4ker server. En s\u00e4ker serveradress b\u00f6rjar med \"https\".",
+      "httpsRequired": "Du beh\u00f6ver ansluta till en s\u00e4ker server. En s\u00e4ker Acrolinx-URL b\u00f6rjar med \"https\".",
       "openHelp": "\u00d6ppna hj\u00e4lpinformationen i ett webbl\u00e4sarf\u00f6nster"
     }
   }
