@@ -19,7 +19,6 @@
     "message": {
       "invalidServerAddress": "It looks like the Acrolinx URL is incorrect. Check the URL and try again.",
       "loadSidebarTimeout": "It looks like the Sidebar took too long to load. Check your network connection or contact your Acrolinx administrator.",
-      "noCloudSidebar": "It looks like your server supports an older Sidebar version. We've tried to load a fallback Sidebar from the Acrolinx cloud but run into a connection problem. Check your Internet connection.",
       "outdatedServer": "It looks like your Acrolinx integration needs a newer server version to load the Sidebar. Ask your Acrolinx administrator to update your server.",
       "serverConnectionProblemHttp": "We couldn't connect to your Acrolinx Server. Check that the URL is correct. If you still can't connect then contact your Acrolinx administrator. It might be that your server doesn\u2019t accept insecure connections.",
       "serverConnectionProblemHttps": "We couldn't connect to your Acrolinx Server. Check that the URL is correct. If you still can't connect then contact your Acrolinx administrator. It might be that your server doesn\u2019t accept secure connections.",
