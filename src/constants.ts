@@ -16,8 +16,6 @@
 
 export const SERVER_SELECTOR_VERSION = '§SERVER_SELECTOR_VERSION';
 
-export const FALLBACK_SIDEBAR_URL = 'https://sidebar-classic.acrolinx-cloud.com/v14.3/prod/';
-
 /* Some extensions need the message adapter, because it's not possible to load javascript from arbitrary hosts
  * due to the content security policy.
  * Safari ( 'safari-extension://') has currently no content security policy, that would prevent the normal loading of the

@@ -243,8 +243,6 @@ export function startMainController(opts: MainControllerOpts = {}) {
       case 'httpErrorStatus':
       case 'noSidebar':
         return simpleErrorMessage(errorMessages.serverIsNoAcrolinxServerOrHasNoSidebar);
-      case 'noCloudSidebar':
-        return simpleErrorMessage(errorMessages.noCloudSidebar);
       case 'sidebarVersionIsBelowMinimum':
         return simpleErrorMessage(errorMessages.outdatedServer);
       default:
