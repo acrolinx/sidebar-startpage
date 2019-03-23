@@ -19,7 +19,6 @@
     "message": {
       "invalidServerAddress": "Det ser ut som om Acrolinx-URL:en \u00e4r felaktig. Kontrollera adressen och f\u00f6rs\u00f6k igen.",
       "loadSidebarTimeout": "Det verkar som om det tar f\u00f6r l\u00e5ng tid att ladda Sidebar. Kontrollera din n\u00e4tverksanslutning eller kontakta din Acrolinx-administrat\u00f6r.",
-      "noCloudSidebar": "Det verkar som om din server st\u00f6der en \u00e4ldre version av Sidebar. Vi har f\u00f6rs\u00f6kt att ladda en annan Sidebarversion fr\u00e5n Acrolinx-molnet men vi fick problem med anslutningen. Kontrollera din internetanslutning.",
       "outdatedServer": "Det verkar som om din Acrolinx-integration beh\u00f6ver en nyare serverversion f\u00f6r att kunna ladda Sidebar. Kontakta din Acrolinx-administrat\u00f6r f\u00f6r att uppdatera Acrolinx-servern.",
       "serverConnectionProblemHttp": "Det gick inte att ansluta till din Acrolinx-server. Kontrollera att URL:en \u00e4r korrekt. Om du fortfarande inte kan ansluta till servern kontaktar du din Acrolinx-administrat\u00f6r. Det kan vara s\u00e5 att din server inte accepterar s\u00e4kra anslutningar.",
       "serverConnectionProblemHttps": "Det gick inte att ansluta till din Acrolinx-server. Kontrollera att URL:en \u00e4r korrekt. Om du fortfarande inte kan ansluta till servern kontaktar du din Acrolinx-administrat\u00f6r. Det kan vara s\u00e5 att din server inte accepterar s\u00e4kra anslutningar.",
