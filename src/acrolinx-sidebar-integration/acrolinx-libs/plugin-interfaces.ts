@@ -156,6 +156,8 @@ export interface InitParameters extends SidebarConfiguration {
    * the popup blocker.
    */
   openWindowDirectly?: boolean;
+
+  accessToken?: string;
 }
 
 /**

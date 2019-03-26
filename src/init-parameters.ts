@@ -17,16 +17,22 @@
 import {
   InitParameters, SoftwareComponent,
   SoftwareComponentCategory
-} from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
-import {isCorsWithCredentialsNeeded} from "./acrolinx-sidebar-integration/utils/utils";
-import {SERVER_SELECTOR_VERSION} from "./constants";
-import {getTranslation} from "./localization";
+} from './acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces';
+import {isCorsWithCredentialsNeeded} from './acrolinx-sidebar-integration/utils/utils';
+import {SERVER_SELECTOR_VERSION} from './constants';
+import {getTranslation} from './localization';
+import {warn} from './utils/logging';
 
 
 export function hackInitParameters(initParameters: InitParameters, serverAddress: string): InitParameters {
+  const ignoreAccessToken = initParameters.accessToken && initParameters.showServerSelector;
+  if (ignoreAccessToken) {
+    warn(`Ignore accessToken because showServerSelector=${initParameters.showServerSelector}`);
+  }
   return {
     ...initParameters,
     serverAddress: serverAddress,
+    accessToken: ignoreAccessToken ? undefined : initParameters.accessToken,
     showServerSelector: false,
     corsWithCredentials: initParameters.corsWithCredentials || isCorsWithCredentialsNeeded(serverAddress),
     supported: {...initParameters.supported, showServerSelector: initParameters.showServerSelector},
