@@ -18,7 +18,7 @@ import {hackInitParameters} from '../../src/init-parameters';
 import {assert} from 'chai';
 
 
-describe.only('init-parameters', () => {
+describe('init-parameters', () => {
   describe('hackInitParameters', () => {
     const DUMMY_SERVER_ADDRESS = 'http://dummyServer';
     const DUMMY_ACCESS_TOKEN = 'http://dummyServer';
