@@ -1,4 +1,4 @@
-# acrolinx-sidebar-startpage
+# @acrolinx/sidebar-startpage
 
 A container component for Acrolinx integrations that loads the Acrolinx sidebar.
 
