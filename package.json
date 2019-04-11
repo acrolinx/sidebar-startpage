@@ -1,6 +1,6 @@
 {
   "name": "@acrolinx/sidebar-startpage",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "A Container Component for Acrolinx Integrations that loads the Acrolinx sidebar",
   "scripts": {
     "generateTranslationsTs": "mkdir -p tmp/generated && node ./tools/generate-translations-ts.js",
