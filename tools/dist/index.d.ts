@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-declare module 'acrolinx-sidebar-startpage' {
+declare module 'sidebar-startpage' {
   const ACROLINX_STARTPAGE_INLINED_HTML: string;
 }
