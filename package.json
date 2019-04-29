@@ -27,7 +27,7 @@
     "buildDist": "shx rm -rf tmp/dist && shx mkdir -p app/scripts && npm run generateTranslationsTs && npm run tslint && tsc && npm run injectVersion && npm run test && npm run browserify && npm run less && shx mkdir -p tmp && shx cp -r app tmp/dist && hashcat tmp/dist/index.html && npm run buildOfflineDist && npm run buildInlined && npm run buildNpmDist",
     "buildNpmDist": "shx mkdir -p dist && shx cp -R tmp/dist-offline/ dist && npm run createNpmDistFilesIndex && npm run copyInlinedToNpmDist",
     "copyInlinedToNpmDist": "shx cp tmp/sidebar-startpage-inlined.js dist/index.js && shx cp tools/dist/index.d.ts dist/",
-    "createNpmDistFilesIndex": "cd dist/dist-offline && shx find . | sed 's/^\\.//' |grep -v '^/files.txt' >files.txt",
+    "createNpmDistFilesIndex": "cd dist/dist-offline && shx find . | shx sed 's/^\\.//' | shx grep -v '^/files.txt' >files.txt",
     "buildOfflineDist": "shx rm -rf tmp/dist-offline && shx cp -r app tmp/dist-offline && npm run inlineSvg ./tmp/dist-offline/styles",
     "buildInlined": "shx rm -rf tmp/dist-inlined && shx cp -r app tmp/dist-inlined && hashcat tmp/dist-inlined/index.html && npm run inline && npm run packInlined",
     "inline": "npm run inlineSvg ./tmp/dist-inlined/styles && cd tmp/dist-inlined && shx cat index.html |inliner >../dist-inlined.html",
