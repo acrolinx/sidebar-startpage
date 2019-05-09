@@ -19,11 +19,11 @@
     "message": {
       "invalidServerAddress": "Il semblerait que l'URL d'Acrolinx soit incorrecte. Corriger l'adresse et essayer \u00e0 nouveau.",
       "loadSidebarTimeout": "La Sidebar Acrolinx est trop lent \u00e0 d\u00e9marrer. V\u00e9rifier la connexion r\u00e9seau ou contacter l'administrateur de Acrolinx. ",
-      "outdatedServer": "Il semblerait que votre int\u00e9gration Acrolinx ait besoin d'une version de serveur plus r\u00e9cente pour charger la Sidebar. Contactez votre administrateur Acrolinx pour une mise \u00e0 jour.",
-      "serverConnectionProblemHttp": "La connexion au serveur Acrolinx n'a pas abouti. Si l'adresse est correcte, contactez l'administrateur Acrolinx. Il se pourrait que votre serveur n'accepte pas de connexions non s\u00e9curis\u00e9es.",
-      "serverConnectionProblemHttps": "La connexion au serveur Acrolinx n'a pas abouti. Si l'adresse est correcte, contactez l'administrateur Acrolinx. Il se pourrait que votre serveur n'accepte pas de connexions non s\u00e9curis\u00e9es.",
-      "serverIsNoAcrolinxServerOrHasNoSidebar": "Il semblerait qu'il ne s'agit pas d'un serveur Acrolinx ou que la version du serveur ne prend pas en charge la Sidebar. Contactez votre administrateur Acrolinx pour v\u00e9rifier.",
-      "serverIsNotSecure": "Vous devez vous connecter \u00e0 un serveur s\u00e9curis\u00e9. L'adresse d'une URL d'Acrolinx s\u00e9curis\u00e9e commence par \"https\"."
+      "outdatedServer": "Il semblerait que la version de la plateforme Acrolinx ne prenne pas en charge la Sidebar. Contactez l'administrateur Acrolinx pour une mise \u00e0 jour de la plateforme.",
+      "serverConnectionProblemHttp": "La connexion \u00e0 Acrolinx n'a pas abouti. Est-ce que l'URL d'Acrolinx est correcte ? Si oui, contactez l'administrateur Acrolinx. Il se pourrait que votre serveur n'accepte pas de connexions non s\u00e9curis\u00e9es.",
+      "serverConnectionProblemHttps": "La connexion \u00e0 Acrolinx n'a pas abouti. Est-ce que l'URL d'Acrolinx est correcte ? Si oui, contactez l'administrateur Acrolinx. Il se pourrait que votre serveur n'accepte pas de connexions s\u00e9curis\u00e9es.",
+      "serverIsNoAcrolinxServerOrHasNoSidebar": "Est-ce que l'URL d'Acrolinx est correcte ? Si oui, il se pourrait que la version de la plateforme Acrolinx ne prend pas en charge la Sidebar. Contactez l'administrateur Acrolinx pour v\u00e9rifier.",
+      "serverIsNotSecure": "Utilisez une URL d'Acrolinx s\u00e9curis\u00e9e.  Une URL d'Acrolinx s\u00e9curis\u00e9e commence par \"https\"."
     },
     "placeHolder": {
       "serverAddress": "URL d'Acrolinx"
@@ -34,7 +34,7 @@
       "serverAddress": "URL d'Acrolinx"
     },
     "tooltip": {
-      "httpsRequired": "Vous devez vous connecter \u00e0 un serveur s\u00e9curis\u00e9. L'adresse d'une URL d'Acrolinx s\u00e9curis\u00e9e commence par \"https\".",
+      "httpsRequired": "Utilisez une URL d'Acrolinx s\u00e9curis\u00e9e.  Une URL d'Acrolinx s\u00e9curis\u00e9e commence par \"https\".",
       "openHelp": "Ouvrir les informations d'aide dans la fen\u00eatre d'un navigateur Web."
     }
   }
