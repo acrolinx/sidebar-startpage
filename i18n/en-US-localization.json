@@ -19,11 +19,11 @@
     "message": {
       "invalidServerAddress": "It looks like the Acrolinx URL is incorrect. Check the URL and try again.",
       "loadSidebarTimeout": "It looks like the Sidebar took too long to load. Check your network connection or contact your Acrolinx administrator.",
-      "outdatedServer": "It looks like your Acrolinx integration needs a newer server version to load the Sidebar. Ask your Acrolinx administrator to update your server.",
-      "serverConnectionProblemHttp": "We couldn't connect to your Acrolinx Server. Check that the URL is correct. If you still can't connect then contact your Acrolinx administrator. It might be that your server doesn\u2019t accept insecure connections.",
-      "serverConnectionProblemHttps": "We couldn't connect to your Acrolinx Server. Check that the URL is correct. If you still can't connect then contact your Acrolinx administrator. It might be that your server doesn\u2019t accept secure connections.",
-      "serverIsNoAcrolinxServerOrHasNoSidebar": "It looks like this isn\u2019t an Acrolinx Server or this server version doesn't support the Sidebar. Ask your Acrolinx administrator to check your server version if you're sure that the Acrolinx URL is correct.",
-      "serverIsNotSecure": "You need to connect to a secure server. A secure Acrolinx URL starts with \"https\"."
+      "outdatedServer": "It looks like your Acrolinx integration needs a newer Acrolinx Core Platform version to load the Sidebar. Ask your Acrolinx administrator to update your Core Platform.",
+      "serverConnectionProblemHttp": "We couldn't connect to Acrolinx. Check that the URL is correct. If you still can't connect then contact your Acrolinx administrator. It might be that your Acrolinx Core Platform doesn\u2019t accept insecure connections.",
+      "serverConnectionProblemHttps": "We couldn't connect to Acrolinx. Check that the URL is correct. If you still can't connect then contact your Acrolinx administrator. It might be that your Acrolinx Core Platform doesn\u2019t accept secure connections.",
+      "serverIsNoAcrolinxServerOrHasNoSidebar": "It looks like this isn\u2019t an Acrolinx URL or this Acrolinx Core Platform version doesn't support the Sidebar. Ask your Acrolinx administrator to check your Acrolinx Core Platform version if you're sure that the Acrolinx URL is correct.",
+      "serverIsNotSecure": "You need to connect to Acrolinx using a secure Acrolinx URL. A secure Acrolinx URL starts with \"https\"."
     },
     "placeHolder": {
       "serverAddress": "Acrolinx URL"
@@ -34,7 +34,7 @@
       "serverAddress": "Acrolinx URL"
     },
     "tooltip": {
-      "httpsRequired": "You need to connect to a secure server. A secure Acrolinx URL starts with \"https\".",
+      "httpsRequired": "You need to connect to Acrolinx using a secure Acrolinx URL. A secure Acrolinx URL starts with \"https\".",
       "openHelp": "Open help information in a web browser window"
     }
   }
