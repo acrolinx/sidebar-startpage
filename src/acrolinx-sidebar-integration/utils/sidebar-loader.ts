@@ -41,7 +41,7 @@ export function getSidebarVersion(sidebarHtml: string): [number, number, number]
 type NoValidSidebarErrorCode = 'noSidebar' | 'sidebarVersionIsBelowMinimum';
 
 export class NoValidSidebarError extends Error {
-  constructor(public acrolinxErrorCode: NoValidSidebarErrorCode, message: string) {
+  constructor(public acrolinxErrorCode: NoValidSidebarErrorCode, message: string, public url: string) {
     super(message);
   }
 }
@@ -65,7 +65,8 @@ export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameEle
 
     // Handle invalid sidebar html error.
     if (sidebarHtml.indexOf('<meta name="sidebar-version"') < 0) {
-      onSidebarLoaded(new NoValidSidebarError('noSidebar', 'No valid sidebar html code:' + sidebarHtml));
+      onSidebarLoaded(new NoValidSidebarError('noSidebar',
+        'No valid sidebar html code:' + sidebarHtml, completeSidebarUrl));
       return;
     }
 
@@ -77,7 +78,8 @@ export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameEle
     if (!FORCE_SIDEBAR_URL && wrongSidebarVersion) {
       logging.warn(`Found sidebar version ${formatVersion(sidebarVersion)} ` +
         `(default minimumSidebarVersion=${formatVersion(DEFAULT_MINIMUM_SIDEBAR_VERSION)}, configured minimumSidebarVersion=${formatVersion(config.minimumSidebarVersion)})`);
-      onSidebarLoaded(new NoValidSidebarError('sidebarVersionIsBelowMinimum', 'Sidebar version is smaller than minimumSidebarVersion'));
+      onSidebarLoaded(new NoValidSidebarError('sidebarVersionIsBelowMinimum',
+        'Sidebar version is smaller than minimumSidebarVersion', completeSidebarUrl));
       return;
     }
 

@@ -17,45 +17,45 @@
 import {
   $,
   $byId,
-  cleanIFrameContainerIfNeeded,
+  cleanIFrameContainerIfNeeded, combinePathParts,
   getDefaultServerAddress,
   isHttpUrl,
   parseVersionNumberWithFallback,
   setDisplayed,
   startsWithAnyOf, TimeoutWatcher,
-} from "./utils/utils";
+} from './utils/utils';
 import {
   LoadSidebarError,
   loadSidebarIntoIFrame,
   LoadSidebarProps
-} from "./acrolinx-sidebar-integration/utils/sidebar-loader";
-import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from "./proxies/proxy-acrolinx-plugin";
+} from './acrolinx-sidebar-integration/utils/sidebar-loader';
+import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from './proxies/proxy-acrolinx-plugin';
 import {
   URL_PREFIXES_NEEDING_MESSAGE_ADAPTER, FORCE_MESSAGE_ADAPTER, REQUEST_INIT_TIMEOUT_MS,
   SERVER_SELECTOR_VERSION
-} from "./constants";
-import {createSidebarMessageProxy} from "./acrolinx-sidebar-integration/message-adapter/message-adapter";
-import {ProxyAcrolinxSidebar} from "./proxies/proxy-acrolinx-sidebar";
+} from './constants';
+import {createSidebarMessageProxy} from './acrolinx-sidebar-integration/message-adapter/message-adapter';
+import {ProxyAcrolinxSidebar} from './proxies/proxy-acrolinx-sidebar';
 import {
   AcrolinxPlugin,
   InitParameters,
   OpenWindowParameters
-} from "./acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
-import {getTranslation, setLanguage} from "./localization";
-import {sanitizeAndValidateServerAddress} from "./utils/validation";
+} from './acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces';
+import {getTranslation, setLanguage} from './localization';
+import {sanitizeAndValidateServerAddress} from './utils/validation';
 
 import {render} from 'preact';
-import {aboutComponent} from "./components/about";
-import {extendClientComponents, hackInitParameters} from "./init-parameters";
-import {focusAddressInputField, severSelectorFormComponent} from "./components/server-selector-form";
-import {errorMessageComponent, ErrorMessageProps} from "./components/error-message";
+import {aboutComponent} from './components/about';
+import {extendClientComponents, hackInitParameters} from './init-parameters';
+import {focusAddressInputField, severSelectorFormComponent} from './components/server-selector-form';
+import {errorMessageComponent, ErrorMessageProps} from './components/error-message';
 import {
   getAcrolinxSimpleStorage,
   initAcrolinxStorage,
   injectAcrolinxStorageIntoSidebarIfAvailable
-} from "./utils/acrolinx-storage";
-import {initDebug} from "./utils/debug";
-import * as logging from "./utils/logging";
+} from './utils/acrolinx-storage';
+import {initDebug} from './utils/debug';
+import * as logging from './utils/logging';
 
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
 
@@ -134,11 +134,11 @@ export function startMainController(opts: MainControllerOpts = {}) {
   });
 
   function openLogFile() {
-    logging.log("clicked openLogFile");
+    logging.log('clicked openLogFile');
     if (acrolinxPlugin.openLogFile) {
       acrolinxPlugin.openLogFile();
     } else {
-      logging.error("acrolinxPlugin.openLogFile is not defined!");
+      logging.error('acrolinxPlugin.openLogFile is not defined!');
     }
   }
 
@@ -176,7 +176,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
     sidebarIFrameElement = document.createElement('iframe') as HTMLIFrameElement;
     sidebarContainer.appendChild(sidebarIFrameElement);
 
-    const sidebarUrl = serverAddress + '/sidebar/v14/';
+    const sidebarUrl = combinePathParts(serverAddress, '/sidebar/v14/');
 
     const loadSidebarProps: LoadSidebarProps = {
       sidebarUrl, useMessageAdapter,
@@ -233,8 +233,11 @@ export function startMainController(opts: MainControllerOpts = {}) {
     }
   }
 
-  function simpleErrorMessage(messageHtml: string): ErrorMessageProps {
-    return {messageHtml: {html: messageHtml}};
+  function simpleErrorMessage(messageHtml: string, details?: object): ErrorMessageProps {
+    return {
+      messageHtml: {html: messageHtml},
+      detailedMessage: details && JSON.stringify(details)
+    };
   }
 
   function getSidebarLoadErrorMessage(serverAddress: string, error: LoadSidebarError): ErrorMessageProps {
@@ -242,11 +245,14 @@ export function startMainController(opts: MainControllerOpts = {}) {
     switch (error.acrolinxErrorCode) {
       case 'httpErrorStatus':
       case 'noSidebar':
-        return simpleErrorMessage(errorMessages.serverIsNoAcrolinxServerOrHasNoSidebar);
+        return simpleErrorMessage(errorMessages.serverIsNoAcrolinxServerOrHasNoSidebar, error);
       case 'sidebarVersionIsBelowMinimum':
-        return simpleErrorMessage(errorMessages.outdatedServer);
+        return simpleErrorMessage(errorMessages.outdatedServer, error);
       default:
-        return simpleErrorMessage(isHttpUrl(serverAddress) ? errorMessages.serverConnectionProblemHttp : errorMessages.serverConnectionProblemHttps);
+        const errorMessage = isHttpUrl(serverAddress)
+          ? errorMessages.serverConnectionProblemHttp
+          : errorMessages.serverConnectionProblemHttps;
+        return simpleErrorMessage(errorMessage, error);
     }
   }
 

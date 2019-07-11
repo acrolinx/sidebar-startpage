@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import * as logging from "./logging";
+import * as logging from './logging';
 
 export function $(selector: string): HTMLElement | undefined {
   return document.querySelector(selector) as HTMLElement;
@@ -41,38 +41,38 @@ export function startsWithAnyOf(haystack: string, needles: string[]) {
 
 // Inspired by https://gist.github.com/dperini/729294
 const SERVER_ADDRESS_REGEXP = new RegExp(
-  "^" +
+  '^' +
   // protocol identifier
-  "(?:(?:https?)://)" +
+  '(?:(?:https?)://)' +
   // user:pass authentication
-  "(?:\\S+(?::\\S*)?@)?" +
-  "(?:" +
+  '(?:\\S+(?::\\S*)?@)?' +
+  '(?:' +
   // IP address exclusion
   // private & local networks
-  "(?!(?:10|127)(?:\\.\\d{1,3}){3})" +
-  "(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})" +
-  "(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})" +
+  '(?!(?:10|127)(?:\\.\\d{1,3}){3})' +
+  '(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})' +
+  '(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})' +
   // IP address dotted notation octets
   // excludes loopback network 0.0.0.0
   // excludes reserved space >= 224.0.0.0
   // excludes network & broacast addresses
   // (first & last IP address of each class)
-  "(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])" +
-  "(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}" +
-  "(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))" +
-  "|" +
+  '(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])' +
+  '(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}' +
+  '(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))' +
+  '|' +
   // host name
-  "(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)" +
+  '(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)' +
   // domain name
-  "(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*" +
+  '(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*' +
   // TLD identifier
-  "(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))?" +
-  ")" +
+  '(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))?' +
+  ')' +
   // port number
-  "(?::\\d{2,5})?" +
+  '(?::\\d{2,5})?' +
   // resource path
-  "(?:[/?#]\\S*)?" +
-  "$", "i"
+  '(?:[/?#]\\S*)?' +
+  '$', 'i'
 );
 
 
@@ -113,13 +113,19 @@ export function sanitizeServerAddress(serverAddressArg: string, opts: SanitizeOp
   }
 }
 
+export function combinePathParts(part1: string, part2: string) {
+  return part1.replace(/\/$/, '')
+    + '/'
+    + part2.replace(/^\//, '');
+}
+
 export function isHttpsRequired(opts: SanitizeOpts) {
   return opts.enforceHTTPS || opts.windowLocation.protocol == 'https:';
 }
 
 export function getDefaultServerAddress(location: WindowLocation) {
   if (isValidServerProtocol(location.protocol)) {
-    return location.protocol + "//" + location.hostname + (location.port ? ':' + location.port : '');
+    return location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
   } else {
     return '';
   }
@@ -143,7 +149,7 @@ function includes(haystack: string, needle: string) {
 
 export function getCorsOrigin() {
   const location = window.location;
-  return location.protocol + "//" + location.hostname + (location.port ? ':' + location.port : '');
+  return location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 }
 
 export function sortBy<T>(array: T[], getSortKey: (el: T) => string) {

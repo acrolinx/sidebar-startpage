@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import {assert} from "chai";
+import {assert} from 'chai';
 import {isCorsWithCredentialsNeeded} from '../../src/acrolinx-sidebar-integration/utils/utils';
-import {isVersionGreaterEqual, parseVersionNumberWithFallback} from "../../src/utils/utils";
+import {combinePathParts, isVersionGreaterEqual, parseVersionNumberWithFallback} from '../../src/utils/utils';
 
 describe('utils', () => {
   describe('isVersionGreaterEqual', () => {
@@ -110,4 +110,10 @@ describe('utils', () => {
     });
   });
 
+  it('combinePathParts ', () => {
+    assert.equal(combinePathParts('http://bla', 'path/more'), 'http://bla/path/more');
+    assert.equal(combinePathParts('http://bla/', 'path/more'), 'http://bla/path/more');
+    assert.equal(combinePathParts('http://bla', '/path/more'), 'http://bla/path/more');
+    assert.equal(combinePathParts('http://bla/', '/path/more'), 'http://bla/path/more');
+  });
 });

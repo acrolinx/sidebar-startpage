@@ -24,7 +24,7 @@ export function isCorsWithCredentialsNeeded(url: string) {
 type FetchErrorCode = 'connectionError' | 'timeout' | 'httpErrorStatus';
 
 export class FetchError extends Error {
-  constructor(public readonly acrolinxErrorCode: FetchErrorCode, message: string) {
+  constructor(public readonly acrolinxErrorCode: FetchErrorCode, message: string, public url: string) {
     super(message);
   }
 }
@@ -42,7 +42,7 @@ export function fetch(url: string, opts: FetchOptions, callback: (responseTextOr
       if (request.status >= 200 && request.status < 400) {
         callback(request.responseText);
       } else {
-        callback(new FetchError('httpErrorStatus', `Error while loading ${url}. Status = ${request.status}`));
+        callback(new FetchError('httpErrorStatus', `Error while loading ${url}. Status = ${request.status}`, url));
       }
     };
 
@@ -52,17 +52,17 @@ export function fetch(url: string, opts: FetchOptions, callback: (responseTextOr
 
 
     request.ontimeout = () => {
-      callback(new FetchError('timeout', `Timeout while loading ${url}.`));
+      callback(new FetchError('timeout', `Timeout while loading ${url}.`, url));
     };
 
     request.onerror = () => {
-      callback(new FetchError('connectionError', `Error while loading ${url}.`));
+      callback(new FetchError('connectionError', `Error while loading ${url}.`, url));
     };
 
     request.withCredentials = isCorsWithCredentialsNeeded(url);
 
     request.send();
   } catch (error) {
-    callback(new FetchError('connectionError', error.message));
+    callback(new FetchError('connectionError', error.message, url));
   }
 }
