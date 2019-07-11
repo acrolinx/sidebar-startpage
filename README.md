@@ -10,6 +10,8 @@ A container component for Acrolinx integrations that loads the Acrolinx sidebar.
 * browsersync - starts a webserver which serves the sidebar startpage at http://localhost:3000/app/
 * dev - starts lessWatch, tscWatch, watchify and browsersync in parallel
 
+To run an example application, using the current startpage, open http://localhost:3001/examples/ .
+
 ## Run the browser-tests in a real browser
 
     npm run tscWatch
