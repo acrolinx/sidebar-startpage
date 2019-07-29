@@ -2,11 +2,16 @@
   font-size: 13px;
   margin-top: 1em;
   font-weight: 400;
-  padding: 15px;
   color: #fff;
   background-color: @acroRed;
 
+  padding: 15px 0;
+  &.hasDetailsSection {
+    padding-bottom: 0;
+  }
+
   .errorMessageMain {
+    margin: 0 @horizontalPageMargin;
   }
 
   .detailedErrorSection {
@@ -15,6 +20,9 @@
     .detailsButton {
       .commonButton();
       .user-select(none);
+      background-color: @acroRed;
+      border: none;
+      margin: 5px 0 10px 0;
       display: inline-block;
       color: #ffffff;
       text-align: right;
@@ -26,9 +34,13 @@
     }
 
     .detailedErrorMessage {
+      padding: 15px @horizontalPageMargin;
+      background: white;
+      color: @text-dark-grey;
       text-align: left;
       white-space: pre-line;
       word-wrap: break-word;
+      border-bottom: 1px solid @border-grey;
     }
 
   }

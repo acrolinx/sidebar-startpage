@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import {Component} from "preact";
-import {createPreactFactory, div} from "../utils/preact";
-import {getTranslation} from "../localization";
+import {Component} from 'preact';
+import {button, classNames, createPreactFactory, div} from '../utils/preact';
+import {getTranslation} from '../localization';
 
 interface HtmlWrapper {
   html: string;
@@ -37,7 +37,8 @@ class ErrorMessageComponent extends Component<ErrorMessageProps, ErrorMessageSta
     showDetails: false
   };
 
-  toggleErrorDetails = () => {
+  toggleErrorDetails = (event: MouseEvent) => {
+    event.preventDefault();
     this.setState({
       showDetails: !this.state.showDetails
     });
@@ -54,12 +55,12 @@ class ErrorMessageComponent extends Component<ErrorMessageProps, ErrorMessageSta
 
   render() {
     const props = this.props;
-    return div({className: 'errorMessage', },
-      div({className: "errorMessageMain", dangerouslySetInnerHTML: {__html: props.messageHtml.html}}),
+    return div({className: classNames('errorMessage', {hasDetailsSection: !!this.props.detailedMessage})},
+      div({className: 'errorMessageMain', dangerouslySetInnerHTML: {__html: props.messageHtml.html}}),
       this.props.detailedMessage ? div({
           className: 'detailedErrorSection'
         },
-        div({className: 'detailsButton', onClick: this.toggleErrorDetails},
+        button({className: 'detailsButton', onClick: this.toggleErrorDetails},
           getTranslation().serverSelector.button.details),
         this.state.showDetails ? div({
           className: 'detailedErrorMessage',
