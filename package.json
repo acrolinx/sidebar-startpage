@@ -62,7 +62,7 @@
     "hashcat": "^0.4.1",
     "inliner": "1.13.1",
     "jquery": "^3.4.1",
-    "karma": "^3.0.0",
+    "karma": "^4.2.0",
     "karma-browserify": "^5.1.1",
     "karma-browserstack-launcher": "^1.4.0",
     "karma-chrome-launcher": "^2.2.0",
