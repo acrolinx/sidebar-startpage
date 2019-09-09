@@ -21,7 +21,7 @@ import {
   CheckOptions,
   Check,
   InvalidDocumentPart,
-  CheckedDocumentRange
+  CheckedDocumentRange, DocumentContentWithReferences
 } from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
 
 
@@ -64,7 +64,7 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
     }
   }
 
-  checkGlobal(documentContent: string, options: CheckOptions): Check {
+  checkGlobal(documentContent: string | DocumentContentWithReferences, options: CheckOptions): Check {
     return this.acrolinxSidebar.checkGlobal(documentContent, options);
   }
 
