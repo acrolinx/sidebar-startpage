@@ -20,7 +20,7 @@ import {
   CheckOptions,
   Check,
   InvalidDocumentPart,
-  CheckedDocumentRange, SidebarConfiguration, DocumentContentWithReferences
+  CheckedDocumentRange, SidebarConfiguration
 } from "../acrolinx-libs/plugin-interfaces";
 
 // Functions are not cloneable and don't work with postMessage.
@@ -57,7 +57,7 @@ export function createSidebarMessageProxy(sidebarWindow: Window) : AcrolinxSideb
     },
     configure (_initParameters: SidebarConfiguration): void {
     },
-    checkGlobal(_documentContent: string | DocumentContentWithReferences, _options: CheckOptions): Check {
+    checkGlobal(_documentContent: string, _options: CheckOptions): Check {
       return {checkId: 'dummyCheckId'};
     },
     onGlobalCheckRejected(): void {
