@@ -17,7 +17,7 @@
 import {Component} from 'preact';
 import {a, createPreactFactory} from "../utils/preact";
 import {getLocale, getTranslation} from "../localization";
-import {InitParameters} from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
+import {InitParameters} from "@acrolinx/sidebar-interface";
 
 export type OpenWindowFunction = (url: string) => void;
 

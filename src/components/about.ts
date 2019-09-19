@@ -22,7 +22,7 @@ import {
   InitParameters,
   SoftwareComponent,
   SoftwareComponentCategory
-} from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
+} from "@acrolinx/sidebar-interface";
 import {getCorsOrigin, sortBy} from "../utils/utils";
 import {OpenWindowFunction} from "./external-text-link";
 import {helpLink} from "./help-link";

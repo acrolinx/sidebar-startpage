@@ -20,9 +20,8 @@ import {
   AcrolinxPluginConfiguration,
   CheckResult,
   MatchWithReplacement,
-  DownloadInfo,
   OpenWindowParameters, RequestGlobalCheckOptions,
-} from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
+} from "@acrolinx/sidebar-interface";
 import * as logging from "../utils/logging";
 
 export const POLL_FOR_PLUGIN_INTERVAL_MS = 10;
@@ -74,10 +73,6 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
 
   replaceRanges(checkId: string, matchesWithReplacement: MatchWithReplacement[]) {
     this.props.acrolinxPlugin.replaceRanges(checkId, matchesWithReplacement);
-  }
-
-  download(download: DownloadInfo) {
-    this.props.acrolinxPlugin.download(download);
   }
 
   openWindow(opts: OpenWindowParameters) {

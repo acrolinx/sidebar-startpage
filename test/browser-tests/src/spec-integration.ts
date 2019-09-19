@@ -24,14 +24,13 @@ import {
   AcrolinxPluginConfiguration,
   AcrolinxSidebar,
   CheckResult,
-  DownloadInfo,
   InitParameters,
   InitResult,
   Match,
   MatchWithReplacement,
   SoftwareComponent,
   SoftwareComponentCategory
-} from "../../../src/acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
+} from '@acrolinx/sidebar-interface';
 import {assertExistCount, getExistingElement, simulateClick, waitUntilSuccess} from "./test-utils/test-utils";
 import {POLL_FOR_PLUGIN_INTERVAL_MS} from "../../../src/proxies/proxy-acrolinx-plugin";
 import {getTranslation} from "../../../src/localization";
@@ -103,9 +102,6 @@ describe('integration-tests', function () {
       },
 
       replaceRanges(_checkId: string, _matchesWithReplacements: MatchWithReplacement[]) {
-      },
-
-      download(_downloadInfo: DownloadInfo) {
       },
 
       openWindow,

@@ -21,7 +21,7 @@ import {
   Check,
   InvalidDocumentPart,
   CheckedDocumentRange, SidebarConfiguration
-} from "../acrolinx-libs/plugin-interfaces";
+} from '@acrolinx/sidebar-interface';
 
 // Functions are not cloneable and don't work with postMessage.
 function removeFunctions(object: any) {

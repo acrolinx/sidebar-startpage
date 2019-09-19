@@ -17,7 +17,7 @@
 import {
   InitParameters, SoftwareComponent,
   SoftwareComponentCategory
-} from './acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces';
+} from '@acrolinx/sidebar-interface';
 import {isCorsWithCredentialsNeeded} from './acrolinx-sidebar-integration/utils/utils';
 import {SERVER_SELECTOR_VERSION} from './constants';
 import {getTranslation} from './localization';

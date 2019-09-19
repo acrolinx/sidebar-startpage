@@ -83,5 +83,8 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@acrolinx/sidebar-interface": "^14.16.1"
   }
 }

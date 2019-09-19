@@ -40,7 +40,7 @@ import {
   AcrolinxPlugin,
   InitParameters,
   OpenWindowParameters
-} from './acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces';
+} from '@acrolinx/sidebar-interface';
 import {getTranslation, setLanguage} from './localization';
 import {sanitizeAndValidateServerAddress} from './utils/validation';
 

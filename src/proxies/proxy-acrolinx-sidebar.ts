@@ -22,7 +22,7 @@ import {
   Check,
   InvalidDocumentPart,
   CheckedDocumentRange
-} from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
+} from "@acrolinx/sidebar-interface";
 
 
 export class ProxyAcrolinxSidebar implements AcrolinxSidebar {

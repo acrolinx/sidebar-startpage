@@ -21,7 +21,7 @@ import {isHttpsRequired} from "../utils/utils";
 import {externalTextLink, OpenWindowFunction} from "./external-text-link";
 import {errorMessageComponent, ErrorMessageProps} from "./error-message";
 import {helpLink} from "./help-link";
-import {InitParameters} from "../acrolinx-sidebar-integration/acrolinx-libs/plugin-interfaces";
+import {InitParameters} from "@acrolinx/sidebar-interface";
 
 interface SeverSelectorFormProps {
   onSubmit: (serverAddress: string) => void;
