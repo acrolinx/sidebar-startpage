@@ -3,7 +3,7 @@
 
 var basicConf = {
   sidebarContainerId: 'sidebarContainer',
-  //See: https://acrolinx.github.io/sidebar-sdk-js/pluginDoc/interfaces/_acrolinx_libs_plugin_interfaces_.initparameters.html
+  //See: https://acrolinx.github.io/sidebar-interface/pluginDoc/interfaces/_index_.initparameters.html
   serverAddress: 'https://test-next-ssl.acrolinx.com/',
   //You'll get the clientSignature for your integration after a successful certification meeting.
   //See: https://support.acrolinx.com/hc/en-us/articles/205687652-Getting-Started-with-Custom-Integrations
