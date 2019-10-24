@@ -6,7 +6,7 @@
     <authors>Acrolinx</authors>
     <owners>Acrolinx</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>https://github.com/acrolinx/sidebar-startpage/blob/master/LICENSE</licenseUrl>
+    <license type="expression">Apache-2.0</license>
     <projectUrl>https://github.com/acrolinx/sidebar-startpage</projectUrl>
     <description>Container component for Acrolinx integrations that loads the Acrolinx sidebar; packaged as a resource DLL</description>
     <copyright>Copyright © Acrolinx 2017</copyright>
