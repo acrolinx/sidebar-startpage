@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-import {hackInitParameters} from '../../src/init-parameters';
+import {getClientComponentFallbackId, hackInitParameters, sanitizeClientComponent} from '../../src/init-parameters';
 import {assert} from 'chai';
+import * as _ from 'lodash';
+import {assertDeepEqual} from '../browser-tests/src/test-utils/test-utils';
 
 
 describe('init-parameters', () => {
@@ -34,6 +36,70 @@ describe('init-parameters', () => {
         showServerSelector: true
       }, DUMMY_SERVER_ADDRESS);
       assert.isUndefined(result.accessToken);
+    });
+  });
+
+  describe('sanitizeClientComponents', () => {
+    const clientComponent = {
+      id: 'clientId',
+      name: 'clientName',
+      version: '1.2.3.0',
+      category: 'MAIN'
+    };
+
+    it('keep existing attributes', () => {
+      assertDeepEqual(sanitizeClientComponent(clientComponent, 0), clientComponent);
+    });
+
+    it('use name as id fallback', () => {
+      assertDeepEqual(
+        sanitizeClientComponent(_.omit(clientComponent, 'id'), 0).id,
+        clientComponent.name
+      );
+    });
+
+    it('use index based id fallback fallback', () => {
+      assertDeepEqual(
+        sanitizeClientComponent(_.omit(clientComponent, 'id', 'name'), 23).id,
+        'unknown.client.component.id.with.index.23'
+      );
+    });
+
+    it('version fallback', () => {
+      assertDeepEqual(
+        sanitizeClientComponent(_.omit(clientComponent, 'version'), 0).version,
+        '0.0.0.0'
+      );
+    });
+
+    it('use id as name fallback', () => {
+      assertDeepEqual(
+        sanitizeClientComponent(_.omit(clientComponent, 'name'), 0).name,
+        clientComponent.id
+      );
+    });
+  });
+
+
+  describe('getClientComponentFallbackId', () => {
+    it('replace all non alphabet|number by a dot', () => {
+      assert.equal(getClientComponentFallbackId('word1!WORD2', 0), 'word1.WORD2');
+      assert.equal(getClientComponentFallbackId('wordÜÖ!"§$%&/()123', 0), 'word.123');
+    });
+
+    it('prevent duplicated dots', () => {
+      assert.equal(getClientComponentFallbackId('word1!!WORD2', 0), 'word1.WORD2');
+      assert.equal(getClientComponentFallbackId('word1.!.WORD2', 0), 'word1.WORD2');
+      assert.equal(getClientComponentFallbackId('word1  more!&word2', 0), 'word1.more.word2');
+    });
+
+    it('return index id as fallback-fallback', () => {
+      const expectedFallbackFallback = 'unknown.client.component.id.with.index.0';
+      assert.equal(getClientComponentFallbackId(undefined, 0), expectedFallbackFallback);
+      assert.equal(getClientComponentFallbackId(null, 0), expectedFallbackFallback);
+      assert.equal(getClientComponentFallbackId('', 0), expectedFallbackFallback);
+      assert.equal(getClientComponentFallbackId(' ', 0), expectedFallbackFallback);
+      assert.equal(getClientComponentFallbackId(' ÜÖ !"§$ %& /() ', 0), expectedFallbackFallback);
     });
   });
 });

@@ -48,3 +48,19 @@ export function extendClientComponents(clientComponents?: SoftwareComponent[]): 
     category: SoftwareComponentCategory.DEFAULT
   });
 }
+
+export function getClientComponentFallbackId(name: string | undefined | null, index: number): string {
+  const idFromName = (name || '').replace(/[^a-zA-Z0-9]+/g, '.');
+  return (idFromName === '.' || idFromName === '')
+    ? 'unknown.client.component.id.with.index.' + index
+    : idFromName;
+}
+
+export function sanitizeClientComponent(clientComponent: Partial<SoftwareComponent>, index: number): SoftwareComponent {
+  return {
+    ...clientComponent,
+    id: clientComponent.id || getClientComponentFallbackId(clientComponent.name, index),
+    name: clientComponent.name || clientComponent.id || 'unknown client component name',
+    version: clientComponent.version || '0.0.0.0',
+  };
+}

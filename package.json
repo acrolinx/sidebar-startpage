@@ -51,6 +51,7 @@
   "devDependencies": {
     "@types/chai": "4.1.4",
     "@types/jquery": "3.3.6",
+    "@types/lodash": "^4.14.149",
     "@types/mocha": "5.2.5",
     "@types/sinon": "5.0.2",
     "browser-sync": "^2.26.7",

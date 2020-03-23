@@ -15,6 +15,7 @@
  */
 
 import {Component} from "preact";
+import {sanitizeClientComponent} from '../init-parameters';
 import {forceRedrawInWebkit} from '../utils/hacks';
 import {button, classNames, createPreactFactory, div, h1, span} from "../utils/preact";
 import {getTranslation} from "../localization";
@@ -92,7 +93,8 @@ class AboutComponent extends Component<AboutProps, {}> {
   render() {
     const t = getTranslation().serverSelector;
     const props = this.props;
-    const allComponentsSorted = sortBy(this.props.clientComponents.concat(getAdditionalComponents(props.logFileLocation)), getSortKey);
+    const saneClientComponents = this.props.clientComponents.map(sanitizeClientComponent);
+    const allComponentsSorted = sortBy(saneClientComponents.concat(getAdditionalComponents(props.logFileLocation)), getSortKey);
     return div({className: 'aboutComponent'},
       div({
         className: classNames('aboutHeader'),
