@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Component} from 'preact';
+import {Component, ComponentConstructor} from 'preact';
 import {createPreactFactory, h1, div, button, form, input, span, a} from "../utils/preact";
 import {getLocale, getTranslation} from "../localization";
 import {isHttpsRequired} from "../utils/utils";
@@ -107,7 +107,7 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
   }
 }
 
-export const severSelectorFormComponent = createPreactFactory(SeverSelectorFormComponent);
+export const severSelectorFormComponent = createPreactFactory(SeverSelectorFormComponent as ComponentConstructor<SeverSelectorFormProps | undefined, {}>);
 
 export function focusAddressInputField(el: HTMLElement) {
   const addressFieldElement = el.getElementsByClassName(SERVER_ADDRESS_INPUT_FIELD_CLASS).item(0) as HTMLElement;

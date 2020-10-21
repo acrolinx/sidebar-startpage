@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Component} from "preact";
+import {Component, ComponentConstructor} from "preact";
 import {sanitizeClientComponent} from '../init-parameters';
 import {forceRedrawInWebkit} from '../utils/hacks';
 import {button, classNames, createPreactFactory, div, h1, span} from "../utils/preact";
@@ -121,4 +121,4 @@ class AboutComponent extends Component<AboutProps, {}> {
   }
 }
 
-export const aboutComponent = createPreactFactory(AboutComponent);
+export const aboutComponent = createPreactFactory(AboutComponent as ComponentConstructor<AboutProps | undefined, {}>);

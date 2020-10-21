@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Component} from 'preact';
+import {Component, ComponentConstructor} from 'preact';
 import {a, createPreactFactory} from "../utils/preact";
 import {getLocale, getTranslation} from "../localization";
 import {InitParameters} from "@acrolinx/sidebar-interface";
@@ -51,4 +51,4 @@ class HelpLink extends Component<HelpLinkProps, {}> {
   }
 }
 
-export const helpLink = createPreactFactory(HelpLink);
+export const helpLink = createPreactFactory(HelpLink as ComponentConstructor<HelpLinkProps | undefined, {}>);

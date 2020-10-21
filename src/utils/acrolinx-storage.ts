@@ -97,7 +97,7 @@ function getLocalStorageSafe(): Storage | undefined {
 }
 
 function getAcrolinxSimpleStorageAtInit(): AcrolinxSimpleStorage {
-  const pimpedWindow = window as WindowWithAcrolinxStorage;
+  const pimpedWindow = window as unknown as WindowWithAcrolinxStorage;
   return getAcrolinxSimpleStorageAtInitInternal(pimpedWindow.acrolinxStorage, getLocalStorageSafe());
 }
 

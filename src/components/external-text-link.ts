@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Component} from 'preact';
+import {Component, ComponentConstructor} from 'preact';
 import {createPreactFactory, a} from "../utils/preact";
 
 export type OpenWindowFunction = (url: string) => void;
@@ -38,4 +38,4 @@ class ExternalTextLink extends Component<ExternalTextLinkProps, {}> {
   }
 }
 
-export const externalTextLink = createPreactFactory(ExternalTextLink);
+export const externalTextLink = createPreactFactory(ExternalTextLink as ComponentConstructor<ExternalTextLinkProps | undefined, {}>);

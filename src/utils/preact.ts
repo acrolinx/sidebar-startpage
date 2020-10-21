@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {h, ComponentConstructor} from 'preact';
+import {h, ComponentConstructor, JSX} from 'preact';
 
 type JsxFactory<PropsType> = (params?: PropsType, ...children: (JSX.Element | JSX.Element[] | string)[]) => JSX.Element;
 

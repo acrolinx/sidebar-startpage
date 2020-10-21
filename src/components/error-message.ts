@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Component} from 'preact';
+import {Component, ComponentConstructor} from 'preact';
 import {button, classNames, createPreactFactory, div} from '../utils/preact';
 import {getTranslation} from '../localization';
 
@@ -48,9 +48,9 @@ class ErrorMessageComponent extends Component<ErrorMessageProps, ErrorMessageSta
     event.preventDefault();
     const selection = window.getSelection();
     const range = document.createRange();
-    range.selectNodeContents(event.srcElement!);
-    selection.removeAllRanges();
-    selection.addRange(range);
+    range.selectNodeContents(<Node>event.target!);
+    selection?.removeAllRanges();
+    selection?.addRange(range);
   }
 
   render() {
@@ -69,4 +69,4 @@ class ErrorMessageComponent extends Component<ErrorMessageProps, ErrorMessageSta
   }
 }
 
-export const errorMessageComponent = createPreactFactory(ErrorMessageComponent);
+export const errorMessageComponent = createPreactFactory(ErrorMessageComponent as ComponentConstructor<ErrorMessageProps | undefined, ErrorMessageState>);
