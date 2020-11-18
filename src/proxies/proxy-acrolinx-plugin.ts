@@ -40,7 +40,7 @@ export interface ProxyAcrolinxPluginProps {
  */
 export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
 
-  constructor(private props: ProxyAcrolinxPluginProps) {
+  constructor(private readonly props: ProxyAcrolinxPluginProps) {
   }
 
   requestInit() {

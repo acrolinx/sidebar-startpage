@@ -24,7 +24,7 @@ export interface Result<T, E = Error> {
 }
 
 export class Ok<T, E> implements Result<T, E> {
-  constructor(private value: T) {
+  constructor(private readonly value: T) {
   }
 
   match<MR>(matcher: ResultMatcher<T, E, MR>): MR {
@@ -33,7 +33,7 @@ export class Ok<T, E> implements Result<T, E> {
 }
 
 export class Err<T, E> implements Result<T, E> {
-  constructor(private error: E) {
+  constructor(private readonly error: E) {
   }
 
   match<MR>(matcher: ResultMatcher<T, E, MR>): MR {

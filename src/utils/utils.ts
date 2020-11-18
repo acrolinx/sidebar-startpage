@@ -120,7 +120,7 @@ export function combinePathParts(part1: string, part2: string) {
 }
 
 export function isHttpsRequired(opts: SanitizeOpts) {
-  return opts.enforceHTTPS || opts.windowLocation.protocol == 'https:';
+  return opts.enforceHTTPS || opts.windowLocation.protocol === 'https:';
 }
 
 export function getDefaultServerAddress(location: WindowLocation) {

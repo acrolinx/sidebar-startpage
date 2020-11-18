@@ -142,12 +142,12 @@ export function startMainController(opts: MainControllerOpts = {}) {
     }
   }
 
-  function openWindow(opts: OpenWindowParameters) {
+  function openWindow(options: OpenWindowParameters) {
     if (acrolinxPlugin && acrolinxPlugin.openWindow &&
       !(initParametersFromPlugin && initParametersFromPlugin.openWindowDirectly)) {
-      acrolinxPlugin.openWindow(opts);
+      acrolinxPlugin.openWindow(options);
     } else {
-      window.open(opts.url);
+      window.open(options.url);
     }
   }
 
@@ -169,14 +169,14 @@ export function startMainController(opts: MainControllerOpts = {}) {
     });
   }
 
-  function tryToLoadSidebar(serverAddress: string) {
-    logging.log(`Try to load sidebar from "${serverAddress}"`);
+  function tryToLoadSidebar(acrolinxServerAddress: string) {
+    logging.log(`Try to load sidebar from "${acrolinxServerAddress}"`);
 
     sidebarContainer.innerHTML = '';
     sidebarIFrameElement = document.createElement('iframe') as HTMLIFrameElement;
     sidebarContainer.appendChild(sidebarIFrameElement);
 
-    const sidebarUrl = combinePathParts(serverAddress, '/sidebar/v14/');
+    const sidebarUrl = combinePathParts(acrolinxServerAddress, '/sidebar/v14/');
 
     const loadSidebarProps: LoadSidebarProps = {
       sidebarUrl, useMessageAdapter,
@@ -194,12 +194,12 @@ export function startMainController(opts: MainControllerOpts = {}) {
     loadSidebarIntoIFrame(loadSidebarProps, sidebarIFrameElement, (error) => {
       if (error) {
         renderServerSelectorForm({isConnectButtonDisabled: false});
-        onSidebarLoadError(serverAddress, error);
+        onSidebarLoadError(acrolinxServerAddress, error);
         return;
       }
 
       if (initParametersFromPlugin.showServerSelector) {
-        getAcrolinxSimpleStorage().setItem(SERVER_ADDRESS_KEY, serverAddress);
+        getAcrolinxSimpleStorage().setItem(SERVER_ADDRESS_KEY, acrolinxServerAddress);
       }
 
       showPage(PageId.SIDEBAR_CONTAINER);
@@ -218,7 +218,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
           onRequestInit();
         },
         acrolinxPlugin,
-        serverAddress,
+        serverAddress: acrolinxServerAddress,
         showServerSelector,
         openWindow
       });
@@ -240,7 +240,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
     };
   }
 
-  function getSidebarLoadErrorMessage(serverAddress: string, error: LoadSidebarError): ErrorMessageProps {
+  function getSidebarLoadErrorMessage(currentServerAddress: string, error: LoadSidebarError): ErrorMessageProps {
     const errorMessages = getTranslation().serverSelector.message;
     switch (error.acrolinxErrorCode) {
       case 'httpErrorStatus':
@@ -249,15 +249,15 @@ export function startMainController(opts: MainControllerOpts = {}) {
       case 'sidebarVersionIsBelowMinimum':
         return simpleErrorMessage(errorMessages.outdatedServer, error);
       default:
-        const errorMessage = isHttpUrl(serverAddress)
+        const errorMessage = isHttpUrl(currentServerAddress)
           ? errorMessages.serverConnectionProblemHttp
           : errorMessages.serverConnectionProblemHttps;
         return simpleErrorMessage(errorMessage, error);
     }
   }
 
-  function onSidebarLoadError(serverAddress: string, error: LoadSidebarError) {
-    showSidebarLoadError(getSidebarLoadErrorMessage(serverAddress, error));
+  function onSidebarLoadError(currentServerAddress: string, error: LoadSidebarError) {
+    showSidebarLoadError(getSidebarLoadErrorMessage(currentServerAddress, error));
   }
 
   function showSidebarLoadError(errorMessage: ErrorMessageProps) {
@@ -272,7 +272,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
     const divs = appElement.childNodes;
     for (let i = 0; i < divs.length; ++i) {
       const div = divs[i] as HTMLElement;
-      setDisplayed(div, page == div.id);
+      setDisplayed(div, page === div.id);
     }
     selectedPage = page;
   }

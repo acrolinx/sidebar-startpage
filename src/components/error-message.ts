@@ -53,6 +53,13 @@ class ErrorMessageComponent extends Component<ErrorMessageProps, ErrorMessageSta
     selection?.addRange(range);
   }
 
+  getErrorDetailsMessage() {
+    return this.state.showDetails ? div({
+      className: 'detailedErrorMessage',
+      onClick: this.selectDetailMessage,
+    }, this.props.detailedMessage!) : [];
+  }
+
   render() {
     const props = this.props;
     return div({className: classNames('errorMessage', {hasDetailsSection: !!this.props.detailedMessage})},
@@ -62,11 +69,9 @@ class ErrorMessageComponent extends Component<ErrorMessageProps, ErrorMessageSta
         },
         button({className: 'detailsButton', onClick: this.toggleErrorDetails},
           getTranslation().serverSelector.button.details),
-        this.state.showDetails ? div({
-          className: 'detailedErrorMessage',
-          onClick: this.selectDetailMessage,
-        }, this.props.detailedMessage) : []) : []);
+        this.getErrorDetailsMessage()) : []);
   }
+
 }
 
 export const errorMessageComponent = createPreactFactory(ErrorMessageComponent as ComponentConstructor<ErrorMessageProps | undefined, ErrorMessageState>);

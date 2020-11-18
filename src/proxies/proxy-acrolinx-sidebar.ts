@@ -28,9 +28,9 @@ import {
 export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
   private _acrolinxSidebar: AcrolinxSidebar;
   private _serverAddress: string;
-  private configureQueue: SidebarConfiguration[] = [];
+  private readonly configureQueue: SidebarConfiguration[] = [];
 
-  constructor(private initListener: (initParameters: InitParameters) => void) {
+  constructor(private readonly initListener: (initParameters: InitParameters) => void) {
   }
 
   get serverAddress(): string {
