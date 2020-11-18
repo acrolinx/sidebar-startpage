@@ -1,0 +1,27 @@
+stages:
+  - verify
+  - build
+  - test
+
+# Cache node modules, npm install will take care of minor updates
+cache:
+  untracked: false
+  policy: pull-push
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+
+sonarcloud-check:
+  stage: verify
+  image:
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [ "" ]
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - sonar-scanner
+  only:
+    - merge_requests
+    - master
