@@ -16,13 +16,14 @@
 
 import {
   AcrolinxSidebar,
-  InitParameters,
-  SidebarConfiguration,
-  CheckOptions,
   Check,
+  CheckedDocumentRange,
+  CheckOptions,
+  InitParameters,
   InvalidDocumentPart,
-  CheckedDocumentRange
-} from "@acrolinx/sidebar-interface";
+  Message,
+  SidebarConfiguration
+} from '@acrolinx/sidebar-interface';
 
 
 export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
@@ -78,5 +79,9 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
 
   onVisibleRangesChanged(checkedDocumentRanges: CheckedDocumentRange[]) {
     return this.acrolinxSidebar.onVisibleRangesChanged(checkedDocumentRanges);
+  }
+
+  showMessage(message: Message): void {
+    return this.acrolinxSidebar.showMessage(message);
   }
 }

@@ -21,7 +21,6 @@ import * as sinon from "sinon";
 import {MainControllerOpts, startMainController} from "../../../src/main-controller";
 import {
   AcrolinxPlugin,
-  AcrolinxPluginConfiguration,
   AcrolinxSidebar,
   CheckResult,
   InitParameters,
@@ -87,9 +86,6 @@ describe('integration-tests', function () {
       },
 
       onInitFinished(_finishResult: InitResult) {
-      },
-
-      configure(_configuration: AcrolinxPluginConfiguration) {
       },
 
       requestGlobalCheck() {

@@ -17,7 +17,6 @@
 import {
   AcrolinxPlugin,
   InitResult,
-  AcrolinxPluginConfiguration,
   CheckResult,
   MatchWithReplacement,
   OpenWindowParameters, RequestGlobalCheckOptions,
@@ -49,10 +48,6 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
 
   onInitFinished(initFinishedResult: InitResult) {
     this.props.acrolinxPlugin.onInitFinished(initFinishedResult);
-  }
-
-  configure(configuration: AcrolinxPluginConfiguration) {
-    this.props.acrolinxPlugin.configure(configuration);
   }
 
   requestGlobalCheck(options?: RequestGlobalCheckOptions) {

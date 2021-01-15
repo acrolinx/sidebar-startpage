@@ -20,7 +20,7 @@ import {
   CheckOptions,
   Check,
   InvalidDocumentPart,
-  CheckedDocumentRange, SidebarConfiguration
+  CheckedDocumentRange, SidebarConfiguration, Message
 } from '@acrolinx/sidebar-interface';
 
 // Functions are not cloneable and don't work with postMessage.
@@ -67,7 +67,10 @@ export function createSidebarMessageProxy(sidebarWindow: Window) : AcrolinxSideb
     },
 
     onVisibleRangesChanged(_checkedDocumentRanges: CheckedDocumentRange[]) {
-    }
+    },
+
+    showMessage(_message: Message): void {
+    },
   };
 
   injectPostCommandAsMessage(() => sidebarWindow, sidebar);
