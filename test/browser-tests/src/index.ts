@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-declare const require: (name: String) => any;
 require('../../node-js-unit-tests/spec-acrolinx-storage');
 require('../../node-js-unit-tests/spec-init-parameter');
 require('../../node-js-unit-tests/spec-sidebar-loader');
