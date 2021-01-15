@@ -45,6 +45,7 @@ export function classNames(...args: ({ [className: string]: (boolean | undefined
       classes.push(arg);
     } else if ('object' === typeof arg) {
       for (const key in arg) {
+        // eslint-disable-next-line no-prototype-builtins
         if (arg.hasOwnProperty(key) && arg[key]) {
           classes.push(key);
         }

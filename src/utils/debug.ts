@@ -63,14 +63,12 @@ function waitForFirebugCheatCode() {
 
   document.addEventListener('mouseup', () => {
     isMouseDown = false;
-    switch (cheatCode) {
-      case 'acrofire':
-        loadFirebugLite();
-        break;
-      default:
-        if (cheatCode.length > 3) {
-          logging.log('Unknown command:', cheatCode);
-        }
+    if (cheatCode === 'acrofire') {
+      loadFirebugLite();
+    } else {
+      if (cheatCode.length > 3) {
+        logging.log('Unknown command:', cheatCode);
+      }
     }
     cheatCode = '';
   });

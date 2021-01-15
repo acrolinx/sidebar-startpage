@@ -173,7 +173,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
     logging.log(`Try to load sidebar from "${acrolinxServerAddress}"`);
 
     sidebarContainer.innerHTML = '';
-    sidebarIFrameElement = document.createElement('iframe') as HTMLIFrameElement;
+    sidebarIFrameElement = document.createElement('iframe');
     sidebarContainer.appendChild(sidebarIFrameElement);
 
     const sidebarUrl = combinePathParts(acrolinxServerAddress, '/sidebar/v14/');
@@ -293,7 +293,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
       onAboutLink,
       serverAddress,
       enforceHTTPS: initParametersFromPlugin.enforceHTTPS,
-      isConnectButtonDisabled: props.isConnectButtonDisabled!!,
+      isConnectButtonDisabled: props.isConnectButtonDisabled!,
       openWindow: (url) => openWindow({url}),
       errorMessage: props.errorMessage,
       initParameters: initParametersFromPlugin
