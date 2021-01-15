@@ -250,7 +250,7 @@ export class TimeoutWatcher {
     this.timeoutId = setTimeout(() => {
       this.timeoutId = undefined;
       this.onTimeout();
-    }, this.durationMs);
+    }, this.durationMs) as unknown as number;
   }
 
   stop() {
