@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import {setExternalLog} from './utils/logging';
 import {
   $,
   $byId,
@@ -308,6 +309,11 @@ export function startMainController(opts: MainControllerOpts = {}) {
   function onInitFromPlugin(initParameters: InitParameters) {
     initParametersFromPlugin = initParameters;
     setLanguage(initParameters.clientLocale);
+
+    if (initParameters.supported?.log && acrolinxPlugin.log) {
+      setExternalLog((logEntry) => acrolinxPlugin.log!(logEntry));
+    }
+
 
     if (initParameters.showServerSelector) {
       if (serverAddress) {

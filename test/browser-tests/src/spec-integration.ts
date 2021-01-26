@@ -101,7 +101,10 @@ describe('integration-tests', function () {
       },
 
       openWindow,
-      openLogFile
+      openLogFile,
+
+      log() {
+      }
     };
     startMainController(mainControllerOpts);
     wait(POLL_FOR_PLUGIN_INTERVAL_MS);

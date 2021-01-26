@@ -14,16 +14,30 @@
  * limitations under the License.
  */
 
-/* tslint:disable:no-console */
+import {AcrolinxPlugin, LogEntry, LogEntryType} from '@acrolinx/sidebar-interface';
 
-const LOGGING_ENABLED = true;
+let LOGGING_ENABLED = true;
 
-export function log(...args: any[]) {
+let externalLog: AcrolinxPlugin['log'] | undefined;
+
+function createLogEntry(type: LogEntryType, args: unknown[]): LogEntry {
+  const [message, ...details] = args;
+  if (typeof message === 'string') {
+    return {type, message, details};
+  } else {
+    return {type, message: 'Details', details: args};
+  }
+}
+
+export function log(...args: unknown[]) {
   if (!LOGGING_ENABLED) {
     return;
   }
   try {
     console.log(...args);
+    if (externalLog) {
+      externalLog(createLogEntry(LogEntryType.info, args));
+    }
   } catch (e) {
     // What should we do, log the problem ? :-)
   }
@@ -35,6 +49,9 @@ export function warn(...args: any[]) {
   }
   try {
     console.warn(...args);
+    if (externalLog) {
+      externalLog(createLogEntry(LogEntryType.warning, args));
+    }
   } catch (e) {
     // What should we do, log the problem ? :-)
   }
@@ -46,7 +63,19 @@ export function error(...args: any[]) {
   }
   try {
     console.error(...args);
+    if (externalLog) {
+      externalLog(createLogEntry(LogEntryType.error, args));
+    }
   } catch (e) {
     // What should we do, log the problem ? :-)
   }
 }
+
+export function setLoggingEnabled(enabled: boolean) {
+  LOGGING_ENABLED = enabled;
+}
+
+export function setExternalLog(newExternalLog: AcrolinxPlugin['log']) {
+  externalLog = newExternalLog;
+}
+

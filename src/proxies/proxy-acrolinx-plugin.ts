@@ -19,8 +19,8 @@ import {
   InitResult,
   CheckResult,
   MatchWithReplacement,
-  OpenWindowParameters, RequestGlobalCheckOptions,
-} from "@acrolinx/sidebar-interface";
+  OpenWindowParameters, RequestGlobalCheckOptions, LogEntry,
+} from '@acrolinx/sidebar-interface';
 import * as logging from "../utils/logging";
 
 export const POLL_FOR_PLUGIN_INTERVAL_MS = 10;
@@ -83,6 +83,14 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
       this.props.acrolinxPlugin.openLogFile();
     } else {
       logging.error('openLogFile is not supported');
+    }
+  }
+
+  log(logEntry: LogEntry): void {
+    if (this.props.acrolinxPlugin.log) {
+      this.props.acrolinxPlugin.log(logEntry);
+    } else {
+      logging.error('log is not supported', logEntry);
     }
   }
 }
