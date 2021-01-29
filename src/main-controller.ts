@@ -91,6 +91,13 @@ export interface MainControllerOpts {
 }
 
 export function startMainController(opts: MainControllerOpts = {}) {
+  setExternalLog((logEntry) => {
+    const acrolinxPlug = (window as any).acrolinxPlugin;
+    if (acrolinxPlug?.log) {
+      acrolinxPlug.log(logEntry);
+    }
+  });
+
   logging.log('Loading acrolinx sidebar startpage ' + SERVER_SELECTOR_VERSION);
   initDebug();
 
@@ -312,8 +319,9 @@ export function startMainController(opts: MainControllerOpts = {}) {
 
     if (initParameters.supported?.log && acrolinxPlugin.log) {
       setExternalLog((logEntry) => acrolinxPlugin.log!(logEntry));
+    } else {
+      setExternalLog(undefined);
     }
-
 
     if (initParameters.showServerSelector) {
       if (serverAddress) {

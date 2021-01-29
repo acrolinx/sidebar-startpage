@@ -75,7 +75,7 @@ export function setLoggingEnabled(enabled: boolean) {
   LOGGING_ENABLED = enabled;
 }
 
-export function setExternalLog(newExternalLog: AcrolinxPlugin['log']) {
+export function setExternalLog(newExternalLog: AcrolinxPlugin['log'] | undefined) {
   externalLog = newExternalLog;
 }
 
