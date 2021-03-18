@@ -18,10 +18,8 @@ export const SERVER_SELECTOR_VERSION = '§SERVER_SELECTOR_VERSION';
 
 /* Some extensions need the message adapter, because it's not possible to load javascript from arbitrary hosts
  * due to the content security policy.
- * Safari ( 'safari-extension://') has currently no content security policy, that would prevent the normal loading of the
- * sidebar.
  */
-export const URL_PREFIXES_NEEDING_MESSAGE_ADAPTER = ['chrome-extension://', 'moz-extension://', 'resource://', 'ms-browser-extension://'];
+export const URL_PREFIXES_NEEDING_MESSAGE_ADAPTER = ['chrome-extension://', 'moz-extension://', 'resource://', 'ms-browser-extension://', 'safari-web-extension://'];
 
 export const REQUEST_INIT_TIMEOUT_MS = 60 * 1000;
 
