@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-import * as logging from "./logging";
+import * as logging from './logging';
 
 interface WindowWithAcrolinxStorage extends Window {
   acrolinxStorage: AcrolinxSimpleStorage;
 }
 
 export interface AcrolinxSimpleStorage {
+  getItems?(callback: (data: Record<string, string>) => void): void;
   getItem(key: string): string | null;
   removeItem(key: string): void;
   setItem(key: string, data: string): void;
@@ -41,8 +42,7 @@ function isLocalStorageAvailable(storage: Storage | undefined) {
     }
     storage.removeItem(x);
     return true;
-  }
-  catch (e) {
+  } catch (e) {
     return false;
   }
 }

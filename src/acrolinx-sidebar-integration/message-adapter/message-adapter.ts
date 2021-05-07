@@ -22,6 +22,7 @@ import {
   InvalidDocumentPart,
   CheckedDocumentRange, SidebarConfiguration, Message
 } from '@acrolinx/sidebar-interface';
+import {ExtendedAcrolinxSidebar, SetStorageProps} from '../../sidebar-interface-extensions';
 
 // Functions are not cloneable and don't work with postMessage.
 function removeFunctions(object: any) {
@@ -52,7 +53,7 @@ function injectPostCommandAsMessage(windowProvider: WindowProvider, object: any)
  * Connects to a sidebar iframe that is on a different domain and uses the plugin message adapter.
  */
 export function createSidebarMessageProxy(sidebarWindow: Window) : AcrolinxSidebar {
-  const sidebar: AcrolinxSidebar = {
+  const sidebar: ExtendedAcrolinxSidebar = {
     init (_initParameters: InitParameters): void {
     },
     configure (_initParameters: SidebarConfiguration): void {
@@ -71,6 +72,9 @@ export function createSidebarMessageProxy(sidebarWindow: Window) : AcrolinxSideb
 
     showMessage(_message: Message): void {
     },
+
+    setStorage(_props: SetStorageProps): void {
+    }
   };
 
   injectPostCommandAsMessage(() => sidebarWindow, sidebar);

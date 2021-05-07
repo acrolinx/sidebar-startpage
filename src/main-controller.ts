@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import {ExtendedAcrolinxPlugin, ExtendedAcrolinxSidebar} from './sidebar-interface-extensions';
 import {setExternalLog} from './utils/logging';
 import {
   $,
@@ -346,8 +347,16 @@ export function startMainController(opts: MainControllerOpts = {}) {
       return;
     }
 
-    const {command, args} = messageEvent.data;
-    logging.log('onMessageFromSidebar', messageEvent, command, args);
+    const command: keyof ExtendedAcrolinxPlugin= messageEvent.data.command;
+    const args = messageEvent.data.args;
+
+    if (command === 'setStorageItem') {
+      // Don't log the setStorageItem message because it might contain secrets.
+      logging.log('onMessageFromSidebar', command, args[0]);
+    } else {
+      logging.log('onMessageFromSidebar', messageEvent, command, args);
+    }
+
     switch (command) {
       case 'requestInit':
         sidebarProxy.acrolinxSidebar = createSidebarMessageProxy(sidebarIFrameElement.contentWindow);
@@ -355,6 +364,12 @@ export function startMainController(opts: MainControllerOpts = {}) {
         break;
       case 'showServerSelector':
         showServerSelector();
+        break;
+      case 'setStorageItem':
+        getAcrolinxSimpleStorage().setItem(args[0], args[1]);
+        break;
+      case 'removeStorageItem':
+        getAcrolinxSimpleStorage().removeItem(args[0]);
         break;
       default:
         const acrolinxPluginAny = windowAny.acrolinxPlugin;
@@ -371,7 +386,20 @@ export function startMainController(opts: MainControllerOpts = {}) {
     logging.log(`Sidebar is loaded completely and has requested init ("${serverAddress}")`);
     sidebarState = SidebarState.AFTER_REQUEST_INIT;
     requestInitTimeoutWatcher.stop();
-    sidebarProxy.acrolinxSidebar.init(hackInitParameters(initParametersFromPlugin, serverAddress!));
+
+    function initSidebar() {
+      sidebarProxy.acrolinxSidebar.init(hackInitParameters(initParametersFromPlugin, serverAddress!));
+    }
+
+    const acrolinxSimpleStorage = getAcrolinxSimpleStorage();
+    if (acrolinxSimpleStorage.getItems) {
+      acrolinxSimpleStorage.getItems(data => {
+        (sidebarProxy.acrolinxSidebar as ExtendedAcrolinxSidebar).setStorage({data});
+        initSidebar();
+      });
+    } else {
+      initSidebar();
+    }
   }
 
   function onRequestInitTimeout() {
