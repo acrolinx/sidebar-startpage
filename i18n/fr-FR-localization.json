@@ -23,7 +23,7 @@
       "serverConnectionProblemHttp": "La connexion \u00e0 Acrolinx n'a pas abouti. Est-ce que l'URL d'Acrolinx est correcte ? Si oui, contactez l'administrateur Acrolinx. Il se pourrait que votre serveur n'accepte pas de connexions non s\u00e9curis\u00e9es.",
       "serverConnectionProblemHttps": "La connexion \u00e0 Acrolinx n'a pas abouti. Est-ce que l'URL d'Acrolinx est correcte ? Si oui, contactez l'administrateur Acrolinx. Il se pourrait que votre serveur n'accepte pas de connexions s\u00e9curis\u00e9es.",
       "serverIsNoAcrolinxServerOrHasNoSidebar": "Est-ce que l'URL d'Acrolinx est correcte ? Si oui, il se pourrait que la version de la plateforme Acrolinx ne prend pas en charge la Sidebar. Contactez l'administrateur Acrolinx pour v\u00e9rifier.",
-      "serverIsNotSecure": "Utilisez une URL d'Acrolinx s\u00e9curis\u00e9e.  Une URL d'Acrolinx s\u00e9curis\u00e9e commence par \"https\"."
+      "serverIsNotSecure": "Utilisez une URL d'Acrolinx s\u00e9curis\u00e9e.  Une URL d'Acrolinx s\u00e9curis\u00e9e commence par \u00ab https \u00bb."
     },
     "placeHolder": {
       "serverAddress": "URL d'Acrolinx"
@@ -34,7 +34,7 @@
       "serverAddress": "URL d'Acrolinx"
     },
     "tooltip": {
-      "httpsRequired": "Utilisez une URL d'Acrolinx s\u00e9curis\u00e9e.  Une URL d'Acrolinx s\u00e9curis\u00e9e commence par \"https\".",
+      "httpsRequired": "Utilisez une URL d'Acrolinx s\u00e9curis\u00e9e.  Une URL d'Acrolinx s\u00e9curis\u00e9e commence par \u00ab https \u00bb.",
       "openHelp": "Ouvrir les informations d'aide dans la fen\u00eatre d'un navigateur Web."
     }
   }
