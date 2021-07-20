@@ -23,7 +23,7 @@
       "serverConnectionProblemHttp": "Wir konnten keine Verbindung zu Acrolinx herstellen. Stimmt die Acrolinx-URL? Wenn ja, wenden Sie sich an Ihren Administrator. M\u00f6glicherweise akzeptiert Ihre Acrolinx-Plattform keine ungesicherten Verbindungen.",
       "serverConnectionProblemHttps": "Wir konnten keine Verbindung zu Acrolinx herstellen. Stimmt die Acrolinx-URL? Wenn ja, wenden Sie sich an Ihren Administrator. M\u00f6glicherweise akzeptiert Ihre Acrolinx-Plattform keine gesicherten Verbindungen.",
       "serverIsNoAcrolinxServerOrHasNoSidebar": "Stimmt die Acrolinx-URL? Wenn ja, wird die Sidebar von der Acrolinx-Plattform evtl. nicht unterst\u00fctzt? Fragen Sie Ihren Administrator.",
-      "serverIsNotSecure": "Verwenden Sie eine gesicherte Acrolinx-URL. Eine gesicherte Acrolinx-URL beginnt mit \"https\"."
+      "serverIsNotSecure": "Verwenden Sie eine gesicherte Acrolinx-URL. Eine gesicherte Acrolinx-URL beginnt mit \u201ehttps\u201c."
     },
     "placeHolder": {
       "serverAddress": "Acrolinx-URL"
@@ -34,7 +34,7 @@
       "serverAddress": "Acrolinx-URL"
     },
     "tooltip": {
-      "httpsRequired": "Verwenden Sie eine gesicherte Acrolinx-URL. Eine gesicherte Acrolinx-URL beginnt mit \"https\".",
+      "httpsRequired": "Verwenden Sie eine gesicherte Acrolinx-URL. Eine gesicherte Acrolinx-URL beginnt mit \u201ehttps\u201c.",
       "openHelp": "Hilfeinformationen in einem Webbrowser-Fenster \u00f6ffnen"
     }
   }
