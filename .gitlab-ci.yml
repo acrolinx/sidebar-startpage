@@ -67,12 +67,12 @@ build:
     - tags
 
 npm-deploy:
-  image: node:latest
+  image: node:14
   stage: deploy
   variables:
-    NPM_TOKEN: "${NPM_TOKEN}"
+    NPM_TOKEN: ${NPM_TOKEN}
   script:
-    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+    - echo "@acrolinx:registry=https://registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
     - npm publish --access public
   only:
     - tags
