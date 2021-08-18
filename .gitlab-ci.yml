@@ -1,7 +1,6 @@
 stages:
   - verify
   - build
-  - test
   - deploy
 
 # Cache node modules, npm install will take care of minor updates
@@ -27,6 +26,7 @@ vulnerabilities-check:
   only:
     - merge_requests
     - master
+    - tags
 
 sonarcloud-check:
   stage: verify
@@ -42,8 +42,10 @@ sonarcloud-check:
   only:
     - merge_requests
     - master
+    - tags
 
 build:
+  stage: build
   image: node:14
   before_script:
     - apt update -y
