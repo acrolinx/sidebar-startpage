@@ -77,9 +77,11 @@ npm-deploy:
   only:
     - tags
 
-maven-deploy:
+maven-deploy-snapshot:
   image: maven:3.6-jdk-11
   stage: deploy
+  variables:
+    STAGE: "snapshot"  
   before_script:
     - mkdir -p tmp/s3/v14
     - cp -r tmp/dist tmp/s3/v14/dev
@@ -88,6 +90,19 @@ maven-deploy:
     - ./gitlab-build-ci.sh
   only:
     - master
+
+maven-deploy-release:
+  image: maven:3.6-jdk-11
+  stage: deploy
+  variables:
+    STAGE: "release"
+  before_script:
+    - mkdir -p tmp/s3/v14
+    - cp -r tmp/dist tmp/s3/v14/dev
+    - chmod +x ./gitlab-build-ci.sh
+  script:
+    - ./gitlab-build-ci.sh
+  only:
     - tags
 
 
