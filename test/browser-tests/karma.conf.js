@@ -142,6 +142,10 @@ module.exports = function (config) {
       bs_firefox_win: bsLauncher(win10, firefoxLatest),
       bs_firefox_est_win: bsLauncher(win10, firefoxEST),
       bs_safari_macos: bsLauncher(macOS, safari10),
+      HeadlessChromeWithoutSecurity: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox'],
+      }
     },
 
     // start these browsers

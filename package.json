@@ -9,7 +9,7 @@
     "test": "npm run testNodeJS && npm run testKarmaChromeHeadless",
     "testNodeJS": "mocha tmp/compiled/test/node-js-unit-tests/**/*.js",
     "testKarmaChrome": "karma start test/browser-tests/karma.conf.js --browsers Chrome",
-    "testKarmaChromeHeadless": "karma start test/browser-tests/karma.conf.js --browsers ChromeHeadless",
+    "testKarmaChromeHeadless": "karma start test/browser-tests/karma.conf.js --browsers HeadlessChromeWithoutSecurity",
     "testKarmaBs": "karma start test/browser-tests/karma.conf.js --browsers bs_ie11_win,bs_edge_win,bs_chrome_win,bs_firefox_win,bs_firefox_est_win,bs_safari_macos",
     "testKarmaAll": "karma start test/browser-tests/karma.conf.js",
     "clean": "shx rm -rf tmp && shx rm -rf app/scripts && shx rm -rf dist",
