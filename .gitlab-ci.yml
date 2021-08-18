@@ -72,7 +72,7 @@ npm-deploy:
   variables:
     NPM_TOKEN: "${NPM_TOKEN}"
   script:
-    - npm set //registry.npmjs.org/@acrolinx/:_authToken=${NPM_TOKEN}
+    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
     - npm publish --access public
   only:
     - tags
