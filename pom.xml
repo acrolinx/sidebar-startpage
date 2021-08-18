@@ -54,12 +54,12 @@
 
   <distributionManagement>
     <repository>
-      <id>dune</id>
-      <url>https://artifactory.dev.acrolinx.com/artifactory/libs-release-local</url>
+      <id>sidebar-startpage-maven</id>
+      <url>https://gitlab.com/api/v4/projects/22486890/packages/maven</url>
     </repository>
     <snapshotRepository>
-      <id>dune-snapshots</id>
-      <url>https://artifactory.dev.acrolinx.com/artifactory/libs-snapshot-local</url>
+      <id>sidebar-startpage-maven</id>
+      <url>https://gitlab.com/api/v4/projects/22486890/packages/maven</url>
     </snapshotRepository>
   </distributionManagement>
 </project>
