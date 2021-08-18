@@ -75,6 +75,7 @@ npm-deploy:
     - echo "$NPM_TOKEN"
     - echo "@acrolinx:registry=https://registry.npmjs.org/" > .npmrc
     - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+    - npm set registry https://registry.npmjs.org/
     - npm publish --access public
   only:
     - tags
