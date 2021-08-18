@@ -21,6 +21,13 @@ Port 3000 is the just default port and the used port might differ, if the port 3
 
 Open http://localhost:3000/test/browser-tests/ in your browser.
 
+## Release a new version
+
+ * Increment the version in package.json
+ * Commit and push the change.
+ * Tag the commit: `git tag vx.x.xx` and push it `git push --tags`. The version should match the one in package.json
+
+
 ## License
 
 Copyright 2017-present Acrolinx GmbH
