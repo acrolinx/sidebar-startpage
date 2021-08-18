@@ -43,13 +43,30 @@ sonarcloud-check:
     - merge_requests
     - master
 
+build:
+  image: node:14
+  before_script:
+    - apt update -y
+    - apt upgrade -y
+    - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    - apt install -y ./google-chrome-stable_current_amd64.deb
+  script:
+    - node --version
+    - npm ci
+    - npm run buildDistWithNPMLinuxOnly
+  artifacts:
+    paths: 
+      - tmp/
+      - dist/
+      - node_modules/
+  only:
+    - merge_requests
+    - master
+    - tags
+
 npm-deploy:
   image: node:latest
   stage: deploy
-  before_script:
-    - node --version
-    - npm i
-    - npm run buildDistWithNPMLinuxOnly
   script:
     - |
       if [[ $NPM_TOKEN ]]; then
