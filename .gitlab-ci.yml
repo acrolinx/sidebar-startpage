@@ -72,7 +72,8 @@ npm-deploy:
   variables:
     NPM_TOKEN: ${NPM_TOKEN}
   script:
-    - echo "@acrolinx:registry=https://registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+    - echo "@acrolinx:registry=https://registry.npmjs.org/" > .npmrc
+    - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
     - npm publish --access public
   only:
     - tags
