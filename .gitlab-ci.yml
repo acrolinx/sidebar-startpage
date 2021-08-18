@@ -57,7 +57,7 @@ build:
     - npm ci
     - npm run buildDistWithNPMLinuxOnly
   artifacts:
-    paths: 
+    paths:
       - tmp/
       - dist/
       - node_modules/
@@ -72,7 +72,7 @@ npm-deploy:
   variables:
     NPM_TOKEN: "${NPM_TOKEN}"
   script:
-    - npm set //registry.npmjs.org/:_authToken=${NPM_TOKEN}
+    - npm set //registry.npmjs.org/@acrolinx/:_authToken=${NPM_TOKEN}
     - npm publish --access public
   only:
     - tags
