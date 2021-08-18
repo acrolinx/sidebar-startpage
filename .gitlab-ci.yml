@@ -69,11 +69,10 @@ build:
 npm-deploy:
   image: node:latest
   stage: deploy
+  variables:
+    NPM_TOKEN: "${NPM_TOKEN}"
   script:
-    - |
-      if [[ $NPM_TOKEN ]]; then
-        npm publish --access public
-      fi
+    - npm publish --access public
   only:
     - tags
 
