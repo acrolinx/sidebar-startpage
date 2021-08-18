@@ -72,7 +72,7 @@ npm-deploy:
   variables:
     NPM_TOKEN: ${NPM_TOKEN}
   script:
-    - echo "@acrolinx:registry=http://registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+    - echo "@acrolinx:registry=https://registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
     - npm publish --access public
   only:
     - tags
@@ -81,7 +81,7 @@ maven-deploy-snapshot:
   image: maven:3.6-jdk-11
   stage: deploy
   variables:
-    STAGE: "snapshot"  
+    STAGE: "snapshot"
   before_script:
     - mkdir -p tmp/s3/v14
     - cp -r tmp/dist tmp/s3/v14/dev
