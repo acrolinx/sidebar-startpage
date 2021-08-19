@@ -67,19 +67,20 @@ build:
     - tags
 
 npm-deploy:
-  image: node:14
+  image: node:16-alpine
   stage: deploy
   variables:
     NPM_TOKEN: ${NPM_TOKEN}
   script:
+    - echo ${NPM_TOKEN}
     - npm --version
     - npm config set registry=https://registry.npmjs.org/
     - npm config set @acrolinx:registry=https://registry.npmjs.org/
-    - npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
+    - npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN}
     - npm ci
     - npm publish --verbose --access public
   only:
-    - tags
+    - master
 
 maven-deploy-snapshot:
   image: maven:3.6-jdk-11
