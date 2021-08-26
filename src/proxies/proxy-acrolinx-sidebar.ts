@@ -16,6 +16,7 @@
 
 import {
   AcrolinxSidebar,
+  BatchCheckRequestOptions,
   Check,
   CheckedDocumentRange,
   CheckOptions,
@@ -84,4 +85,26 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
   showMessage(message: Message): void {
     return this.acrolinxSidebar.showMessage(message);
   }
+
+  initBatchCheck(references: BatchCheckRequestOptions[]): void {
+    if (this.acrolinxSidebar.initBatchCheck) {
+      return this.acrolinxSidebar.initBatchCheck(references);
+    }
+    // TODO log error?
+  };
+
+  checkReferenceInBackground(reference: string, documentContent: string, options: CheckOptions): void {
+    if (this.acrolinxSidebar.checkReferenceInBackground) {
+      return this.acrolinxSidebar.checkReferenceInBackground(reference, documentContent, options);
+    }
+    // TODO log error?
+  }
+
+  onReferenceLoadedInEditor?(reference: string): void {
+    if (this.acrolinxSidebar.onReferenceLoadedInEditor) {
+      return this.acrolinxSidebar.onReferenceLoadedInEditor(reference);
+    }
+    // TODO log error?
+  }
+
 }

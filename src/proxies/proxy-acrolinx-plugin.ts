@@ -16,10 +16,12 @@
 
 import {
   AcrolinxPlugin,
-  InitResult,
   CheckResult,
+  InitResult,
+  LogEntry,
   MatchWithReplacement,
-  OpenWindowParameters, RequestGlobalCheckOptions, LogEntry,
+  OpenWindowParameters,
+  RequestGlobalCheckOptions,
 } from '@acrolinx/sidebar-interface';
 import * as logging from "../utils/logging";
 
@@ -85,6 +87,23 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
       logging.error('openLogFile is not supported');
     }
   }
+
+  requestBackgroundCheckForRef(reference: string): void {
+    if (this.props.acrolinxPlugin.requestBackgroundCheckForRef) {
+      this.props.acrolinxPlugin.requestBackgroundCheckForRef(reference);
+    } else {
+      logging.error('requestBackgroundCheckForRef is not supported');
+    }
+  }
+
+  openReferenceInEditor(reference: string): void | Promise<void> {
+    if (this.props.acrolinxPlugin.openReferenceInEditor) {
+      this.props.acrolinxPlugin.openReferenceInEditor(reference);
+    } else {
+      logging.error('openReferenceInEditor is not supported');
+    }
+  }
+
 
   log(logEntry: LogEntry): void {
     if (this.props.acrolinxPlugin.log) {
