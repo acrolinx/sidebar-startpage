@@ -4,12 +4,12 @@ stages:
   - deploy
 
 # Cache node modules, npm install will take care of minor updates
-cache:
-  untracked: false
-  policy: pull-push
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - node_modules/
+#cache:
+#  untracked: false
+#  policy: pull-push
+#  key: ${CI_COMMIT_REF_SLUG}
+#  paths:
+#    - node_modules/
 
 include:
   - project: acrolinx/integrations/gitlab-ci-templates
