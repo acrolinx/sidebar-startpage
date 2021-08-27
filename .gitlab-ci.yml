@@ -96,9 +96,6 @@ windows:build:
   script:
     - node --version
     - npm ci
-    - set pwd=%cd%
-    - set PATH=%PATH%;%pwd%\node_modules\.bin\
-    - echo %PATH%
     - npm run buildDistButNotNPM
   artifacts:
     paths:
