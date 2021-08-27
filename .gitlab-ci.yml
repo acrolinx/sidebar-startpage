@@ -46,7 +46,7 @@ sonarcloud-check:
 
 linux:build:
   stage: build
-  image: node:latest
+  image: node:lts
   before_script:
     - apt update -y
     - apt upgrade -y
