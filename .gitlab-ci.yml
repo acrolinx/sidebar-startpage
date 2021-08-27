@@ -3,13 +3,13 @@ stages:
   - build
   - deploy
 
-# Cache node modules, npm install will take care of minor updates
-# cache:
-#   untracked: false
-#   policy: pull-push
-#   key: ${CI_COMMIT_REF_SLUG}
-#   paths:
-#     - node_modules/
+Cache node modules, npm install will take care of minor updates
+cache:
+  untracked: false
+  policy: pull-push
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
 
 include:
   - project: acrolinx/integrations/gitlab-ci-templates
@@ -44,7 +44,7 @@ sonarcloud-check:
     - master
     - tags
 
-build:
+linux:build:
   stage: build
   image: node:latest
   before_script:
@@ -66,11 +66,34 @@ build:
     - master
     - tags
 
+# Build on Mac
+mac:build:
+  stage: build
+  tags:
+    - osx
+    - mac
+    - integrations
+  script:
+    - node --version
+    - npm ci
+    - npm run buildDistButNotNPM
+  artifacts:
+    paths:
+      - tmp/
+      - dist/
+      - node_modules/
+  only:
+    - merge_requests
+    - master
+    - tags
+
+
 npm-deploy:
   image: node:16-alpine
   stage: deploy
   variables:
     NPM_TOKEN: ${NPM_TOKEN}
+  needs: ["linux:build"]
   script:
     - echo ${NPM_TOKEN}
     - npm --version
@@ -89,6 +112,7 @@ npm-deploy-beta:
   stage: deploy
   variables:
     NPM_TOKEN: ${NPM_TOKEN}
+  needs: ["linux:build"]
   script:
     - echo ${NPM_TOKEN}
     - npm --version
@@ -106,6 +130,7 @@ maven-deploy-snapshot:
   stage: deploy
   variables:
     STAGE: "snapshot"
+  needs: ["linux:build"]
   before_script:
     - mkdir -p tmp/s3/v14
     - cp -r tmp/dist tmp/s3/v14/dev
@@ -120,6 +145,7 @@ maven-deploy-release:
   stage: deploy
   variables:
     STAGE: "release"
+  needs: ["linux:build"]    
   before_script:
     - mkdir -p tmp/s3/v14
     - cp -r tmp/dist tmp/s3/v14/dev
