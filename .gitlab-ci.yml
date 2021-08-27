@@ -88,6 +88,29 @@ mac:build:
     - tags
 
 
+# Build on Windows
+windows:build:
+  stage: build
+  tags:
+    - windows-build-node-integrations
+  script:
+    - node --version
+    - npm ci
+    - set pwd=%cd%
+    - set PATH=%PATH%;%pwd%\node_modules\.bin\
+    - echo %PATH%
+    - npm run buildDistButNotNPM
+  artifacts:
+    paths:
+      - tmp/
+      - dist/
+      - node_modules/
+  only:
+    - merge_requests
+    - master
+    - tags  
+
+
 npm-deploy:
   image: node:16-alpine
   stage: deploy
