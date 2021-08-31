@@ -91,6 +91,7 @@ mac:build:
 # Build on Windows
 windows:build:
   stage: build
+  allow_failure: true
   tags:
     - windows-build-node-integrations
   script:
@@ -105,10 +106,10 @@ windows:build:
   only:
     - merge_requests
     - master
-    - tags  
+    - tags
 
 
-npm-deploy:
+linux:npm-deploy:
   image: node:16-alpine
   stage: deploy
   variables:
@@ -127,7 +128,7 @@ npm-deploy:
 
 
 ## Beta release stage for DITA POC
-npm-deploy-beta:
+linux:npm-deploy-beta:
   image: node:16-alpine
   stage: deploy
   variables:
@@ -145,7 +146,7 @@ npm-deploy-beta:
   only:
     - DITA_POC
 
-maven-deploy-snapshot:
+linux:maven-deploy-snapshot:
   image: maven:3.6-jdk-11
   stage: deploy
   variables:
@@ -160,12 +161,12 @@ maven-deploy-snapshot:
   only:
     - master
 
-maven-deploy-release:
+linux:maven-deploy-release:
   image: maven:3.6-jdk-11
   stage: deploy
   variables:
     STAGE: "release"
-  needs: ["linux:build"]    
+  needs: ["linux:build"]
   before_script:
     - mkdir -p tmp/s3/v14
     - cp -r tmp/dist tmp/s3/v14/dev
