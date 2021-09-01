@@ -93,9 +93,9 @@ windows:build:
   stage: build
   allow_failure: true
   tags:
-    # - windows-build-node-integrations
-    -  windows-1809 
-    -  shared-windows 
+    - windows-build-node-integrations
+    # -  windows-1809 
+    # -  shared-windows 
   script:
     - node --version
     - npm ci
