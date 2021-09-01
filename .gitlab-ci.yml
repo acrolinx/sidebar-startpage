@@ -50,7 +50,7 @@ linux:build:
   before_script:
     - apt update -y
     - apt upgrade -y
-    - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    - wget 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
     - apt install -y ./google-chrome-stable_current_amd64.deb
   script:
     - node --version
@@ -77,11 +77,6 @@ mac:build:
     - node --version
     - npm ci
     - npm run buildDistButNotNPM
-  artifacts:
-    paths:
-      - tmp/
-      - dist/
-      - node_modules/
   only:
     - merge_requests
     - master
@@ -94,17 +89,10 @@ windows:build:
   allow_failure: true
   tags:
     - windows-build-node-integrations
-    # -  windows-1809 
-    # -  shared-windows 
   script:
     - node --version
     - npm ci
     - npm run buildDistButNotNPM
-  artifacts:
-    paths:
-      - tmp/
-      - dist/
-      - node_modules/
   only:
     - merge_requests
     - master
