@@ -105,7 +105,6 @@ linux:npm-deploy:
     NPM_TOKEN: ${NPM_TOKEN}
   needs: ["linux:build"]
   script:
-    - echo ${NPM_TOKEN}
     - npm --version
     - npm config set registry=https://registry.npmjs.org/
     - npm config set @acrolinx:registry=https://registry.npmjs.org/
@@ -124,7 +123,6 @@ linux:npm-deploy-beta:
     NPM_TOKEN: ${NPM_TOKEN}
   needs: ["linux:build"]
   script:
-    - echo ${NPM_TOKEN}
     - npm --version
     - npm config set registry=https://registry.npmjs.org/
     - npm config set @acrolinx:registry=https://registry.npmjs.org/
