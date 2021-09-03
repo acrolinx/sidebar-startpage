@@ -44,6 +44,7 @@ sonarcloud-check:
     - master
     - tags
 
+# Build on Linux
 linux:build:
   stage: build
   image: node:lts
