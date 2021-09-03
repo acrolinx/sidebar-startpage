@@ -86,7 +86,6 @@ mac:build:
 # Build on Windows
 windows:build:
   stage: build
-  allow_failure: true
   tags:
     - windows-build-node-integrations
   script:
