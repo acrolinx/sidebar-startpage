@@ -98,7 +98,7 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
 
   openReferenceInEditor(reference: string): void | Promise<void> {
     if (this.props.acrolinxPlugin.openReferenceInEditor) {
-      this.props.acrolinxPlugin.openReferenceInEditor(reference);
+      return this.props.acrolinxPlugin.openReferenceInEditor(reference);
     } else {
       logging.error('openReferenceInEditor is not supported');
     }

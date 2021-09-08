@@ -91,7 +91,7 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
       return this.acrolinxSidebar.initBatchCheck(references);
     }
     // TODO log error?
-  };
+  }
 
   checkReferenceInBackground(reference: string, documentContent: string, options: CheckOptions): void {
     if (this.acrolinxSidebar.checkReferenceInBackground) {
