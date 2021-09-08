@@ -66,7 +66,7 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
     }
   }
 
-  checkGlobal(documentContent: string, options: CheckOptions): Check {
+  checkGlobal(documentContent: string, options: CheckOptions): Check | Promise<Check | void> {
     return this.acrolinxSidebar.checkGlobal(documentContent, options);
   }
 
