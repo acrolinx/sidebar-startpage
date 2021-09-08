@@ -82,6 +82,29 @@ npm-deploy:
   only:
     - tags
 
+## Beta release stage for DITA POC
+npm-deploy-beta:
+  image: node:16-alpine
+  stage: deploy
+  variables:
+    NPM_TOKEN: ${NPM_TOKEN}
+  allow_failure: true
+  before_script:
+    - apt update -y
+    - apt upgrade -y
+    - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    - apt install -y ./google-chrome-stable_current_amd64.deb    
+  script:
+    - npm --version
+    - npm config set registry=https://registry.npmjs.org/
+    - npm config set @acrolinx:registry=https://registry.npmjs.org/
+    - npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN}
+    - npm ci
+    - npm run buildDistWithNPMLinuxOnly
+    - npm publish --verbose --access public --beta
+  only:
+    - DITA_POC
+
 maven-deploy-snapshot:
   image: maven:3.6-jdk-11
   stage: deploy
