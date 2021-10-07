@@ -104,6 +104,13 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
     }
   }
 
+  openMapInEditor(): void {
+    if(this.props.acrolinxPlugin.openMapInEditor) {
+      return this.props.acrolinxPlugin.openMapInEditor();
+    } else {
+      logging.error('openMapInEditor is not supported');
+    }
+  }
 
   log(logEntry: LogEntry): void {
     if (this.props.acrolinxPlugin.log) {

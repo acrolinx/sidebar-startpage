@@ -96,7 +96,7 @@ npm-deploy-beta:
     - npm config set @acrolinx:registry=https://registry.npmjs.org/
     - npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN}
     - npm ci
-    - npm publish --verbose --access public --beta
+    - npm publish --verbose --access public --tag beta
   only:
     - DITA_POC
 

@@ -25,7 +25,7 @@ import {
   Message,
   SidebarConfiguration
 } from '@acrolinx/sidebar-interface';
-
+import * as logging from "../utils/logging";
 
 export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
   private _acrolinxSidebar: AcrolinxSidebar;
@@ -89,22 +89,25 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
   initBatchCheck(references: BatchCheckRequestOptions[]): void {
     if (this.acrolinxSidebar.initBatchCheck) {
       return this.acrolinxSidebar.initBatchCheck(references);
+    } else {
+      logging.error('initBatchCheck is not supported');
     }
-    // TODO log error?
   }
 
   checkReferenceInBackground(reference: string, documentContent: string, options: CheckOptions): void {
     if (this.acrolinxSidebar.checkReferenceInBackground) {
       return this.acrolinxSidebar.checkReferenceInBackground(reference, documentContent, options);
+    } else {
+      logging.error('checkReferenceInBackground is not supported');
     }
-    // TODO log error?
   }
 
   onReferenceLoadedInEditor?(reference: string): void {
     if (this.acrolinxSidebar.onReferenceLoadedInEditor) {
       return this.acrolinxSidebar.onReferenceLoadedInEditor(reference);
+    } else {
+      logging.error('onReferenceLoadedInEditor is not supported');
     }
-    // TODO log error?
   }
 
 }
