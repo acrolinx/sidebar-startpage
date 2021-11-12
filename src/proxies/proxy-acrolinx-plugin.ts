@@ -88,27 +88,19 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
     }
   }
 
-  requestBackgroundCheckForRef(reference: string): void {
-    if (this.props.acrolinxPlugin.requestBackgroundCheckForRef) {
-      this.props.acrolinxPlugin.requestBackgroundCheckForRef(reference);
+  requestBackgroundCheckForDocument(documentIdentifier: string): void {
+    if (this.props.acrolinxPlugin.requestBackgroundCheckForDocument) {
+      this.props.acrolinxPlugin.requestBackgroundCheckForDocument(documentIdentifier);
     } else {
-      logging.error('requestBackgroundCheckForRef is not supported');
+      logging.error('requestBackgroundCheckForDocument is not supported');
     }
   }
 
-  openReferenceInEditor(reference: string): void | Promise<void> {
-    if (this.props.acrolinxPlugin.openReferenceInEditor) {
-      return this.props.acrolinxPlugin.openReferenceInEditor(reference);
+  openDocumentInEditor(documentIdentifier: string): void | Promise<void> {
+    if (this.props.acrolinxPlugin.openDocumentInEditor) {
+      return this.props.acrolinxPlugin.openDocumentInEditor(documentIdentifier);
     } else {
-      logging.error('openReferenceInEditor is not supported');
-    }
-  }
-
-  openMapInEditor(): void {
-    if(this.props.acrolinxPlugin.openMapInEditor) {
-      return this.props.acrolinxPlugin.openMapInEditor();
-    } else {
-      logging.error('openMapInEditor is not supported');
+      logging.error('openDocumentInEditor is not supported');
     }
   }
 

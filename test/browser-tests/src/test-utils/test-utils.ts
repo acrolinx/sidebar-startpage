@@ -32,7 +32,7 @@ export function getExistingElement(jQuerySelector: string, message?: string) {
 }
 
 export function simulateClick(jQuerySelector: any) {
-  getExistingElement(jQuerySelector).get(0).click();
+  getExistingElement(jQuerySelector).get(0)!.click();
 }
 
 

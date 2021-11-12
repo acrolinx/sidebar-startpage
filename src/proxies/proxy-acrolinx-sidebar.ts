@@ -66,7 +66,7 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
     }
   }
 
-  checkGlobal(documentContent: string, options: CheckOptions): Check | Promise<Check | void> {
+  checkGlobal(documentContent: string, options: CheckOptions): Check {
     return this.acrolinxSidebar.checkGlobal(documentContent, options);
   }
 
@@ -86,27 +86,19 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
     return this.acrolinxSidebar.showMessage(message);
   }
 
-  initBatchCheck(references: BatchCheckRequestOptions[]): void {
+  initBatchCheck(documentIdentifiers: BatchCheckRequestOptions[]): void {
     if (this.acrolinxSidebar.initBatchCheck) {
-      return this.acrolinxSidebar.initBatchCheck(references);
+      return this.acrolinxSidebar.initBatchCheck(documentIdentifiers);
     } else {
       logging.error('initBatchCheck is not supported');
     }
   }
 
-  checkReferenceInBackground(reference: string, documentContent: string, options: CheckOptions): void {
-    if (this.acrolinxSidebar.checkReferenceInBackground) {
-      return this.acrolinxSidebar.checkReferenceInBackground(reference, documentContent, options);
+  checkDocumentInBackground(documentIdentifier: string, documentContent: string, options: CheckOptions): void {
+    if (this.acrolinxSidebar.checkDocumentInBackground) {
+      return this.acrolinxSidebar.checkDocumentInBackground(documentIdentifier, documentContent, options);
     } else {
-      logging.error('checkReferenceInBackground is not supported');
-    }
-  }
-
-  onReferenceLoadedInEditor?(reference: string): void {
-    if (this.acrolinxSidebar.onReferenceLoadedInEditor) {
-      return this.acrolinxSidebar.onReferenceLoadedInEditor(reference);
-    } else {
-      logging.error('onReferenceLoadedInEditor is not supported');
+      logging.error('checkDocumentInBackground is not supported');
     }
   }
 
