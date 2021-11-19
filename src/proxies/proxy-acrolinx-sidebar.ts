@@ -94,11 +94,11 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
     }
   }
 
-  checkDocumentInBackground(documentIdentifier: string, documentContent: string, options: CheckOptions): void {
-    if (this.acrolinxSidebar.checkDocumentInBackground) {
-      return this.acrolinxSidebar.checkDocumentInBackground(documentIdentifier, documentContent, options);
+  checkDocumentInBatch(documentIdentifier: string, documentContent: string, options: CheckOptions): void {
+    if (this.acrolinxSidebar.checkDocumentInBatch) {
+      return this.acrolinxSidebar.checkDocumentInBatch(documentIdentifier, documentContent, options);
     } else {
-      logging.error('checkDocumentInBackground is not supported');
+      logging.error('checkDocumentInBatch is not supported');
     }
   }
 

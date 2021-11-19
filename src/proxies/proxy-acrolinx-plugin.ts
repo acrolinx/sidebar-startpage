@@ -88,11 +88,11 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
     }
   }
 
-  requestBackgroundCheckForDocument(documentIdentifier: string): void {
-    if (this.props.acrolinxPlugin.requestBackgroundCheckForDocument) {
-      this.props.acrolinxPlugin.requestBackgroundCheckForDocument(documentIdentifier);
+  requestCheckForDocumentInBatch(documentIdentifier: string): void {
+    if (this.props.acrolinxPlugin.requestCheckForDocumentInBatch) {
+      this.props.acrolinxPlugin.requestCheckForDocumentInBatch(documentIdentifier);
     } else {
-      logging.error('requestBackgroundCheckForDocument is not supported');
+      logging.error('requestCheckForDocumentInBatch is not supported');
     }
   }
 
