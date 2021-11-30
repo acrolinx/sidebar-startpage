@@ -36,9 +36,10 @@ sonarcloud-check:
     - master
     - tags
 
-build:
+# Build on Linux
+linux:build:
   stage: build
-  image: node:14
+  image: node:lts
   before_script:
     - apt update -y
     - apt upgrade -y
@@ -59,13 +60,45 @@ build:
     - tags
     - DITA_POC
 
-npm-deploy:
+# Build on Mac
+mac:build:
+  stage: build
+  tags:
+    - osx
+    - mac
+    - integrations
+  script:
+    - node --version
+    - npm ci
+    - npm run buildDistButNotNPM
+  only:
+    - merge_requests
+    - master
+    - tags
+
+
+# Build on Windows
+windows:build:
+  stage: build
+  tags:
+    - windows-build-node-integrations
+  script:
+    - node --version
+    - npm ci
+    - npm run buildDistButNotNPM
+  only:
+    - merge_requests
+    - master
+    - tags
+
+
+linux:npm-deploy:
   image: node:16-alpine
   stage: deploy
   variables:
     NPM_TOKEN: ${NPM_TOKEN}
+  needs: ["linux:build"]
   script:
-    - echo ${NPM_TOKEN}
     - npm --version
     - npm config set registry=https://registry.npmjs.org/
     - npm config set @acrolinx:registry=https://registry.npmjs.org/
@@ -75,13 +108,14 @@ npm-deploy:
   only:
     - tags
 
+
 ## Beta release stage for DITA POC
-npm-deploy-beta:
+linux:npm-deploy-beta:
   image: node:16-alpine
   stage: deploy
   variables:
     NPM_TOKEN: ${NPM_TOKEN}
-  allow_failure: true 
+  needs: ["linux:build"]
   script:
     - npm --version
     - npm config set registry=https://registry.npmjs.org/
@@ -92,11 +126,12 @@ npm-deploy-beta:
   only:
     - DITA_POC
 
-maven-deploy-snapshot:
+linux:maven-deploy-snapshot:
   image: maven:3.6-jdk-11
   stage: deploy
   variables:
     STAGE: "snapshot"
+  needs: ["linux:build"]
   before_script:
     - mkdir -p tmp/s3/v14
     - cp -r tmp/dist tmp/s3/v14/dev
@@ -106,11 +141,12 @@ maven-deploy-snapshot:
   only:
     - master
 
-maven-deploy-release:
+linux:maven-deploy-release:
   image: maven:3.6-jdk-11
   stage: deploy
   variables:
     STAGE: "release"
+  needs: ["linux:build"]
   before_script:
     - mkdir -p tmp/s3/v14
     - cp -r tmp/dist tmp/s3/v14/dev
