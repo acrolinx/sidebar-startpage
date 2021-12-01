@@ -188,7 +188,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
     const minimumSidebarVersion = parseVersionNumberWithFallback(initParametersFromPlugin.minimumSidebarVersion);
 
     let sidebarUrl;
-    if(minimumSidebarVersion.length !== 0 && minimumSidebarVersion[0] >= 15) {
+    if(minimumSidebarVersion.length !== 0 && minimumSidebarVersion[0] === 15) {
       sidebarUrl = combinePathParts(acrolinxServerAddress, '/sidebar/v15/')
     } else {
       sidebarUrl = combinePathParts(acrolinxServerAddress, '/sidebar/v14/');
