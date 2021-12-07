@@ -16,6 +16,7 @@
 
 import {
   AcrolinxSidebar,
+  BatchCheckRequestOptions,
   Check,
   CheckedDocumentRange,
   CheckOptions,
@@ -24,7 +25,7 @@ import {
   Message,
   SidebarConfiguration
 } from '@acrolinx/sidebar-interface';
-
+import * as logging from "../utils/logging";
 
 export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
   private _acrolinxSidebar: AcrolinxSidebar;
@@ -84,4 +85,21 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
   showMessage(message: Message): void {
     return this.acrolinxSidebar.showMessage(message);
   }
+
+  initBatchCheck(documentIdentifiers: BatchCheckRequestOptions[]): void {
+    if (this.acrolinxSidebar.initBatchCheck) {
+      return this.acrolinxSidebar.initBatchCheck(documentIdentifiers);
+    } else {
+      logging.error('initBatchCheck is not supported');
+    }
+  }
+
+  checkDocumentInBatch(documentIdentifier: string, documentContent: string, options: CheckOptions): void {
+    if (this.acrolinxSidebar.checkDocumentInBatch) {
+      return this.acrolinxSidebar.checkDocumentInBatch(documentIdentifier, documentContent, options);
+    } else {
+      logging.error('checkDocumentInBatch is not supported');
+    }
+  }
+
 }

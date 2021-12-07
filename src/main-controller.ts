@@ -185,12 +185,19 @@ export function startMainController(opts: MainControllerOpts = {}) {
     sidebarIFrameElement = document.createElement('iframe');
     sidebarContainer.appendChild(sidebarIFrameElement);
 
-    const sidebarUrl = combinePathParts(acrolinxServerAddress, '/sidebar/v14/');
+    const minimumSidebarVersion = parseVersionNumberWithFallback(initParametersFromPlugin.minimumSidebarVersion);
+
+    let sidebarUrl;
+    if(minimumSidebarVersion.length !== 0 && minimumSidebarVersion[0] === 15) {
+      sidebarUrl = combinePathParts(acrolinxServerAddress, '/sidebar/v15/')
+    } else {
+      sidebarUrl = combinePathParts(acrolinxServerAddress, '/sidebar/v14/');
+    }
 
     const loadSidebarProps: LoadSidebarProps = {
       sidebarUrl, useMessageAdapter,
       timeoutWatcher: requestInitTimeoutWatcher,
-      minimumSidebarVersion: parseVersionNumberWithFallback(initParametersFromPlugin.minimumSidebarVersion)
+      minimumSidebarVersion: minimumSidebarVersion
     };
 
     if (selectedPage === PageId.SERVER_SELECTOR) {

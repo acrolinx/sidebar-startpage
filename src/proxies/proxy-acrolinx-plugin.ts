@@ -16,10 +16,12 @@
 
 import {
   AcrolinxPlugin,
-  InitResult,
   CheckResult,
+  InitResult,
+  LogEntry,
   MatchWithReplacement,
-  OpenWindowParameters, RequestGlobalCheckOptions, LogEntry,
+  OpenWindowParameters,
+  RequestGlobalCheckOptions,
 } from '@acrolinx/sidebar-interface';
 import * as logging from "../utils/logging";
 
@@ -83,6 +85,22 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
       this.props.acrolinxPlugin.openLogFile();
     } else {
       logging.error('openLogFile is not supported');
+    }
+  }
+
+  requestCheckForDocumentInBatch(documentIdentifier: string): void {
+    if (this.props.acrolinxPlugin.requestCheckForDocumentInBatch) {
+      this.props.acrolinxPlugin.requestCheckForDocumentInBatch(documentIdentifier);
+    } else {
+      logging.error('requestCheckForDocumentInBatch is not supported');
+    }
+  }
+
+  openDocumentInEditor(documentIdentifier: string): void | Promise<void> {
+    if (this.props.acrolinxPlugin.openDocumentInEditor) {
+      return this.props.acrolinxPlugin.openDocumentInEditor(documentIdentifier);
+    } else {
+      logging.error('openDocumentInEditor is not supported');
     }
   }
 

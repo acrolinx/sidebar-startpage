@@ -58,6 +58,7 @@ linux:build:
     - merge_requests
     - master
     - tags
+    - DITA_POC
 
 # Build on Mac
 mac:build:
@@ -121,8 +122,7 @@ linux:npm-deploy-beta:
     - npm config set @acrolinx:registry=https://registry.npmjs.org/
     - npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN}
     - npm ci
-    - npm run buildDistWithNPMLinuxOnly
-    - npm publish --verbose --access public --beta
+    - npm publish --verbose --access public --tag beta
   only:
     - DITA_POC
 

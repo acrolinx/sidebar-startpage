@@ -163,7 +163,7 @@ describe('integration-tests', function () {
     });
 
     it('show error message for outdated sidebar/server', (done) => {
-      init({showServerSelector: true, minimumSidebarVersion: '15'});
+      init({showServerSelector: true, minimumSidebarVersion: '16'});
 
       $('.serverAddress').val(validMockedServerAddress);
       simulateClick('.submitButton');
