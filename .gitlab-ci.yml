@@ -93,7 +93,7 @@ windows:beta_deploy:
     - $Env:PUBLISH_INTERNAL=$PUBLISH_INTERNAL
     - Write-Host "Get Latest Nuget"
     - curl.exe --location --output nuget.exe "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
-    - ./gitlab-buils-ci.bat > execution.log
+    - ./gitlab-build-ci.bat > execution.log
   artifacts:
     paths:  
     - build\script.log
@@ -112,7 +112,7 @@ windows:beta_deploy:
     - Write-Host "Get Latest Nuget"
     - curl.exe --location --output nuget.exe "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 
-    - ./gitlab-buils-ci.bat > execution.log
+    - ./gitlab-build-ci.bat > execution.log
   only:
     - tags
 
