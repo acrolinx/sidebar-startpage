@@ -109,7 +109,9 @@ linux:npm-deploy:
     - tags
 
 windows:beta_deploy:
-  stage: deploy    
+  stage: deploy 
+  tags:
+    - windows-build-node-integrations   
   script:
     - curl.exe --location --output artifacts_certificates.zip --header JOB-TOKEN:$CI_JOB_TOKEN https://gitlab.com/api/v4/projects/20636229/jobs/artifacts/master/download?job=cert_artifact
     - Expand-Archive -Path .\artifacts_certificates.zip -DestinationPath .\certificate -Force
