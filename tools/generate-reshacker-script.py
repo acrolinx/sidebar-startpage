@@ -100,7 +100,7 @@ def main():
 
         for parent, _, files in os.walk(
                     directory,
-                    onerror=raise_error_without_traceback
+                    # onerror=raise_error_without_traceback
                 ):
             commands.extend(
                 '-addoverwrite "%s", %s,"%s",%d' % (
@@ -114,11 +114,11 @@ def main():
                 ) for path in files
             )
 
-    print >> args.output, _SCRIPT_TEMPLATE.format(
+    print (args.output, _SCRIPT_TEMPLATE.format(
             script_name=os.path.basename(sys.argv[0]),
             script_args=args,
             commands="\n".join(commands)
-        ),
+        )),
 
 
 if __name__ == "__main__":
