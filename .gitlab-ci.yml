@@ -1,5 +1,4 @@
 stages:
-  - verify
   - build
   - deploy
 
@@ -61,7 +60,7 @@ linux:build:
     - DITA_POC
 
 # Build on Mac
-mac:build:
+.mac:build:
   stage: build
   tags:
     - osx
@@ -78,7 +77,7 @@ mac:build:
 
 
 # Build on Windows
-windows:build:
+.windows:build:
   stage: build
   tags:
     - windows-build-node-integrations
@@ -92,7 +91,7 @@ windows:build:
     - tags
 
 
-linux:npm-deploy:
+.linux:npm-deploy:
   image: node:16-alpine
   stage: deploy
   variables:
@@ -117,7 +116,7 @@ windows:beta_deploy:
     - Expand-Archive -Path .\artifacts_certificates.zip -DestinationPath .\certificate -Force
     - $Env:COPYARTIFACT_BUILD_NUMBER_STARTPAGE=$CI_PIPELINE_IID
     - $Env:SIGNINGPWD=$code_signing_key
-    - $Env:CI_JOB_TOKEN=JOB-TOKEN:$CI_JOB_TOKEN
+    - $Env:CI_JOB_TOKEN=$CI_JOB_TOKEN
     - $Env:NUGET_API_KEY=$NUGET_API_KEY
     - $Env:PUBLISH_INTERNAL=$PUBLISH_INTERNAL
     - Write-Host "Get Latest Nuget"
@@ -128,14 +127,14 @@ windows:beta_deploy:
     - build\script.log
     - execution.log
       
-windows:deploy:
+.windows:deploy:
   stage: deploy    
   script:
     - curl.exe --location --output artifacts_certificates.zip --header JOB-TOKEN:$CI_JOB_TOKEN https://gitlab.com/api/v4/projects/20636229/jobs/artifacts/master/download?job=cert_artifact
     - Expand-Archive -Path .\artifacts_certificates.zip -DestinationPath .\certificate -Force
     - $Env:COPYARTIFACT_BUILD_NUMBER_STARTPAGE=$CI_PIPELINE_IID
     - $Env:SIGNINGPWD=$code_signing_key
-    - $Env:CI_JOB_TOKEN=JOB-TOKEN:$CI_JOB_TOKEN
+    - $Env:CI_JOB_TOKEN=$CI_JOB_TOKEN
     - $Env:NUGET_API_KEY=$NUGET_API_KEY
     - $Env:PUBLISH_INTERNAL=$PUBLISH_INTERNAL
     - Write-Host "Get Latest Nuget"
@@ -146,7 +145,7 @@ windows:deploy:
     - tags
 
 ## Beta release stage for DITA POC
-linux:npm-deploy-beta:
+.linux:npm-deploy-beta:
   image: node:16-alpine
   stage: deploy
   variables:
@@ -162,7 +161,7 @@ linux:npm-deploy-beta:
   only:
     - DITA_POC
 
-linux:maven-deploy-snapshot:
+.linux:maven-deploy-snapshot:
   image: maven:3.6-jdk-11
   stage: deploy
   variables:
@@ -177,7 +176,7 @@ linux:maven-deploy-snapshot:
   only:
     - master
 
-linux:maven-deploy-release:
+.linux:maven-deploy-release:
   image: maven:3.6-jdk-11
   stage: deploy
   variables:
