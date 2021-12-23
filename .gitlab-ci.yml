@@ -29,11 +29,7 @@ linux:build:
       - tmp/
       - dist/
       - node_modules/
-  only:
-    - merge_requests
-    - master
-    - tags
-    - DITA_POC
+
 
 # Build on Mac
 .mac:build:
