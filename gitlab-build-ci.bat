@@ -1,4 +1,4 @@
-mkdir build dist                                                    || goto error
+mkdir build                                                    || goto error
 
 REM Create the DLL bundle:
 python tools\generate-reshacker-script.py -b .\tools\data\empty.dll -t HTML -o build\script.txt -L .\build\script.log .\build\Acrolinx.Startpage.dll.bundle .\dist\dist-offline                                                  || goto error
