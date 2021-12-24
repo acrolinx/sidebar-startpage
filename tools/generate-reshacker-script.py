@@ -34,7 +34,7 @@ Log    = "{script_args.script_logfile}"
 
 
 def raise_error_without_traceback(exc):
-    raise exc, None, sys.exc_info()[2]
+    raise exc(sys.exc_info()[2]) from None
 
 def make_argparser():
     p = argparse.ArgumentParser(
@@ -100,7 +100,7 @@ def main():
 
         for parent, _, files in os.walk(
                     directory,
-                    # onerror=raise_error_without_traceback
+                    onerror=raise_error_without_traceback
                 ):
             commands.extend(
                 '-addoverwrite "%s", %s,"%s",%d' % (
@@ -114,11 +114,12 @@ def main():
                 ) for path in files
             )
 
-    print (args.output, _SCRIPT_TEMPLATE.format(
+    print (_SCRIPT_TEMPLATE.format(
             script_name=os.path.basename(sys.argv[0]),
             script_args=args,
             commands="\n".join(commands)
-        )),
+        ), file=args.output),
+
 
 
 if __name__ == "__main__":
