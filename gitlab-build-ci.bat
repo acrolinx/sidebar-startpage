@@ -3,6 +3,7 @@ move /Y dist upstream_artifacts || goto error
 mkdir build  dist                                                  || goto error
 
 REM Create the DLL bundle:
+echo %PATH%
 python tools\generate-reshacker-script.py -b %CD%\tools\data\empty.dll -t HTML -o build\script.txt -L %CD%\build\script.log %CD%\build\Acrolinx.Startpage.dll.bundle %CD%\upstream_artifacts\dist\dist-offline                                                  || goto error
 resourcehacker -script build\script.txt                             || goto error
 type build\script.log
