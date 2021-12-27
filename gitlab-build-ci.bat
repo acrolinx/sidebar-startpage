@@ -9,7 +9,7 @@ resourcehacker -script build\script.txt                             || goto erro
 type build\script.log
 
 REM Extract the application version:
-for /f "usebackq delims=" %%v IN (`python -c "import json; print json.load(open('./package.json'))['version']"`) DO set VERSION=%%v
+for /f "usebackq delims=" %%v IN (`python -c "import json; print(json.load(open('./package.json'))['version'])"`) DO set VERSION=%%v
 
 REM The full version number also includes the build number:
 set FULLVERSION=%VERSION%.%COPYARTIFACT_BUILD_NUMBER_STARTPAGE%
