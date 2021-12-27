@@ -46,7 +46,7 @@ REM Build the NuGet package:
 
 REM Publish it locally and on the NuGet gallery:
 FOR %%P IN (dist\*.nupkg) DO (
-  IF /i %PUBLISH_INTERNAL%==true (
+  IF /i %PUBLISH_INTERNAL%=="true" (
     REM Add the NuGet package registry for internal use:
     .\nuget.exe add source "https://gitlab.example.com/api/v4/projects/projects/22486890/packages/nuget/index.json" --name Gitlab --username gitlab-ci-token --password %CI_JOB_TOKEN% --store-password-in-clear-text
     nuget push -NonInteractive -Source Gitlab %%P      || goto error

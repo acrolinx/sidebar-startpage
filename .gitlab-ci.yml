@@ -73,6 +73,8 @@ linux:build:
 
 windows:beta_deploy:
   stage: deploy 
+  variables:
+    PUBLISH_INTERNAL: "true"
   tags:
     - windows-build-node-integrations   
   script:
