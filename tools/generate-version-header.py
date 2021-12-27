@@ -79,9 +79,7 @@ def main():
     args = get_argparser().parse_args()
 
     with codecs.open(args.out_file, "wb", "utf-8") as fh:
-        escaped_filename = to_c_string(
-                args.filename.decode(sys.getfilesystemencoding())
-            )
+        escaped_filename = to_c_string(args.filename)
         fh.write("#define BUILD_DLL_NAME %s\r\n" % escaped_filename)
 
         current_year = datetime.datetime.utcnow().year
