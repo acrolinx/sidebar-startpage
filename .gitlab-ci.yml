@@ -1,15 +1,8 @@
 stages:
   - verify
   - build
-  - deploy
-
-#Cache node modules, npm install will take care of minor updates
-cache:
-  untracked: false
-  policy: pull-push
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - node_modules/
+  - publish_internal
+  - publish_public
 
 include:
   - project: acrolinx/integrations/gitlab-ci-templates
@@ -54,11 +47,7 @@ linux:build:
       - tmp/
       - dist/
       - node_modules/
-  only:
-    - merge_requests
-    - master
-    - tags
-    - DITA_POC
+
 
 # Build on Mac
 mac:build:
@@ -91,64 +80,10 @@ windows:build:
     - master
     - tags
 
-
-linux:npm-deploy:
-  image: node:16-alpine
-  stage: deploy
-  variables:
-    NPM_TOKEN: ${NPM_TOKEN}
-  needs: ["linux:build"]
-  script:
-    - npm --version
-    - npm config set registry=https://registry.npmjs.org/
-    - npm config set @acrolinx:registry=https://registry.npmjs.org/
-    - npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN}
-    - npm ci
-    - npm publish --verbose --access public
-  only:
-    - tags
-
-windows:beta_deploy:
-  stage: deploy 
-  tags:
-    - windows-build-node-integrations   
-  script:
-    - curl.exe --location --output artifacts_certificates.zip --header JOB-TOKEN:$CI_JOB_TOKEN https://gitlab.com/api/v4/projects/20636229/jobs/artifacts/master/download?job=cert_artifact
-    - Expand-Archive -Path .\artifacts_certificates.zip -DestinationPath .\certificate -Force
-    - $Env:COPYARTIFACT_BUILD_NUMBER_STARTPAGE=$CI_PIPELINE_IID
-    - $Env:SIGNINGPWD=$code_signing_key
-    - $Env:CI_JOB_TOKEN=JOB-TOKEN:$CI_JOB_TOKEN
-    - $Env:NUGET_API_KEY=$NUGET_API_KEY
-    - $Env:PUBLISH_INTERNAL=$PUBLISH_INTERNAL
-    - Write-Host "Get Latest Nuget"
-    - curl.exe --location --output nuget.exe "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
-    - ./gitlab-buils-ci.bat > execution.log
-  artifacts:
-    paths:  
-    - build\script.log
-    - execution.log
-      
-windows:deploy:
-  stage: deploy    
-  script:
-    - curl.exe --location --output artifacts_certificates.zip --header JOB-TOKEN:$CI_JOB_TOKEN https://gitlab.com/api/v4/projects/20636229/jobs/artifacts/master/download?job=cert_artifact
-    - Expand-Archive -Path .\artifacts_certificates.zip -DestinationPath .\certificate -Force
-    - $Env:COPYARTIFACT_BUILD_NUMBER_STARTPAGE=$CI_PIPELINE_IID
-    - $Env:SIGNINGPWD=$code_signing_key
-    - $Env:CI_JOB_TOKEN=JOB-TOKEN:$CI_JOB_TOKEN
-    - $Env:NUGET_API_KEY=$NUGET_API_KEY
-    - $Env:PUBLISH_INTERNAL=$PUBLISH_INTERNAL
-    - Write-Host "Get Latest Nuget"
-    - curl.exe --location --output nuget.exe "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
-
-    - ./gitlab-buils-ci.bat > execution.log
-  only:
-    - tags
-
 ## Beta release stage for DITA POC
 linux:npm-deploy-beta:
   image: node:16-alpine
-  stage: deploy
+  stage: publish_internal
   variables:
     NPM_TOKEN: ${NPM_TOKEN}
   needs: ["linux:build"]
@@ -164,7 +99,7 @@ linux:npm-deploy-beta:
 
 linux:maven-deploy-snapshot:
   image: maven:3.6-jdk-11
-  stage: deploy
+  stage: publish_internal
   variables:
     STAGE: "snapshot"
   needs: ["linux:build"]
@@ -177,9 +112,51 @@ linux:maven-deploy-snapshot:
   only:
     - master
 
+windows:internal_deploy:
+  stage: publish_internal 
+  tags:
+    - windows-build-node-integrations
+  variables:
+    PUBLISH_PUBLIC: "false"
+  script:
+     # Set required variables as windows Env variables
+    - $Env:COPYARTIFACT_BUILD_NUMBER_STARTPAGE=$CI_PIPELINE_IID
+    - $Env:SIGNINGPWD=$code_signing_key
+    - $Env:CI_JOB_TOKEN=$CI_JOB_TOKEN
+
+    - curl.exe --location --output artifacts_certificates.zip --header JOB-TOKEN:$CI_JOB_TOKEN https://gitlab.com/api/v4/projects/20636229/jobs/artifacts/master/download?job=cert_artifact
+    - Expand-Archive -Path .\artifacts_certificates.zip -DestinationPath .\certificate -Force
+    - Write-Host "Get Latest Nuget"
+    - curl.exe --location --output nuget.exe "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
+
+    - ./gitlab-build-ci.bat > execution.log
+  artifacts:
+    when: always
+    paths:  
+    - build\script.log
+    - execution.log
+
+#### Public Deployment Jobs for NPMJS, MAVEN, Nuget - Only Tags ####
+
+linux:npm-deploy:
+  image: node:16-alpine
+  stage: publish_public
+  variables:
+    NPM_TOKEN: ${NPM_TOKEN}
+  needs: ["linux:build"]
+  script:
+    - npm --version
+    - npm config set registry=https://registry.npmjs.org/
+    - npm config set @acrolinx:registry=https://registry.npmjs.org/
+    - npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN}
+    - npm ci
+    - npm publish --verbose --access public
+  only:
+    - tags
+
 linux:maven-deploy-release:
   image: maven:3.6-jdk-11
-  stage: deploy
+  stage: publish_public
   variables:
     STAGE: "release"
   needs: ["linux:build"]
@@ -191,6 +168,36 @@ linux:maven-deploy-release:
     - ./gitlab-build-ci.sh
   only:
     - tags
+
+windows:deploy:
+  stage: publish_public
+  variables:
+    PUBLISH_PUBLIC: "true"
+  tags:
+    - windows-build-node-integrations
+  script:
+     # Set required variables as windows Env variables
+    - $Env:COPYARTIFACT_BUILD_NUMBER_STARTPAGE=$CI_PIPELINE_IID
+    - $Env:SIGNINGPWD=$code_signing_key
+    - $Env:CI_JOB_TOKEN=$CI_JOB_TOKEN
+    - $Env:NUGET_API_KEY=$NUGET_API_KEY
+    - $Env:PUBLISH_PUBLIC=$PUBLISH_PUBLIC
+
+    - curl.exe --location --output artifacts_certificates.zip --header JOB-TOKEN:$CI_JOB_TOKEN https://gitlab.com/api/v4/projects/20636229/jobs/artifacts/master/download?job=cert_artifact
+    - Expand-Archive -Path .\artifacts_certificates.zip -DestinationPath .\certificate -Force
+
+    - curl.exe --location --output nuget.exe "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
+
+    - ./gitlab-build-ci.bat > execution.log
+  only:
+    - tags
+  artifacts:
+    when: always
+    paths:  
+    - build\script.log
+    - execution.log
+
+
 
 
 

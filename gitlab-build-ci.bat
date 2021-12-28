@@ -1,15 +1,17 @@
-mkdir build dist                                                    || goto error
+mkdir upstream_artifacts || goto error
+move /Y dist upstream_artifacts || goto error
+mkdir build  dist                                                  || goto error
 
 REM Create the DLL bundle:
-python tools\generate-reshacker-script.py -b .\tools\data\empty.dll -t HTML -o build\script.txt -L .\build\script.log .\build\Acrolinx.Startpage.dll.bundle .\dist\dist-offline                                                  || goto error
+echo %PATH%
+python tools\generate-reshacker-script.py -b %CD%\tools\data\empty.dll -t HTML -o build\script.txt -L %CD%\build\script.log %CD%\build\Acrolinx.Startpage.dll.bundle %CD%\upstream_artifacts\dist\dist-offline                                                  || goto error
 resourcehacker -script build\script.txt                             || goto error
 type build\script.log
 
 REM Extract the application version:
-for /f "usebackq delims=" %%v IN (`python -c "import json; print json.load(open('./package.json'))['version']"`) DO set VERSION=%%v
+for /f "usebackq delims=" %%v IN (`python -c "import json; print(json.load(open('./package.json'))['version'])"`) DO set VERSION=%%v
 
 REM The full version number also includes the build number:
-$CI_PIPELINE_IID
 set FULLVERSION=%VERSION%.%COPYARTIFACT_BUILD_NUMBER_STARTPAGE%
 
 REM Set version information in the DLL:
@@ -44,15 +46,16 @@ REM Build the NuGet package:
 
 REM Publish it locally and on the NuGet gallery:
 FOR %%P IN (dist\*.nupkg) DO (
-  IF /i %PUBLISH_INTERNAL%==true (
-    REM Add the NuGet package registry for internal use:
-    .\nuget.exe add source "https://gitlab.example.com/api/v4/projects/projects/22486890/packages/nuget/index.json" --name Gitlab --username gitlab-ci-token --password %CI_JOB_TOKEN% --store-password-in-clear-text
-    nuget push -NonInteractive -Source Gitlab %%P      || goto error
-  )
 
-@REM   IF /i %PUBLISH_PUBLIC%==true (
-@REM     nuget push -NonInteractive -Source nuget.org %%P -ApiKey %NUGET_API_KEY%    || goto error
-@REM   )
+  REM Add the NuGet package registry for internal use:
+  .\nuGet.exe sources remove -name Gitlab
+  .\nuget.exe source Add -Source "https://gitlab.com/api/v4/projects/22486890/packages/nuget/index.json" -Name Gitlab -UserName gitlab-ci-token -Password %CI_JOB_TOKEN%
+  .\nuget.exe push -NonInteractive -Source Gitlab %%P      || goto error
+
+  IF /i %PUBLISH_PUBLIC%==true (
+  REM Publish to nuget.org
+  .\nuget.exe push -NonInteractive -Source nuget.org %%P -ApiKey %NUGET_API_KEY%    || goto error
+  )
 )
 
 
