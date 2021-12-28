@@ -78,7 +78,6 @@ windows:build:
     - master
     - tags
 
-## Beta release stage for DITA POC
 linux:npm-deploy-beta:
   image: node:16-alpine
   stage: publish_internal
