@@ -1,3 +1,5 @@
+REM Acrolinx Startpage DLL. Pass "publish" as arguement for publishing to nuget.org
+
 mkdir upstream_artifacts || goto error
 move /Y dist upstream_artifacts || goto error
 mkdir build  dist                                                  || goto error
@@ -52,7 +54,7 @@ FOR %%P IN (dist\*.nupkg) DO (
   .\nuget.exe source Add -Source "https://gitlab.com/api/v4/projects/22486890/packages/nuget/index.json" -Name Gitlab -UserName gitlab-ci-token -Password %CI_JOB_TOKEN%
   .\nuget.exe push -NonInteractive -Source Gitlab %%P      || goto error
 
-  IF /i %PUBLISH_PUBLIC%==true (
+  IF /i "%~1"=="publish"  (
   REM Publish to nuget.org
   .\nuget.exe push -NonInteractive -Source nuget.org %%P -ApiKey %NUGET_API_KEY%    || goto error
   )

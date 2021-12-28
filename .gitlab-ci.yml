@@ -7,17 +7,17 @@ stages:
 include:
   - project: acrolinx/integrations/gitlab-ci-templates
     ref: master
-    file: 'npm/check-licenses-gitlab.yml'
+    file: "npm/check-licenses-gitlab.yml"
 
   - project: acrolinx/integrations/gitlab-ci-templates
     ref: master
-    file: 'npm/vulnerable-prod-dependency-check.yml'
+    file: "npm/vulnerable-prod-dependency-check.yml"
 
 sonarcloud-check:
   stage: verify
   image:
     name: sonarsource/sonar-scanner-cli:latest
-    entrypoint: [ "" ]
+    entrypoint: [""]
   cache:
     key: "${CI_JOB_NAME}"
     paths:
@@ -48,7 +48,6 @@ linux:build:
       - dist/
       - node_modules/
 
-
 # Build on Mac
 mac:build:
   stage: build
@@ -64,7 +63,6 @@ mac:build:
     - merge_requests
     - master
     - tags
-
 
 # Build on Windows
 windows:build:
@@ -113,13 +111,11 @@ linux:maven-deploy-snapshot:
     - master
 
 windows:internal_deploy:
-  stage: publish_internal 
+  stage: publish_internal
   tags:
     - windows-build-node-integrations
-  variables:
-    PUBLISH_PUBLIC: "false"
   script:
-     # Set required variables as windows Env variables
+    # Set required variables as windows Env variables
     - $Env:COPYARTIFACT_BUILD_NUMBER_STARTPAGE=$CI_PIPELINE_IID
     - $Env:SIGNINGPWD=$code_signing_key
     - $Env:CI_JOB_TOKEN=$CI_JOB_TOKEN
@@ -132,9 +128,9 @@ windows:internal_deploy:
     - ./gitlab-build-ci.bat > execution.log
   artifacts:
     when: always
-    paths:  
-    - build\script.log
-    - execution.log
+    paths:
+      - build\script.log
+      - execution.log
 
 #### Public Deployment Jobs for NPMJS, MAVEN, Nuget - Only Tags ####
 
@@ -171,34 +167,25 @@ linux:maven-deploy-release:
 
 windows:deploy:
   stage: publish_public
-  variables:
-    PUBLISH_PUBLIC: "true"
   tags:
     - windows-build-node-integrations
   script:
-     # Set required variables as windows Env variables
+    # Set required variables as windows Env variables
     - $Env:COPYARTIFACT_BUILD_NUMBER_STARTPAGE=$CI_PIPELINE_IID
     - $Env:SIGNINGPWD=$code_signing_key
     - $Env:CI_JOB_TOKEN=$CI_JOB_TOKEN
     - $Env:NUGET_API_KEY=$NUGET_API_KEY
-    - $Env:PUBLISH_PUBLIC=$PUBLISH_PUBLIC
 
     - curl.exe --location --output artifacts_certificates.zip --header JOB-TOKEN:$CI_JOB_TOKEN https://gitlab.com/api/v4/projects/20636229/jobs/artifacts/master/download?job=cert_artifact
     - Expand-Archive -Path .\artifacts_certificates.zip -DestinationPath .\certificate -Force
 
     - curl.exe --location --output nuget.exe "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 
-    - ./gitlab-build-ci.bat > execution.log
+    - ./gitlab-build-ci.bat publish > execution.log
   only:
     - tags
   artifacts:
     when: always
-    paths:  
-    - build\script.log
-    - execution.log
-
-
-
-
-
-
+    paths:
+      - build\script.log
+      - execution.log

@@ -6,7 +6,7 @@ SELECTOR_VERSION=`cat package.json | grep "version\":" | cut -d'"' -f4`
 CLASSIFIER=-SNAPSHOT
 
 # prod is triggered on release tag!
-if [ "$STAGE" = "release" ]; then
+if [ "$CI_JOB_STAGE" = "publish_public" ]; then
     echo "Creating release version ID..."
   	CLASSIFIER=.$CI_PIPELINE_IID
 fi
