@@ -39,7 +39,6 @@
   },
   "author": "Acrolinx",
   "url": "http://www.acrolinx.com",
-  "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
