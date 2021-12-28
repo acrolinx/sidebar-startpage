@@ -7,9 +7,9 @@
     <owners>Acrolinx</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">Apache-2.0</license>
-    <projectUrl>https://github.com/acrolinx/sidebar-startpage</projectUrl>
+    <projectUrl>https://gitlab.com/acrolinx/integrations/sidebar-startpage</projectUrl>
     <description>Container component for Acrolinx integrations that loads the Acrolinx sidebar; packaged as a resource DLL</description>
-    <copyright>Copyright © Acrolinx 2017</copyright>
+    <copyright>Copyright © Acrolinx 2017-present</copyright>
     <tags>Acrolinx Sidebar Startpage</tags>
 
     <contentFiles>
