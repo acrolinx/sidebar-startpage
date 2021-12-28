@@ -20,7 +20,7 @@ const CONSTANTS_FILE = 'tmp/compiled/src/constants.js';
 const ENCODING = 'utf8';
 
 const packageJson = JSON.parse(fs.readFileSync('package.json'));
-const build = process.env.BUILD_NUMBER || 1;
+const build = process.env.CI_PIPELINE_IID || 1;
 
 const serverSelectorVersion = packageJson.version + '.' + build;
 

@@ -48,7 +48,7 @@ module.exports = function (config) {
     browserStack: {
       /// username: 'marcostahl2', set by BROWSER_STACK_USERNAME
       //  accessKey: '*', set by BROWSER_STACK_ACCESS_KEY
-      build: 'sidebar-startpage-' + (process.env.BUILD_NUMBER || 'local'),
+      build: 'sidebar-startpage-' + (process.env.CI_PIPELINE_IID || 'local'),
       name: 'sidebar-startpage',
       project: 'Sidebar Start Page',
       retryLimit: 6,
