@@ -90,6 +90,7 @@ linux:npm-deploy-beta:
     - npm config set @acrolinx:registry=https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/npm/
     - npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN}
     - npm config set -- '//gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken' "${CI_JOB_TOKEN}"
+    - npm version 3.1.0-beta.$CI_PIPELINE_IID
     - npm ci
     - npm publish --verbose --access public --tag beta
   only:
@@ -114,6 +115,7 @@ windows:internal_deploy:
   stage: publish_internal
   tags:
     - windows-build-node-integrations
+  needs: ["linux:build"]
   script:
     # Set required variables as windows Env variables
     - $Env:COPYARTIFACT_BUILD_NUMBER_STARTPAGE=$CI_PIPELINE_IID
@@ -169,6 +171,7 @@ windows:deploy:
   stage: publish_public
   tags:
     - windows-build-node-integrations
+  needs: ["linux:build"]
   script:
     # Set required variables as windows Env variables
     - $Env:COPYARTIFACT_BUILD_NUMBER_STARTPAGE=$CI_PIPELINE_IID
