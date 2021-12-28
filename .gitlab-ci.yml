@@ -1,7 +1,33 @@
 stages:
+  - verify
   - build
-  - deploy
+  - publish_internal
+  - publish_public
 
+include:
+  - project: acrolinx/integrations/gitlab-ci-templates
+    ref: master
+    file: 'npm/check-licenses-gitlab.yml'
+
+  - project: acrolinx/integrations/gitlab-ci-templates
+    ref: master
+    file: 'npm/vulnerable-prod-dependency-check.yml'
+
+sonarcloud-check:
+  stage: verify
+  image:
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [ "" ]
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - sonar-scanner
+  only:
+    - merge_requests
+    - master
+    - tags
 
 # Build on Linux
 linux:build:
@@ -24,7 +50,7 @@ linux:build:
 
 
 # Build on Mac
-.mac:build:
+mac:build:
   stage: build
   tags:
     - osx
@@ -41,7 +67,7 @@ linux:build:
 
 
 # Build on Windows
-.windows:build:
+windows:build:
   stage: build
   tags:
     - windows-build-node-integrations
@@ -54,10 +80,10 @@ linux:build:
     - master
     - tags
 
-
-.linux:npm-deploy:
+## Beta release stage for DITA POC
+linux:npm-deploy-beta:
   image: node:16-alpine
-  stage: deploy
+  stage: publish_internal
   variables:
     NPM_TOKEN: ${NPM_TOKEN}
   needs: ["linux:build"]
@@ -67,12 +93,27 @@ linux:build:
     - npm config set @acrolinx:registry=https://registry.npmjs.org/
     - npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN}
     - npm ci
-    - npm publish --verbose --access public
+    - npm publish --verbose --access public --tag beta
   only:
-    - tags
+    - DITA_POC
 
-windows:beta_deploy:
-  stage: deploy 
+linux:maven-deploy-snapshot:
+  image: maven:3.6-jdk-11
+  stage: publish_internal
+  variables:
+    STAGE: "snapshot"
+  needs: ["linux:build"]
+  before_script:
+    - mkdir -p tmp/s3/v14
+    - cp -r tmp/dist tmp/s3/v14/dev
+    - chmod +x ./gitlab-build-ci.sh
+  script:
+    - ./gitlab-build-ci.sh
+  only:
+    - master
+
+windows:internal_deploy:
+  stage: publish_internal 
   tags:
     - windows-build-node-integrations
   variables:
@@ -94,9 +135,42 @@ windows:beta_deploy:
     paths:  
     - build\script.log
     - execution.log
-      
-.windows:deploy:
-  stage: deploy
+
+#### Public Deployment Jobs for NPMJS, MAVEN, Nuget - Only Tags ####
+
+linux:npm-deploy:
+  image: node:16-alpine
+  stage: publish_public
+  variables:
+    NPM_TOKEN: ${NPM_TOKEN}
+  needs: ["linux:build"]
+  script:
+    - npm --version
+    - npm config set registry=https://registry.npmjs.org/
+    - npm config set @acrolinx:registry=https://registry.npmjs.org/
+    - npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN}
+    - npm ci
+    - npm publish --verbose --access public
+  only:
+    - tags
+
+linux:maven-deploy-release:
+  image: maven:3.6-jdk-11
+  stage: publish_public
+  variables:
+    STAGE: "release"
+  needs: ["linux:build"]
+  before_script:
+    - mkdir -p tmp/s3/v14
+    - cp -r tmp/dist tmp/s3/v14/dev
+    - chmod +x ./gitlab-build-ci.sh
+  script:
+    - ./gitlab-build-ci.sh
+  only:
+    - tags
+
+windows:deploy:
+  stage: publish_public
   variables:
     PUBLISH_PUBLIC: "true"
   tags:
@@ -123,52 +197,7 @@ windows:beta_deploy:
     - build\script.log
     - execution.log
 
-## Beta release stage for DITA POC
-.linux:npm-deploy-beta:
-  image: node:16-alpine
-  stage: deploy
-  variables:
-    NPM_TOKEN: ${NPM_TOKEN}
-  needs: ["linux:build"]
-  script:
-    - npm --version
-    - npm config set registry=https://registry.npmjs.org/
-    - npm config set @acrolinx:registry=https://registry.npmjs.org/
-    - npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN}
-    - npm ci
-    - npm publish --verbose --access public --tag beta
-  only:
-    - DITA_POC
 
-.linux:maven-deploy-snapshot:
-  image: maven:3.6-jdk-11
-  stage: deploy
-  variables:
-    STAGE: "snapshot"
-  needs: ["linux:build"]
-  before_script:
-    - mkdir -p tmp/s3/v14
-    - cp -r tmp/dist tmp/s3/v14/dev
-    - chmod +x ./gitlab-build-ci.sh
-  script:
-    - ./gitlab-build-ci.sh
-  only:
-    - master
-
-.linux:maven-deploy-release:
-  image: maven:3.6-jdk-11
-  stage: deploy
-  variables:
-    STAGE: "release"
-  needs: ["linux:build"]
-  before_script:
-    - mkdir -p tmp/s3/v14
-    - cp -r tmp/dist tmp/s3/v14/dev
-    - chmod +x ./gitlab-build-ci.sh
-  script:
-    - ./gitlab-build-ci.sh
-  only:
-    - tags
 
 
 
