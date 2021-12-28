@@ -48,6 +48,7 @@ REM Publish it locally and on the NuGet gallery:
 FOR %%P IN (dist\*.nupkg) DO (
 
   REM Add the NuGet package registry for internal use:
+  .\nuGet.exe sources remove -name Gitlab
   .\nuget.exe source Add -Source "https://gitlab.com/api/v4/projects/22486890/packages/nuget/index.json" -Name Gitlab -UserName gitlab-ci-token -Password %CI_JOB_TOKEN%
   .\nuget.exe push -NonInteractive -Source Gitlab %%P      || goto error
 

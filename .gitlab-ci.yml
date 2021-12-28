@@ -75,6 +75,8 @@ windows:beta_deploy:
   stage: deploy 
   tags:
     - windows-build-node-integrations
+  variables:
+    PUBLISH_PUBLIC: "false"
   script:
      # Set required variables as windows Env variables
     - $Env:COPYARTIFACT_BUILD_NUMBER_STARTPAGE=$CI_PIPELINE_IID
