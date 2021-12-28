@@ -49,7 +49,7 @@ FOR %%P IN (dist\*.nupkg) DO (
   IF /i %PUBLISH_INTERNAL%==true (
     REM Add the NuGet package registry for internal use:
     .\nuget.exe source Add "https://gitlab.com/api/v4/projects/22486890/packages/nuget/index.json" -Name Gitlab -UserName gitlab-ci-token -Password %CI_JOB_TOKEN%
-    nuget push -NonInteractive -Source Gitlab %%P      || goto error
+    .\nuget.exe push -NonInteractive -Source Gitlab %%P      || goto error
   )
 
 @REM   IF /i %PUBLISH_PUBLIC%==true (
