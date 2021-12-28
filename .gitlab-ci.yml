@@ -73,42 +73,53 @@ linux:build:
 
 windows:beta_deploy:
   stage: deploy 
-  variables:
-    PUBLISH_INTERNAL: "true"
   tags:
-    - windows-build-node-integrations   
+    - windows-build-node-integrations
   script:
-    - curl.exe --location --output artifacts_certificates.zip --header JOB-TOKEN:$CI_JOB_TOKEN https://gitlab.com/api/v4/projects/20636229/jobs/artifacts/master/download?job=cert_artifact
-    - Expand-Archive -Path .\artifacts_certificates.zip -DestinationPath .\certificate -Force
+     # Set required variables as windows Env variables
     - $Env:COPYARTIFACT_BUILD_NUMBER_STARTPAGE=$CI_PIPELINE_IID
     - $Env:SIGNINGPWD=$code_signing_key
     - $Env:CI_JOB_TOKEN=$CI_JOB_TOKEN
-    - $Env:NUGET_API_KEY=$NUGET_API_KEY
-    - $Env:PUBLISH_INTERNAL=$PUBLISH_INTERNAL
+
+    - curl.exe --location --output artifacts_certificates.zip --header JOB-TOKEN:$CI_JOB_TOKEN https://gitlab.com/api/v4/projects/20636229/jobs/artifacts/master/download?job=cert_artifact
+    - Expand-Archive -Path .\artifacts_certificates.zip -DestinationPath .\certificate -Force
     - Write-Host "Get Latest Nuget"
     - curl.exe --location --output nuget.exe "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
+
     - ./gitlab-build-ci.bat > execution.log
   artifacts:
+    when: always
     paths:  
     - build\script.log
     - execution.log
       
 .windows:deploy:
-  stage: deploy    
+  stage: deploy
+  variables:
+    PUBLISH_PUBLIC: "true"
+  tags:
+    - windows-build-node-integrations
   script:
-    - curl.exe --location --output artifacts_certificates.zip --header JOB-TOKEN:$CI_JOB_TOKEN https://gitlab.com/api/v4/projects/20636229/jobs/artifacts/master/download?job=cert_artifact
-    - Expand-Archive -Path .\artifacts_certificates.zip -DestinationPath .\certificate -Force
+     # Set required variables as windows Env variables
     - $Env:COPYARTIFACT_BUILD_NUMBER_STARTPAGE=$CI_PIPELINE_IID
     - $Env:SIGNINGPWD=$code_signing_key
     - $Env:CI_JOB_TOKEN=$CI_JOB_TOKEN
     - $Env:NUGET_API_KEY=$NUGET_API_KEY
-    - $Env:PUBLISH_INTERNAL=$PUBLISH_INTERNAL
-    - Write-Host "Get Latest Nuget"
+    - $Env:PUBLISH_PUBLIC=$PUBLISH_PUBLIC
+
+    - curl.exe --location --output artifacts_certificates.zip --header JOB-TOKEN:$CI_JOB_TOKEN https://gitlab.com/api/v4/projects/20636229/jobs/artifacts/master/download?job=cert_artifact
+    - Expand-Archive -Path .\artifacts_certificates.zip -DestinationPath .\certificate -Force
+
     - curl.exe --location --output nuget.exe "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 
     - ./gitlab-build-ci.bat > execution.log
   only:
     - tags
+  artifacts:
+    when: always
+    paths:  
+    - build\script.log
+    - execution.log
 
 ## Beta release stage for DITA POC
 .linux:npm-deploy-beta:
