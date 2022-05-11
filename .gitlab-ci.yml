@@ -6,11 +6,11 @@ stages:
 
 include:
   - project: acrolinx/integrations/gitlab-ci-templates
-    ref: master
+    ref: main
     file: "npm/check-licenses-gitlab.yml"
 
   - project: acrolinx/integrations/gitlab-ci-templates
-    ref: master
+    ref: main
     file: "npm/vulnerable-prod-dependency-check.yml"
 
 sonarcloud-check:
