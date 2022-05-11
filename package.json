@@ -1,6 +1,6 @@
 {
   "name": "@acrolinx/sidebar-startpage",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "A Container Component for Acrolinx Integrations that loads the Acrolinx sidebar",
   "scripts": {
     "generateTranslationsTs": "shx mkdir -p tmp/generated && node ./tools/generate-translations-ts.js",
@@ -49,7 +49,7 @@
     "preact": "This is the only package that is build into the final startpage code."
   },
   "devDependencies": {
-    "@acrolinx/sidebar-interface": "15.0.0",
+    "@acrolinx/sidebar-interface": "15.2.0",
     "@types/chai": "4.2.21",
     "@types/jquery": "^3.5.6",
     "@types/lodash": "^4.14.172",
