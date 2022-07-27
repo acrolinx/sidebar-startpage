@@ -130,10 +130,12 @@ windows:internal_deploy:
     - ./gitlab-build-ci.bat > execution.log
   only:
     - master
+    - merge_requests
   artifacts:
     when: always
     paths:
       - build\script.log
+      - build\script.txt
       - execution.log
 
 
