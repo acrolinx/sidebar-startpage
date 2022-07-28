@@ -59,10 +59,6 @@ mac:build:
     - node --version
     - npm ci
     - npm run buildDistButNotNPM
-  only:
-    - merge_requests
-    - master
-    - tags
 
 # Build on Windows
 windows:build:
@@ -73,10 +69,6 @@ windows:build:
     - node --version
     - npm ci
     - npm run buildDistButNotNPM
-  only:
-    - merge_requests
-    - master
-    - tags
 
 linux:npm-deploy-beta:
   image: node:16-alpine
@@ -134,6 +126,7 @@ windows:internal_deploy:
     when: always
     paths:
       - build\script.log
+      - build\script.txt
       - execution.log
 
 
