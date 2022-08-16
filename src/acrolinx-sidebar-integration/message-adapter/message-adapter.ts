@@ -20,26 +20,37 @@ import {
   CheckOptions,
   Check,
   InvalidDocumentPart,
-  CheckedDocumentRange, SidebarConfiguration, Message
-} from '@acrolinx/sidebar-interface';
-import {ExtendedAcrolinxSidebar, SetStorageProps} from '../../sidebar-interface-extensions';
+  CheckedDocumentRange,
+  SidebarConfiguration,
+  Message,
+  Cluster,
+} from "@acrolinx/sidebar-interface";
+import {
+  ExtendedAcrolinxSidebar,
+  SetStorageProps,
+} from "../../sidebar-interface-extensions";
 
 // Functions are not cloneable and don't work with postMessage.
 function removeFunctions(object: any) {
   return JSON.parse(JSON.stringify(object));
 }
 
-
 function postCommandAsMessage(window: Window, command: string, ...args: any[]) {
-  window.postMessage({
-    command,
-    args: removeFunctions(args)
-  }, '*');
+  window.postMessage(
+    {
+      command,
+      args: removeFunctions(args),
+    },
+    "*"
+  );
 }
 
 type WindowProvider = () => Window;
 
-function injectPostCommandAsMessage(windowProvider: WindowProvider, object: any) {
+function injectPostCommandAsMessage(
+  windowProvider: WindowProvider,
+  object: any
+) {
   for (const key in object) {
     const originalMethod = object[key];
     object[key] = (...args: any[]) => {
@@ -52,33 +63,31 @@ function injectPostCommandAsMessage(windowProvider: WindowProvider, object: any)
 /**
  * Connects to a sidebar iframe that is on a different domain and uses the plugin message adapter.
  */
-export function createSidebarMessageProxy(sidebarWindow: Window) : AcrolinxSidebar {
+export function createSidebarMessageProxy(
+  sidebarWindow: Window
+): AcrolinxSidebar {
   const sidebar: ExtendedAcrolinxSidebar = {
-    init (_initParameters: InitParameters): void {
-    },
-    configure (_initParameters: SidebarConfiguration): void {
-    },
+    init(_initParameters: InitParameters): void {},
+    configure(_initParameters: SidebarConfiguration): void {},
     checkGlobal(_documentContent: string, _options: CheckOptions): Check {
-      return {checkId: 'dummyCheckId'};
+      return { checkId: "dummyCheckId" };
     },
-    onGlobalCheckRejected(): void {
-    },
+    onGlobalCheckRejected(): void {},
 
-    invalidateRanges(_invalidCheckedDocumentRanges: InvalidDocumentPart[]) {
-    },
+    invalidateRanges(_invalidCheckedDocumentRanges: InvalidDocumentPart[]) {},
 
-    onVisibleRangesChanged(_checkedDocumentRanges: CheckedDocumentRange[]) {
-    },
+    onVisibleRangesChanged(_checkedDocumentRanges: CheckedDocumentRange[]) {},
 
-    showMessage(_message: Message): void {
-    },
+    showMessage(_message: Message): void {},
 
-    setStorage(_props: SetStorageProps): void {
-    }
+    setStorage(_props: SetStorageProps): void {},
+
+    callReuse(): Cluster[] {
+      return [];
+    },
   };
 
   injectPostCommandAsMessage(() => sidebarWindow, sidebar);
 
   return sidebar;
 }
-
