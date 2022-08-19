@@ -120,9 +120,6 @@ windows:internal_deploy:
     - curl.exe --location --output nuget.exe "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 
     - python runBatchScript.py
-  only:
-    - master
-    - merge_requests
   artifacts:
     when: always
     paths:
