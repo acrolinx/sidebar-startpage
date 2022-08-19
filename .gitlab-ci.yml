@@ -179,11 +179,10 @@ windows:deploy:
 
     - curl.exe --location --output nuget.exe "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 
-    - ./gitlab-build-ci.bat publish > execution.log
+    - python runBatchScript.py
   only:
     - tags
   artifacts:
     when: always
     paths:
       - build\script.log
-      - execution.log
