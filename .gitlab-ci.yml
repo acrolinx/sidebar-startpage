@@ -119,7 +119,7 @@ windows:internal_deploy:
     - Write-Host "Get Latest Nuget"
     - curl.exe --location --output nuget.exe "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 
-    - ./gitlab-build-ci.bat > execution.log
+    - python runBatchScript.py
   only:
     - master
   artifacts:
@@ -127,7 +127,6 @@ windows:internal_deploy:
     paths:
       - build\script.log
       - build\script.txt
-      - execution.log
 
 
 #### Public Deployment Jobs for NPMJS, MAVEN, Nuget - Only Tags ####
