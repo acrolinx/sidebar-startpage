@@ -122,6 +122,7 @@ windows:internal_deploy:
     - python runBatchScript.py
   only:
     - master
+    - merge_requests
   artifacts:
     when: always
     paths:
