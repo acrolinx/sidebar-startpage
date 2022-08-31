@@ -23,7 +23,7 @@ import {
   CheckedDocumentRange,
   SidebarConfiguration,
   Message,
-  Cluster,
+  // Cluster,
 } from "@acrolinx/sidebar-interface";
 import {
   ExtendedAcrolinxSidebar,
@@ -82,9 +82,10 @@ export function createSidebarMessageProxy(
 
     setStorage(_props: SetStorageProps): void {},
 
-    callReuse(): Cluster[] {
-      return [];
-    },
+    onReusePrefixSearchResult(_result: string[]): void {}
+    // callReuse(): Cluster[] {
+    //   return [];
+    // },
   };
 
   injectPostCommandAsMessage(() => sidebarWindow, sidebar);

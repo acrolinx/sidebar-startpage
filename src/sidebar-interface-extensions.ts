@@ -7,10 +7,19 @@ interface AcrolinxPluginStorageExtension {
 
 export interface ExtendedAcrolinxPlugin extends AcrolinxPlugin, AcrolinxPluginStorageExtension {}
 
+export interface AcrolinxPluginWithReuse extends AcrolinxPlugin {
+  onReusePrefixSearchResult(result: string[]): void;
+}
+
 export interface SetStorageProps {
   data: Record<string, string>;
 }
 
 export interface ExtendedAcrolinxSidebar extends AcrolinxSidebar {
   setStorage(props: SetStorageProps): void;
+  onReusePrefixSearchResult(result: string[]): void;
+}
+
+export interface AcrolinxSidebarWithReuse extends AcrolinxSidebar {
+  reusePrefixSearch(prefix: string): void;
 }

@@ -29,17 +29,21 @@ export const POLL_FOR_PLUGIN_INTERVAL_MS = 10;
 
 export interface ProxyAcrolinxPluginProps {
   requestInitListener: () => void;
-  acrolinxPlugin: AcrolinxPlugin;
+  acrolinxPlugin: AcrolinxPluginWithReuse;
   serverAddress: string;
   showServerSelector: Function;
   openWindow: (opts: OpenWindowParameters) => void;
+}
+
+export interface AcrolinxPluginWithReuse extends AcrolinxPlugin {
+  onReusePrefixSearchResult(result: string[]): void;
 }
 
 /**
  * Made for injection into the sidebar iframe.
  * It will forward method calls from the sidebar to the startpage or directly to the acrolinxPlugin.
  */
-export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
+export class ProxyAcrolinxPlugin implements AcrolinxPluginWithReuse {
 
   constructor(private readonly props: ProxyAcrolinxPluginProps) {
   }
@@ -96,6 +100,10 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
     }
   }
 
+  onReusePrefixSearchResult(result: string[]): void {
+     this.props.acrolinxPlugin.onReusePrefixSearchResult(result);
+  }
+
   openDocumentInEditor(documentIdentifier: string): void | Promise<void> {
     if (this.props.acrolinxPlugin.openDocumentInEditor) {
       return this.props.acrolinxPlugin.openDocumentInEditor(documentIdentifier);
@@ -114,7 +122,7 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
 }
 
 
-export function waitForAcrolinxPlugin(callback: (acrolinxPlugin: AcrolinxPlugin) => void) {
+export function waitForAcrolinxPlugin(callback: (acrolinxPlugin: AcrolinxPluginWithReuse) => void) {
   const windowAny = window as any;
   if (windowAny.acrolinxPlugin) {
     callback(windowAny.acrolinxPlugin);

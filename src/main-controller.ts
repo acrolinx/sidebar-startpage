@@ -17,6 +17,7 @@
 import {
   ExtendedAcrolinxPlugin,
   ExtendedAcrolinxSidebar,
+  AcrolinxPluginWithReuse,
 } from "./sidebar-interface-extensions";
 import { setExternalLog } from "./utils/logging";
 import {
@@ -49,7 +50,7 @@ import {
 import { createSidebarMessageProxy } from "./acrolinx-sidebar-integration/message-adapter/message-adapter";
 import { ProxyAcrolinxSidebar } from "./proxies/proxy-acrolinx-sidebar";
 import {
-  AcrolinxPlugin,
+  // AcrolinxPlugin,
   InitParameters,
   OpenWindowParameters,
 } from "@acrolinx/sidebar-interface";
@@ -126,7 +127,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
 
   const windowAny = window as any;
   const sidebarProxy = new ProxyAcrolinxSidebar(onInitFromPlugin);
-  let acrolinxPlugin: AcrolinxPlugin;
+  let acrolinxPlugin: AcrolinxPluginWithReuse;
   let initParametersFromPlugin: InitParameters;
   windowAny.acrolinxSidebar = sidebarProxy;
 
