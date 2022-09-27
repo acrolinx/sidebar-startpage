@@ -1,5 +1,5 @@
 {
-  "name": "@acrolinx/sidebar-startpage",
+  "name": "@acrolinx/sidebar-startpage-reuse",
   "version": "3.1.2",
   "description": "A Container Component for Acrolinx Integrations that loads the Acrolinx sidebar",
   "scripts": {
