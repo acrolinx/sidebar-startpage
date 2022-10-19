@@ -5,6 +5,16 @@ interface AcrolinxPluginStorageExtension {
   removeStorageItem(key: string): void;
 }
 
+//ToDo: Move this to sidebar-interface
+interface ReuseSuggestion {
+  preferredPhrase: string,
+  description: string
+}
+export interface ReuseSearchResult {
+  requestId: string,
+  results: ReuseSuggestion[]
+}
+
 export interface ExtendedAcrolinxPlugin extends AcrolinxPlugin, AcrolinxPluginStorageExtension {}
 
 export interface AcrolinxPluginWithReuse extends AcrolinxPlugin {
@@ -17,9 +27,9 @@ export interface SetStorageProps {
 
 export interface ExtendedAcrolinxSidebar extends AcrolinxSidebar {
   setStorage(props: SetStorageProps): void;
-  onReusePrefixSearchResult(result: string[]): void;
+  onReusePrefixSearchResult(reuseSearchResult: ReuseSearchResult): void;
 }
 
 export interface AcrolinxSidebarWithReuse extends AcrolinxSidebar {
-  reusePrefixSearch(prefix: string): void;
+  reusePrefixSearch(requestId: string, prefix: string): void;
 }

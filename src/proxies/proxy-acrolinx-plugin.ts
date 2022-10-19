@@ -20,9 +20,11 @@ import {
   InitResult,
   LogEntry,
   MatchWithReplacement,
+  Message,
   OpenWindowParameters,
   RequestGlobalCheckOptions,
 } from '@acrolinx/sidebar-interface';
+import { ReuseSearchResult } from '../sidebar-interface-extensions';
 import * as logging from "../utils/logging";
 
 export const POLL_FOR_PLUGIN_INTERVAL_MS = 10;
@@ -36,7 +38,8 @@ export interface ProxyAcrolinxPluginProps {
 }
 
 export interface AcrolinxPluginWithReuse extends AcrolinxPlugin {
-  onReusePrefixSearchResult(result: string[]): void;
+  onReusePrefixSearchResult(reuseSearchResult: ReuseSearchResult): void;
+  onReusePrefixSearchFailed(message: Message): void;
 }
 
 /**
@@ -100,8 +103,12 @@ export class ProxyAcrolinxPlugin implements AcrolinxPluginWithReuse {
     }
   }
 
-  onReusePrefixSearchResult(result: string[]): void {
-     this.props.acrolinxPlugin.onReusePrefixSearchResult(result);
+  onReusePrefixSearchResult(reuseSearchResult: ReuseSearchResult): void {
+     this.props.acrolinxPlugin.onReusePrefixSearchResult(reuseSearchResult);
+  }
+
+  onReusePrefixSearchFailed(message: Message): void {
+    this.props.acrolinxPlugin.onReusePrefixSearchFailed(message);
   }
 
   openDocumentInEditor(documentIdentifier: string): void | Promise<void> {
