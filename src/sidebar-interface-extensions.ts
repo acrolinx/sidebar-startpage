@@ -1,4 +1,4 @@
-import {AcrolinxPlugin, AcrolinxSidebar} from '@acrolinx/sidebar-interface';
+import {AcrolinxPlugin, AcrolinxSidebar, Message} from '@acrolinx/sidebar-interface';
 
 interface AcrolinxPluginStorageExtension {
   setStorageItem(key: string, value: string): void;
@@ -18,7 +18,8 @@ export interface ReuseSearchResult {
 export interface ExtendedAcrolinxPlugin extends AcrolinxPlugin, AcrolinxPluginStorageExtension {}
 
 export interface AcrolinxPluginWithReuse extends AcrolinxPlugin {
-  onReusePrefixSearchResult(result: string[]): void;
+  onReusePrefixSearchResult(reuseSearchResult: ReuseSearchResult): void;
+  onReusePrefixSearchFailed(message: Message): void;
 }
 
 export interface SetStorageProps {
