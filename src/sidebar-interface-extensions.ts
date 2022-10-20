@@ -32,5 +32,5 @@ export interface ExtendedAcrolinxSidebar extends AcrolinxSidebar {
 }
 
 export interface AcrolinxSidebarWithReuse extends AcrolinxSidebar {
-  reusePrefixSearch(requestId: string, prefix: string): void;
+  reusePrefixSearch(prefix: string): void;
 }
