@@ -19,10 +19,6 @@
     "message": {
       "invalidServerAddress": "Ist die Acrolinx-URL korrekt? \u00dcberpr\u00fcfen Sie die eingegebene URL und versuchen Sie es erneut.",
       "loadSidebarTimeout": "Die Sidebar braucht zu lange zum Laden. \u00dcberpr\u00fcfen Sie Ihre Netzwerkverbindung oder wenden Sie sich an Ihre*n Acrolinx-Admin.",
-      "outdatedServer": "Ihre Acrolinx-Integration ben\u00f6tigt eine neuere Version der Acrolinx-Plattform. Sonst l\u00e4dt die Sidebar nicht. Bitten Sie Ihre*n Admin, die Plattform zu aktualisieren.",
-      "serverConnectionProblemHttp": "Wir konnten keine Verbindung zu Acrolinx herstellen. Stimmt die Acrolinx-URL? Wenn ja, wenden Sie sich an Ihre*n Admin. M\u00f6glicherweise akzeptiert Ihre Acrolinx-Plattform keine ungesicherten Verbindungen.",
-      "serverConnectionProblemHttps": "Wir konnten keine Verbindung zu Acrolinx herstellen. Stimmt die Acrolinx-URL? Wenn ja, wenden Sie sich an Ihre*n Admin. M\u00f6glicherweise akzeptiert Ihre Acrolinx-Plattform keine gesicherten Verbindungen.",
-      "serverIsNoAcrolinxServerOrHasNoSidebar": "Stimmt die Acrolinx-URL? Wenn ja, wird die Sidebar von der Acrolinx-Plattform evtl. nicht unterst\u00fctzt? Fragen Sie Ihre*n Admin.",
       "serverIsNotSecure": "Verwenden Sie eine gesicherte Acrolinx-URL. Eine gesicherte Acrolinx-URL beginnt mit \u201ehttps\u201c."
     },
     "placeHolder": {
