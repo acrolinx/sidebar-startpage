@@ -15,16 +15,14 @@
  */
 
 import {
-  AcrolinxPlugin,
   CheckResult,
   InitResult,
   LogEntry,
   MatchWithReplacement,
-  Message,
   OpenWindowParameters,
   RequestGlobalCheckOptions,
 } from '@acrolinx/sidebar-interface';
-import { ReuseSearchResult } from '../sidebar-interface-extensions';
+import { AcrolinxPluginWithReuse, ReuseSearchResult, UILanguage } from '../sidebar-interface-extensions';
 import * as logging from "../utils/logging";
 
 export const POLL_FOR_PLUGIN_INTERVAL_MS = 10;
@@ -35,11 +33,6 @@ export interface ProxyAcrolinxPluginProps {
   serverAddress: string;
   showServerSelector: Function;
   openWindow: (opts: OpenWindowParameters) => void;
-}
-
-export interface AcrolinxPluginWithReuse extends AcrolinxPlugin {
-  onReusePrefixSearchResult(reuseSearchResult: ReuseSearchResult): void;
-  onReusePrefixSearchFailed(message: Message): void;
 }
 
 /**
@@ -104,12 +97,29 @@ export class ProxyAcrolinxPlugin implements AcrolinxPluginWithReuse {
   }
 
   onReusePrefixSearchResult(reuseSearchResult: ReuseSearchResult): void {
-     this.props.acrolinxPlugin.onReusePrefixSearchResult(reuseSearchResult);
+    if(this.props.acrolinxPlugin.onReusePrefixSearchResult) {
+      this.props.acrolinxPlugin.onReusePrefixSearchResult(reuseSearchResult);
+    } else {
+      logging.error("onReusePrefixSearchResult is not supported");
+    }
   }
 
-  onReusePrefixSearchFailed(message: Message): void {
-    this.props.acrolinxPlugin.onReusePrefixSearchFailed(message);
+  openReusePanel(): void {
+    if(this.props.acrolinxPlugin.openReusePanel) {
+      this.props.acrolinxPlugin.openReusePanel();
+    } else {
+      logging.error("openReusePanel is not supported");
+    }
   }
+
+  onUiLanguageChanged(uiLanguage: UILanguage): void {
+    if(this.props.acrolinxPlugin.onUiLanguageChanged) {
+      this.props.acrolinxPlugin.onUiLanguageChanged(uiLanguage);
+    } else {
+      logging.error("onUiLanguageChanged is not supported");
+    }
+  }
+
 
   openDocumentInEditor(documentIdentifier: string): void | Promise<void> {
     if (this.props.acrolinxPlugin.openDocumentInEditor) {

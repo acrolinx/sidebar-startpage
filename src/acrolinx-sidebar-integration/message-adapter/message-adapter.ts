@@ -28,7 +28,6 @@ import {
 import {
   ExtendedAcrolinxSidebar,
   SetStorageProps,
-  ReuseSearchResult,
 } from "../../sidebar-interface-extensions";
 
 // Functions are not cloneable and don't work with postMessage.
@@ -82,11 +81,6 @@ export function createSidebarMessageProxy(
     showMessage(_message: Message): void {},
 
     setStorage(_props: SetStorageProps): void {},
-
-    onReusePrefixSearchResult(_reuseSearchResult: ReuseSearchResult): void {}
-    // callReuse(): Cluster[] {
-    //   return [];
-    // },
   };
 
   injectPostCommandAsMessage(() => sidebarWindow, sidebar);

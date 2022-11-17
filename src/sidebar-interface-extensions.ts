@@ -15,11 +15,22 @@ export interface ReuseSearchResult {
   results: ReuseSuggestion[]
 }
 
+export enum UILanguage {
+  Default = 'default',
+  English = 'en',
+  German = 'de',
+  French = 'fr',
+  Japanese = 'ja',
+  Swedish = 'sv'
+}
+
 export interface ExtendedAcrolinxPlugin extends AcrolinxPlugin, AcrolinxPluginStorageExtension {}
 
 export interface AcrolinxPluginWithReuse extends AcrolinxPlugin {
-  onReusePrefixSearchResult(reuseSearchResult: ReuseSearchResult): void;
-  onReusePrefixSearchFailed(message: Message): void;
+  onReusePrefixSearchResult?(reuseSearchResult: ReuseSearchResult): void;
+  onReusePrefixSearchFailed?(message: Message): void;
+  openReusePanel?(): void;
+  onUiLanguageChanged?(uiLanguage: UILanguage): void;
 }
 
 export interface SetStorageProps {
@@ -28,7 +39,6 @@ export interface SetStorageProps {
 
 export interface ExtendedAcrolinxSidebar extends AcrolinxSidebar {
   setStorage(props: SetStorageProps): void;
-  onReusePrefixSearchResult(reuseSearchResult: ReuseSearchResult): void;
 }
 
 export interface AcrolinxSidebarWithReuse extends AcrolinxSidebar {
