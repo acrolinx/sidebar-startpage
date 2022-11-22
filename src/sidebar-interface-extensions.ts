@@ -31,6 +31,7 @@ export interface AcrolinxPluginWithReuse extends AcrolinxPlugin {
   onReusePrefixSearchFailed?(message: Message): void;
   openReusePanel?(): void;
   onUiLanguageChanged?(uiLanguage: UILanguage): void;
+  onTargetChanged?(supportsReuse: boolean): void;
 }
 
 export interface SetStorageProps {

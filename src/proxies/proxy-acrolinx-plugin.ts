@@ -120,6 +120,13 @@ export class ProxyAcrolinxPlugin implements AcrolinxPluginWithReuse {
     }
   }
 
+  onTargetChanged?(supportsReuse: boolean): void {
+    if(this.props.acrolinxPlugin.onTargetChanged) {
+      this.props.acrolinxPlugin.onTargetChanged(supportsReuse);
+    } else {
+      logging.error("onTargetChanged is not supported");
+    }
+  }
 
   openDocumentInEditor(documentIdentifier: string): void | Promise<void> {
     if (this.props.acrolinxPlugin.openDocumentInEditor) {
