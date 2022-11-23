@@ -115,8 +115,9 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebarWithReuse {
     }
   }
 
-  reusePrefixSearch(prefix: string) {
-    (this.acrolinxSidebar as AcrolinxSidebarWithReuse).reusePrefixSearch(prefix);
+  //Add a check if method exsists since it is optional
+  liveSearch(query: string) {
+    (this.acrolinxSidebar as AcrolinxSidebarWithReuse).liveSearch(query);
   }
 
 }

@@ -22,7 +22,7 @@ import {
   OpenWindowParameters,
   RequestGlobalCheckOptions,
 } from '@acrolinx/sidebar-interface';
-import { AcrolinxPluginWithReuse, ReuseSearchResult, UILanguage } from '../sidebar-interface-extensions';
+import { AcrolinxPluginWithReuse, LiveSearchResult, UILanguage } from '../sidebar-interface-extensions';
 import * as logging from "../utils/logging";
 
 export const POLL_FOR_PLUGIN_INTERVAL_MS = 10;
@@ -96,11 +96,19 @@ export class ProxyAcrolinxPlugin implements AcrolinxPluginWithReuse {
     }
   }
 
-  onReusePrefixSearchResult(reuseSearchResult: ReuseSearchResult): void {
-    if(this.props.acrolinxPlugin.onReusePrefixSearchResult) {
-      this.props.acrolinxPlugin.onReusePrefixSearchResult(reuseSearchResult);
+  onLiveSearchResults(liveSearchResult: LiveSearchResult): void {
+    if(this.props.acrolinxPlugin.onLiveSearchResults) {
+      this.props.acrolinxPlugin.onLiveSearchResults(liveSearchResult);
     } else {
-      logging.error("onReusePrefixSearchResult is not supported");
+      logging.error("onLiveSearchResult is not supported");
+    }
+  }
+
+  onLiveSearchFailed(query: String): void {
+    if(this.props.acrolinxPlugin.onLiveSearchFailed) {
+      this.props.acrolinxPlugin.onLiveSearchFailed(query);
+    } else {
+      logging.error("onLiveSearchFailed is not supported");
     }
   }
 
@@ -120,9 +128,9 @@ export class ProxyAcrolinxPlugin implements AcrolinxPluginWithReuse {
     }
   }
 
-  onTargetChanged?(supportsReuse: boolean): void {
+  onTargetChanged(supportsLive: boolean): void {
     if(this.props.acrolinxPlugin.onTargetChanged) {
-      this.props.acrolinxPlugin.onTargetChanged(supportsReuse);
+      this.props.acrolinxPlugin.onTargetChanged(supportsLive);
     } else {
       logging.error("onTargetChanged is not supported");
     }

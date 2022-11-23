@@ -1,4 +1,4 @@
-import {AcrolinxPlugin, AcrolinxSidebar, Message} from '@acrolinx/sidebar-interface';
+import {AcrolinxPlugin, AcrolinxSidebar} from '@acrolinx/sidebar-interface';
 
 interface AcrolinxPluginStorageExtension {
   setStorageItem(key: string, value: string): void;
@@ -6,13 +6,13 @@ interface AcrolinxPluginStorageExtension {
 }
 
 //ToDo: Move this to sidebar-interface
-interface ReuseSuggestion {
+interface LiveSuggestion {
   preferredPhrase: string,
   description: string
 }
-export interface ReuseSearchResult {
+export interface LiveSearchResult {
   requestId: string,
-  results: ReuseSuggestion[]
+  results: LiveSuggestion[]
 }
 
 export enum UILanguage {
@@ -27,8 +27,8 @@ export enum UILanguage {
 export interface ExtendedAcrolinxPlugin extends AcrolinxPlugin, AcrolinxPluginStorageExtension {}
 
 export interface AcrolinxPluginWithReuse extends AcrolinxPlugin {
-  onReusePrefixSearchResult?(reuseSearchResult: ReuseSearchResult): void;
-  onReusePrefixSearchFailed?(message: Message): void;
+  onLiveSearchResults?(liveSearchResult: LiveSearchResult): void;
+  onLiveSearchFailed?(query: String): void;
   openReusePanel?(): void;
   onUiLanguageChanged?(uiLanguage: UILanguage): void;
   onTargetChanged?(supportsReuse: boolean): void;
@@ -43,5 +43,5 @@ export interface ExtendedAcrolinxSidebar extends AcrolinxSidebar {
 }
 
 export interface AcrolinxSidebarWithReuse extends AcrolinxSidebar {
-  reusePrefixSearch(prefix: string): void;
+  liveSearch(query: string): void;
 }
