@@ -112,11 +112,11 @@ export class ProxyAcrolinxPlugin implements AcrolinxPluginWithReuse {
     }
   }
 
-  openReusePanel(): void {
-    if(this.props.acrolinxPlugin.openReusePanel) {
-      this.props.acrolinxPlugin.openReusePanel();
+  openLivePanel(): void {
+    if(this.props.acrolinxPlugin.openLivePanel) {
+      this.props.acrolinxPlugin.openLivePanel();
     } else {
-      logging.error("openReusePanel is not supported");
+      logging.error("openLivePanel is not supported");
     }
   }
 

@@ -29,9 +29,9 @@ export interface ExtendedAcrolinxPlugin extends AcrolinxPlugin, AcrolinxPluginSt
 export interface AcrolinxPluginWithReuse extends AcrolinxPlugin {
   onLiveSearchResults?(liveSearchResult: LiveSearchResult): void;
   onLiveSearchFailed?(query: String): void;
-  openReusePanel?(): void;
+  openLivePanel?(): void;
   onUiLanguageChanged?(uiLanguage: UILanguage): void;
-  onTargetChanged?(supportsReuse: boolean): void;
+  onTargetChanged?(supportsLive: boolean): void;
 }
 
 export interface SetStorageProps {

@@ -115,9 +115,12 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebarWithReuse {
     }
   }
 
-  //Add a check if method exsists since it is optional
   liveSearch(query: string) {
-    (this.acrolinxSidebar as AcrolinxSidebarWithReuse).liveSearch(query);
+    if ((this.acrolinxSidebar as AcrolinxSidebarWithReuse).liveSearch) {
+      (this.acrolinxSidebar as AcrolinxSidebarWithReuse).liveSearch(query);
+    } else {
+      logging.error("liveSearch is not supported");
+    }
   }
 
 }
