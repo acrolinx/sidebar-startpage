@@ -30,7 +30,7 @@ export interface AcrolinxPluginWithReuse extends AcrolinxPlugin {
   onLiveSearchResults?(liveSearchResult: LiveSearchResult): void;
   onLiveSearchFailed?(query: String): void;
   openLivePanel?(): void;
-  onUiLanguageChanged?(uiLanguage: UILanguage): void;
+  onUILanguageChanged?(UILanguage: UILanguage): void;
   onTargetChanged?(supportsLive: boolean): void;
 }
 

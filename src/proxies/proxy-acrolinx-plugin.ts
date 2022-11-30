@@ -120,11 +120,11 @@ export class ProxyAcrolinxPlugin implements AcrolinxPluginWithReuse {
     }
   }
 
-  onUiLanguageChanged(uiLanguage: UILanguage): void {
-    if(this.props.acrolinxPlugin.onUiLanguageChanged) {
-      this.props.acrolinxPlugin.onUiLanguageChanged(uiLanguage);
+  onUILanguageChanged(UILanguage: UILanguage): void {
+    if(this.props.acrolinxPlugin.onUILanguageChanged) {
+      this.props.acrolinxPlugin.onUILanguageChanged(UILanguage);
     } else {
-      logging.error("onUiLanguageChanged is not supported");
+      logging.error("onUILanguageChanged is not supported");
     }
   }
 
