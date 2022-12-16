@@ -50,7 +50,7 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
   }
 
   set acrolinxSidebar(sidebar: AcrolinxSidebar) {
-    this._acrolinxSidebar = (sidebar  as AcrolinxSidebar);
+    this._acrolinxSidebar = sidebar;
     while (this.configureQueue.length > 0) {
       this._acrolinxSidebar.configure(this.configureQueue.splice(0, 1)[0]);
     }
