@@ -5,16 +5,6 @@ interface AcrolinxPluginStorageExtension {
   removeStorageItem(key: string): void;
 }
 
-//ToDo: Move this to sidebar-interface
-interface LiveSuggestion {
-  preferredPhrase: string,
-  description: string
-}
-export interface LiveSearchResult {
-  requestId: string,
-  results: LiveSuggestion[]
-}
-
 export enum UILanguage {
   Default = 'default',
   English = 'en',
@@ -25,15 +15,6 @@ export enum UILanguage {
 }
 
 export interface ExtendedAcrolinxPlugin extends AcrolinxPlugin, AcrolinxPluginStorageExtension {}
-
-export interface AcrolinxPluginWithReuse extends AcrolinxPlugin {
-  onLiveSearchResults?(liveSearchResult: LiveSearchResult): void;
-  onLiveSearchFailed?(query: String): void;
-  openLivePanel?(): void;
-  onUILanguageChanged?(UILanguage: UILanguage): void;
-  onTargetChanged?(supportsLive: boolean): void;
-}
-
 export interface SetStorageProps {
   data: Record<string, string>;
 }

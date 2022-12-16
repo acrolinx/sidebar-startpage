@@ -15,21 +15,23 @@
  */
 
 import {
+  AcrolinxPlugin,
   CheckResult,
   InitResult,
+  LiveSearchResult,
   LogEntry,
   MatchWithReplacement,
   OpenWindowParameters,
   RequestGlobalCheckOptions,
 } from '@acrolinx/sidebar-interface';
-import { AcrolinxPluginWithReuse, LiveSearchResult, UILanguage } from '../sidebar-interface-extensions';
+import { UILanguage } from '../sidebar-interface-extensions';
 import * as logging from "../utils/logging";
 
 export const POLL_FOR_PLUGIN_INTERVAL_MS = 10;
 
 export interface ProxyAcrolinxPluginProps {
   requestInitListener: () => void;
-  acrolinxPlugin: AcrolinxPluginWithReuse;
+  acrolinxPlugin: AcrolinxPlugin;
   serverAddress: string;
   showServerSelector: Function;
   openWindow: (opts: OpenWindowParameters) => void;
@@ -39,7 +41,7 @@ export interface ProxyAcrolinxPluginProps {
  * Made for injection into the sidebar iframe.
  * It will forward method calls from the sidebar to the startpage or directly to the acrolinxPlugin.
  */
-export class ProxyAcrolinxPlugin implements AcrolinxPluginWithReuse {
+export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
 
   constructor(private readonly props: ProxyAcrolinxPluginProps) {
   }
@@ -104,7 +106,7 @@ export class ProxyAcrolinxPlugin implements AcrolinxPluginWithReuse {
     }
   }
 
-  onLiveSearchFailed(query: String): void {
+  onLiveSearchFailed(query: string): void {
     if(this.props.acrolinxPlugin.onLiveSearchFailed) {
       this.props.acrolinxPlugin.onLiveSearchFailed(query);
     } else {
@@ -154,7 +156,7 @@ export class ProxyAcrolinxPlugin implements AcrolinxPluginWithReuse {
 }
 
 
-export function waitForAcrolinxPlugin(callback: (acrolinxPlugin: AcrolinxPluginWithReuse) => void) {
+export function waitForAcrolinxPlugin(callback: (acrolinxPlugin: AcrolinxPlugin) => void) {
   const windowAny = window as any;
   if (windowAny.acrolinxPlugin) {
     callback(windowAny.acrolinxPlugin);
