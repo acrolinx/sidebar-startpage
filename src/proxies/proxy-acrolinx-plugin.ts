@@ -24,7 +24,6 @@ import {
   OpenWindowParameters,
   RequestGlobalCheckOptions,
 } from '@acrolinx/sidebar-interface';
-import { UILanguage } from '../sidebar-interface-extensions';
 import * as logging from "../utils/logging";
 
 export const POLL_FOR_PLUGIN_INTERVAL_MS = 10;
@@ -122,7 +121,7 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
     }
   }
 
-  onUILanguageChanged(UILanguage: UILanguage): void {
+  onUILanguageChanged(UILanguage: string): void {
     if(this.props.acrolinxPlugin.onUILanguageChanged) {
       this.props.acrolinxPlugin.onUILanguageChanged(UILanguage);
     } else {

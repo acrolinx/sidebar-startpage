@@ -27,12 +27,9 @@ import {
   SidebarConfiguration,
 } from "@acrolinx/sidebar-interface";
 import * as logging from "../utils/logging";
-import {
-  AcrolinxSidebarWithReuse,
-} from "../sidebar-interface-extensions";
 
-export class ProxyAcrolinxSidebar implements AcrolinxSidebarWithReuse {
-  private _acrolinxSidebar: AcrolinxSidebarWithReuse;
+export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
+  private _acrolinxSidebar: AcrolinxSidebar;
   private _serverAddress: string;
   private readonly configureQueue: SidebarConfiguration[] = [];
 
@@ -53,7 +50,7 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebarWithReuse {
   }
 
   set acrolinxSidebar(sidebar: AcrolinxSidebar) {
-    this._acrolinxSidebar = (sidebar  as AcrolinxSidebarWithReuse);
+    this._acrolinxSidebar = (sidebar  as AcrolinxSidebar);
     while (this.configureQueue.length > 0) {
       this._acrolinxSidebar.configure(this.configureQueue.splice(0, 1)[0]);
     }
@@ -116,8 +113,8 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebarWithReuse {
   }
 
   liveSearch(query: string) {
-    if ((this.acrolinxSidebar as AcrolinxSidebarWithReuse).liveSearch) {
-      (this.acrolinxSidebar as AcrolinxSidebarWithReuse).liveSearch(query);
+    if (this.acrolinxSidebar.liveSearch) {
+      this.acrolinxSidebar.liveSearch(query);
     } else {
       logging.error("liveSearch is not supported");
     }
