@@ -59,10 +59,6 @@ mac:build:
     - node --version
     - npm ci
     - npm run buildDistButNotNPM
-  only:
-    - merge_requests
-    - master
-    - tags
 
 # Build on Windows
 windows:build:
@@ -73,10 +69,6 @@ windows:build:
     - node --version
     - npm ci
     - npm run buildDistButNotNPM
-  only:
-    - merge_requests
-    - master
-    - tags
 
 linux:maven-deploy-snapshot:
   image: maven:3.6-jdk-11
@@ -109,14 +101,14 @@ windows:internal_deploy:
     - Write-Host "Get Latest Nuget"
     - curl.exe --location --output nuget.exe "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 
-    - ./gitlab-build-ci.bat > execution.log
+    - python runBatchScript.py
   only:
     - master
   artifacts:
     when: always
     paths:
       - build\script.log
-      - execution.log
+      - build\script.txt
 
 
 #### Public Deployment Jobs for NPMJS, MAVEN, Nuget - Only Tags ####
@@ -169,11 +161,10 @@ windows:deploy:
 
     - curl.exe --location --output nuget.exe "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 
-    - ./gitlab-build-ci.bat publish > execution.log
+    - python runBatchScript.py
   only:
     - tags
   artifacts:
     when: always
     paths:
       - build\script.log
-      - execution.log

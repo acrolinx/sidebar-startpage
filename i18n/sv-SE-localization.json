@@ -19,10 +19,10 @@
     "message": {
       "invalidServerAddress": "Det ser ut som om Acrolinx-URL:en \u00e4r felaktig. Kontrollera adressen och f\u00f6rs\u00f6k igen.",
       "loadSidebarTimeout": "Det verkar som om det tar f\u00f6r l\u00e5ng tid att ladda Sidebar. Kontrollera din n\u00e4tverksanslutning eller kontakta din Acrolinx-administrat\u00f6r.",
-      "outdatedServer": "Det verkar som om din Acrolinx-integration beh\u00f6ver en nyare Acrolinx Core Platform-serverversion f\u00f6r att kunna ladda Sidebar. Kontakta din Acrolinx-administrat\u00f6r f\u00f6r att uppdatera Acrolinx-servern.",
-      "serverConnectionProblemHttp": "Det gick inte att ansluta till Acrolinx. Kontrollera att URL:en \u00e4r korrekt. Om du fortfarande inte kan ansluta till servern kontaktar du din Acrolinx-administrat\u00f6r. Det kan vara s\u00e5 att din Acrolinx Core Platform inte accepterar os\u00e4kra anslutningar.",
-      "serverConnectionProblemHttps": "Det gick inte att ansluta till Acrolinx. Kontrollera att URL:en \u00e4r korrekt. Om du fortfarande inte kan ansluta till servern kontaktar du din Acrolinx-administrat\u00f6r. Det kan vara s\u00e5 att din Acrolinx Core Platform inte accepterar s\u00e4kra anslutningar.",
-      "serverIsNoAcrolinxServerOrHasNoSidebar": "Det verkar som om detta inte \u00e4r en Acrolinx-URL eller ocks\u00e5 har den h\u00e4r Acrolinx Core Platform-serverversionen inte st\u00f6d f\u00f6r Acrolinx Sidebar. Kontakta din Acrolinx-administrat\u00f6r och kontrollera serverversion om du inte \u00e4r s\u00e4ker p\u00e5 att Acrolinx-URL:en \u00e4r korrekt.",
+      "outdatedServer": "Det verkar som om din Acrolinx-integration beh\u00f6ver en nyare Acrolinx-plattform-serverversion f\u00f6r att kunna ladda Sidebar. Kontakta din Acrolinx-administrat\u00f6r f\u00f6r att uppdatera Acrolinx-servern.",
+      "serverConnectionProblemHttp": "Det gick inte att ansluta till Acrolinx. Kontrollera att URL:en \u00e4r korrekt. Om du fortfarande inte kan ansluta till servern kontaktar du din Acrolinx-administrat\u00f6r. Det kan vara s\u00e5 att din Acrolinx-plattform inte accepterar s\u00e4kra anslutningar.",
+      "serverConnectionProblemHttps": "Det gick inte att ansluta till Acrolinx. Kontrollera att URL:en \u00e4r korrekt. Om du fortfarande inte kan ansluta till servern kontaktar du din Acrolinx-administrat\u00f6r. Det kan vara s\u00e5 att din Acrolinx-plattform inte accepterar s\u00e4kra anslutningar.",
+      "serverIsNoAcrolinxServerOrHasNoSidebar": "Det verkar som om detta inte \u00e4r en Acrolinx-URL eller ocks\u00e5 har den h\u00e4r Acrolinx-plattform-serverversionen inte st\u00f6d f\u00f6r Acrolinx Sidebar. Kontakta din Acrolinx-administrat\u00f6r och kontrollera serverversion om du inte \u00e4r s\u00e4ker p\u00e5 att Acrolinx-URL:en \u00e4r korrekt.",
       "serverIsNotSecure": "Du beh\u00f6ver ansluta till Acrolinx med en s\u00e4ker Acrolinx-URL. En s\u00e4ker Acrolinx-URL b\u00f6rjar med \"https\"."
     },
     "placeHolder": {

@@ -103,7 +103,7 @@ def main():
                     onerror=raise_error_without_traceback
                 ):
             commands.extend(
-                '-addoverwrite "%s", %s,"%s",%d' % (
+                '-addoverwrite "%s", %s,%s,%d' % (
                     os.path.join(parent, path),
                     args.resource_type,
                     os.path.relpath(
