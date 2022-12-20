@@ -18,6 +18,7 @@ import {
   AcrolinxPlugin,
   CheckResult,
   InitResult,
+  LiveSearchResult,
   LogEntry,
   MatchWithReplacement,
   OpenWindowParameters,
@@ -93,6 +94,46 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
       this.props.acrolinxPlugin.requestCheckForDocumentInBatch(documentIdentifier);
     } else {
       logging.error('requestCheckForDocumentInBatch is not supported');
+    }
+  }
+
+  onLiveSearchResults(liveSearchResult: LiveSearchResult): void {
+    if(this.props.acrolinxPlugin.onLiveSearchResults) {
+      this.props.acrolinxPlugin.onLiveSearchResults(liveSearchResult);
+    } else {
+      logging.error("onLiveSearchResult is not supported");
+    }
+  }
+
+  onLiveSearchFailed(query: string): void {
+    if(this.props.acrolinxPlugin.onLiveSearchFailed) {
+      this.props.acrolinxPlugin.onLiveSearchFailed(query);
+    } else {
+      logging.error("onLiveSearchFailed is not supported");
+    }
+  }
+
+  openLivePanel(): void {
+    if(this.props.acrolinxPlugin.openLivePanel) {
+      this.props.acrolinxPlugin.openLivePanel();
+    } else {
+      logging.error("openLivePanel is not supported");
+    }
+  }
+
+  onUILanguageChanged(UILanguage: string): void {
+    if(this.props.acrolinxPlugin.onUILanguageChanged) {
+      this.props.acrolinxPlugin.onUILanguageChanged(UILanguage);
+    } else {
+      logging.error("onUILanguageChanged is not supported");
+    }
+  }
+
+  onTargetChanged(supportsLive: boolean): void {
+    if(this.props.acrolinxPlugin.onTargetChanged) {
+      this.props.acrolinxPlugin.onTargetChanged(supportsLive);
+    } else {
+      logging.error("onTargetChanged is not supported");
     }
   }
 

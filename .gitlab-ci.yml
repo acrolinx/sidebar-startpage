@@ -70,24 +70,6 @@ windows:build:
     - npm ci
     - npm run buildDistButNotNPM
 
-linux:npm-deploy-beta:
-  image: node:16-alpine
-  stage: publish_internal
-  variables:
-    NPM_TOKEN: ${NPM_TOKEN}
-  needs: ["linux:build"]
-  script:
-    - npm --version
-    - npm config set @acrolinx:registry=https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/npm/
-    - npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN}
-    - npm config set -- '//gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken' "${CI_JOB_TOKEN}"
-    - PACKAGE_VERSION=`cat package.json | grep "version\":" | cut -d'"' -f4`
-    - npm version $PACKAGE_VERSION-beta.$CI_PIPELINE_IID
-    - npm ci
-    - npm publish --verbose --access public --tag beta
-  only:
-    - master
-
 linux:maven-deploy-snapshot:
   image: maven:3.6-jdk-11
   stage: publish_internal

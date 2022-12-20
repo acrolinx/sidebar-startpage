@@ -23,8 +23,8 @@ import {
   InitParameters,
   InvalidDocumentPart,
   Message,
-  SidebarConfiguration
-} from '@acrolinx/sidebar-interface';
+  SidebarConfiguration,
+} from "@acrolinx/sidebar-interface";
 import * as logging from "../utils/logging";
 
 export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
@@ -32,8 +32,9 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
   private _serverAddress: string;
   private readonly configureQueue: SidebarConfiguration[] = [];
 
-  constructor(private readonly initListener: (initParameters: InitParameters) => void) {
-  }
+  constructor(
+    private readonly initListener: (initParameters: InitParameters) => void
+  ) {}
 
   get serverAddress(): string {
     return this._serverAddress;
@@ -90,15 +91,31 @@ export class ProxyAcrolinxSidebar implements AcrolinxSidebar {
     if (this.acrolinxSidebar.initBatchCheck) {
       return this.acrolinxSidebar.initBatchCheck(documentIdentifiers);
     } else {
-      logging.error('initBatchCheck is not supported');
+      logging.error("initBatchCheck is not supported");
     }
   }
 
-  checkDocumentInBatch(documentIdentifier: string, documentContent: string, options: CheckOptions): void {
+  checkDocumentInBatch(
+    documentIdentifier: string,
+    documentContent: string,
+    options: CheckOptions
+  ): void {
     if (this.acrolinxSidebar.checkDocumentInBatch) {
-      return this.acrolinxSidebar.checkDocumentInBatch(documentIdentifier, documentContent, options);
+      return this.acrolinxSidebar.checkDocumentInBatch(
+        documentIdentifier,
+        documentContent,
+        options
+      );
     } else {
-      logging.error('checkDocumentInBatch is not supported');
+      logging.error("checkDocumentInBatch is not supported");
+    }
+  }
+
+  liveSearch(query: string) {
+    if (this.acrolinxSidebar.liveSearch) {
+      this.acrolinxSidebar.liveSearch(query);
+    } else {
+      logging.error("liveSearch is not supported");
     }
   }
 
