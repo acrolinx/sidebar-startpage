@@ -9,21 +9,21 @@
     "button": {
       "connect": "Anslut",
       "details": "Detaljer",
-      "openLogFile": "\u00d6ppna loggfil"
+      "openLogFile": "Öppna loggfil"
     },
     "links": {
       "about": "Om Acrolinx",
       "cantConnect": "Kan du inte ansluta till Acrolinx?",
-      "needHelp": "Hj\u00e4lp"
+      "needHelp": "Hjälp"
     },
     "message": {
-      "invalidServerAddress": "Det ser ut som om Acrolinx-URL:en \u00e4r felaktig. Kontrollera adressen och f\u00f6rs\u00f6k igen.",
-      "loadSidebarTimeout": "Det verkar som om det tar f\u00f6r l\u00e5ng tid att ladda Sidebar. Kontrollera din n\u00e4tverksanslutning eller kontakta din Acrolinx-administrat\u00f6r.",
-      "outdatedServer": "Det verkar som om din Acrolinx-integration beh\u00f6ver en nyare Acrolinx-plattform-serverversion f\u00f6r att kunna ladda Sidebar. Kontakta din Acrolinx-administrat\u00f6r f\u00f6r att uppdatera Acrolinx-servern.",
-      "serverConnectionProblemHttp": "Det gick inte att ansluta till Acrolinx. Kontrollera att URL:en \u00e4r korrekt. Om du fortfarande inte kan ansluta till servern kontaktar du din Acrolinx-administrat\u00f6r. Det kan vara s\u00e5 att din Acrolinx-plattform inte accepterar s\u00e4kra anslutningar.",
-      "serverConnectionProblemHttps": "Det gick inte att ansluta till Acrolinx. Kontrollera att URL:en \u00e4r korrekt. Om du fortfarande inte kan ansluta till servern kontaktar du din Acrolinx-administrat\u00f6r. Det kan vara s\u00e5 att din Acrolinx-plattform inte accepterar s\u00e4kra anslutningar.",
-      "serverIsNoAcrolinxServerOrHasNoSidebar": "Det verkar som om detta inte \u00e4r en Acrolinx-URL eller ocks\u00e5 har den h\u00e4r Acrolinx-plattform-serverversionen inte st\u00f6d f\u00f6r Acrolinx Sidebar. Kontakta din Acrolinx-administrat\u00f6r och kontrollera serverversion om du inte \u00e4r s\u00e4ker p\u00e5 att Acrolinx-URL:en \u00e4r korrekt.",
-      "serverIsNotSecure": "Du beh\u00f6ver ansluta till Acrolinx med en s\u00e4ker Acrolinx-URL. En s\u00e4ker Acrolinx-URL b\u00f6rjar med \"https\"."
+      "invalidServerAddress": "Det ser ut som om Acrolinx-URL:en är felaktig. Kontrollera adressen och försök igen.",
+      "loadSidebarTimeout": "Det verkar som om det tar för lång tid att ladda Sidebar. Kontrollera din nätverksanslutning eller kontakta din Acrolinx-administratör.",
+      "outdatedServer": "Det verkar som om din Acrolinx-integration behöver en nyare Acrolinx-plattform-serverversion för att kunna ladda Sidebar. Kontakta din Acrolinx-administratör för att uppdatera Acrolinx-servern.",
+      "serverConnectionProblemHttp": "Det gick inte att ansluta till Acrolinx. Kontrollera att URL:en är korrekt. Om du fortfarande inte kan ansluta till servern kontaktar du din Acrolinx-administratör. Det kan vara så att din Acrolinx-plattform inte accepterar säkra anslutningar.",
+      "serverConnectionProblemHttps": "Det gick inte att ansluta till Acrolinx. Kontrollera att URL:en är korrekt. Om du fortfarande inte kan ansluta till servern kontaktar du din Acrolinx-administratör. Det kan vara så att din Acrolinx-plattform inte accepterar säkra anslutningar.",
+      "serverIsNoAcrolinxServerOrHasNoSidebar": "Det verkar som om detta inte är en Acrolinx-URL eller också har den här Acrolinx-plattform-serverversionen inte stöd för Acrolinx Sidebar. Kontakta din Acrolinx-administratör och kontrollera serverversion om du inte är säker på att Acrolinx-URL:en är korrekt.",
+      "serverIsNotSecure": "Du behöver ansluta till Acrolinx med en säker Acrolinx-URL. En säker Acrolinx-URL börjar med \"https\"."
     },
     "placeHolder": {
       "serverAddress": "Acrolinx-URL"
@@ -34,8 +34,8 @@
       "serverAddress": "Acrolinx-URL"
     },
     "tooltip": {
-      "httpsRequired": "Du beh\u00f6ver ansluta till Acrolinx med en s\u00e4ker Acrolinx-URL. En s\u00e4ker Acrolinx-URL b\u00f6rjar med \"https\".",
-      "openHelp": "\u00d6ppna hj\u00e4lpinformationen i ett webbl\u00e4sarf\u00f6nster"
+      "httpsRequired": "Du behöver ansluta till Acrolinx med en säker Acrolinx-URL. En säker Acrolinx-URL börjar med \"https\".",
+      "openHelp": "Öppna hjälpinformationen i ett webbläsarfönster"
     }
   }
 }
