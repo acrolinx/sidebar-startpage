@@ -3,27 +3,27 @@
     "aboutItems": {
       "browserInformation": "Informations du navigateur",
       "logFileLocation": "Emplacement des fichiers journaux",
-      "serverSelector": "Page de d\u00e9marrage",
+      "serverSelector": "Page de démarrage",
       "startPageCorsOrigin": "CORS Origin"
     },
     "button": {
       "connect": "Se connecter",
-      "details": "D\u00e9tails",
+      "details": "Détails",
       "openLogFile": "Ouvrir le fichier journal"
     },
     "links": {
-      "about": "A propos d\u00b4Acrolinx",
-      "cantConnect": "Vous ne r\u00e9ussissez pas \u00e0 vous connecter \u00e0 Acrolinx ?",
+      "about": "A propos d´Acrolinx",
+      "cantConnect": "Vous ne réussissez pas à vous connecter à Acrolinx ?",
       "needHelp": "Aide"
     },
     "message": {
-      "invalidServerAddress": "Il semblerait que l'URL d'Acrolinx soit incorrecte. Corriger l'adresse et essayer \u00e0 nouveau.",
-      "loadSidebarTimeout": "La Sidebar Acrolinx est trop lent \u00e0 d\u00e9marrer. V\u00e9rifier la connexion r\u00e9seau ou contacter l'administrateur de Acrolinx. ",
-      "outdatedServer": "Il semblerait que la version de la plateforme Acrolinx ne prenne pas en charge la Sidebar. Contactez l'administrateur Acrolinx pour une mise \u00e0 jour de la plateforme.",
-      "serverConnectionProblemHttp": "La connexion \u00e0 Acrolinx n'a pas abouti. Est-ce que l'URL d'Acrolinx est correcte ? Si oui, contactez l'administrateur Acrolinx. Il se pourrait que votre serveur n'accepte pas de connexions s\u00e9curis\u00e9es.",
-      "serverConnectionProblemHttps": "La connexion \u00e0 Acrolinx n'a pas abouti. Est-ce que l'URL d'Acrolinx est correcte ? Si oui, contactez l'administrateur Acrolinx. Il se pourrait que votre serveur n'accepte pas de connexions s\u00e9curis\u00e9es.",
-      "serverIsNoAcrolinxServerOrHasNoSidebar": "Est-ce que l'URL d'Acrolinx est correcte ? Si oui, il se pourrait que la version de la plateforme Acrolinx ne prend pas en charge la Sidebar. Contactez l'administrateur Acrolinx pour v\u00e9rifier.",
-      "serverIsNotSecure": "Utilisez une URL d'Acrolinx s\u00e9curis\u00e9e.  Une URL d'Acrolinx s\u00e9curis\u00e9e commence par \u00ab https \u00bb."
+      "invalidServerAddress": "Il semblerait que l'URL d'Acrolinx soit incorrecte. Corriger l'adresse et essayer à nouveau.",
+      "loadSidebarTimeout": "La Sidebar Acrolinx est trop lent à démarrer. Vérifier la connexion réseau ou contacter l'administrateur de Acrolinx. ",
+      "outdatedServer": "Il semblerait que la version de la plateforme Acrolinx ne prenne pas en charge la Sidebar. Contactez l'administrateur Acrolinx pour une mise à jour de la plateforme.",
+      "serverConnectionProblemHttp": "La connexion à Acrolinx n'a pas abouti. Est-ce que l'URL d'Acrolinx est correcte ? Si oui, contactez l'administrateur Acrolinx. Il se pourrait que votre serveur n'accepte pas de connexions sécurisées.",
+      "serverConnectionProblemHttps": "La connexion à Acrolinx n'a pas abouti. Est-ce que l'URL d'Acrolinx est correcte ? Si oui, contactez l'administrateur Acrolinx. Il se pourrait que votre serveur n'accepte pas de connexions sécurisées.",
+      "serverIsNoAcrolinxServerOrHasNoSidebar": "Est-ce que l'URL d'Acrolinx est correcte ? Si oui, il se pourrait que la version de la plateforme Acrolinx ne prend pas en charge la Sidebar. Contactez l'administrateur Acrolinx pour vérifier.",
+      "serverIsNotSecure": "Utilisez une URL d'Acrolinx sécurisée.  Une URL d'Acrolinx sécurisée commence par « https »."
     },
     "placeHolder": {
       "serverAddress": "URL d'Acrolinx"
@@ -34,8 +34,8 @@
       "serverAddress": "URL d'Acrolinx"
     },
     "tooltip": {
-      "httpsRequired": "Utilisez une URL d'Acrolinx s\u00e9curis\u00e9e.  Une URL d'Acrolinx s\u00e9curis\u00e9e commence par \u00ab https \u00bb.",
-      "openHelp": "Ouvrir les informations d'aide dans la fen\u00eatre d'un navigateur Web."
+      "httpsRequired": "Utilisez une URL d'Acrolinx sécurisée.  Une URL d'Acrolinx sécurisée commence par « https ».",
+      "openHelp": "Ouvrir les informations d'aide dans la fenêtre d'un navigateur Web."
     }
   }
 }

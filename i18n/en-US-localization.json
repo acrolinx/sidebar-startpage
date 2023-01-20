@@ -20,9 +20,9 @@
       "invalidServerAddress": "It looks like the Acrolinx URL is incorrect. Check the URL and try again.",
       "loadSidebarTimeout": "It looks like the Sidebar took too long to load. Check your network connection or contact your Acrolinx administrator.",
       "outdatedServer": "It looks like your Acrolinx integration needs a newer Acrolinx Platform version to load the Sidebar. Ask your Acrolinx administrator to update your platform.",
-      "serverConnectionProblemHttp": "We couldn't connect to Acrolinx. Check that the URL is correct. If you still can't connect, contact your Acrolinx administrator. It might be that your Acrolinx Platform doesn\u2019t accept unsecure connections.",
-      "serverConnectionProblemHttps": "We couldn't connect to Acrolinx. Check that the URL is correct. If you still can't connect, contact your Acrolinx administrator. It might be that your Acrolinx Platform doesn\u2019t accept secure connections.",
-      "serverIsNoAcrolinxServerOrHasNoSidebar": "It looks like this isn\u2019t an Acrolinx URL or this Acrolinx Platform version doesn't support the Sidebar. If you're sure that the Acrolinx URL is correct, ask your Acrolinx administrator to check your platform version.",
+      "serverConnectionProblemHttp": "We couldn't connect to Acrolinx. Check that the URL is correct. If you still can't connect, contact your Acrolinx administrator. It might be that your Acrolinx Platform doesn’t accept unsecure connections.",
+      "serverConnectionProblemHttps": "We couldn't connect to Acrolinx. Check that the URL is correct. If you still can't connect, contact your Acrolinx administrator. It might be that your Acrolinx Platform doesn’t accept secure connections.",
+      "serverIsNoAcrolinxServerOrHasNoSidebar": "It looks like this isn’t an Acrolinx URL or this Acrolinx Platform version doesn't support the Sidebar. If you're sure that the Acrolinx URL is correct, ask your Acrolinx administrator to check your platform version.",
       "serverIsNotSecure": "You need to connect to Acrolinx using a secure Acrolinx URL. A secure Acrolinx URL starts with \"https\"."
     },
     "placeHolder": {
