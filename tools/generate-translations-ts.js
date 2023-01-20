@@ -20,7 +20,7 @@ const _ = require('lodash');
 const OUTPUT_FILE = 'tmp/generated/translations.ts';
 const ENCODING = 'utf8';
 const EN_US = 'en-US';
-const LANGUAGES = [EN_US, 'de-DE', 'fr-FR', 'sv-SE', 'ja-JP'];
+const LANGUAGES = ['de-DE', 'fr-FR', 'sv-SE', 'ja-JP'];
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, ENCODING));
@@ -39,16 +39,15 @@ function createTranslationTs(translationObj, constantName) {
 }
 
 
-function fillTypeScriptTemplate(localizationDev, languageTranslationPairs) {
+function fillTypeScriptTemplate(localizationEn, languageTranslationPairs) {
   return `
-${createTranslationTs(localizationDev, 'devTranslation')}
+${createTranslationTs(localizationEn, getShortLanguageCode(EN_US))}
 
-type Translation = typeof devTranslation;
+type Translation = typeof ${getShortLanguageCode(EN_US)};
 
 ${_.map(languageTranslationPairs, pair => createTranslationTs(pair[1], pair[0])).join(' as Translation;\n\n')}
 
 export const translations: { [language: string]: Translation|undefined } = {
-  dev: devTranslation,
   ${LANGUAGES.map(getShortLanguageCode).join(', ')}
 }`;
 }
@@ -56,15 +55,14 @@ export const translations: { [language: string]: Translation|undefined } = {
 
 function compileLocalizationToTypeScript() {
   const basePath = 'i18n/';
-  const localizationDev = readLocalization(basePath, 'dev');
   const localizationEn = readLocalization(basePath, EN_US);
 
   const languageTranslationPairs = LANGUAGES.map(languageCodeLong => [
     getShortLanguageCode(languageCodeLong),
-    _.defaultsDeep({}, readLocalization(basePath, languageCodeLong), localizationEn, localizationDev)
+    _.defaultsDeep({}, readLocalization(basePath, languageCodeLong), localizationEn)
   ]);
 
-  const translationsTs = fillTypeScriptTemplate(localizationDev, languageTranslationPairs);
+  const translationsTs = fillTypeScriptTemplate(localizationEn, languageTranslationPairs);
 
   fs.writeFileSync(OUTPUT_FILE, translationsTs, ENCODING);
 };
