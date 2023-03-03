@@ -98,7 +98,6 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
             }, t.button.connect)
           ),
           div({ className: 'submitRequest' },
-            // span({}, t.links.submitRequest),
             externalTextLink({
               url: t.links.submitRequestUrl,
               openWindow: props.openWindow,
