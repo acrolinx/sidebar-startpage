@@ -36,7 +36,7 @@ import {getTranslation} from "../../../src/localization";
 import {startsWith} from "../../../src/utils/utils";
 import {getAcrolinxSimpleStorage} from "../../../src/utils/acrolinx-storage";
 import {HELP_LINK_URLS} from "../../../src/components/help-link";
-import {CANT_CONNECT_HELP_LINK_URLS} from "../../../src/components/server-selector-form";
+import {CANT_CONNECT_HELP_LINK_URLS, getLocalizedSubmitRequestUrl} from "../../../src/components/server-selector-form";
 
 type AugmentedWindow = Window & {
   acrolinxSidebar: AcrolinxSidebar;
@@ -292,12 +292,18 @@ describe('integration-tests', function () {
 
     it('click english cant-connect-help', () => {
       init({showServerSelector: true, clientLocale: 'en'});
-      assertHelpOpened(CANT_CONNECT_HELP_LINK_URLS.en, '.externalTextLink');
+      assertHelpOpened(CANT_CONNECT_HELP_LINK_URLS.en, '.buttonGroup .externalTextLink');
     });
 
     it('click german cant-connect-help', () => {
       init({showServerSelector: true, clientLocale: 'de'});
-      assertHelpOpened(CANT_CONNECT_HELP_LINK_URLS.de, '.externalTextLink');
+      assertHelpOpened(CANT_CONNECT_HELP_LINK_URLS.de, '.buttonGroup .externalTextLink');
+    });
+
+    it ('click submit a request', () => {
+      init({showServerSelector: true, clientLocale: 'de'});
+      const localizedUrl = getLocalizedSubmitRequestUrl();
+      assertHelpOpened(localizedUrl, '.submitRequest .externalTextLink');
     });
 
   });

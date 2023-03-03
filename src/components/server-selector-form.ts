@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-import {Component, ComponentConstructor} from 'preact';
-import {createPreactFactory, h1, div, button, form, input, span, a} from "../utils/preact";
-import {getLocale, getTranslation} from "../localization";
-import {isHttpsRequired} from "../utils/utils";
-import {externalTextLink, OpenWindowFunction} from "./external-text-link";
-import {errorMessageComponent, ErrorMessageProps} from "./error-message";
-import {helpLink} from "./help-link";
-import {InitParameters} from "@acrolinx/sidebar-interface";
+import { Component, ComponentConstructor } from 'preact';
+import { createPreactFactory, h1, div, button, form, input, span, a } from "../utils/preact";
+import { getLocale, getTranslation } from "../localization";
+import { isHttpsRequired } from "../utils/utils";
+import { externalTextLink, OpenWindowFunction } from "./external-text-link";
+import { errorMessageComponent, ErrorMessageProps } from "./error-message";
+import { helpLink } from "./help-link";
+import { InitParameters } from "@acrolinx/sidebar-interface";
 
 interface SeverSelectorFormProps {
   onSubmit: (serverAddress: string) => void;
@@ -45,6 +45,11 @@ export const CANT_CONNECT_HELP_LINK_URLS = {
   de: 'https://docs.acrolinx.com/coreplatform/latest/de/the-sidebar/connect-your-sidebar-to-acrolinx'
 };
 
+export function getLocalizedSubmitRequestUrl(): string {
+  const t = getTranslation().serverSelector;
+  return t.links.submitRequestUrl;
+}
+
 
 class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
   serverAddressField: HTMLInputElement;
@@ -57,18 +62,18 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
   render() {
     const t = getTranslation().serverSelector;
     const props = this.props;
-    const httpsRequired = isHttpsRequired({enforceHTTPS: props.enforceHTTPS, windowLocation: window.location});
-    return form({className: 'serverSelectorFormComponent', onSubmit: this.onSubmit},
+    const httpsRequired = isHttpsRequired({ enforceHTTPS: props.enforceHTTPS, windowLocation: window.location });
+    return form({ className: 'serverSelectorFormComponent', onSubmit: this.onSubmit },
       div({
         className: 'logoHeader'
       }, helpLink(props)),
-      div({className: 'formContent'},
-        div({className: 'paddedFormContent'},
+      div({ className: 'formContent' },
+        div({ className: 'paddedFormContent' },
           h1({
-              className: 'serverAddressTitle',
-              title: httpsRequired ? t.tooltip.httpsRequired : ''
-            }, t.title.serverAddress,
-            httpsRequired ? span({className: 'httpsRequiredIcon'}) : []
+            className: 'serverAddressTitle',
+            title: httpsRequired ? t.tooltip.httpsRequired : ''
+          }, t.title.serverAddress,
+            httpsRequired ? span({ className: 'httpsRequiredIcon' }) : []
           ),
           input({
             className: SERVER_ADDRESS_INPUT_FIELD_CLASS,
@@ -80,7 +85,7 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
             defaultValue: props.serverAddress,
             spellCheck: "false"
           }),
-          div({className: 'buttonGroup'},
+          div({ className: 'buttonGroup' },
             externalTextLink({
               url: getLocalizedCantConnectHelpLink(),
               openWindow: props.openWindow,
@@ -92,13 +97,21 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
               disabled: props.isConnectButtonDisabled
             }, t.button.connect)
           ),
+          div({ className: 'submitRequest' },
+            // span({}, t.links.submitRequest),
+            externalTextLink({
+              url: t.links.submitRequestUrl,
+              openWindow: props.openWindow,
+              text: t.links.submitRequest
+            })
+          ),
           a({
-              onClick: (event: Event) => {
-                event.preventDefault();
-                props.onAboutLink();
-              },
-              href: '#'
+            onClick: (event: Event) => {
+              event.preventDefault();
+              props.onAboutLink();
             },
+            href: '#'
+          },
             t.links.about
           ),
         ),

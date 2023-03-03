@@ -14,7 +14,9 @@
     "links": {
       "about": "Om Acrolinx",
       "cantConnect": "Kan du inte ansluta till Acrolinx?",
-      "needHelp": "Hjälp"
+      "needHelp": "Hjälp",
+      "submitRequest": "Issues connecting? Submit a Request",
+      "submitRequestUrl": "https://support.acrolinx.com/hc/en-us/requests/new"
     },
     "message": {
       "invalidServerAddress": "Det ser ut som om Acrolinx-URL:en är felaktig. Kontrollera adressen och försök igen.",
