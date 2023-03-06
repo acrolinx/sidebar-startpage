@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-import {Component, ComponentConstructor} from 'preact';
-import {a, createPreactFactory} from "../utils/preact";
-import {getLocale, getTranslation} from "../localization";
-import {InitParameters} from "@acrolinx/sidebar-interface";
+import { Component, ComponentConstructor } from 'preact';
+import { a, createPreactFactory } from "../utils/preact";
+import { getLocale, getTranslation } from "../localization";
+import { InitParameters } from "@acrolinx/sidebar-interface";
+import { getExternalLinks } from "../utils/externalLinks";
 
 export type OpenWindowFunction = (url: string) => void;
 
@@ -26,15 +27,10 @@ interface HelpLinkProps {
   initParameters: InitParameters;
 }
 
-export function getLocalizedDefaultHelpLink(): string {
-  return (getLocale() === 'de') ? HELP_LINK_URLS.de : HELP_LINK_URLS.en;
+function getLocalizedDefaultHelpLink(): string {
+  const locale = getLocale();
+  return getExternalLinks(locale).helpLinkUrl;
 }
-
-export const HELP_LINK_URLS = {
-  en: 'https://docs.acrolinx.com/doc/en',
-  de: 'https://docs.acrolinx.com/doc/en'
-};
-
 
 class HelpLink extends Component<HelpLinkProps, {}> {
   render() {

@@ -22,6 +22,7 @@ import { externalTextLink, OpenWindowFunction } from "./external-text-link";
 import { errorMessageComponent, ErrorMessageProps } from "./error-message";
 import { helpLink } from "./help-link";
 import { InitParameters } from "@acrolinx/sidebar-interface";
+import { ExternalLinks, getExternalLinks } from "../utils/externalLinks";
 
 interface SeverSelectorFormProps {
   onSubmit: (serverAddress: string) => void;
@@ -36,20 +37,11 @@ interface SeverSelectorFormProps {
 
 const SERVER_ADDRESS_INPUT_FIELD_CLASS = 'serverAddress';
 
-export function getLocalizedCantConnectHelpLink(): string {
-  return (getLocale() === 'de') ? CANT_CONNECT_HELP_LINK_URLS.de : CANT_CONNECT_HELP_LINK_URLS.en;
+
+function getLokalizedExternalLinks(): ExternalLinks {
+  const locale = getLocale();
+  return getExternalLinks(locale);
 }
-
-export const CANT_CONNECT_HELP_LINK_URLS = {
-  en: 'https://docs.acrolinx.com/coreplatform/latest/en/the-sidebar/connect-your-sidebar-to-acrolinx',
-  de: 'https://docs.acrolinx.com/coreplatform/latest/de/the-sidebar/connect-your-sidebar-to-acrolinx'
-};
-
-export function getLocalizedSubmitRequestUrl(): string {
-  const t = getTranslation().serverSelector;
-  return t.links.submitRequestUrl;
-}
-
 
 class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
   serverAddressField: HTMLInputElement;
@@ -61,6 +53,7 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
 
   render() {
     const t = getTranslation().serverSelector;
+    const externalLinks = getLokalizedExternalLinks();
     const props = this.props;
     const httpsRequired = isHttpsRequired({ enforceHTTPS: props.enforceHTTPS, windowLocation: window.location });
     return form({ className: 'serverSelectorFormComponent', onSubmit: this.onSubmit },
@@ -87,7 +80,7 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
           }),
           div({ className: 'buttonGroup' },
             externalTextLink({
-              url: getLocalizedCantConnectHelpLink(),
+              url: externalLinks.cantConnectHelpLink,
               openWindow: props.openWindow,
               text: t.links.cantConnect
             }),
@@ -99,7 +92,7 @@ class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
           ),
           div({ className: 'submitRequest' },
             externalTextLink({
-              url: t.links.submitRequestUrl,
+              url: externalLinks.submitRequestUrl,
               openWindow: props.openWindow,
               text: t.links.submitRequest
             })
