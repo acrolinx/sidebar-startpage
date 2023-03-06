@@ -305,7 +305,7 @@ describe('integration-tests', function () {
     });
 
     it ('click english submit a request', () => {
-      init({showServerSelector: true, clientLocale: 'de'});
+      init({showServerSelector: true, clientLocale: 'en'});
       const externalLinkEn: ExternalLinks = getExternalLinks("en");
       assertHelpOpened(externalLinkEn.submitRequestUrl, '.submitRequest .externalTextLink');
     });
