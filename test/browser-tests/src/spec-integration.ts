@@ -15,7 +15,7 @@
  */
 
 import {assert} from "chai";
-import * as $ from "jquery";
+import $ from "jquery";
 import {SinonSandbox, SinonStub} from "sinon";
 import * as sinon from "sinon";
 import {MainControllerOpts, startMainController} from "../../../src/main-controller";
@@ -35,8 +35,8 @@ import {POLL_FOR_PLUGIN_INTERVAL_MS} from "../../../src/proxies/proxy-acrolinx-p
 import {getTranslation} from "../../../src/localization";
 import {startsWith} from "../../../src/utils/utils";
 import {getAcrolinxSimpleStorage} from "../../../src/utils/acrolinx-storage";
-import {HELP_LINK_URLS} from "../../../src/components/help-link";
-import {CANT_CONNECT_HELP_LINK_URLS} from "../../../src/components/server-selector-form";
+// import {HELP_LINK_URLS} from "../../../src/components/help-link";
+import { ExternalLinks, getExternalLinks } from "../../../src/utils/externalLinks";
 
 type AugmentedWindow = Window & {
   acrolinxSidebar: AcrolinxSidebar;
@@ -266,16 +266,17 @@ describe('integration-tests', function () {
 
     it('click help', () => {
       init({showServerSelector: true, logFileLocation: 'dummyLogFileLocation'});
-      assertHelpOpened(HELP_LINK_URLS.en);
+      const externalLinks: ExternalLinks = getExternalLinks("en");
+      assertHelpOpened(externalLinks.helpLinkUrl);
     });
 
     it('uses window.open if initParameters.openWindowDirectly == true', () => {
       init({openWindowDirectly: true, showServerSelector: true});
-
+      const externalLinks: ExternalLinks = getExternalLinks("en");
       simulateClick(HELP_ICON_SELECTOR);
 
       sinon.assert.callCount(windowOpenStub, 1);
-      sinon.assert.calledWith(windowOpenStub, HELP_LINK_URLS.en);
+      sinon.assert.calledWith(windowOpenStub, externalLinks.helpLinkUrl);
       sinon.assert.notCalled(augmentedWindow.acrolinxPlugin.openWindowSpy);
     });
 
@@ -287,17 +288,32 @@ describe('integration-tests', function () {
 
     it('click german help', () => {
       init({showServerSelector: true, logFileLocation: 'dummyLogFileLocation', clientLocale: 'de-DE'});
-      assertHelpOpened(HELP_LINK_URLS.de);
+      const externalLinks: ExternalLinks = getExternalLinks("de");
+      assertHelpOpened(externalLinks.helpLinkUrl);
     });
 
     it('click english cant-connect-help', () => {
       init({showServerSelector: true, clientLocale: 'en'});
-      assertHelpOpened(CANT_CONNECT_HELP_LINK_URLS.en, '.externalTextLink');
+      const externalLinkEn: ExternalLinks = getExternalLinks("en");
+      assertHelpOpened(externalLinkEn.cantConnectHelpLink, '.buttonGroup .externalTextLink');
     });
 
     it('click german cant-connect-help', () => {
       init({showServerSelector: true, clientLocale: 'de'});
-      assertHelpOpened(CANT_CONNECT_HELP_LINK_URLS.de, '.externalTextLink');
+      const externalLinkDe: ExternalLinks = getExternalLinks("de");
+      assertHelpOpened(externalLinkDe.cantConnectHelpLink, '.buttonGroup .externalTextLink');
+    });
+
+    it ('click english submit a request', () => {
+      init({showServerSelector: true, clientLocale: 'en'});
+      const externalLinkEn: ExternalLinks = getExternalLinks("en");
+      assertHelpOpened(externalLinkEn.submitRequestUrl, '.submitRequest .externalTextLink');
+    });
+
+    it ('click german submit a request', () => {
+      init({showServerSelector: true, clientLocale: 'de'});
+      const externalLinkDe: ExternalLinks = getExternalLinks("de");
+      assertHelpOpened(externalLinkDe.submitRequestUrl, '.submitRequest .externalTextLink');
     });
 
   });

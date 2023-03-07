@@ -15,7 +15,7 @@
  */
 
 import {assert} from "chai";
-import * as $ from "jquery";
+import $ from "jquery";
 
 export function assertDeepEqual(val: any, expected: any) {
   assert.equal(JSON.stringify(val), JSON.stringify(expected));
