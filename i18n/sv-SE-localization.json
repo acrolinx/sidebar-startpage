@@ -1,8 +1,8 @@
 {
   "serverSelector": {
     "aboutItems": {
-      "browserInformation": "Browser-information",
-      "logFileLocation": "Loggfilsplats",
+      "browserInformation": "Webbläsarinformation",
+      "logFileLocation": "Plats för loggfil",
       "serverSelector": "Startsida",
       "startPageCorsOrigin": "CORS Origin"
     },
@@ -14,15 +14,16 @@
     "links": {
       "about": "Om Acrolinx",
       "cantConnect": "Kan du inte ansluta till Acrolinx?",
-      "needHelp": "Hjälp"
+      "needHelp": "Hjälp",
+      "submitRequest": "Kontakta Acrolinx Support"
     },
     "message": {
       "invalidServerAddress": "Det ser ut som om Acrolinx-URL:en är felaktig. Kontrollera adressen och försök igen.",
       "loadSidebarTimeout": "Det verkar som om det tar för lång tid att ladda Sidebar. Kontrollera din nätverksanslutning eller kontakta din Acrolinx-administratör.",
-      "outdatedServer": "Det verkar som om din Acrolinx-integration behöver en nyare Acrolinx-plattform-serverversion för att kunna ladda Sidebar. Kontakta din Acrolinx-administratör för att uppdatera Acrolinx-servern.",
+      "outdatedServer": "Det verkar som om din Acrolinx-integration behöver en nyare Acrolinx-plattformversion för att kunna ladda Sidebar. Kontakta din Acrolinx-administratör för att uppdatera Acrolinx-servern.",
       "serverConnectionProblemHttp": "Det gick inte att ansluta till Acrolinx. Kontrollera att URL:en är korrekt. Om du fortfarande inte kan ansluta till servern kontaktar du din Acrolinx-administratör. Det kan vara så att din Acrolinx-plattform inte accepterar säkra anslutningar.",
       "serverConnectionProblemHttps": "Det gick inte att ansluta till Acrolinx. Kontrollera att URL:en är korrekt. Om du fortfarande inte kan ansluta till servern kontaktar du din Acrolinx-administratör. Det kan vara så att din Acrolinx-plattform inte accepterar säkra anslutningar.",
-      "serverIsNoAcrolinxServerOrHasNoSidebar": "Det verkar som om detta inte är en Acrolinx-URL eller också har den här Acrolinx-plattform-serverversionen inte stöd för Acrolinx Sidebar. Kontakta din Acrolinx-administratör och kontrollera serverversion om du inte är säker på att Acrolinx-URL:en är korrekt.",
+      "serverIsNoAcrolinxServerOrHasNoSidebar": "Det verkar som om detta inte är en Acrolinx-URL eller att den här versionen av Acrolinx-plattformen inte stöder Sidebar. Om du är säker på att Acrolinx-URL:n är korrekt, be din Acrolinx-administratör att kontrollera din plattformsversion.",
       "serverIsNotSecure": "Du behöver ansluta till Acrolinx med en säker Acrolinx-URL. En säker Acrolinx-URL börjar med \"https\"."
     },
     "placeHolder": {
