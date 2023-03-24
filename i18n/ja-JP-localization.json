@@ -14,7 +14,8 @@
     "links": {
       "about": "Acrolinxについて",
       "cantConnect": "接続に問題がありますか？",
-      "needHelp": "ヘルプ"
+      "needHelp": "ヘルプ",
+      "submitRequest": "Acrolinx サポートに連絡する"
     },
     "message": {
       "invalidServerAddress": "Acrolinx の URL に誤りがあります。URL を確認し、再試行してください。",
