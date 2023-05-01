@@ -20,7 +20,8 @@ import {FORCE_SIDEBAR_URL} from '../../constants';
 import {isVersionGreaterEqual, TimeoutWatcher} from '../../utils/utils';
 import * as logging from '../../utils/logging';
 
-const DEFAULT_MINIMUM_SIDEBAR_VERSION = [14, 3, 1];
+// TODO not sure on what values use here?
+const DEFAULT_MINIMUM_SIDEBAR_VERSION = [15, 12, 0];
 
 export interface LoadSidebarProps {
   sidebarUrl: string;

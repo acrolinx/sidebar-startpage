@@ -187,12 +187,9 @@ export function startMainController(opts: MainControllerOpts = {}) {
 
     const minimumSidebarVersion = parseVersionNumberWithFallback(initParametersFromPlugin.minimumSidebarVersion);
 
-    let sidebarUrl;
-    if(minimumSidebarVersion.length !== 0 && minimumSidebarVersion[0] === 15) {
-      sidebarUrl = combinePathParts(acrolinxServerAddress, '/sidebar/v15/')
-    } else {
-      sidebarUrl = combinePathParts(acrolinxServerAddress, '/sidebar/v14/');
-    }
+    const platformVersion = '2023.06'; // TODO where to get this from?
+    const sidebarVersion = getSidebarVersion(minimumSidebarVersion, platformVersion);
+    const sidebarUrl = combinePathParts(acrolinxServerAddress, `/sidebar/v${sidebarVersion}/`);
 
     const loadSidebarProps: LoadSidebarProps = {
       sidebarUrl, useMessageAdapter,
@@ -428,6 +425,34 @@ export function startMainController(opts: MainControllerOpts = {}) {
       openWindow: (url) => openWindow({url}),
       initParameters: initParametersFromPlugin
     }), aboutPage, aboutPage.firstChild as Element);
+  }
+
+  function getSidebarVersion(minimumSidebarVersion: number[], platformVersion: string) {
+
+    let sidebarVersion = 15;
+
+    if (minimumSidebarVersion.length !== 0) {
+      sidebarVersion = minimumSidebarVersion[0];
+    }
+
+    // Check compatibility with the platform version
+    const isCompatible = isCompatibleWithPlatform(sidebarVersion, platformVersion);
+
+    // TODO not sure what to do when its not compatible?
+    if (!isCompatible) {
+      logging.error(`The sidebar version ${minimumSidebarVersion} is not compatible with the platform version ${platformVersion}`)
+    }
+
+    return minimumSidebarVersion;
+  }
+
+  function isCompatibleWithPlatform(sidebarVersion: number, platformVersion: string) {
+    const compatibilityList = [
+      { sidebarVersion: 15, platformVersion: '2023.06' },
+    ];
+
+    // Check if the current sidebar and platform versions are in the compatibility list
+    return compatibilityList.some(pair => pair.sidebarVersion === sidebarVersion && pair.platformVersion === platformVersion);
   }
 
 }
