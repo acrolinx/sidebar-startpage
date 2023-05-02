@@ -187,8 +187,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
 
     const minimumSidebarVersion = parseVersionNumberWithFallback(initParametersFromPlugin.minimumSidebarVersion);
 
-    const platformVersion = '2023.06'; // TODO where to get this from?
-    const sidebarVersion = pickSidebarVersion(minimumSidebarVersion, platformVersion);
+    const sidebarVersion = pickSidebarVersion(minimumSidebarVersion);
     const sidebarUrl = combinePathParts(acrolinxServerAddress, `/sidebar/v${sidebarVersion}/`);
 
     const loadSidebarProps: LoadSidebarProps = {

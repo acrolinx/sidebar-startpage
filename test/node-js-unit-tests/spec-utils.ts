@@ -19,7 +19,7 @@ import {isCorsWithCredentialsNeeded} from '../../src/acrolinx-sidebar-integratio
 import {combinePathParts, isVersionGreaterEqual, parseVersionNumberWithFallback} from '../../src/utils/utils';
 
 describe('utils', () => {
-  describe('isVersionGreaterEqual', function(this: Mocha.Context) {
+  describe('isVersionGreaterEqual', function() {
     this.timeout(5000);
 
     function assertVersionGreaterEqual(version: number[], minimumVersion: number[], expected: boolean) {

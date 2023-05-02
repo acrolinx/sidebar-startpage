@@ -115,7 +115,7 @@ function writeSidebarHtmlIntoIFrame(sidebarHtml: string, sidebarIFrameElement: H
   sidebarContentWindow.document.close();
 }
 
-export function pickSidebarVersion(minimumSidebarVersion: number[], platformVersion: string): number {
+export function pickSidebarVersion(minimumSidebarVersion: number[]): number {
 
   let defaultSidebarVersion = 15;
 
@@ -123,23 +123,5 @@ export function pickSidebarVersion(minimumSidebarVersion: number[], platformVers
     defaultSidebarVersion = minimumSidebarVersion[0];
   }
 
-  // Check compatibility with the platform version
-  const isCompatible = isCompatibleWithPlatform(defaultSidebarVersion, platformVersion);
-
-  // TODO not sure what to do when its not compatible?
-  if (!isCompatible) {
-    logging.error(`The sidebar version ${minimumSidebarVersion} is not compatible with the platform version ${platformVersion}`)
-  }
-
   return defaultSidebarVersion;
-}
-
-export function isCompatibleWithPlatform(sidebarVersion: number, platformVersion: string): boolean {
-  const compatibilityList = [
-    { sidebarVersion: 15, platformVersion: '2021.12.1' },
-    { sidebarVersion: 14, platformVersion: '2021.12.1' },
-  ];
-
-  // Check if the current sidebar and platform versions are in the compatibility list
-  return compatibilityList.some(pair => pair.sidebarVersion === sidebarVersion && pair.platformVersion === platformVersion);
 }

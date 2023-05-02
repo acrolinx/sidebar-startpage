@@ -23,6 +23,6 @@
     "i18n",
     "tmp",
     "tools/dist",
-    "dist",
+    "dist"
   ]
 }
