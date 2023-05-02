@@ -191,6 +191,22 @@ describe('integration-tests', function (this: Mocha.Context) {
 
     });
 
+    it('load dummy sidebar when v14', (done) => {
+      init({showServerSelector: true, minimumSidebarVersion: '14'});
+
+      $('.serverAddress').val(validMockedServerAddress);
+      simulateClick('.submitButton');
+
+      clock.restore();
+
+      waitUntilSuccess(() => {
+        const sidebarIFrame = getExistingElement('#sidebarContainer iframe').get(0) as HTMLIFrameElement;
+        assert.equal(sidebarIFrame.contentWindow!.document.body.innerText.trim(), 'Dummy Sidebar');
+        done();
+      }, 4000);
+
+    });
+
     it('show error message if sidebar loads to slowly', (done) => {
       init({showServerSelector: true}, {requestInitTimeOutMs: 50});
 
