@@ -35,7 +35,8 @@
     "inlineSvg": "node ./tools/inline-svg.js",
     "packInlined": "node ./tools/pack-inlined.js >tmp/sidebar-startpage-inlined.js",
     "injectVersion": "node ./tools/inject-version.js",
-    "updateDependencies": "npx -p npm-check-updates ncu --doctor -u"
+    "updateDependencies": "npx -p npm-check-updates ncu --doctor -u",
+    "jest-test": "npx jest"
   },
   "author": "Acrolinx",
   "url": "http://www.acrolinx.com",
@@ -51,6 +52,7 @@
   "devDependencies": {
     "@acrolinx/sidebar-interface": "15.3.0",
     "@types/chai": "4.2.21",
+    "@types/jest": "^27.5.1",
     "@types/jquery": "^3.5.6",
     "@types/lodash": "^4.14.172",
     "@types/mocha": "^9.0.0",
@@ -68,6 +70,7 @@
     "eslint-plugin-sonarjs": "^0.10.0",
     "hashcat": "^0.4.1",
     "inliner": "1.13.1",
+    "jest": "^27.0.6",
     "jquery": "^3.6.0",
     "karma": "^6.3.4",
     "karma-browserify": "^8.1.0",
@@ -81,6 +84,9 @@
     "mocha": "^9.1.0",
     "shx": "^0.3.3",
     "sinon": "^11.1.2",
+    "ts-jest": "^27.0.4",
+    "ts-loader": "^6.2.1",
+    "ts-node": "^8.10.2",
     "tslib": "^2.3.1",
     "typescript": "4.3.5",
     "watch": "1.0.2",

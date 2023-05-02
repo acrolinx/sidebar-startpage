@@ -48,7 +48,7 @@ interface MockedAcrolinxPlugin extends AcrolinxPlugin {
   openWindowSpy: sinon.SinonSpy;
 }
 
-describe('integration-tests', function () {
+describe('integration-tests', function (this: Mocha.Context) {
   const augmentedWindow = window as unknown as AugmentedWindow;
   let sinonSandbox: SinonSandbox;
   let windowOpenStub: SinonStub;

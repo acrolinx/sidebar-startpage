@@ -30,7 +30,7 @@ describe('sidebar-loader', () => {
     });
 
     it('returns version if there is a sidebar', () => {
-      assert.deepEqual(getSidebarVersion('<html><meta name="sidebar-version" content="14.2.2"></html> '), [14, 2, 2] as [number, number, number]);
+      assert.deepEqual(getSidebarVersion('<html><meta name="sidebar-version" content="15.12.0"></html> '), [15, 12, 0] as [number, number, number]);
     });
 
   });
