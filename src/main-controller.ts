@@ -29,7 +29,8 @@ import {
 import {
   LoadSidebarError,
   loadSidebarIntoIFrame,
-  LoadSidebarProps, pickSidebarVersion
+  LoadSidebarProps,
+  pickSidebarVersion
 } from './acrolinx-sidebar-integration/utils/sidebar-loader';
 import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from './proxies/proxy-acrolinx-plugin';
 import {
