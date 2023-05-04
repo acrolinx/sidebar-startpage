@@ -102,7 +102,7 @@ export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameEle
 }
 
 function formatVersion(version: number[] | null) {
-  return version && version.join('.');
+  return version && version?.join('.');
 }
 
 function writeSidebarHtmlIntoIFrame(sidebarHtml: string, sidebarIFrameElement: HTMLIFrameElement, sidebarBaseUrl: string) {
