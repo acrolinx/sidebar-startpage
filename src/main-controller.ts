@@ -30,7 +30,6 @@ import {
   LoadSidebarError,
   loadSidebarIntoIFrame,
   LoadSidebarProps,
-  pickSidebarVersion
 } from './acrolinx-sidebar-integration/utils/sidebar-loader';
 import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from './proxies/proxy-acrolinx-plugin';
 import {
@@ -188,8 +187,11 @@ export function startMainController(opts: MainControllerOpts = {}) {
 
     const minimumSidebarVersion = parseVersionNumberWithFallback(initParametersFromPlugin.minimumSidebarVersion);
 
-    const sidebarVersion = pickSidebarVersion(minimumSidebarVersion);
-    const sidebarUrl = combinePathParts(acrolinxServerAddress, `/sidebar/v${sidebarVersion}/`);
+    let sidebarUrl = combinePathParts(acrolinxServerAddress, '/sidebar/v15/');
+
+    if(minimumSidebarVersion.length !== 0 && minimumSidebarVersion[0] === 14) {
+      sidebarUrl = combinePathParts(acrolinxServerAddress, '/sidebar/v14/')
+    }
 
     const loadSidebarProps: LoadSidebarProps = {
       sidebarUrl, useMessageAdapter,

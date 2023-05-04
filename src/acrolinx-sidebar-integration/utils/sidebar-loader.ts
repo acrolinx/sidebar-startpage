@@ -20,7 +20,7 @@ import {FORCE_SIDEBAR_URL} from '../../constants';
 import {isVersionGreaterEqual, TimeoutWatcher} from '../../utils/utils';
 import * as logging from '../../utils/logging';
 
-const DEFAULT_MINIMUM_SIDEBAR_VERSION = [14, 3, 1];
+const MINIMUM_SIDEBAR_VERSION_SUPPORTED = [14, 3, 1];
 
 export interface LoadSidebarProps {
   sidebarUrl: string;
@@ -72,12 +72,12 @@ export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameEle
 
     const sidebarVersion = getSidebarVersion(sidebarHtml);
     const wrongSidebarVersion = !sidebarVersion
-      || !isVersionGreaterEqual(sidebarVersion, DEFAULT_MINIMUM_SIDEBAR_VERSION)
+      || !isVersionGreaterEqual(sidebarVersion, MINIMUM_SIDEBAR_VERSION_SUPPORTED)
       || !isVersionGreaterEqual(sidebarVersion, config.minimumSidebarVersion);
 
     if (!FORCE_SIDEBAR_URL && wrongSidebarVersion) {
       logging.warn(`Found sidebar version ${formatVersion(sidebarVersion)} ` +
-        `(default minimumSidebarVersion=${formatVersion(DEFAULT_MINIMUM_SIDEBAR_VERSION)}, configured minimumSidebarVersion=${formatVersion(config.minimumSidebarVersion)})`);
+        `(default minimumSidebarVersion=${formatVersion(MINIMUM_SIDEBAR_VERSION_SUPPORTED)}, configured minimumSidebarVersion=${formatVersion(config.minimumSidebarVersion)})`);
       onSidebarLoaded(new NoValidSidebarError('sidebarVersionIsBelowMinimum',
         'Sidebar version is smaller than minimumSidebarVersion', completeSidebarUrl));
       return;
@@ -114,14 +114,3 @@ function writeSidebarHtmlIntoIFrame(sidebarHtml: string, sidebarIFrameElement: H
   sidebarContentWindow.document.write(sidebarHtmlWithAbsoluteLinks);
   sidebarContentWindow.document.close();
 }
-
-export function pickSidebarVersion(minimumSidebarVersion: number[]): number {
-
-  const defaultSidebarVersion = 15;
-  const allowedVersions = [14, 15];
-
-  return (minimumSidebarVersion.length !== 0 && allowedVersions.includes(minimumSidebarVersion[0]))
-    ? minimumSidebarVersion[0]
-    : defaultSidebarVersion;
-}
-
