@@ -30,7 +30,7 @@ export interface LoadSidebarProps {
 }
 
 export function getSidebarVersion(sidebarHtml: string): [number, number, number] | null {
-  const match = sidebarHtml.match(/<meta name=\"sidebar-version\" content=\"(\d+)\.(\d+)\.(\d+)/);
+  const match = sidebarHtml.match(/<meta name="sidebar-version" content="(\d+)\.(\d+)\.(\d+)/);
   if (!match || match.length !== 4) {
     return null;
   }
