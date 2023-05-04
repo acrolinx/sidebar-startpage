@@ -117,11 +117,11 @@ function writeSidebarHtmlIntoIFrame(sidebarHtml: string, sidebarIFrameElement: H
 
 export function pickSidebarVersion(minimumSidebarVersion: number[]): number {
 
-  let defaultSidebarVersion = 15;
+  const defaultSidebarVersion = 15;
+  const allowedVersions = [14, 15];
 
-  if (minimumSidebarVersion.length !== 0 && minimumSidebarVersion[0] < defaultSidebarVersion) {
-    defaultSidebarVersion = minimumSidebarVersion[0];
-  }
-
-  return defaultSidebarVersion;
+  return (minimumSidebarVersion.length !== 0 && allowedVersions.includes(minimumSidebarVersion[0]))
+    ? minimumSidebarVersion[0]
+    : defaultSidebarVersion;
 }
+
