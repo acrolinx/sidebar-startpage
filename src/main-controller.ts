@@ -153,8 +153,8 @@ export function startMainController(opts: MainControllerOpts = {}) {
   }
 
   function openWindow(options: OpenWindowParameters) {
-    if (acrolinxPlugin && acrolinxPlugin?.openWindow &&
-      !(initParametersFromPlugin && initParametersFromPlugin?.openWindowDirectly)) {
+    if (acrolinxPlugin?.openWindow &&
+      !(initParametersFromPlugin?.openWindowDirectly)) {
       acrolinxPlugin.openWindow(options);
     } else {
       window.open(options.url);
@@ -346,7 +346,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
   }
 
   function onMessageFromSidebar(messageEvent: MessageEvent) {
-    if (!sidebarIFrameElement || !sidebarIFrameElement?.contentWindow ||
+    if (!sidebarIFrameElement?.contentWindow ||
       messageEvent.source !== sidebarIFrameElement.contentWindow) {
       return;
     }
