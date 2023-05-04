@@ -20,7 +20,7 @@ import {FORCE_SIDEBAR_URL} from '../../constants';
 import {isVersionGreaterEqual, TimeoutWatcher} from '../../utils/utils';
 import * as logging from '../../utils/logging';
 
-const DEFAULT_MINIMUM_SIDEBAR_VERSION = [14, 3, 1];
+const MINIMUM_SIDEBAR_VERSION_SUPPORTED = [14, 3, 1];
 
 export interface LoadSidebarProps {
   sidebarUrl: string;
@@ -30,7 +30,7 @@ export interface LoadSidebarProps {
 }
 
 export function getSidebarVersion(sidebarHtml: string): [number, number, number] | null {
-  const match = sidebarHtml.match(/<meta name=\"sidebar-version\" content=\"(\d+)\.(\d+)\.(\d+)/);
+  const match = sidebarHtml.match(/<meta name="sidebar-version" content="(\d+)\.(\d+)\.(\d+)/);
   if (!match || match.length !== 4) {
     return null;
   }
@@ -72,12 +72,12 @@ export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameEle
 
     const sidebarVersion = getSidebarVersion(sidebarHtml);
     const wrongSidebarVersion = !sidebarVersion
-      || !isVersionGreaterEqual(sidebarVersion, DEFAULT_MINIMUM_SIDEBAR_VERSION)
+      || !isVersionGreaterEqual(sidebarVersion, MINIMUM_SIDEBAR_VERSION_SUPPORTED)
       || !isVersionGreaterEqual(sidebarVersion, config.minimumSidebarVersion);
 
     if (!FORCE_SIDEBAR_URL && wrongSidebarVersion) {
       logging.warn(`Found sidebar version ${formatVersion(sidebarVersion)} ` +
-        `(default minimumSidebarVersion=${formatVersion(DEFAULT_MINIMUM_SIDEBAR_VERSION)}, configured minimumSidebarVersion=${formatVersion(config.minimumSidebarVersion)})`);
+        `(default minimumSidebarVersion=${formatVersion(MINIMUM_SIDEBAR_VERSION_SUPPORTED)}, configured minimumSidebarVersion=${formatVersion(config.minimumSidebarVersion)})`);
       onSidebarLoaded(new NoValidSidebarError('sidebarVersionIsBelowMinimum',
         'Sidebar version is smaller than minimumSidebarVersion', completeSidebarUrl));
       return;
@@ -102,7 +102,7 @@ export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameEle
 }
 
 function formatVersion(version: number[] | null) {
-  return version && version.join('.');
+  return version?.join('.');
 }
 
 function writeSidebarHtmlIntoIFrame(sidebarHtml: string, sidebarIFrameElement: HTMLIFrameElement, sidebarBaseUrl: string) {

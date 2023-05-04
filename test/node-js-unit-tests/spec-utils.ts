@@ -85,7 +85,7 @@ describe('utils', () => {
       assert.deepEqual(parseVersionNumberWithFallback('12'), [12]);
       assert.deepEqual(parseVersionNumberWithFallback('14.11.123'), [14, 11, 123]);
       assert.deepEqual(parseVersionNumberWithFallback('1.2.3'), [1, 2, 3]);
-      assert.deepEqual(parseVersionNumberWithFallback('15.0.0')[0], 15);
+      assert.deepEqual(parseVersionNumberWithFallback('15.12.0')[0], 15);
     });
 
     it('invalid versions return fallback', () => {

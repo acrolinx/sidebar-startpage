@@ -29,7 +29,7 @@ import {
 import {
   LoadSidebarError,
   loadSidebarIntoIFrame,
-  LoadSidebarProps
+  LoadSidebarProps,
 } from './acrolinx-sidebar-integration/utils/sidebar-loader';
 import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from './proxies/proxy-acrolinx-plugin';
 import {
@@ -152,8 +152,8 @@ export function startMainController(opts: MainControllerOpts = {}) {
   }
 
   function openWindow(options: OpenWindowParameters) {
-    if (acrolinxPlugin && acrolinxPlugin.openWindow &&
-      !(initParametersFromPlugin && initParametersFromPlugin.openWindowDirectly)) {
+    if (acrolinxPlugin?.openWindow &&
+      !(initParametersFromPlugin?.openWindowDirectly)) {
       acrolinxPlugin.openWindow(options);
     } else {
       window.open(options.url);
@@ -187,11 +187,10 @@ export function startMainController(opts: MainControllerOpts = {}) {
 
     const minimumSidebarVersion = parseVersionNumberWithFallback(initParametersFromPlugin.minimumSidebarVersion);
 
-    let sidebarUrl;
-    if(minimumSidebarVersion.length !== 0 && minimumSidebarVersion[0] === 15) {
-      sidebarUrl = combinePathParts(acrolinxServerAddress, '/sidebar/v15/')
-    } else {
-      sidebarUrl = combinePathParts(acrolinxServerAddress, '/sidebar/v14/');
+    let sidebarUrl = combinePathParts(acrolinxServerAddress, '/sidebar/v15/');
+
+    if(minimumSidebarVersion.length !== 0 && minimumSidebarVersion[0] === 14) {
+      sidebarUrl = combinePathParts(acrolinxServerAddress, '/sidebar/v14/')
     }
 
     const loadSidebarProps: LoadSidebarProps = {
@@ -349,7 +348,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
   }
 
   function onMessageFromSidebar(messageEvent: MessageEvent) {
-    if (!sidebarIFrameElement || !sidebarIFrameElement.contentWindow ||
+    if (!sidebarIFrameElement?.contentWindow ||
       messageEvent.source !== sidebarIFrameElement.contentWindow) {
       return;
     }
@@ -429,5 +428,4 @@ export function startMainController(opts: MainControllerOpts = {}) {
       initParameters: initParametersFromPlugin
     }), aboutPage, aboutPage.firstChild as Element);
   }
-
 }

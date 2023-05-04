@@ -175,8 +175,39 @@ describe('integration-tests', function () {
       }, 4000);
     });
 
+    it('show error message for outdated sidebar/server when sidebar is v15.13.0', (done) => {
+      init({showServerSelector: true, minimumSidebarVersion: '15.13.0'});
+
+      $('.serverAddress').val(validMockedServerAddress);
+      simulateClick('.submitButton');
+
+      clock.restore();
+      waitUntilSuccess(() => {
+        assertMainErrorMessage(getTranslation().serverSelector.message.outdatedServer);
+        done();
+      }, 4000);
+    });
+
     it('load dummy sidebar', (done) => {
       init({showServerSelector: true});
+
+      $('.serverAddress').val(validMockedServerAddress);
+      simulateClick('.submitButton');
+
+      clock.restore();
+
+      waitUntilSuccess(() => {
+        const sidebarVersion = '<meta name="sidebar-version" content="15.12.2">';
+        const sidebarIFrame = getExistingElement('#sidebarContainer iframe').get(0) as HTMLIFrameElement;
+        assert.isTrue(sidebarIFrame.contentWindow!.document.head.innerHTML.includes(sidebarVersion));
+        assert.equal(sidebarIFrame.contentWindow!.document.body.innerText.trim(), 'Dummy Sidebar');
+        done();
+      }, 4000);
+
+    });
+
+    it('load dummy sidebar when v14', (done) => {
+      init({showServerSelector: true, minimumSidebarVersion: '14'});
 
       $('.serverAddress').val(validMockedServerAddress);
       simulateClick('.submitButton');
@@ -190,6 +221,39 @@ describe('integration-tests', function () {
       }, 4000);
 
     });
+
+    it('load dummy sidebar when v15.12.0', (done) => {
+      init({showServerSelector: true, minimumSidebarVersion: '15.12.0'});
+
+      $('.serverAddress').val(validMockedServerAddress);
+      simulateClick('.submitButton');
+
+      clock.restore();
+
+      waitUntilSuccess(() => {
+        const sidebarIFrame = getExistingElement('#sidebarContainer iframe').get(0) as HTMLIFrameElement;
+        assert.equal(sidebarIFrame.contentWindow!.document.body.innerText.trim(), 'Dummy Sidebar');
+        done();
+      }, 4000);
+
+    });
+
+    it('load dummy sidebar when v15.11.1', (done) => {
+      init({showServerSelector: true, minimumSidebarVersion: '15.11.1'});
+
+      $('.serverAddress').val(validMockedServerAddress);
+      simulateClick('.submitButton');
+
+      clock.restore();
+
+      waitUntilSuccess(() => {
+        const sidebarIFrame = getExistingElement('#sidebarContainer iframe').get(0) as HTMLIFrameElement;
+        assert.equal(sidebarIFrame.contentWindow!.document.body.innerText.trim(), 'Dummy Sidebar');
+        done();
+      }, 4000);
+
+    });
+
 
     it('show error message if sidebar loads to slowly', (done) => {
       init({showServerSelector: true}, {requestInitTimeOutMs: 50});

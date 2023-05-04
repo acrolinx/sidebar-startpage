@@ -144,7 +144,7 @@ linux:maven-deploy-release:
   only:
     - tags
 
-windows:deploy:
+.windows:deploy:
   stage: publish_public
   tags:
     - windows-build-node-integrations
