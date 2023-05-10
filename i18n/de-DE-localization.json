@@ -22,7 +22,7 @@
       "loadSidebarTimeout": "Die Sidebar braucht zu lange zum Laden. Überprüfen Sie Ihre Netzwerkverbindung oder wenden Sie sich an Ihre*n Acrolinx-Admin.",
       "outdatedServer": "Ihre Acrolinx-Integration benötigt eine neuere Version der Acrolinx-Plattform. Sonst lädt die Sidebar nicht. Bitten Sie Ihre*n Admin, die Plattform zu aktualisieren.",
       "serverConnectionProblemHttp": "Wir konnten keine Verbindung zu Acrolinx herstellen. Stimmt die Acrolinx-URL? Wenn ja, wenden Sie sich an Ihre*n Admin. Möglicherweise akzeptiert Ihre Acrolinx-Plattform keine gesicherten Verbindungen.",
-      "serverConnectionProblemHttps": "Wir konnten keine Verbindung zu Acrolinx herstellen. Stimmt die Acrolinx-URL? Wenn ja, wenden Sie sich an Ihre*n Admin. Möglicherweise akzeptiert Ihre Acrolinx-Plattform keine gesicherten Verbindungen.",
+      "serverConnectionProblemHttps": "Wir konnten keine Verbindung zu Acrolinx herstellen. Überprüfen Sie, ob die URL korrekt ist. Wenn Sie weiterhin keine Verbindung herstellen können, wenden Sie sich an Ihre*n Acrolinx-Admin.",
       "serverIsNoAcrolinxServerOrHasNoSidebar": "Stimmt die Acrolinx-URL? Wenn ja, wird die Sidebar von der Acrolinx-Plattform evtl. nicht unterstützt? Fragen Sie Ihre*n Admin.",
       "serverIsNotSecure": "Verwenden Sie eine gesicherte Acrolinx-URL. Eine gesicherte Acrolinx-URL beginnt mit „https“."
     },

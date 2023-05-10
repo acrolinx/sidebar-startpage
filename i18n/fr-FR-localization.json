@@ -22,7 +22,7 @@
       "loadSidebarTimeout": "La Sidebar Acrolinx est trop lent à démarrer. Vérifier la connexion réseau ou contacter l'administrateur de Acrolinx. ",
       "outdatedServer": "Il semblerait que la version de la plateforme Acrolinx ne prenne pas en charge la Sidebar. Contactez l'administrateur Acrolinx pour une mise à jour de la plateforme.",
       "serverConnectionProblemHttp": "La connexion à Acrolinx n'a pas abouti. Est-ce que l'URL d'Acrolinx est correcte ? Si oui, contactez l'administrateur Acrolinx. Il se pourrait que votre serveur n'accepte pas de connexions sécurisées.",
-      "serverConnectionProblemHttps": "La connexion à Acrolinx n'a pas abouti. Est-ce que l'URL d'Acrolinx est correcte ? Si oui, contactez l'administrateur Acrolinx. Il se pourrait que votre serveur n'accepte pas de connexions sécurisées.",
+      "serverConnectionProblemHttps": "Nous n'avons pas pu vous connecter à Acrolinx. Vérifiez que l'URL est correcte. Si vous ne pouvez toujours pas vous connecter, contactez votre administrateur Acrolinx.",
       "serverIsNoAcrolinxServerOrHasNoSidebar": "Est-ce que l'URL d'Acrolinx est correcte ? Si oui, il se pourrait que la version de la plateforme Acrolinx ne prend pas en charge la Sidebar. Contactez l'administrateur Acrolinx pour vérifier.",
       "serverIsNotSecure": "Utilisez une URL d'Acrolinx sécurisée.  Une URL d'Acrolinx sécurisée commence par « https »."
     },
