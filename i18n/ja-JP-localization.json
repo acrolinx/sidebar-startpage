@@ -22,7 +22,7 @@
       "loadSidebarTimeout": "サイドバーを起動するのに時間がかかっています。ネットワークの接続を確認し、Acrolinx の管理者に連絡してください。",
       "outdatedServer": "この Acrolinx プラグインのサイドバーを起動するには、新しいコアプラットフォームバージョンが必要です。Acrolinx の管理者に、コアプラットフォームの更新を依頼してください。",
       "serverConnectionProblemHttp": "Acrolinx に接続できませんでした。URL が正しいかを確認してください。URL が正しいにも関わらず接続できない場合は、Acrolinx 管理者に連絡してください。Acrolinx コアプラットフォームが、保護された接続を許可していない可能性があります。",
-      "serverConnectionProblemHttps": "Acrolinx に接続できませんでした。URL が正しいかを確認してください。URL が正しいにも関わらず接続できない場合は、Acrolinx 管理者に連絡してください。Acrolinx コアプラットフォームが、保護された接続を許可していない可能性があります。",
+      "serverConnectionProblemHttps": "Acrolinx に接続できませんでした。URL が正しいかを確認してください。URL が正しいにも関わらず接続できない場合は、Acrolinx 管理者に連絡してください。",
       "serverIsNoAcrolinxServerOrHasNoSidebar": "この URL は、Acrolinx の URL ではないか、このサイドバーがサポートされていないバージョンの Acrolinx コアプラットフォームです。URL が正しい場合は、Acrolinx の管理者に Acrolinx コアプラットフォームのバージョンを確認してください。",
       "serverIsNotSecure": "セキュリティーで保護されている Acrolinx URL を使用して、Acrolinx に接続してください。保護されている Acrolinx サーバーの URL は、https で始まります。"
     },
