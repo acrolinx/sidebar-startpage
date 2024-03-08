@@ -1,6 +1,6 @@
 set -ex
 
-SELECTOR_VERSION=`cat package.json | grep "version\":" | cut -d'"' -f4`
+readonly SELECTOR_VERSION=`cat package.json | grep "version\":" | cut -d'"' -f4`
 
 # SIDEBAR_VERSION_SHORT=$(printf "%s\n" "${SIDEBAR_VERSION?}" | cut -d . -f 1-2)
 CLASSIFIER=-SNAPSHOT
