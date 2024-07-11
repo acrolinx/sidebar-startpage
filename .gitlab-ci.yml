@@ -71,7 +71,7 @@ windows:build:
     - npm run buildDistButNotNPM
 
 linux:maven-deploy-snapshot:
-  image: maven:3.6-jdk-11
+  image: maven:3-jdk-11
   stage: publish_internal
   variables:
     STAGE: "snapshot"
@@ -113,7 +113,7 @@ windows:internal_deploy:
 #### Public Deployment Jobs for NPMJS, MAVEN, Nuget - Only Tags ####
 
 linux:npm-deploy:
-  image: node:16-alpine
+  image: node:20-alpine
   stage: publish_public
   variables:
     NPM_TOKEN: ${NPM_TOKEN}
@@ -129,7 +129,7 @@ linux:npm-deploy:
     - tags
 
 linux:maven-deploy-release:
-  image: maven:3.6-jdk-11
+  image: maven:3-jdk-11
   stage: publish_public
   variables:
     STAGE: "release"
