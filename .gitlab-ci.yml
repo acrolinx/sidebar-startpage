@@ -24,19 +24,14 @@ sonarcloud-check:
       - .sonar/cache
   script:
     - sonar-scanner
-  only:
-    - merge_requests
-    - master
-    - tags
 
-# Build on Linux
 linux:build:
   stage: build
   image: node:lts
   before_script:
     - apt update -y
     - apt upgrade -y
-    - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    - wget --no-verbose https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     - apt install -y ./google-chrome-stable_current_amd64.deb
   script:
     - node --version
@@ -48,23 +43,12 @@ linux:build:
       - dist/
       - node_modules/
 
-# Build on Mac
 mac:build:
   stage: build
   tags:
     - osx
     - mac
     - integrations
-  script:
-    - node --version
-    - npm ci
-    - npm run buildDistButNotNPM
-
-# Build on Windows
-windows:build:
-  stage: build
-  tags:
-    - windows-build-node-integrations
   script:
     - node --version
     - npm ci
