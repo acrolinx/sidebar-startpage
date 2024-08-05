@@ -66,7 +66,7 @@ linux:maven-deploy-snapshot:
   script:
     - ./gitlab-build-ci.sh
   only:
-    - master
+    - main
 
 windows:internal_deploy:
   stage: publish_internal
@@ -86,7 +86,7 @@ windows:internal_deploy:
 
     - python runBatchScript.py
   only:
-    - master
+    - main
   artifacts:
     when: always
     paths:
