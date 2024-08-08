@@ -83,7 +83,7 @@
     "sinon": "^11.1.2",
     "tslib": "^2.3.1",
     "typescript": "^5.5.4",
-    "typescript-eslint": "^8.0.0",
+    "typescript-eslint": "^8.0.1",
     "watch": "1.0.2",
     "watchify": "^4.0.0"
   },
