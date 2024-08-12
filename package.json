@@ -64,7 +64,7 @@
     "chai": "^4.3.4",
     "concurrently": "^8.2.2",
     "cookie": "^0.6.0",
-    "eslint": "^9.8.0",
+    "eslint": "^9.9.0",
     "eslint-plugin-sonarjs": "^1.0.4",
     "hashcat": "^0.4.1",
     "inliner": "1.13.1",
