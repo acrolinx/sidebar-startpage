@@ -91,6 +91,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "preact": "^10.5.14"
+    "preact": "^10.23.2"
   }
 }
