@@ -38,6 +38,9 @@ import { getAcrolinxSimpleStorage } from '../../../src/utils/acrolinx-storage';
 // import {HELP_LINK_URLS} from "../../../src/components/help-link";
 import { ExternalLinks, getExternalLinks } from '../../../src/utils/externalLinks';
 import { describe, it, beforeEach, afterEach } from 'vitest';
+import '../test-styles.css';
+import '../../../src/styles/index.less';
+import '../../../src/assets/styles/fonts.css';
 
 type AugmentedWindow = Window & {
   acrolinxSidebar: AcrolinxSidebar;
@@ -118,21 +121,20 @@ describe('integration-tests', function () {
   }
 
   describe('showServerSelector = false', () => {
-    it('display connection problems on own page', done => {
+    it('display connection problems on own page', async () => {
       init({
         showServerSelector: false,
         serverAddress: 'http://not-existing-local-domain',
       });
       clock.restore();
-      waitUntilSuccess(() => {
+      await waitUntilSuccess(() => {
         assertMainErrorMessage(getTranslation().serverSelector.message.serverConnectionProblemHttp);
       }, 4000);
     });
   });
 
   describe('server selector form', () => {
-    const validMockedServerAddress =
-      (startsWith(window.location.pathname, '/test/') ? '' : '/base') + '/test/browser-tests/dummy-sidebar';
+    const validMockedServerAddress = '/tests/browser-tests/dummy-sidebar';
 
     it('validate server address for invalid URLS', () => {
       init({ showServerSelector: true });
@@ -143,43 +145,43 @@ describe('integration-tests', function () {
       assertMainErrorMessage(getTranslation().serverSelector.message.invalidServerAddress);
     });
 
-    it('display connection problems', done => {
+    it('display connection problems', async () => {
       init({ showServerSelector: true });
 
       $('.serverAddress').val('http://not-existing-local-domain');
       simulateClick('.submitButton');
 
       clock.restore();
-      waitUntilSuccess(() => {
+      await waitUntilSuccess(() => {
         assertMainErrorMessage(getTranslation().serverSelector.message.serverConnectionProblemHttp);
       }, 4000);
     });
 
-    it('show error message for outdated sidebar/server', done => {
+    it('show error message for outdated sidebar/server', async () => {
       init({ showServerSelector: true, minimumSidebarVersion: '16' });
 
       $('.serverAddress').val(validMockedServerAddress);
       simulateClick('.submitButton');
 
       clock.restore();
-      waitUntilSuccess(() => {
+      await waitUntilSuccess(() => {
         assertMainErrorMessage(getTranslation().serverSelector.message.outdatedServer);
       }, 4000);
     });
 
-    it('show error message for outdated sidebar/server when sidebar is v15.13.0', done => {
+    it('show error message for outdated sidebar/server when sidebar is v15.13.0', async () => {
       init({ showServerSelector: true, minimumSidebarVersion: '15.13.0' });
 
       $('.serverAddress').val(validMockedServerAddress);
       simulateClick('.submitButton');
 
       clock.restore();
-      waitUntilSuccess(() => {
+      await waitUntilSuccess(() => {
         assertMainErrorMessage(getTranslation().serverSelector.message.outdatedServer);
       }, 4000);
     });
 
-    it('load dummy sidebar', done => {
+    it('load dummy sidebar', async () => {
       init({ showServerSelector: true });
 
       $('.serverAddress').val(validMockedServerAddress);
@@ -187,7 +189,7 @@ describe('integration-tests', function () {
 
       clock.restore();
 
-      waitUntilSuccess(() => {
+      await waitUntilSuccess(() => {
         const sidebarVersion = '<meta name="sidebar-version" content="15.12.2">';
         const sidebarIFrame = getExistingElement('#sidebarContainer iframe').get(0) as HTMLIFrameElement;
         assert.isTrue(sidebarIFrame.contentWindow!.document.head.innerHTML.includes(sidebarVersion));
@@ -195,7 +197,7 @@ describe('integration-tests', function () {
       }, 4000);
     });
 
-    it('load dummy sidebar when v14', done => {
+    it('load dummy sidebar when v14', async () => {
       init({ showServerSelector: true, minimumSidebarVersion: '14' });
 
       $('.serverAddress').val(validMockedServerAddress);
@@ -203,13 +205,13 @@ describe('integration-tests', function () {
 
       clock.restore();
 
-      waitUntilSuccess(() => {
+      await waitUntilSuccess(() => {
         const sidebarIFrame = getExistingElement('#sidebarContainer iframe').get(0) as HTMLIFrameElement;
         assert.equal(sidebarIFrame.contentWindow!.document.body.innerText.trim(), 'Dummy Sidebar');
       }, 4000);
     });
 
-    it('load dummy sidebar when v15.12.0', done => {
+    it('load dummy sidebar when v15.12.0', async () => {
       init({ showServerSelector: true, minimumSidebarVersion: '15.12.0' });
 
       $('.serverAddress').val(validMockedServerAddress);
@@ -217,13 +219,13 @@ describe('integration-tests', function () {
 
       clock.restore();
 
-      waitUntilSuccess(() => {
+      await waitUntilSuccess(() => {
         const sidebarIFrame = getExistingElement('#sidebarContainer iframe').get(0) as HTMLIFrameElement;
         assert.equal(sidebarIFrame.contentWindow!.document.body.innerText.trim(), 'Dummy Sidebar');
       }, 4000);
     });
 
-    it('load dummy sidebar when v15.11.1', done => {
+    it('load dummy sidebar when v15.11.1', async () => {
       init({ showServerSelector: true, minimumSidebarVersion: '15.11.1' });
 
       $('.serverAddress').val(validMockedServerAddress);
@@ -231,20 +233,20 @@ describe('integration-tests', function () {
 
       clock.restore();
 
-      waitUntilSuccess(() => {
+      await waitUntilSuccess(() => {
         const sidebarIFrame = getExistingElement('#sidebarContainer iframe').get(0) as HTMLIFrameElement;
         assert.equal(sidebarIFrame.contentWindow!.document.body.innerText.trim(), 'Dummy Sidebar');
       }, 4000);
     });
 
-    it('show error message if sidebar loads to slowly', done => {
+    it('show error message if sidebar loads to slowly', async () => {
       init({ showServerSelector: true }, { requestInitTimeOutMs: 50 });
 
       $('.serverAddress').val(validMockedServerAddress);
       simulateClick('.submitButton');
 
       clock.restore();
-      waitUntilSuccess(() => {
+      await waitUntilSuccess(() => {
         assertMainErrorMessage(getTranslation().serverSelector.message.loadSidebarTimeout);
       }, 4000);
     });

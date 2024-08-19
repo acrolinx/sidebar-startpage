@@ -39,22 +39,24 @@ export function simulateClick(jQuerySelector: any) {
   getExistingElement(jQuerySelector).get(0)!.click();
 }
 
-export function waitUntilSuccess(f: () => void, timeoutMs: number) {
+export async function waitUntilSuccess(f: () => void, timeoutMs: number) {
   const startTime = Date.now();
 
-  function waitUntilSuccessInternal() {
-    setTimeout(() => {
-      try {
-        f();
-      } catch (error) {
-        if (Date.now() < startTime + timeoutMs) {
-          waitUntilSuccessInternal();
-        } else {
-          throw error;
+  function waitUntilSuccessInternal(): Promise<void> {
+    return new Promise((res, rej) => {
+      setTimeout(() => {
+        try {
+          f();
+          res();
+        } catch (error) {
+          if (Date.now() < startTime + timeoutMs) {
+            waitUntilSuccessInternal();
+          } else {
+            rej('failed');
+          }
         }
-      }
-    }, 100);
+      }, 100);
+    });
   }
-
-  waitUntilSuccessInternal();
+  await waitUntilSuccessInternal();
 }

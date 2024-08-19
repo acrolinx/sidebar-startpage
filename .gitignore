@@ -25,3 +25,4 @@ dist-ssr
 js-junit.xml
 tmp
 dist-inline
+tests/browser-tests/src/__screenshots__/
