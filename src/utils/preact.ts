@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
-import {h, ComponentConstructor, JSX} from 'preact';
+import { h, ComponentConstructor, JSX } from 'preact';
 
 type JsxFactory<PropsType> = (params?: PropsType, ...children: (JSX.Element | JSX.Element[] | string)[]) => JSX.Element;
 
-export function createPreactFactory<PropsType, StateType=any>(component: ComponentConstructor<PropsType, StateType> | string): JsxFactory<PropsType> {
-  return (params?: PropsType, ...children: (JSX.Element | JSX.Element[] | string)[]) => h(component as any, params!, ...children);
+export function createPreactFactory<PropsType, StateType = any>(
+  component: ComponentConstructor<PropsType, StateType> | string,
+): JsxFactory<PropsType> {
+  return (params?: PropsType, ...children: (JSX.Element | JSX.Element[] | string)[]) =>
+    h(component as any, params!, ...children);
 }
 
 export const div = createPreactFactory('div');
@@ -32,7 +35,7 @@ export const a = createPreactFactory('a');
 export const input = createPreactFactory('input');
 export const textarea = createPreactFactory('textarea');
 
-export function classNames(...args: ({ [className: string]: (boolean | undefined) } | string | undefined)[]) {
+export function classNames(...args: ({ [className: string]: boolean | undefined } | string | undefined)[]) {
   const classes: string[] = [];
 
   for (let i = 0; i < args.length; i++) {

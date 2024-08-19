@@ -14,12 +14,18 @@
  * limitations under the License.
  */
 
-export const SERVER_SELECTOR_VERSION = '§SERVER_SELECTOR_VERSION';
+export const SERVER_SELECTOR_VERSION = `${import.meta.env.PACKAGE_VERSION}.${import.meta.env.BUILD_NUMBER}`;
 
 /* Some extensions need the message adapter, because it's not possible to load javascript from arbitrary hosts
  * due to the content security policy.
  */
-export const URL_PREFIXES_NEEDING_MESSAGE_ADAPTER = ['chrome-extension://', 'moz-extension://', 'resource://', 'ms-browser-extension://', 'safari-web-extension://'];
+export const URL_PREFIXES_NEEDING_MESSAGE_ADAPTER = [
+  'chrome-extension://',
+  'moz-extension://',
+  'resource://',
+  'ms-browser-extension://',
+  'safari-web-extension://',
+];
 
 export const REQUEST_INIT_TIMEOUT_MS = 60 * 1000;
 

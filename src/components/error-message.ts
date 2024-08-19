@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import {Component, ComponentConstructor} from 'preact';
-import {button, classNames, createPreactFactory, div} from '../utils/preact';
-import {getTranslation} from '../localization';
+import { Component, ComponentConstructor } from 'preact';
+import { button, classNames, createPreactFactory, div } from '../utils/preact';
+import { getTranslation } from '../localization';
 
 interface HtmlWrapper {
   html: string;
@@ -31,18 +31,17 @@ interface ErrorMessageState {
   showDetails: boolean;
 }
 
-
 class ErrorMessageComponent extends Component<ErrorMessageProps, ErrorMessageState> {
   state = {
-    showDetails: false
+    showDetails: false,
   };
 
   toggleErrorDetails = (event: MouseEvent) => {
     event.preventDefault();
     this.setState({
-      showDetails: !this.state.showDetails
+      showDetails: !this.state.showDetails,
     });
-  }
+  };
 
   selectDetailMessage = (event: Event) => {
     event.preventDefault();
@@ -51,27 +50,48 @@ class ErrorMessageComponent extends Component<ErrorMessageProps, ErrorMessageSta
     range.selectNodeContents(<Node>event.target!);
     selection?.removeAllRanges();
     selection?.addRange(range);
-  }
+  };
 
   getErrorDetailsMessage() {
-    return this.state.showDetails ? div({
-      className: 'detailedErrorMessage',
-      onClick: this.selectDetailMessage,
-    }, this.props.detailedMessage!) : [];
+    return this.state.showDetails
+      ? div(
+          {
+            className: 'detailedErrorMessage',
+            onClick: this.selectDetailMessage,
+          },
+          this.props.detailedMessage!,
+        )
+      : [];
   }
 
   render() {
     const props = this.props;
-    return div({className: classNames('errorMessage', {hasDetailsSection: !!this.props.detailedMessage})},
-      div({className: 'errorMessageMain', dangerouslySetInnerHTML: {__html: props.messageHtml.html}}),
-      this.props.detailedMessage ? div({
-          className: 'detailedErrorSection'
-        },
-        button({className: 'detailsButton', onClick: this.toggleErrorDetails},
-          getTranslation().serverSelector.button.details),
-        this.getErrorDetailsMessage()) : []);
+    return div(
+      {
+        className: classNames('errorMessage', {
+          hasDetailsSection: !!this.props.detailedMessage,
+        }),
+      },
+      div({
+        className: 'errorMessageMain',
+        dangerouslySetInnerHTML: { __html: props.messageHtml.html },
+      }),
+      this.props.detailedMessage
+        ? div(
+            {
+              className: 'detailedErrorSection',
+            },
+            button(
+              { className: 'detailsButton', onClick: this.toggleErrorDetails },
+              getTranslation().serverSelector.button.details,
+            ),
+            this.getErrorDetailsMessage(),
+          )
+        : [],
+    );
   }
-
 }
 
-export const errorMessageComponent = createPreactFactory(ErrorMessageComponent as ComponentConstructor<ErrorMessageProps | undefined, ErrorMessageState>);
+export const errorMessageComponent = createPreactFactory(
+  ErrorMessageComponent as ComponentConstructor<ErrorMessageProps | undefined, ErrorMessageState>,
+);

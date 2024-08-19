@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
-import {startMainController} from "./main-controller";
+import { startMainController } from './main-controller';
+import './styles/index.less';
 
 setTimeout(startMainController, 500);

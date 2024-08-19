@@ -2,20 +2,20 @@
 .icon-replace-fill(@src, @fill-default, @fill-new) {
   @escape-fill-default: escape(@fill-default);
   @escape-fill-new: escape(@fill-new);
-  @data-uri: data-uri('image/svg+xml;charset=UTF-8', "@{src}");
-  @replace-src: replace("@{data-uri}", "@{escape-fill-default}", "@{escape-fill-new}");
+  @data-uri: data-uri('image/svg+xml;charset=UTF-8', '@{src}');
+  @replace-src: replace('@{data-uri}', '@{escape-fill-default}', '@{escape-fill-new}');
   background-image: e(@replace-src);
   background-repeat: no-repeat;
 }
 
 .icon-vpn-lock-grey {
-  .icon-replace-fill("./icons/ic_vpn_lock.svg", "#000000", @sidebar-grey);
+  .icon-replace-fill('./icons/ic_vpn_lock.svg', '#000000', @sidebar-grey);
 }
 
 .icon-arrow-back {
-  .icon-replace-fill("./icons/ic_arrow_back.svg", "#000000", @text-dark-grey);
+  .icon-replace-fill('./icons/ic_arrow_back.svg', '#000000', @text-dark-grey);
 }
 
 .icon-help {
-  .icon-replace-fill("./icons/ic_help.svg", "#000000", @text-dark-grey);
+  .icon-replace-fill('./icons/ic_help.svg', '#000000', @text-dark-grey);
 }

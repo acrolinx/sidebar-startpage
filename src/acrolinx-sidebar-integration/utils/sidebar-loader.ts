@@ -15,9 +15,9 @@
  */
 
 import * as utils from './utils';
-import {FetchError} from './utils';
-import {FORCE_SIDEBAR_URL} from '../../constants';
-import {isVersionGreaterEqual, TimeoutWatcher} from '../../utils/utils';
+import { FetchError } from './utils';
+import { FORCE_SIDEBAR_URL } from '../../constants';
+import { isVersionGreaterEqual, TimeoutWatcher } from '../../utils/utils';
 import * as logging from '../../utils/logging';
 
 const MINIMUM_SIDEBAR_VERSION_SUPPORTED = [14, 3, 1];
@@ -41,18 +41,26 @@ export function getSidebarVersion(sidebarHtml: string): [number, number, number]
 type NoValidSidebarErrorCode = 'noSidebar' | 'sidebarVersionIsBelowMinimum';
 
 export class NoValidSidebarError extends Error {
-  constructor(public acrolinxErrorCode: NoValidSidebarErrorCode, message: string, public url: string) {
+  constructor(
+    public acrolinxErrorCode: NoValidSidebarErrorCode,
+    message: string,
+    public url: string,
+  ) {
     super(message);
   }
 }
 
 export type LoadSidebarError = FetchError | NoValidSidebarError;
 
-export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameElement: HTMLIFrameElement, onSidebarLoaded: (error?: LoadSidebarError) => void) {
+export function loadSidebarIntoIFrame(
+  config: LoadSidebarProps,
+  sidebarIFrameElement: HTMLIFrameElement,
+  onSidebarLoaded: (error?: LoadSidebarError) => void,
+) {
   logging.log('loadSidebarIntoIFrame', config);
   const sidebarBaseUrl = FORCE_SIDEBAR_URL || config.sidebarUrl;
   const completeSidebarUrl = sidebarBaseUrl + 'index.html?t=' + Date.now();
-  utils.fetch(completeSidebarUrl, {timeout: 10000}, (sidebarHtmlOrError) => {
+  utils.fetch(completeSidebarUrl, { timeout: 10000 }, sidebarHtmlOrError => {
     // Handle fetch errors.
     if (typeof sidebarHtmlOrError !== 'string') {
       const fetchError: FetchError = sidebarHtmlOrError;
@@ -65,21 +73,30 @@ export function loadSidebarIntoIFrame(config: LoadSidebarProps, sidebarIFrameEle
 
     // Handle invalid sidebar html error.
     if (sidebarHtml.indexOf('<meta name="sidebar-version"') < 0) {
-      onSidebarLoaded(new NoValidSidebarError('noSidebar',
-        'No valid sidebar html code:' + sidebarHtml, completeSidebarUrl));
+      onSidebarLoaded(
+        new NoValidSidebarError('noSidebar', 'No valid sidebar html code:' + sidebarHtml, completeSidebarUrl),
+      );
       return;
     }
 
     const sidebarVersion = getSidebarVersion(sidebarHtml);
-    const wrongSidebarVersion = !sidebarVersion
-      || !isVersionGreaterEqual(sidebarVersion, MINIMUM_SIDEBAR_VERSION_SUPPORTED)
-      || !isVersionGreaterEqual(sidebarVersion, config.minimumSidebarVersion);
+    const wrongSidebarVersion =
+      !sidebarVersion ||
+      !isVersionGreaterEqual(sidebarVersion, MINIMUM_SIDEBAR_VERSION_SUPPORTED) ||
+      !isVersionGreaterEqual(sidebarVersion, config.minimumSidebarVersion);
 
     if (!FORCE_SIDEBAR_URL && wrongSidebarVersion) {
-      logging.warn(`Found sidebar version ${formatVersion(sidebarVersion)} ` +
-        `(default minimumSidebarVersion=${formatVersion(MINIMUM_SIDEBAR_VERSION_SUPPORTED)}, configured minimumSidebarVersion=${formatVersion(config.minimumSidebarVersion)})`);
-      onSidebarLoaded(new NoValidSidebarError('sidebarVersionIsBelowMinimum',
-        'Sidebar version is smaller than minimumSidebarVersion', completeSidebarUrl));
+      logging.warn(
+        `Found sidebar version ${formatVersion(sidebarVersion)} ` +
+          `(default minimumSidebarVersion=${formatVersion(MINIMUM_SIDEBAR_VERSION_SUPPORTED)}, configured minimumSidebarVersion=${formatVersion(config.minimumSidebarVersion)})`,
+      );
+      onSidebarLoaded(
+        new NoValidSidebarError(
+          'sidebarVersionIsBelowMinimum',
+          'Sidebar version is smaller than minimumSidebarVersion',
+          completeSidebarUrl,
+        ),
+      );
       return;
     }
 
@@ -105,7 +122,11 @@ function formatVersion(version: number[] | null) {
   return version?.join('.');
 }
 
-function writeSidebarHtmlIntoIFrame(sidebarHtml: string, sidebarIFrameElement: HTMLIFrameElement, sidebarBaseUrl: string) {
+function writeSidebarHtmlIntoIFrame(
+  sidebarHtml: string,
+  sidebarIFrameElement: HTMLIFrameElement,
+  sidebarBaseUrl: string,
+) {
   const sidebarContentWindow = sidebarIFrameElement.contentWindow!;
   const sidebarHtmlWithAbsoluteLinks = sidebarHtml
     .replace(/src="/g, 'src="' + sidebarBaseUrl)

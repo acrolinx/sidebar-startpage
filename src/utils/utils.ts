@@ -38,43 +38,42 @@ export function startsWithAnyOf(haystack: string, needles: string[]) {
   return needles.some(needle => startsWith(haystack, needle));
 }
 
-
 // Inspired by https://gist.github.com/dperini/729294
 const SERVER_ADDRESS_REGEXP = new RegExp(
   '^' +
-  // protocol identifier
-  '(?:(?:https?)://)' +
-  // user:pass authentication
-  '(?:\\S+(?::\\S*)?@)?' +
-  '(?:' +
-  // IP address exclusion
-  // private & local networks
-  '(?!(?:10|127)(?:\\.\\d{1,3}){3})' +
-  '(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})' +
-  '(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})' +
-  // IP address dotted notation octets
-  // excludes loopback network 0.0.0.0
-  // excludes reserved space >= 224.0.0.0
-  // excludes network & broacast addresses
-  // (first & last IP address of each class)
-  '(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])' +
-  '(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}' +
-  '(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))' +
-  '|' +
-  // host name
-  '(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)' +
-  // domain name
-  '(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*' +
-  // TLD identifier
-  '(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))?' +
-  ')' +
-  // port number
-  '(?::\\d{2,5})?' +
-  // resource path
-  '(?:[/?#]\\S*)?' +
-  '$', 'i'
+    // protocol identifier
+    '(?:(?:https?)://)' +
+    // user:pass authentication
+    '(?:\\S+(?::\\S*)?@)?' +
+    '(?:' +
+    // IP address exclusion
+    // private & local networks
+    '(?!(?:10|127)(?:\\.\\d{1,3}){3})' +
+    '(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})' +
+    '(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})' +
+    // IP address dotted notation octets
+    // excludes loopback network 0.0.0.0
+    // excludes reserved space >= 224.0.0.0
+    // excludes network & broacast addresses
+    // (first & last IP address of each class)
+    '(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])' +
+    '(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}' +
+    '(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))' +
+    '|' +
+    // host name
+    '(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)' +
+    // domain name
+    '(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*' +
+    // TLD identifier
+    '(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))?' +
+    ')' +
+    // port number
+    '(?::\\d{2,5})?' +
+    // resource path
+    '(?:[/?#]\\S*)?' +
+    '$',
+  'i',
 );
-
 
 export interface WindowLocation {
   protocol: string; // example: 'http:' or 'https:'
@@ -87,7 +86,6 @@ export interface SanitizeOpts {
   windowLocation: WindowLocation;
 }
 
-
 /**
  * Converts input like integration2.acrolinx.com, http://integration2.acrolinx.com or integration2.acrolinx.com:8031
  * to a valid server address (including port if there is no provided port or path)
@@ -98,9 +96,11 @@ export function sanitizeServerAddress(serverAddressArg: string, opts: SanitizeOp
     return getDefaultServerAddress(opts.windowLocation) + trimmedAddress;
   }
   const defaultHttpPort = 8031;
-  const defaultProtocol = (includes(trimmedAddress, ':443') || isHttpsRequired(opts)) ? 'https' : 'http';
+  const defaultProtocol = includes(trimmedAddress, ':443') || isHttpsRequired(opts) ? 'https' : 'http';
   const normalizedAddress = trimmedAddress.replace(/\/$/, '');
-  const addressWithProtocol = startsWith(normalizedAddress, 'http') ? normalizedAddress : (defaultProtocol + '://' + normalizedAddress);
+  const addressWithProtocol = startsWith(normalizedAddress, 'http')
+    ? normalizedAddress
+    : defaultProtocol + '://' + normalizedAddress;
   const hasPortRegExp = /\/\/.+((:\d+.*)|(\/.+))$/;
   if (hasPortRegExp.test(addressWithProtocol)) {
     return addressWithProtocol;
@@ -114,9 +114,7 @@ export function sanitizeServerAddress(serverAddressArg: string, opts: SanitizeOp
 }
 
 export function combinePathParts(part1: string, part2: string) {
-  return part1.replace(/\/$/, '')
-    + '/'
-    + part2.replace(/^\//, '');
+  return part1.replace(/\/$/, '') + '/' + part2.replace(/^\//, '');
 }
 
 export function isHttpsRequired(opts: SanitizeOpts) {
@@ -175,7 +173,6 @@ export function isVersionGreaterEqual(version: number[], minimumVersion: number[
   return true;
 }
 
-
 export function parseVersionNumberWithFallback(s: string | undefined): number[] {
   if (!s) {
     return [];
@@ -224,7 +221,6 @@ function createScriptElement(src: string) {
   return el;
 }
 
-
 export function loadScript(url: string) {
   const head = document.querySelector('head');
   if (head) {
@@ -234,12 +230,13 @@ export function loadScript(url: string) {
   }
 }
 
-
 export class TimeoutWatcher {
   private timeoutId: number | undefined;
 
-  constructor(private readonly onTimeout: () => void, private readonly durationMs: number) {
-  }
+  constructor(
+    private readonly onTimeout: () => void,
+    private readonly durationMs: number,
+  ) {}
 
   start() {
     if (this.timeoutId !== undefined) {

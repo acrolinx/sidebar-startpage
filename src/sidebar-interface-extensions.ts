@@ -1,4 +1,4 @@
-import {AcrolinxPlugin, AcrolinxSidebar} from '@acrolinx/sidebar-interface';
+import { AcrolinxPlugin, AcrolinxSidebar } from '@acrolinx/sidebar-interface';
 
 interface AcrolinxPluginStorageExtension {
   setStorageItem(key: string, value: string): void;

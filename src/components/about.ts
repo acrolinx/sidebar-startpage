@@ -14,19 +14,15 @@
  * limitations under the License.
  */
 
-import {Component, ComponentConstructor} from "preact";
-import {sanitizeClientComponent} from '../init-parameters';
-import {forceRedrawInWebkit} from '../utils/hacks';
-import {button, classNames, createPreactFactory, div, h1, span} from "../utils/preact";
-import {getTranslation} from "../localization";
-import {
-  InitParameters,
-  SoftwareComponent,
-  SoftwareComponentCategory
-} from "@acrolinx/sidebar-interface";
-import {getCorsOrigin, sortBy} from "../utils/utils";
-import {OpenWindowFunction} from "./external-text-link";
-import {helpLink} from "./help-link";
+import { Component, ComponentConstructor } from 'preact';
+import { sanitizeClientComponent } from '../init-parameters';
+import { forceRedrawInWebkit } from '../utils/hacks';
+import { button, classNames, createPreactFactory, div, h1, span } from '../utils/preact';
+import { getTranslation } from '../localization';
+import { InitParameters, SoftwareComponent, SoftwareComponentCategory } from '@acrolinx/sidebar-interface';
+import { getCorsOrigin, sortBy } from '../utils/utils';
+import { OpenWindowFunction } from './external-text-link';
+import { helpLink } from './help-link';
 
 interface AboutProps {
   onBack: Function;
@@ -38,9 +34,11 @@ interface AboutProps {
 }
 
 function aboutInfoLine(component: SoftwareComponent) {
-  return div({className: 'about-item', key: component.id},
-    div({className: 'about-tab-label'}, component.name),
-    div({className: 'about-tab-value', title: component.version}, component.version));
+  return div(
+    { className: 'about-item', key: component.id },
+    div({ className: 'about-tab-label' }, component.name),
+    div({ className: 'about-tab-value', title: component.version }, component.version),
+  );
 }
 
 const sortKeyByCategory = {
@@ -54,7 +52,6 @@ function getSortKey(softwareComponent: SoftwareComponent) {
   return prefix + softwareComponent.name.toLowerCase();
 }
 
-
 function getAdditionalComponents(logFileLocation: string | undefined): SoftwareComponent[] {
   const t = getTranslation().serverSelector;
   const additionalComponents = [
@@ -62,28 +59,27 @@ function getAdditionalComponents(logFileLocation: string | undefined): SoftwareC
       id: 'com.acrolinx.userAgent',
       name: t.aboutItems.browserInformation,
       version: navigator.userAgent,
-      category: SoftwareComponentCategory.DEFAULT
+      category: SoftwareComponentCategory.DEFAULT,
     },
     {
-      id: "com.acrolinx.startPageCorsOrigin",
+      id: 'com.acrolinx.startPageCorsOrigin',
       name: t.aboutItems.startPageCorsOrigin,
       version: getCorsOrigin(),
-      category: SoftwareComponentCategory.DEFAULT
-    }
+      category: SoftwareComponentCategory.DEFAULT,
+    },
   ];
 
   if (logFileLocation) {
     additionalComponents.push({
-      id: "com.acrolinx.logFileLocation",
+      id: 'com.acrolinx.logFileLocation',
       name: t.aboutItems.logFileLocation,
       version: logFileLocation,
-      category: SoftwareComponentCategory.DEFAULT
+      category: SoftwareComponentCategory.DEFAULT,
     });
   }
 
   return additionalComponents;
 }
-
 
 class AboutComponent extends Component<AboutProps, {}> {
   componentDidMount() {
@@ -94,29 +90,40 @@ class AboutComponent extends Component<AboutProps, {}> {
     const t = getTranslation().serverSelector;
     const props = this.props;
     const saneClientComponents = this.props.clientComponents.map(sanitizeClientComponent);
-    const allComponentsSorted = sortBy(saneClientComponents.concat(getAdditionalComponents(props.logFileLocation)), getSortKey);
-    return div({className: 'aboutComponent'},
-      div({
-        className: classNames('aboutHeader'),
-        onClick: props.onBack,
-      }, span({className: 'icon-arrow-back'}), helpLink(props)),
-      div({className: 'aboutBody'},
-        div({className: 'aboutMain'},
-          h1({}, t.title.about),
-          allComponentsSorted.map(aboutInfoLine)
-        )
+    const allComponentsSorted = sortBy(
+      saneClientComponents.concat(getAdditionalComponents(props.logFileLocation)),
+      getSortKey,
+    );
+    return div(
+      { className: 'aboutComponent' },
+      div(
+        {
+          className: classNames('aboutHeader'),
+          onClick: props.onBack,
+        },
+        span({ className: 'icon-arrow-back' }),
+        helpLink(props),
       ),
-      div({className: 'aboutFooter'},
-        props.logFileLocation ?
-          div({className: 'buttonGroup logFileSection'},
-            span({className: 'openLogFileTitle'}, t.title.logFile),
-            button({
-              className: "submitButton",
-              onClick: props.openLogFile
-            }, t.button.openLogFile)
-          )
+      div(
+        { className: 'aboutBody' },
+        div({ className: 'aboutMain' }, h1({}, t.title.about), allComponentsSorted.map(aboutInfoLine)),
+      ),
+      div(
+        { className: 'aboutFooter' },
+        props.logFileLocation
+          ? div(
+              { className: 'buttonGroup logFileSection' },
+              span({ className: 'openLogFileTitle' }, t.title.logFile),
+              button(
+                {
+                  className: 'submitButton',
+                  onClick: props.openLogFile,
+                },
+                t.button.openLogFile,
+              ),
+            )
           : [],
-      )
+      ),
     );
   }
 }

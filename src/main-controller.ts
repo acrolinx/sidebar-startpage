@@ -14,49 +14,49 @@
  * limitations under the License.
  */
 
-import {ExtendedAcrolinxPlugin, ExtendedAcrolinxSidebar} from './sidebar-interface-extensions';
-import {setExternalLog} from './utils/logging';
+import { ExtendedAcrolinxPlugin, ExtendedAcrolinxSidebar } from './sidebar-interface-extensions';
+import { setExternalLog } from './utils/logging';
 import {
   $,
   $byId,
-  cleanIFrameContainerIfNeeded, combinePathParts,
+  cleanIFrameContainerIfNeeded,
+  combinePathParts,
   getDefaultServerAddress,
   isHttpUrl,
   parseVersionNumberWithFallback,
   setDisplayed,
-  startsWithAnyOf, TimeoutWatcher,
+  startsWithAnyOf,
+  TimeoutWatcher,
 } from './utils/utils';
 import {
   LoadSidebarError,
   loadSidebarIntoIFrame,
   LoadSidebarProps,
 } from './acrolinx-sidebar-integration/utils/sidebar-loader';
-import {ProxyAcrolinxPlugin, waitForAcrolinxPlugin} from './proxies/proxy-acrolinx-plugin';
+import { ProxyAcrolinxPlugin, waitForAcrolinxPlugin } from './proxies/proxy-acrolinx-plugin';
 import {
-  URL_PREFIXES_NEEDING_MESSAGE_ADAPTER, FORCE_MESSAGE_ADAPTER, REQUEST_INIT_TIMEOUT_MS,
-  SERVER_SELECTOR_VERSION
+  URL_PREFIXES_NEEDING_MESSAGE_ADAPTER,
+  FORCE_MESSAGE_ADAPTER,
+  REQUEST_INIT_TIMEOUT_MS,
+  SERVER_SELECTOR_VERSION,
 } from './constants';
-import {createSidebarMessageProxy} from './acrolinx-sidebar-integration/message-adapter/message-adapter';
-import {ProxyAcrolinxSidebar} from './proxies/proxy-acrolinx-sidebar';
-import {
-  AcrolinxPlugin,
-  InitParameters,
-  OpenWindowParameters
-} from '@acrolinx/sidebar-interface';
-import {getTranslation, setLanguage} from './localization';
-import {sanitizeAndValidateServerAddress} from './utils/validation';
+import { createSidebarMessageProxy } from './acrolinx-sidebar-integration/message-adapter/message-adapter';
+import { ProxyAcrolinxSidebar } from './proxies/proxy-acrolinx-sidebar';
+import { AcrolinxPlugin, InitParameters, OpenWindowParameters } from '@acrolinx/sidebar-interface';
+import { getTranslation, setLanguage } from './localization';
+import { sanitizeAndValidateServerAddress } from './utils/validation';
 
-import {render} from 'preact';
-import {aboutComponent} from './components/about';
-import {extendClientComponents, hackInitParameters} from './init-parameters';
-import {focusAddressInputField, severSelectorFormComponent} from './components/server-selector-form';
-import {errorMessageComponent, ErrorMessageProps} from './components/error-message';
+import { render } from 'preact';
+import { aboutComponent } from './components/about';
+import { extendClientComponents, hackInitParameters } from './init-parameters';
+import { focusAddressInputField, severSelectorFormComponent } from './components/server-selector-form';
+import { errorMessageComponent, ErrorMessageProps } from './components/error-message';
 import {
   getAcrolinxSimpleStorage,
   initAcrolinxStorage,
-  injectAcrolinxStorageIntoSidebarIfAvailable
+  injectAcrolinxStorageIntoSidebarIfAvailable,
 } from './utils/acrolinx-storage';
-import {initDebug} from './utils/debug';
+import { initDebug } from './utils/debug';
 import * as logging from './utils/logging';
 
 const SERVER_ADDRESS_KEY = 'acrolinx.serverSelector.serverAddress';
@@ -84,7 +84,8 @@ function isMessageAdapterNeeded() {
 }
 
 enum SidebarState {
-  BEFORE_REQUEST_INIT, AFTER_REQUEST_INIT
+  BEFORE_REQUEST_INIT,
+  AFTER_REQUEST_INIT,
 }
 
 export interface MainControllerOpts {
@@ -92,7 +93,7 @@ export interface MainControllerOpts {
 }
 
 export function startMainController(opts: MainControllerOpts = {}) {
-  setExternalLog((logEntry) => {
+  setExternalLog(logEntry => {
     const acrolinxPlug = (window as any).acrolinxPlugin;
     if (acrolinxPlug?.log) {
       acrolinxPlug.log(logEntry);
@@ -125,7 +126,10 @@ export function startMainController(opts: MainControllerOpts = {}) {
 
   let selectedPage: PageId;
 
-  const requestInitTimeoutWatcher = new TimeoutWatcher(onRequestInitTimeout, opts.requestInitTimeOutMs || REQUEST_INIT_TIMEOUT_MS);
+  const requestInitTimeoutWatcher = new TimeoutWatcher(
+    onRequestInitTimeout,
+    opts.requestInitTimeOutMs || REQUEST_INIT_TIMEOUT_MS,
+  );
   let sidebarState = SidebarState.BEFORE_REQUEST_INIT;
 
   showPage(PageId.LOADING_SIDEBAR_MESSAGE);
@@ -152,8 +156,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
   }
 
   function openWindow(options: OpenWindowParameters) {
-    if (acrolinxPlugin?.openWindow &&
-      !(initParametersFromPlugin?.openWindowDirectly)) {
+    if (acrolinxPlugin?.openWindow && !initParametersFromPlugin?.openWindowDirectly) {
       acrolinxPlugin.openWindow(options);
     } else {
       window.open(options.url);
@@ -164,7 +167,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
     logging.log(`User tries to connect with server "${serverAddressInput}"`);
     const newServerAddressResult = sanitizeAndValidateServerAddress(serverAddressInput, {
       enforceHTTPS: initParametersFromPlugin.enforceHTTPS,
-      windowLocation: window.location
+      windowLocation: window.location,
     });
 
     newServerAddressResult.match({
@@ -173,8 +176,8 @@ export function startMainController(opts: MainControllerOpts = {}) {
         tryToLoadSidebar(serverAddress);
       },
       err: errorMessage => {
-        showServerSelector({errorMessage: simpleErrorMessage(errorMessage)});
-      }
+        showServerSelector({ errorMessage: simpleErrorMessage(errorMessage) });
+      },
     });
   }
 
@@ -189,26 +192,27 @@ export function startMainController(opts: MainControllerOpts = {}) {
 
     let sidebarUrl = combinePathParts(acrolinxServerAddress, '/sidebar/v15/');
 
-    if(minimumSidebarVersion.length !== 0 && minimumSidebarVersion[0] === 14) {
-      sidebarUrl = combinePathParts(acrolinxServerAddress, '/sidebar/v14/')
+    if (minimumSidebarVersion.length !== 0 && minimumSidebarVersion[0] === 14) {
+      sidebarUrl = combinePathParts(acrolinxServerAddress, '/sidebar/v14/');
     }
 
     const loadSidebarProps: LoadSidebarProps = {
-      sidebarUrl, useMessageAdapter,
+      sidebarUrl,
+      useMessageAdapter,
       timeoutWatcher: requestInitTimeoutWatcher,
-      minimumSidebarVersion: minimumSidebarVersion
+      minimumSidebarVersion: minimumSidebarVersion,
     };
 
     if (selectedPage === PageId.SERVER_SELECTOR) {
-      renderServerSelectorForm({isConnectButtonDisabled: true});
+      renderServerSelectorForm({ isConnectButtonDisabled: true });
     } else {
       addSidebarLoadingStyles();
       showPage(PageId.LOADING_SIDEBAR_MESSAGE);
     }
 
-    loadSidebarIntoIFrame(loadSidebarProps, sidebarIFrameElement, (error) => {
+    loadSidebarIntoIFrame(loadSidebarProps, sidebarIFrameElement, error => {
       if (error) {
-        renderServerSelectorForm({isConnectButtonDisabled: false});
+        renderServerSelectorForm({ isConnectButtonDisabled: false });
         onSidebarLoadError(acrolinxServerAddress, error);
         return;
       }
@@ -235,10 +239,9 @@ export function startMainController(opts: MainControllerOpts = {}) {
         acrolinxPlugin,
         serverAddress: acrolinxServerAddress,
         showServerSelector,
-        openWindow
+        openWindow,
       });
     });
-
   }
 
   function addSidebarLoadingStyles() {
@@ -250,8 +253,8 @@ export function startMainController(opts: MainControllerOpts = {}) {
 
   function simpleErrorMessage(messageHtml: string, details?: object): ErrorMessageProps {
     return {
-      messageHtml: {html: messageHtml},
-      detailedMessage: details && JSON.stringify(details)
+      messageHtml: { html: messageHtml },
+      detailedMessage: details && JSON.stringify(details),
     };
   }
 
@@ -277,7 +280,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
 
   function showSidebarLoadError(errorMessage: ErrorMessageProps) {
     if (initParametersFromPlugin.showServerSelector) {
-      showServerSelector({errorMessage: errorMessage});
+      showServerSelector({ errorMessage: errorMessage });
     } else {
       showErrorMessagePage(errorMessage);
     }
@@ -292,8 +295,12 @@ export function startMainController(opts: MainControllerOpts = {}) {
     selectedPage = page;
   }
 
-
-  function showServerSelector(props: { isConnectButtonDisabled?: boolean, errorMessage?: ErrorMessageProps } = {}) {
+  function showServerSelector(
+    props: {
+      isConnectButtonDisabled?: boolean;
+      errorMessage?: ErrorMessageProps;
+    } = {},
+  ) {
     sidebarState = SidebarState.BEFORE_REQUEST_INIT;
     cleanIFrameContainerIfNeeded(sidebarContainer, () => {
       showPage(PageId.SERVER_SELECTOR);
@@ -302,17 +309,26 @@ export function startMainController(opts: MainControllerOpts = {}) {
     });
   }
 
-  function renderServerSelectorForm(props: { isConnectButtonDisabled?: boolean, errorMessage?: ErrorMessageProps } = {}) {
-    render(severSelectorFormComponent({
-      onSubmit: onSubmit,
-      onAboutLink,
-      serverAddress,
-      enforceHTTPS: initParametersFromPlugin.enforceHTTPS,
-      isConnectButtonDisabled: props.isConnectButtonDisabled!,
-      openWindow: (url) => openWindow({url}),
-      errorMessage: props.errorMessage,
-      initParameters: initParametersFromPlugin
-    }), serverSelectorFormPage, serverSelectorFormPage.firstChild as Element);
+  function renderServerSelectorForm(
+    props: {
+      isConnectButtonDisabled?: boolean;
+      errorMessage?: ErrorMessageProps;
+    } = {},
+  ) {
+    render(
+      severSelectorFormComponent({
+        onSubmit: onSubmit,
+        onAboutLink,
+        serverAddress,
+        enforceHTTPS: initParametersFromPlugin.enforceHTTPS,
+        isConnectButtonDisabled: props.isConnectButtonDisabled!,
+        openWindow: url => openWindow({ url }),
+        errorMessage: props.errorMessage,
+        initParameters: initParametersFromPlugin,
+      }),
+      serverSelectorFormPage,
+      serverSelectorFormPage.firstChild as Element,
+    );
   }
 
   function showErrorMessagePage(errorMessageProps: ErrorMessageProps) {
@@ -325,7 +341,7 @@ export function startMainController(opts: MainControllerOpts = {}) {
     setLanguage(initParameters.clientLocale);
 
     if (initParameters.supported?.log && acrolinxPlugin.log) {
-      setExternalLog((logEntry) => acrolinxPlugin.log!(logEntry));
+      setExternalLog(logEntry => acrolinxPlugin.log!(logEntry));
     } else {
       setExternalLog(undefined);
     }
@@ -344,16 +360,14 @@ export function startMainController(opts: MainControllerOpts = {}) {
       serverAddress = initParameters.serverAddress || getDefaultServerAddress(window.location);
       tryToLoadSidebar(serverAddress);
     }
-
   }
 
   function onMessageFromSidebar(messageEvent: MessageEvent) {
-    if (!sidebarIFrameElement?.contentWindow ||
-      messageEvent.source !== sidebarIFrameElement.contentWindow) {
+    if (!sidebarIFrameElement?.contentWindow || messageEvent.source !== sidebarIFrameElement.contentWindow) {
       return;
     }
 
-    const command: keyof ExtendedAcrolinxPlugin= messageEvent.data.command;
+    const command: keyof ExtendedAcrolinxPlugin = messageEvent.data.command;
     const args = messageEvent.data.args;
 
     if (command === 'setStorageItem') {
@@ -400,7 +414,9 @@ export function startMainController(opts: MainControllerOpts = {}) {
     const acrolinxSimpleStorage = getAcrolinxSimpleStorage();
     if (acrolinxSimpleStorage.getItems) {
       acrolinxSimpleStorage.getItems(data => {
-        (sidebarProxy.acrolinxSidebar as ExtendedAcrolinxSidebar).setStorage({data});
+        (sidebarProxy.acrolinxSidebar as ExtendedAcrolinxSidebar).setStorage({
+          data,
+        });
         initSidebar();
       });
     } else {
@@ -411,21 +427,29 @@ export function startMainController(opts: MainControllerOpts = {}) {
   function onRequestInitTimeout() {
     if (sidebarState === SidebarState.BEFORE_REQUEST_INIT) {
       logging.error(`Sidebar took too long to load from "${serverAddress}"`);
-      showSidebarLoadError({messageHtml: {html: getTranslation().serverSelector.message.loadSidebarTimeout}});
+      showSidebarLoadError({
+        messageHtml: {
+          html: getTranslation().serverSelector.message.loadSidebarTimeout,
+        },
+      });
     }
   }
 
   function onAboutLink() {
     showPage(PageId.ABOUT);
-    render(aboutComponent({
-      onBack() {
-        showServerSelector();
-      },
-      logFileLocation: initParametersFromPlugin.logFileLocation,
-      openLogFile,
-      clientComponents: extendClientComponents(initParametersFromPlugin.clientComponents),
-      openWindow: (url) => openWindow({url}),
-      initParameters: initParametersFromPlugin
-    }), aboutPage, aboutPage.firstChild as Element);
+    render(
+      aboutComponent({
+        onBack() {
+          showServerSelector();
+        },
+        logFileLocation: initParametersFromPlugin.logFileLocation,
+        openLogFile,
+        clientComponents: extendClientComponents(initParametersFromPlugin.clientComponents),
+        openWindow: url => openWindow({ url }),
+        initParameters: initParametersFromPlugin,
+      }),
+      aboutPage,
+      aboutPage.firstChild as Element,
+    );
   }
 }

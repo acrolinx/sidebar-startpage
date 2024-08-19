@@ -1,24 +1,27 @@
-.idea
-.private
-node_modules
-tmp
-/dist
-app/scripts
-app/styles/index.css
-app/version.properties
-TESTS-PhantomJS*
-
-# bower components and cache
-bower_components
-.bower-cache
-.bower-registry
-.bower-tmp
+# Logs
+logs
+*.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Maven
-/target/
+node_modules
+dist
+dist-ssr
+*.local
 
-# Eclipse
-.settings/
-.classpath
-.project
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+js-junit.xml
+tmp
+dist-inline

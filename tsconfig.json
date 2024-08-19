@@ -1,28 +1,4 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "removeComments": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "strictNullChecks": true,
-    "noImplicitThis": true,
-    "noUnusedParameters": true,
-    "noUnusedLocals": true,
-    "outDir": "tmp/compiled",
-    "sourceMap": true,
-    "module": "commonjs",
-    "lib": ["ES5","DOM", "ES2015.Collection"] /* ES2015.Collection is just needed to make sinon happy */,
-    "importHelpers": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true
-  },
-  "exclude": [
-    "node_modules",
-    "i18n",
-    "tmp",
-    "tools/dist",
-    "dist"
-  ]
+  "files": [],
+  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
 }

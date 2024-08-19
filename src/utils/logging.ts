@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {AcrolinxPlugin, LogEntry, LogEntryType} from '@acrolinx/sidebar-interface';
+import { AcrolinxPlugin, LogEntry, LogEntryType } from '@acrolinx/sidebar-interface';
 
 let LOGGING_ENABLED = true;
 
@@ -23,9 +23,9 @@ let externalLog: AcrolinxPlugin['log'] | undefined;
 function createLogEntry(type: LogEntryType, args: unknown[]): LogEntry {
   const [message, ...details] = args;
   if (typeof message === 'string') {
-    return {type, message, details};
+    return { type, message, details };
   } else {
-    return {type, message: 'Details', details: args};
+    return { type, message: 'Details', details: args };
   }
 }
 
@@ -78,4 +78,3 @@ export function setLoggingEnabled(enabled: boolean) {
 export function setExternalLog(newExternalLog: AcrolinxPlugin['log'] | undefined) {
   externalLog = newExternalLog;
 }
-

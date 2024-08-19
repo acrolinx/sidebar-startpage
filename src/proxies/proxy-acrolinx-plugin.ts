@@ -24,7 +24,7 @@ import {
   OpenWindowParameters,
   RequestGlobalCheckOptions,
 } from '@acrolinx/sidebar-interface';
-import * as logging from "../utils/logging";
+import * as logging from '../utils/logging';
 
 export const POLL_FOR_PLUGIN_INTERVAL_MS = 10;
 
@@ -41,9 +41,7 @@ export interface ProxyAcrolinxPluginProps {
  * It will forward method calls from the sidebar to the startpage or directly to the acrolinxPlugin.
  */
 export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
-
-  constructor(private readonly props: ProxyAcrolinxPluginProps) {
-  }
+  constructor(private readonly props: ProxyAcrolinxPluginProps) {}
 
   requestInit() {
     this.props.requestInitListener();
@@ -98,42 +96,42 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
   }
 
   onLiveSearchResults(liveSearchResult: LiveSearchResult): void {
-    if(this.props.acrolinxPlugin.onLiveSearchResults) {
+    if (this.props.acrolinxPlugin.onLiveSearchResults) {
       this.props.acrolinxPlugin.onLiveSearchResults(liveSearchResult);
     } else {
-      logging.error("onLiveSearchResult is not supported");
+      logging.error('onLiveSearchResult is not supported');
     }
   }
 
   onLiveSearchFailed(query: string): void {
-    if(this.props.acrolinxPlugin.onLiveSearchFailed) {
+    if (this.props.acrolinxPlugin.onLiveSearchFailed) {
       this.props.acrolinxPlugin.onLiveSearchFailed(query);
     } else {
-      logging.error("onLiveSearchFailed is not supported");
+      logging.error('onLiveSearchFailed is not supported');
     }
   }
 
   openLivePanel(): void {
-    if(this.props.acrolinxPlugin.openLivePanel) {
+    if (this.props.acrolinxPlugin.openLivePanel) {
       this.props.acrolinxPlugin.openLivePanel();
     } else {
-      logging.error("openLivePanel is not supported");
+      logging.error('openLivePanel is not supported');
     }
   }
 
   onUILanguageChanged(UILanguage: string): void {
-    if(this.props.acrolinxPlugin.onUILanguageChanged) {
+    if (this.props.acrolinxPlugin.onUILanguageChanged) {
       this.props.acrolinxPlugin.onUILanguageChanged(UILanguage);
     } else {
-      logging.error("onUILanguageChanged is not supported");
+      logging.error('onUILanguageChanged is not supported');
     }
   }
 
   onTargetChanged(supportsLive: boolean): void {
-    if(this.props.acrolinxPlugin.onTargetChanged) {
+    if (this.props.acrolinxPlugin.onTargetChanged) {
       this.props.acrolinxPlugin.onTargetChanged(supportsLive);
     } else {
-      logging.error("onTargetChanged is not supported");
+      logging.error('onTargetChanged is not supported');
     }
   }
 
@@ -153,7 +151,6 @@ export class ProxyAcrolinxPlugin implements AcrolinxPlugin {
     }
   }
 }
-
 
 export function waitForAcrolinxPlugin(callback: (acrolinxPlugin: AcrolinxPlugin) => void) {
   const windowAny = window as any;

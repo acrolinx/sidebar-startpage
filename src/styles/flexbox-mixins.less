@@ -8,10 +8,10 @@
 // Flexbox display
 // flex or inline-flex
 .flex-display(@display: flex) {
-  display: ~"-webkit-@{display}";
-  display: ~"-moz-@{display}";
-  display: ~"-ms-@{display}box"; // IE10 uses -ms-flexbox
-  display: ~"-ms-@{display}"; // IE11
+  display: ~'-webkit-@{display}';
+  display: ~'-moz-@{display}';
+  display: ~'-ms-@{display}box'; // IE10 uses -ms-flexbox
+  display: ~'-ms-@{display}'; // IE11
   display: @display;
 }
 

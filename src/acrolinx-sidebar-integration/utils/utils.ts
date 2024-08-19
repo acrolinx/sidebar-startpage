@@ -20,16 +20,19 @@ export function isCorsWithCredentialsNeeded(url: string) {
   return IS_WITH_CREDENTIALS_NEEDED.test(url);
 }
 
-
 type FetchErrorCode = 'connectionError' | 'timeout' | 'httpErrorStatus';
 
 export class FetchError extends Error {
-  constructor(public readonly acrolinxErrorCode: FetchErrorCode, message: string, public url: string) {
+  constructor(
+    public readonly acrolinxErrorCode: FetchErrorCode,
+    message: string,
+    public url: string,
+  ) {
     super(message);
   }
 }
 
-interface  FetchOptions {
+interface FetchOptions {
   timeout?: number;
 }
 
@@ -50,7 +53,6 @@ export function fetch(url: string, opts: FetchOptions, callback: (responseTextOr
       request.timeout = opts.timeout;
     }
 
-
     request.ontimeout = () => {
       callback(new FetchError('timeout', `Timeout while loading ${url}.`, url));
     };
@@ -63,6 +65,6 @@ export function fetch(url: string, opts: FetchOptions, callback: (responseTextOr
 
     request.send();
   } catch (error) {
-    callback(new FetchError('connectionError', error.message, url));
+    callback(new FetchError('connectionError', (error as Error).message, url));
   }
 }

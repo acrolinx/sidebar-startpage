@@ -28,7 +28,6 @@ export interface AcrolinxSimpleStorage {
   clear(): void;
 }
 
-
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
 function isLocalStorageAvailable(storage: Storage | undefined) {
   try {
@@ -68,10 +67,12 @@ export class AcrolinxSimpleStorageInMemory implements AcrolinxSimpleStorage {
   }
 }
 
-
 const disableLocalStorageForTesting = false;
 
-function getAcrolinxSimpleStorageAtInitInternal(acrolinxStorageArg: AcrolinxSimpleStorage | undefined, localStorageArg: Storage | undefined): AcrolinxSimpleStorage {
+function getAcrolinxSimpleStorageAtInitInternal(
+  acrolinxStorageArg: AcrolinxSimpleStorage | undefined,
+  localStorageArg: Storage | undefined,
+): AcrolinxSimpleStorage {
   if (acrolinxStorageArg) {
     logging.log('acrolinxStartpage: Using window.acrolinxStorage');
     return acrolinxStorageArg;
@@ -114,7 +115,10 @@ export function initAcrolinxStorage() {
   acrolinxSimpleStorage = getAcrolinxSimpleStorageAtInit();
 }
 
-export function injectAcrolinxStorageIntoSidebarIfAvailable(currentWindow: { acrolinxStorage?: AcrolinxSimpleStorage }, sidebarIFrameWindow: WindowWithAcrolinxStorage) {
+export function injectAcrolinxStorageIntoSidebarIfAvailable(
+  currentWindow: { acrolinxStorage?: AcrolinxSimpleStorage },
+  sidebarIFrameWindow: WindowWithAcrolinxStorage,
+) {
   if (currentWindow.acrolinxStorage) {
     logging.log('Inject window.acrolinxStorage into sidebar');
     sidebarIFrameWindow.acrolinxStorage = currentWindow.acrolinxStorage;
@@ -122,5 +126,5 @@ export function injectAcrolinxStorageIntoSidebarIfAvailable(currentWindow: { acr
 }
 
 export const forTesting = {
-  getAcrolinxSimpleStorageAtInitInternal
+  getAcrolinxSimpleStorageAtInitInternal,
 };

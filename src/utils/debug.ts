@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import {loadScript} from "./utils";
-import * as logging from "./logging";
+import { loadScript } from './utils';
+import * as logging from './logging';
 
 function patchFirebugUI() {
   const iFrameEl = document.getElementById('FirebugUI') as HTMLIFrameElement;
@@ -73,7 +73,6 @@ function waitForFirebugCheatCode() {
     cheatCode = '';
   });
 }
-
 
 export function initDebug() {
   waitForFirebugCheatCode();

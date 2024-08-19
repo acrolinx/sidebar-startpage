@@ -15,14 +15,14 @@
  */
 
 import { Component, ComponentConstructor } from 'preact';
-import { createPreactFactory, h1, div, button, form, input, span, a } from "../utils/preact";
-import { getLocale, getTranslation } from "../localization";
-import { isHttpsRequired } from "../utils/utils";
-import { externalTextLink, OpenWindowFunction } from "./external-text-link";
-import { errorMessageComponent, ErrorMessageProps } from "./error-message";
-import { helpLink } from "./help-link";
-import { InitParameters } from "@acrolinx/sidebar-interface";
-import { ExternalLinks, getExternalLinks } from "../utils/externalLinks";
+import { createPreactFactory, h1, div, button, form, input, span, a } from '../utils/preact';
+import { getLocale, getTranslation } from '../localization';
+import { isHttpsRequired } from '../utils/utils';
+import { externalTextLink, OpenWindowFunction } from './external-text-link';
+import { errorMessageComponent, ErrorMessageProps } from './error-message';
+import { helpLink } from './help-link';
+import { InitParameters } from '@acrolinx/sidebar-interface';
+import { ExternalLinks, getExternalLinks } from '../utils/externalLinks';
 
 interface SeverSelectorFormProps {
   onSubmit: (serverAddress: string) => void;
@@ -37,82 +37,102 @@ interface SeverSelectorFormProps {
 
 const SERVER_ADDRESS_INPUT_FIELD_CLASS = 'serverAddress';
 
-
 function getLokalizedExternalLinks(): ExternalLinks {
   const locale = getLocale();
   return getExternalLinks(locale);
 }
 
 class SeverSelectorFormComponent extends Component<SeverSelectorFormProps, {}> {
-  serverAddressField: HTMLInputElement;
+  serverAddressField!: HTMLInputElement;
 
   onSubmit = (event: Event) => {
     event.preventDefault();
     this.props.onSubmit(this.serverAddressField.value);
-  }
+  };
 
   render() {
     const t = getTranslation().serverSelector;
     const externalLinks = getLokalizedExternalLinks();
     const props = this.props;
-    const httpsRequired = isHttpsRequired({ enforceHTTPS: props.enforceHTTPS, windowLocation: window.location });
-    return form({ className: 'serverSelectorFormComponent', onSubmit: this.onSubmit },
-      div({
-        className: 'logoHeader'
-      }, helpLink(props)),
-      div({ className: 'formContent' },
-        div({ className: 'paddedFormContent' },
-          h1({
-            className: 'serverAddressTitle',
-            title: httpsRequired ? t.tooltip.httpsRequired : ''
-          }, t.title.serverAddress,
-            httpsRequired ? span({ className: 'httpsRequiredIcon' }) : []
+    const httpsRequired = isHttpsRequired({
+      enforceHTTPS: props.enforceHTTPS,
+      windowLocation: window.location,
+    });
+    return form(
+      { className: 'serverSelectorFormComponent', onSubmit: this.onSubmit },
+      div(
+        {
+          className: 'logoHeader',
+        },
+        helpLink(props),
+      ),
+      div(
+        { className: 'formContent' },
+        div(
+          { className: 'paddedFormContent' },
+          h1(
+            {
+              className: 'serverAddressTitle',
+              title: httpsRequired ? t.tooltip.httpsRequired : '',
+            },
+            t.title.serverAddress,
+            httpsRequired ? span({ className: 'httpsRequiredIcon' }) : [],
           ),
           input({
             className: SERVER_ADDRESS_INPUT_FIELD_CLASS,
             name: 'acrolinxServerAddress',
-            placeholder: t.placeHolder.serverAddress, autofocus: true,
+            placeholder: t.placeHolder.serverAddress,
+            autofocus: true,
             ref: (inputEl: HTMLInputElement) => {
               this.serverAddressField = inputEl;
             },
             defaultValue: props.serverAddress,
-            spellCheck: "false"
+            spellCheck: 'false',
           }),
-          div({ className: 'buttonGroup' },
+          div(
+            { className: 'buttonGroup' },
             externalTextLink({
               url: externalLinks.cantConnectHelpLink,
               openWindow: props.openWindow,
-              text: t.links.cantConnect
+              text: t.links.cantConnect,
             }),
-            button({
-              type: 'submit',
-              className: "submitButton",
-              disabled: props.isConnectButtonDisabled
-            }, t.button.connect)
+            button(
+              {
+                type: 'submit',
+                className: 'submitButton',
+                disabled: props.isConnectButtonDisabled,
+              },
+              t.button.connect,
+            ),
           ),
-          div({ className: 'submitRequest' },
+          div(
+            { className: 'submitRequest' },
             externalTextLink({
               url: externalLinks.submitRequestUrl,
               openWindow: props.openWindow,
-              text: t.links.submitRequest
-            })
+              text: t.links.submitRequest,
+            }),
           ),
-          a({
-            onClick: (event: Event) => {
-              event.preventDefault();
-              props.onAboutLink();
+          a(
+            {
+              onClick: (event: Event) => {
+                event.preventDefault();
+                props.onAboutLink();
+              },
+              href: '#',
             },
-            href: '#'
-          },
-            t.links.about
+            t.links.about,
           ),
         ),
-        props.errorMessage ? errorMessageComponent(props.errorMessage) : []
-      ));
+        props.errorMessage ? errorMessageComponent(props.errorMessage) : [],
+      ),
+    );
   }
 }
 
-export const severSelectorFormComponent = createPreactFactory(SeverSelectorFormComponent as ComponentConstructor<SeverSelectorFormProps | undefined, {}>);
+export const severSelectorFormComponent = createPreactFactory(
+  SeverSelectorFormComponent as ComponentConstructor<SeverSelectorFormProps | undefined, {}>,
+);
 
 export function focusAddressInputField(el: HTMLElement) {
   const addressFieldElement = el.getElementsByClassName(SERVER_ADDRESS_INPUT_FIELD_CLASS).item(0) as HTMLElement;

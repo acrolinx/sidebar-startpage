@@ -1,12 +1,12 @@
 {
-    "en": {
-        "submitRequestUrl": "https://support.acrolinx.com/hc/en-us/requests/new",
-        "cantConnectHelpLink": "https://support.acrolinx.com/hc/en-us/articles/10220860699794-Why-can-t-I-connect-my-Sidebar-Edition-Integration-to-the-Acrolinx-Core-Platform-",
-        "helpLinkUrl": "https://support.acrolinx.com/hc/en-us"
-    },
-    "de": {
-        "submitRequestUrl": "https://support.acrolinx.com/hc/de/requests/new",
-        "cantConnectHelpLink": "https://support.acrolinx.com/hc/de/articles/10220860699794-Why-can-t-I-connect-my-Sidebar-Edition-Integration-to-the-Acrolinx-Core-Platform-",
-        "helpLinkUrl": "https://support.acrolinx.com/hc/de"
-    }
+  "en": {
+    "submitRequestUrl": "https://support.acrolinx.com/hc/en-us/requests/new",
+    "cantConnectHelpLink": "https://support.acrolinx.com/hc/en-us/articles/10220860699794-Why-can-t-I-connect-my-Sidebar-Edition-Integration-to-the-Acrolinx-Core-Platform-",
+    "helpLinkUrl": "https://support.acrolinx.com/hc/en-us"
+  },
+  "de": {
+    "submitRequestUrl": "https://support.acrolinx.com/hc/de/requests/new",
+    "cantConnectHelpLink": "https://support.acrolinx.com/hc/de/articles/10220860699794-Why-can-t-I-connect-my-Sidebar-Edition-Integration-to-the-Acrolinx-Core-Platform-",
+    "helpLinkUrl": "https://support.acrolinx.com/hc/de"
+  }
 }

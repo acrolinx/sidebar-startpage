@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {translations, en} from "../tmp/generated/translations";
+import { translations, en } from '../tmp/generated/translations';
 
 let currentTranslation = en;
 let currentLocale = 'en';

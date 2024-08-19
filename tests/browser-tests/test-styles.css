@@ -1,0 +1,11 @@
+#app {
+  width: 300px;
+  border: 1px solid grey;
+  height: 300px;
+  margin: 0 auto;
+}
+
+html,
+body {
+  overflow: auto !important;
+}

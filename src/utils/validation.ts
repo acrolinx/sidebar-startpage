@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-import {isHttpsRequired, isHttpUrl, SanitizeOpts, sanitizeServerAddress, validateUrl} from "./utils";
-import {Err, Ok, Result} from "./result";
-import {getTranslation} from "../localization";
+import { isHttpsRequired, isHttpUrl, SanitizeOpts, sanitizeServerAddress, validateUrl } from './utils';
+import { Err, Ok, Result } from './result';
+import { getTranslation } from '../localization';
 
-export function sanitizeAndValidateServerAddress(serverAddressInput: string, opts: SanitizeOpts): Result<string, string> {
+export function sanitizeAndValidateServerAddress(
+  serverAddressInput: string,
+  opts: SanitizeOpts,
+): Result<string, string> {
   const serverUrl = sanitizeServerAddress(serverAddressInput.trim(), opts);
 
   if (isHttpUrl(serverUrl) && isHttpsRequired(opts)) {
@@ -31,4 +34,3 @@ export function sanitizeAndValidateServerAddress(serverAddressInput: string, opt
 
   return new Ok(serverUrl);
 }
-

@@ -19,8 +19,8 @@ import externalLinks from '../../config/externalLinks.json'; // This import requ
 export type ExternalLinks = typeof externalLinks.en;
 
 export function getExternalLinks(lokale: string): ExternalLinks {
-    if (lokale === "de") {
-        return externalLinks.de
-    }
-    return externalLinks.en;
+  if (lokale === 'de') {
+    return externalLinks.de;
+  }
+  return externalLinks.en;
 }

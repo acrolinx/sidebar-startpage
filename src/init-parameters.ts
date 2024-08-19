@@ -14,15 +14,11 @@
  * limitations under the License.
  */
 
-import {
-  InitParameters, SoftwareComponent,
-  SoftwareComponentCategory
-} from '@acrolinx/sidebar-interface';
-import {isCorsWithCredentialsNeeded} from './acrolinx-sidebar-integration/utils/utils';
-import {SERVER_SELECTOR_VERSION} from './constants';
-import {getTranslation} from './localization';
-import {warn} from './utils/logging';
-
+import { InitParameters, SoftwareComponent, SoftwareComponentCategory } from '@acrolinx/sidebar-interface';
+import { isCorsWithCredentialsNeeded } from './acrolinx-sidebar-integration/utils/utils';
+import { SERVER_SELECTOR_VERSION } from './constants';
+import { getTranslation } from './localization';
+import { warn } from './utils/logging';
 
 export function hackInitParameters(initParameters: InitParameters, serverAddress: string): InitParameters {
   const ignoreAccessToken = initParameters.accessToken && initParameters.showServerSelector;
@@ -35,8 +31,11 @@ export function hackInitParameters(initParameters: InitParameters, serverAddress
     accessToken: ignoreAccessToken ? undefined : initParameters.accessToken,
     showServerSelector: false,
     corsWithCredentials: initParameters.corsWithCredentials || isCorsWithCredentialsNeeded(serverAddress),
-    supported: {...initParameters.supported, showServerSelector: initParameters.showServerSelector},
-    clientComponents: extendClientComponents(initParameters.clientComponents)
+    supported: {
+      ...initParameters.supported,
+      showServerSelector: initParameters.showServerSelector,
+    },
+    clientComponents: extendClientComponents(initParameters.clientComponents),
   };
 }
 
@@ -45,15 +44,13 @@ export function extendClientComponents(clientComponents?: SoftwareComponent[]): 
     id: 'com.acrolinx.serverselector',
     name: getTranslation().serverSelector.aboutItems.serverSelector,
     version: SERVER_SELECTOR_VERSION,
-    category: SoftwareComponentCategory.DEFAULT
+    category: SoftwareComponentCategory.DEFAULT,
   });
 }
 
 export function getClientComponentFallbackId(name: string | undefined | null, index: number): string {
   const idFromName = (name || '').replace(/[^a-zA-Z0-9]+/g, '.');
-  return (idFromName === '.' || idFromName === '')
-    ? 'unknown.client.component.id.with.index.' + index
-    : idFromName;
+  return idFromName === '.' || idFromName === '' ? 'unknown.client.component.id.with.index.' + index : idFromName;
 }
 
 export function sanitizeClientComponent(clientComponent: Partial<SoftwareComponent>, index: number): SoftwareComponent {

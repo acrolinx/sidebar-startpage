@@ -15,10 +15,10 @@
  */
 
 import { Component, ComponentConstructor } from 'preact';
-import { a, createPreactFactory } from "../utils/preact";
-import { getLocale, getTranslation } from "../localization";
-import { InitParameters } from "@acrolinx/sidebar-interface";
-import { getExternalLinks } from "../utils/externalLinks";
+import { a, createPreactFactory } from '../utils/preact';
+import { getLocale, getTranslation } from '../localization';
+import { InitParameters } from '@acrolinx/sidebar-interface';
+import { getExternalLinks } from '../utils/externalLinks';
 
 export type OpenWindowFunction = (url: string) => void;
 
@@ -42,7 +42,8 @@ class HelpLink extends Component<HelpLinkProps, {}> {
         event.preventDefault();
         event.stopPropagation(); // Prevent triggering the click event on the containing element.
         props.openWindow(props.initParameters.helpUrl || getLocalizedDefaultHelpLink());
-      }, href: '#'
+      },
+      href: '#',
     });
   }
 }
