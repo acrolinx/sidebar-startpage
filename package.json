@@ -1,11 +1,10 @@
 {
   "name": "@acrolinx/sidebar-startpage",
-  "version": "4.0.1-beta.2",
+  "version": "4.0.1-beta.3",
   "description": "A Container Component for Acrolinx Integrations that loads the Acrolinx sidebar",
-  "type": "module",
   "author": "Acrolinx",
   "url": "http://www.acrolinx.com",
-  "main": "dist/dist-inline/index.ts",
+  "main": "dist/dist-inline/index.js",
   "types": "dist/dist-inline/index.d.ts",
   "engines": {
     "node": ">=20"
@@ -14,11 +13,11 @@
     "dist"
   ],
   "scripts": {
-    "generateTranslations": "mkdir -p tmp/generated && node tools/generate-translations.js",
+    "generateTranslations": "mkdir -p tmp/generated && node tools/generate-translations.mjs",
     "dev": "vite",
     "prebuild": "npm run generateTranslations",
     "build": "tsc -b && vite build && vite build --mode inline",
-    "postbuild": "node tools/pack-inlined.js > dist/dist-inline/index.ts && cp src/index.d.ts dist/dist-inline",
+    "postbuild": "node tools/pack-inlined.mjs > dist/dist-inline/index.js && cp src/index.d.ts dist/dist-inline",
     "preview": "vite preview",
     "test:watch": "vitest",
     "test": "vitest run",

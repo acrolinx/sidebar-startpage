@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { version } from '../package.json';
 
-export const SERVER_SELECTOR_VERSION = `${import.meta.env.PACKAGE_VERSION}.${import.meta.env.BUILD_NUMBER}`;
+export const SERVER_SELECTOR_VERSION = version;
 
 /* Some extensions need the message adapter, because it's not possible to load javascript from arbitrary hosts
  * due to the content security policy.
