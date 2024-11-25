@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@acrolinx/sidebar-interface": "^15.4.3",
-    "preact": "^10.24.3"
+    "preact": "^10.25.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
