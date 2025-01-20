@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
-    "@preact/preset-vite": "^2.9.4",
+    "@preact/preset-vite": "^2.10.0",
     "@types/eslint__js": "^8.42.3",
     "@vitest/browser": "^2.1.8",
     "chai": "^5.1.2",
