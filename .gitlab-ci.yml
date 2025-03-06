@@ -47,7 +47,7 @@ build:
         - js-junit.xml
 
 publish:
-  image: node:20-alpine
+  image: node:lts
   when: manual
   stage: publish
   variables:
