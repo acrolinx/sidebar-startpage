@@ -7,7 +7,7 @@
   "main": "dist/dist-inline/index.js",
   "types": "dist/dist-inline/index.d.ts",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "files": [
     "dist"
