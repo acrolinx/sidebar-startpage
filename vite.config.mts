@@ -1,6 +1,7 @@
 import { defineConfig, UserConfig } from 'vite';
 import preact from '@preact/preset-vite';
 import { viteSingleFile } from 'vite-plugin-singlefile';
+import { removeCrossorigin, removeModule } from './vite-plugin-remove-attributes';
 
 /* Terminology: "dist-inline" and "dist-offline"
  *  The difference arises from whether scripts
@@ -26,6 +27,6 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: 'dist/dist-offline',
     },
-    plugins: [preact()],
+    plugins: [preact(), removeCrossorigin(), removeModule()],
   };
 });

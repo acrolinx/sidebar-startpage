@@ -26,3 +26,5 @@ js-junit.xml
 tmp
 dist-inline
 tests/browser-tests/src/__screenshots__/
+tsconfig.app.tsbuildinfo
+tsconfig.node.tsbuildinfo
