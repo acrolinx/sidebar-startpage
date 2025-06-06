@@ -34,7 +34,7 @@
     "@eslint/js": "^9.19.0",
     "@preact/preset-vite": "^2.10.1",
     "@types/eslint__js": "^8.42.3",
-    "@vitest/browser": "^3.2.1",
+    "@vitest/browser": "^3.2.2",
     "chai": "^5.2.0",
     "eslint": "^9.28.0",
     "import": "^0.0.6",
