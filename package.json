@@ -4,6 +4,12 @@
   "description": "A Container Component for Acrolinx Integrations that loads the Acrolinx sidebar",
   "author": "Acrolinx",
   "url": "http://www.acrolinx.com",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/acrolinx/sidebar-startpage.git"
+  },
+  "homepage": "https://github.com/acrolinx/sidebar-startpage",
   "main": "dist/dist-inline/index.js",
   "types": "dist/dist-inline/index.d.ts",
   "engines": {
