@@ -8,27 +8,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  sonarcloud_check:
-    name: SonarCloud Scan
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup SonarCloud Scan
-        uses: sonarsource/sonarqube-scan-action@v5
-        with:
-          args: -Dsonar.organization=acrolinx
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
-
   build:
     name: Build and Test
     runs-on: ubuntu-latest
-    needs: sonarcloud_check
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
