@@ -1,5 +1,5 @@
-/// <reference types='vitest' />
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
+import { playwright } from '@vitest/browser-playwright';
 
 export default defineConfig({
   test: {
@@ -7,10 +7,10 @@ export default defineConfig({
     reporters: ['junit', 'default'],
     outputFile: 'js-junit.xml',
     browser: {
-      provider: 'playwright',
+      provider: playwright(),
       enabled: true,
-      name: 'chromium',
       headless: true,
+      instances: [{ browser: 'chromium', name: 'chromium' }],
     },
   },
 });
