@@ -41,7 +41,7 @@
     "@preact/preset-vite": "^2.10.2",
     "@vitest/browser-playwright": "^4.0.6",
     "chai": "^6.2.0",
-    "eslint": "^9.39.0",
+    "eslint": "^9.39.1",
     "import": "^0.0.6",
     "jquery": "^3.7.1",
     "jsdom": "^27.1.0",
