@@ -33,7 +33,7 @@
     "format:fix": "prettier . --write"
   },
   "dependencies": {
-    "@acrolinx/sidebar-interface": "^15.4.3",
+    "@acrolinx/sidebar-interface": "^15.4.4",
     "preact": "^10.27.2"
   },
   "devDependencies": {
