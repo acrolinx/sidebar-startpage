@@ -47,7 +47,7 @@
     "jsdom": "^28.0.0",
     "less": "^4.5.1",
     "lodash": "^4.17.23",
-    "playwright": "^1.58.0",
+    "playwright": "^1.58.1",
     "prettier": "^3.8.1",
     "sinon": "^21.0.1",
     "typescript": "^5.9.3",
