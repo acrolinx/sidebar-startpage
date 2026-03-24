@@ -39,7 +39,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@preact/preset-vite": "^2.10.5",
-    "@vitest/browser-playwright": "^4.1.0",
+    "@vitest/browser-playwright": "^4.1.1",
     "chai": "^6.2.2",
     "eslint": "^10.1.0",
     "import": "^0.0.6",
